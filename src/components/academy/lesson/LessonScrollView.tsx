@@ -15,6 +15,7 @@ import { getChapterBySlug, getLessonsForChapter, getNextLesson, getPrevLesson } 
 import { CHAPTERS } from '@/lib/academy/curriculum'
 import { loadLessonContent } from '@/lib/academy/content-loader'
 import { useAcademyStore } from '@/lib/academy/progress-store'
+import { useProgressSync } from '@/lib/academy/progress-sync'
 
 import { SlideCard } from './SlideCard'
 import { DemoVideo } from './DemoVideo'
@@ -98,6 +99,8 @@ export function LessonScrollView() {
     isLessonAvailable,
     initializeProgress,
   } = useAcademyStore()
+
+  useProgressSync()
 
   // State
   const [lessonContent, setLessonContent] = useState<ExtractedLesson | null>(null)

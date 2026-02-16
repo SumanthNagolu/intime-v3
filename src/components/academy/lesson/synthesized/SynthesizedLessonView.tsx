@@ -19,6 +19,7 @@ import {
 } from '@/lib/academy/curriculum'
 import { loadSynthesizedLesson, loadLessonContent } from '@/lib/academy/content-loader'
 import { useAcademyStore } from '@/lib/academy/progress-store'
+import { useProgressSync } from '@/lib/academy/progress-sync'
 
 import { BlockRenderer } from './BlockRenderer'
 import { SynthesizedSidebar } from './SynthesizedSidebar'
@@ -56,6 +57,8 @@ export function SynthesizedLessonView() {
     setCurrentLesson,
     initializeProgress,
   } = useAcademyStore()
+
+  useProgressSync()
 
   // State
   const [synthesized, setSynthesized] = useState<SynthesizedLesson | null>(null)

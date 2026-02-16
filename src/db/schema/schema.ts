@@ -1389,6 +1389,11 @@ export const studentProgress = pgTable("student_progress", {
 	lastActivityAt: timestamp("last_activity_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	lessonProgress: jsonb("lesson_progress").default({}),
+	currentLesson: text("current_lesson"),
+	streakCount: integer("streak_count").default(0),
+	lastActiveDate: text("last_active_date"),
+	readinessIndex: integer("readiness_index").default(0),
 }, (table) => [
 	index("idx_student_progress_mastery").using("btree", table.masteryScore.desc().nullsFirst().op("int4_ops")),
 	index("idx_student_progress_module").using("btree", table.currentModule.asc().nullsLast().op("text_ops")),

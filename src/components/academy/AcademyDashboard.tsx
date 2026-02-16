@@ -27,6 +27,7 @@ import {
   getAllLessons,
 } from '@/lib/academy/curriculum'
 import { useAcademyStore } from '@/lib/academy/progress-store'
+import { useProgressSync } from '@/lib/academy/progress-sync'
 import type { LessonMeta, ChapterPhase } from '@/lib/academy/types'
 
 export function AcademyDashboard() {
@@ -41,6 +42,8 @@ export function AcademyDashboard() {
     isLessonAvailable,
     getLessonProgress,
   } = useAcademyStore()
+
+  useProgressSync()
 
   useEffect(() => {
     initializeProgress()

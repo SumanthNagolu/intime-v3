@@ -4,6 +4,89 @@ import { orgProtectedProcedure } from '../trpc/middleware'
 import { getAdminClient } from '@/lib/supabase/admin'
 
 export const academyRouter = router({
+  // ============================================
+  // GUIDEWIRE ACADEMY PROGRESS SYNC
+  // ============================================
+  guidewire: router({
+    getProgress: orgProtectedProcedure.query(async ({ ctx }) => {
+      const adminClient = getAdminClient()
+      const studentId = ctx.profileId
+
+      if (!studentId) {
+        return null
+      }
+
+      const { data } = await adminClient
+        .from('student_progress')
+        .select('lesson_progress, current_lesson, streak_count, last_active_date, readiness_index')
+        .eq('student_id', studentId)
+        .single()
+
+      if (!data) {
+        return null
+      }
+
+      return {
+        lessonProgress: (data.lesson_progress ?? {}) as Record<string, unknown>,
+        currentLesson: data.current_lesson as string | null,
+        streakCount: (data.streak_count ?? 0) as number,
+        lastActiveDate: data.last_active_date as string | null,
+        readinessIndex: (data.readiness_index ?? 0) as number,
+      }
+    }),
+
+    saveProgress: orgProtectedProcedure
+      .input(z.object({
+        lessonProgress: z.record(z.string(), z.unknown()),
+        currentLesson: z.string().nullable(),
+        streakCount: z.number().int().min(0),
+        lastActiveDate: z.string().nullable(),
+        readinessIndex: z.number().int().min(0).max(100),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const adminClient = getAdminClient()
+        const studentId = ctx.profileId
+
+        if (!studentId) {
+          return { success: false }
+        }
+
+        // Derive legacy fields from lesson progress blob
+        const completedModules: string[] = []
+        for (const [lessonId, progress] of Object.entries(input.lessonProgress)) {
+          const p = progress as { status?: string } | null
+          if (p?.status === 'completed') {
+            completedModules.push(lessonId)
+          }
+        }
+
+        const { error } = await adminClient
+          .from('student_progress')
+          .upsert({
+            student_id: studentId,
+            lesson_progress: input.lessonProgress,
+            current_lesson: input.currentLesson,
+            streak_count: input.streakCount,
+            last_active_date: input.lastActiveDate,
+            readiness_index: input.readinessIndex,
+            // Backfill legacy fields
+            current_module: input.currentLesson ?? '',
+            completed_modules: completedModules,
+            mastery_score: Math.min(input.readinessIndex, 100),
+            last_activity_at: new Date().toISOString(),
+          }, {
+            onConflict: 'student_id',
+          })
+
+        if (error) {
+          console.error('[guidewire.saveProgress] Error:', error)
+          return { success: false }
+        }
+
+        return { success: true }
+      }),
+  }),
+
   getPublicCourseBySlug: publicProcedure
     .input(z.object({ slug: z.string() }))
     .query(async ({ input }) => {

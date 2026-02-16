@@ -15,6 +15,9 @@ const DEFAULT_LESSON_PROGRESS: LessonProgress = {
 }
 
 interface AcademyStore extends AcademyProgressState {
+  // Server sync callback (injected by useProgressSync)
+  _serverSaveNow?: () => void
+
   // Lesson actions
   updateLessonStatus: (lessonId: string, status: LessonStatus) => void
   updateScrollProgress: (lessonId: string, progress: number) => void
@@ -163,6 +166,7 @@ export const useAcademyStore = create<AcademyStore>()(
             },
           },
         }))
+        setTimeout(() => get()._serverSaveNow?.(), 0)
       },
 
       recordKnowledgeCheckAnswer: (lessonId, questionKey, answer, correct, feedback) => {
@@ -187,6 +191,7 @@ export const useAcademyStore = create<AcademyStore>()(
             },
           }
         })
+        setTimeout(() => get()._serverSaveNow?.(), 0)
       },
 
       getKnowledgeCheckScore: (lessonId) => {
@@ -240,6 +245,7 @@ export const useAcademyStore = create<AcademyStore>()(
         })
 
         get().recalculateProgress()
+        setTimeout(() => get()._serverSaveNow?.(), 0)
       },
 
       setCurrentLesson: (lessonId) => set({ currentLesson: lessonId }),
