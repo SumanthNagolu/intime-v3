@@ -12,6 +12,11 @@ interface DemoVideoProps {
   isWatched?: boolean
 }
 
+// Lazy-load Mux Player only when needed
+const MuxPlayerLazy = React.lazy(() =>
+  import('@mux/mux-player-react').then(mod => ({ default: mod.default }))
+)
+
 export function DemoVideo({ video, chapterSlug, onWatched, isWatched }: DemoVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -20,12 +25,74 @@ export function DemoVideo({ video, chapterSlug, onWatched, isWatched }: DemoVide
   const [currentTime, setCurrentTime] = useState(0)
   const [isMuted, setIsMuted] = useState(false)
   const [hasReached80, setHasReached80] = useState(false)
-  const [videoPath, setVideoPath] = useState(`/academy/guidewire/videos/${chapterSlug}/${video.filename}`)
+
+  // Resolved video source - could be a Mux playback ID or a URL/path
+  const [videoSrc, setVideoSrc] = useState<{ type: 'mux'; playbackId: string } | { type: 'url'; url: string }>({
+    type: 'url',
+    url: `/academy/guidewire/videos/${chapterSlug}/${video.filename}`,
+  })
 
   useEffect(() => {
-    resolveVideoUrl(chapterSlug, video.filename).then(setVideoPath)
+    resolveVideoUrl(chapterSlug, video.filename).then(resolved => {
+      if (resolved.startsWith('mux:')) {
+        setVideoSrc({ type: 'mux', playbackId: resolved.slice(4) })
+      } else {
+        setVideoSrc({ type: 'url', url: resolved })
+      }
+    })
   }, [chapterSlug, video.filename])
 
+  const handleWatchProgress = useCallback((pct: number) => {
+    if (!hasReached80 && pct >= 0.8) {
+      setHasReached80(true)
+      onWatched?.(video.filename)
+    }
+  }, [hasReached80, onWatched, video.filename])
+
+  // ── Mux Player ──
+  if (videoSrc.type === 'mux') {
+    return (
+      <div className="rounded-xl border border-warm-light/20 bg-warm-deep shadow-elevation-sm overflow-hidden" id={`video-${video.index}`}>
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-warm-primary/20">
+          <div className="flex items-center gap-2">
+            <Play className="w-3.5 h-3.5 text-copper-400" />
+            <span className="font-serif text-xs font-medium text-warm-light">
+              Demo {video.index}
+            </span>
+            <span className="font-mono-warm text-xs text-warm-muted">
+              {video.filename}
+            </span>
+          </div>
+          {(isWatched || hasReached80) && (
+            <span className="font-mono-warm text-[9px] font-medium uppercase text-sage-400" style={{ letterSpacing: '2px' }}>
+              Watched
+            </span>
+          )}
+        </div>
+        <React.Suspense fallback={
+          <div className="aspect-video bg-black flex items-center justify-center">
+            <div className="animate-spin w-8 h-8 border-2 border-warm-light/30 border-t-copper-400 rounded-full" />
+          </div>
+        }>
+          <MuxPlayerLazy
+            playbackId={videoSrc.playbackId}
+            streamType="on-demand"
+            accentColor="#B87333"
+            style={{ aspectRatio: '16/9', width: '100%' }}
+            onTimeUpdate={(e: any) => {
+              const el = e.target
+              if (el.duration > 0) {
+                handleWatchProgress(el.currentTime / el.duration)
+              }
+            }}
+            onEnded={() => onWatched?.(video.filename)}
+          />
+        </React.Suspense>
+      </div>
+    )
+  }
+
+  // ── Fallback HTML5 Player (local dev / no manifest) ──
   const togglePlay = useCallback(() => {
     if (!videoRef.current) return
     if (isPlaying) {
@@ -42,13 +109,8 @@ export function DemoVideo({ video, chapterSlug, onWatched, isWatched }: DemoVide
     const dur = videoRef.current.duration
     setCurrentTime(ct)
     setProgress(dur > 0 ? (ct / dur) * 100 : 0)
-
-    // Mark as watched when 80% viewed
-    if (!hasReached80 && dur > 0 && ct / dur >= 0.8) {
-      setHasReached80(true)
-      onWatched?.(video.filename)
-    }
-  }, [hasReached80, onWatched, video.filename])
+    handleWatchProgress(dur > 0 ? ct / dur : 0)
+  }, [handleWatchProgress])
 
   const handleLoadedMetadata = useCallback(() => {
     if (videoRef.current) {
@@ -119,7 +181,7 @@ export function DemoVideo({ video, chapterSlug, onWatched, isWatched }: DemoVide
       <div className="relative bg-black aspect-video">
         <video
           ref={videoRef}
-          src={videoPath}
+          src={videoSrc.url}
           className="w-full h-full"
           onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={handleLoadedMetadata}

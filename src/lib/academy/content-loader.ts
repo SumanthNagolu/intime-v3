@@ -74,11 +74,11 @@ export async function loadKnowledgeChecks(lessonId: string): Promise<KnowledgeCh
   return data.lessons[lessonId] ?? []
 }
 
-// Video manifest cache (Blob URLs mapped by relative path)
-let videoManifestCache: Record<string, { url: string }> | null = null
+// Video manifest cache - maps "chapterSlug/filename" to Mux playback ID or URL
+let videoManifestCache: Record<string, { playbackId?: string; url?: string }> | null = null
 let manifestLoadAttempted = false
 
-async function loadVideoManifest(): Promise<Record<string, { url: string }> | null> {
+async function loadVideoManifest(): Promise<Record<string, { playbackId?: string; url?: string }> | null> {
   if (videoManifestCache) return videoManifestCache
   if (manifestLoadAttempted) return null
   manifestLoadAttempted = true
@@ -94,18 +94,27 @@ async function loadVideoManifest(): Promise<Record<string, { url: string }> | nu
   }
 }
 
-// Get video path - uses Blob URL from manifest if available, falls back to local path
+// Sync version - local path only (for backward compat)
 export function getVideoPath(chapterSlug: string, videoFilename: string): string {
   return `/academy/guidewire/videos/${chapterSlug}/${videoFilename}`
 }
 
-// Async version that checks Blob manifest first
+// Async version - returns "mux:<playbackId>" for Mux videos, or a URL/path for fallback
 export async function resolveVideoUrl(chapterSlug: string, videoFilename: string): Promise<string> {
   const manifest = await loadVideoManifest()
   const key = `${chapterSlug}/${videoFilename}`
-  if (manifest?.[key]?.url) {
-    return manifest[key].url
+
+  if (manifest?.[key]) {
+    // Mux playback ID takes priority
+    if (manifest[key].playbackId) {
+      return `mux:${manifest[key].playbackId}`
+    }
+    // Blob/CDN URL
+    if (manifest[key].url) {
+      return manifest[key].url
+    }
   }
+
   // Fallback to local path (works in dev)
   return `/academy/guidewire/videos/${chapterSlug}/${videoFilename}`
 }
