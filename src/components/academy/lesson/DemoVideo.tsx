@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useRef, useState, useCallback } from 'react'
+import React, { useRef, useState, useCallback, useEffect } from 'react'
 import { Play, Pause, Maximize2, Volume2, VolumeX, SkipBack, SkipForward } from 'lucide-react'
 import type { VideoRef } from '@/lib/academy/types'
+import { resolveVideoUrl } from '@/lib/academy/content-loader'
 
 interface DemoVideoProps {
   video: VideoRef
@@ -19,8 +20,11 @@ export function DemoVideo({ video, chapterSlug, onWatched, isWatched }: DemoVide
   const [currentTime, setCurrentTime] = useState(0)
   const [isMuted, setIsMuted] = useState(false)
   const [hasReached80, setHasReached80] = useState(false)
+  const [videoPath, setVideoPath] = useState(`/academy/guidewire/videos/${chapterSlug}/${video.filename}`)
 
-  const videoPath = `/academy/guidewire/videos/${chapterSlug}/${video.filename}`
+  useEffect(() => {
+    resolveVideoUrl(chapterSlug, video.filename).then(setVideoPath)
+  }, [chapterSlug, video.filename])
 
   const togglePlay = useCallback(() => {
     if (!videoRef.current) return

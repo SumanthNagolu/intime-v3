@@ -74,8 +74,39 @@ export async function loadKnowledgeChecks(lessonId: string): Promise<KnowledgeCh
   return data.lessons[lessonId] ?? []
 }
 
-// Get video path for a lesson
+// Video manifest cache (Blob URLs mapped by relative path)
+let videoManifestCache: Record<string, { url: string }> | null = null
+let manifestLoadAttempted = false
+
+async function loadVideoManifest(): Promise<Record<string, { url: string }> | null> {
+  if (videoManifestCache) return videoManifestCache
+  if (manifestLoadAttempted) return null
+  manifestLoadAttempted = true
+
+  try {
+    const res = await fetch('/academy/guidewire/video-manifest.json')
+    if (!res.ok) return null
+    const data = await res.json()
+    videoManifestCache = data.videos ?? null
+    return videoManifestCache
+  } catch {
+    return null
+  }
+}
+
+// Get video path - uses Blob URL from manifest if available, falls back to local path
 export function getVideoPath(chapterSlug: string, videoFilename: string): string {
+  return `/academy/guidewire/videos/${chapterSlug}/${videoFilename}`
+}
+
+// Async version that checks Blob manifest first
+export async function resolveVideoUrl(chapterSlug: string, videoFilename: string): Promise<string> {
+  const manifest = await loadVideoManifest()
+  const key = `${chapterSlug}/${videoFilename}`
+  if (manifest?.[key]?.url) {
+    return manifest[key].url
+  }
+  // Fallback to local path (works in dev)
   return `/academy/guidewire/videos/${chapterSlug}/${videoFilename}`
 }
 
