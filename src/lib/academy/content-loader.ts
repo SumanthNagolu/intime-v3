@@ -1,6 +1,6 @@
 'use client'
 
-import type { ExtractedLesson, InterviewPrepData, KnowledgeChecksData, KnowledgeCheckItem, SynthesizedLesson } from './types'
+import type { ExtractedLesson, InterviewPrepData, KnowledgeChecksData, KnowledgeCheckItem, SynthesizedLesson, InteractiveAssignment } from './types'
 
 const CONTENT_BASE = '/academy/guidewire/content'
 
@@ -148,10 +148,62 @@ export async function loadSynthesizedLesson(
   }
 }
 
+// --- Interactive Assignment Loading ---
+
+const ASSIGNMENT_INTERACTIVE_BASE = '/academy/guidewire/assignment-interactive'
+const interactiveAssignmentCache = new Map<string, InteractiveAssignment>()
+
+export async function loadInteractiveAssignment(
+  chapterSlug: string,
+  assignmentNumber: number
+): Promise<InteractiveAssignment | null> {
+  const key = `${chapterSlug}-a${String(assignmentNumber).padStart(2, '0')}`
+  if (interactiveAssignmentCache.has(key)) return interactiveAssignmentCache.get(key)!
+
+  try {
+    const url = `${ASSIGNMENT_INTERACTIVE_BASE}/${chapterSlug}/assignment-${String(assignmentNumber).padStart(2, '0')}.json`
+    const res = await fetch(url)
+    if (!res.ok) return null
+    const data: InteractiveAssignment = await res.json()
+    interactiveAssignmentCache.set(key, data)
+    return data
+  } catch {
+    return null
+  }
+}
+
+// --- Slide Image URL ---
+
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
+const SLIDE_BUCKET = 'academy-slides'
+
+/**
+ * Get the URL for a slide image.
+ * In production (or when SUPABASE_URL is set), returns a Supabase Storage public URL.
+ * Falls back to local path for development without Supabase.
+ */
+export function getSlideImageUrl(
+  chapterSlug: string,
+  lessonNumber: number,
+  slideNumber: number
+): string {
+  const lessonPad = String(lessonNumber).padStart(2, '0')
+  const slidePad = String(slideNumber).padStart(2, '0')
+  const path = `${chapterSlug}/lesson-${lessonPad}/slide-${slidePad}.png`
+
+  if (SUPABASE_URL) {
+    return `${SUPABASE_URL}/storage/v1/object/public/${SLIDE_BUCKET}/${path}`
+  }
+
+  // Fallback to local path (dev only)
+  return `/academy/guidewire/slides/${path}`
+}
+
 // Clear caches (useful for development)
 export function clearContentCache(): void {
   lessonCache.clear()
   indexCache.clear()
   synthesizedCache.clear()
+  interactiveAssignmentCache.clear()
   knowledgeChecksCache = null
 }

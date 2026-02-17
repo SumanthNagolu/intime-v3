@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { ZoomIn } from 'lucide-react'
 import type { FigureRef } from '@/lib/academy/types'
+import { getSlideImageUrl } from '@/lib/academy/content-loader'
 
 interface FigureViewerProps {
   figure: FigureRef
@@ -14,7 +15,7 @@ export function FigureViewer({ figure, chapterSlug, lessonNumber }: FigureViewer
   const [imgError, setImgError] = useState(false)
   const [showZoom, setShowZoom] = useState(false)
 
-  const slideImagePath = `/academy/guidewire/slides/${chapterSlug}/lesson-${String(lessonNumber).padStart(2, '0')}/slide-${String(figure.slideNumber).padStart(2, '0')}.png`
+  const slideImagePath = getSlideImageUrl(chapterSlug, lessonNumber, figure.slideNumber)
 
   if (imgError) return null
 

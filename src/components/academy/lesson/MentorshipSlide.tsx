@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { ZoomIn, Download } from 'lucide-react'
 import type { SlideContent } from '@/lib/academy/types'
+import { getSlideImageUrl } from '@/lib/academy/content-loader'
 
 interface MentorshipSlideProps {
   slide: SlideContent
@@ -16,7 +17,7 @@ export function MentorshipSlide({ slide, chapterSlug, lessonNumber, slideIndex }
   const [showZoom, setShowZoom] = useState(false)
 
   const hasTextContent = slide.notes || slide.bodyParagraphs.length > 0 || slide.hasTable
-  const slideImagePath = `/academy/guidewire/slides/${chapterSlug}/lesson-${String(lessonNumber).padStart(2, '0')}/slide-${String(slide.slideNumber).padStart(2, '0')}.png`
+  const slideImagePath = getSlideImageUrl(chapterSlug, lessonNumber, slide.slideNumber)
 
   // Skip completely empty slides (no image, no text, no notes)
   if (!hasTextContent && !slide.hasImage && slideIndex === 0) return null

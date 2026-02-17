@@ -385,3 +385,189 @@ export interface MockInterviewSession {
   completedAt?: string
   timerMinutes: number
 }
+
+// ============================================================
+// Interactive Assignment Types (hands-on lab exercises)
+// ============================================================
+
+export type AssignmentElementType =
+  | 'assignment_header'
+  | 'exercise_group'
+  | 'step'
+  | 'write_it_down'
+  | 'data_table'
+  | 'code_task'
+  | 'callout'
+  | 'verification'
+  | 'solution_step'
+  | 'reference'
+
+export type AssignmentComplexityLevel = 'exploratory' | 'configuration' | 'development'
+
+export interface AssignmentHeader {
+  type: 'assignment_header'
+  id: string
+  lessonTitle: string
+  scenario: string
+  prerequisites: string[]
+  objectives: string[]
+  estimatedMinutes: number
+  complexityLevel: AssignmentComplexityLevel
+  skillsTested: string[]
+}
+
+export interface ExerciseGroup {
+  type: 'exercise_group'
+  id: string
+  exerciseNumber: number
+  title: string
+  description: string
+  variant?: 'lab' | 'activity' | 'exercise' | 'cookbook'
+}
+
+export interface StepBlock {
+  type: 'step'
+  id: string
+  exerciseId: string
+  stepNumber: number
+  instruction: string
+  substeps?: { letter: string; text: string }[]
+  embeddedQuestion?: string
+  requiresAction: boolean
+}
+
+export interface WriteItDownBlock {
+  type: 'write_it_down'
+  id: string
+  exerciseId: string
+  question: string
+  referenceAnswer?: string
+  answerType: 'short' | 'paragraph' | 'observation'
+  hints?: string[]
+  skillTested?: string
+}
+
+export interface DataTableBlock {
+  type: 'data_table'
+  id: string
+  exerciseId: string
+  context?: string
+  headers: string[]
+  rows: string[][]
+  caption?: string
+}
+
+export interface CodeTaskBlock {
+  type: 'code_task'
+  id: string
+  exerciseId: string
+  language: 'gosu' | 'xml' | 'yaml' | 'json' | 'text'
+  prompt: string
+  context?: string
+  starterCode?: string
+  hints?: string[]
+  referenceSolution?: string
+  skillTested?: string
+}
+
+export interface AssignmentCalloutBlock {
+  type: 'callout'
+  id: string
+  variant: 'hint' | 'important' | 'best_practice' | 'tip' | 'cookbook_recipe' | 'warning'
+  title: string
+  content: string
+}
+
+export interface VerificationBlock {
+  type: 'verification'
+  id: string
+  exerciseId: string
+  title: string
+  steps: { text: string; verificationNote?: string }[]
+}
+
+export interface SolutionStepBlock {
+  type: 'solution_step'
+  id: string
+  exerciseId: string
+  stepNumber: number
+  instruction: string
+  substeps?: { letter: string; text: string }[]
+  codeSnippet?: { language: string; code: string; explanation?: string }
+  screenshotCaption?: string
+}
+
+export interface ReferenceBlock {
+  type: 'reference'
+  id: string
+  variant: 'review' | 'tip'
+  question: string
+  explanation: string
+}
+
+export type InteractiveAssignmentBlock =
+  | AssignmentHeader
+  | ExerciseGroup
+  | StepBlock
+  | WriteItDownBlock
+  | DataTableBlock
+  | CodeTaskBlock
+  | AssignmentCalloutBlock
+  | VerificationBlock
+  | SolutionStepBlock
+  | ReferenceBlock
+
+export interface InteractiveAssignment {
+  assignmentId: string
+  chapterSlug: string
+  lessonNumber: number
+  title: string
+  complexityLevel: AssignmentComplexityLevel
+  estimatedMinutes: number
+  totalExercises: number
+  skillsCovered: string[]
+  blocks: InteractiveAssignmentBlock[]
+  synthesizedAt: string
+}
+
+// --- Assignment Work Record Types ---
+
+export interface ExerciseWorkRecord {
+  exerciseId: string
+  status: 'not_started' | 'in_progress' | 'completed'
+  startedAt?: string
+  completedAt?: string
+  timeSpentSeconds: number
+  stepsCompleted: string[]
+  writeItDownAnswers: Record<string, {
+    answer: string
+    correct?: boolean
+    feedback?: string
+    gradedAt?: string
+    attempts: number
+  }>
+  codeSubmissions: Record<string, {
+    code: string
+    feedback?: string
+    score?: number
+    submittedAt: string
+  }>
+  verificationChecks: string[]
+  hintsRevealed: number
+  solutionStepsRevealed: number
+  guruQueriesCount: number
+}
+
+export interface AssignmentWorkRecord {
+  assignmentId: string
+  status: 'not_started' | 'in_progress' | 'completed'
+  startedAt?: string
+  completedAt?: string
+  totalTimeSpentSeconds: number
+  exercises: Record<string, ExerciseWorkRecord>
+  overallScore?: number
+  totalHintsUsed: number
+  totalSolutionReveals: number
+  totalGuruQueries: number
+  skillsScores: Record<string, number>
+}
