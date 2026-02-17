@@ -4,6 +4,9 @@
  *
  * TypeScript bindings for Tauri commands and events.
  * Falls back gracefully when running in browser mode.
+ *
+ * NOTE: All Tauri APIs are accessed via window.__TAURI__ at runtime
+ * to avoid bundler issues (no @tauri-apps/api import needed for web builds).
  */
 
 // ============================================
@@ -25,51 +28,38 @@ export interface SystemInfo {
 // Environment Detection
 // ============================================
 
-/**
- * Check if running in Tauri desktop environment
- */
 export function isTauri(): boolean {
   return typeof window !== 'undefined' && '__TAURI__' in window
 }
 
-/**
- * Check if running on macOS
- */
 export function isMacOS(): boolean {
   if (typeof navigator === 'undefined') return false
   return navigator.platform.toLowerCase().includes('mac')
 }
 
-/**
- * Check if running on Windows
- */
 export function isWindows(): boolean {
   if (typeof navigator === 'undefined') return false
   return navigator.platform.toLowerCase().includes('win')
+}
+
+// Runtime access to Tauri globals (avoids bundler resolution)
+function getTauri(): any {
+  if (!isTauri()) return null
+  return (window as any).__TAURI__
 }
 
 // ============================================
 // Tauri Command Wrappers
 // ============================================
 
-/**
- * Invoke a Tauri command
- */
 async function invoke<T>(cmd: string, args?: Record<string, unknown>): Promise<T> {
-  if (!isTauri()) {
-    throw new Error('Not running in Tauri environment')
-  }
-
-  const { invoke: tauriInvoke } = await import('@tauri-apps/api/tauri')
-  return tauriInvoke<T>(cmd, args)
+  const tauri = getTauri()
+  if (!tauri?.invoke) throw new Error('Not running in Tauri environment')
+  return tauri.invoke(cmd, args)
 }
 
-/**
- * Show a native notification
- */
 export async function showNotification(title: string, body: string): Promise<void> {
   if (!isTauri()) {
-    // Fall back to web notifications
     if ('Notification' in window && Notification.permission === 'granted') {
       new Notification(title, { body })
     } else if ('Notification' in window && Notification.permission !== 'denied') {
@@ -80,99 +70,61 @@ export async function showNotification(title: string, body: string): Promise<voi
     }
     return
   }
-
   await invoke('show_notification', { title, body })
 }
 
-/**
- * Open URL in default browser
- */
 export async function openExternal(url: string): Promise<void> {
   if (!isTauri()) {
     window.open(url, '_blank', 'noopener,noreferrer')
     return
   }
-
   await invoke('open_external', { url })
 }
 
-/**
- * Make a phone call via system handler
- */
 export async function makePhoneCall(phoneNumber: string): Promise<void> {
   if (!isTauri()) {
-    // On web, use tel: protocol
     window.location.href = `tel:${phoneNumber.replace(/\s/g, '')}`
     return
   }
-
   await invoke('make_phone_call', { phoneNumber })
 }
 
-/**
- * Copy text to clipboard
- */
 export async function copyToClipboard(text: string): Promise<void> {
   if (!isTauri()) {
     await navigator.clipboard.writeText(text)
     return
   }
-
-  const { writeText } = await import('@tauri-apps/api/clipboard')
-  await writeText(text)
+  const tauri = getTauri()
+  await tauri.clipboard.writeText(text)
 }
 
-/**
- * Read text from clipboard
- */
 export async function readFromClipboard(): Promise<string | null> {
   if (!isTauri()) {
     return navigator.clipboard.readText()
   }
-
-  const { readText } = await import('@tauri-apps/api/clipboard')
-  return readText()
+  const tauri = getTauri()
+  return tauri.clipboard.readText()
 }
 
-/**
- * Get system information
- */
 export async function getSystemInfo(): Promise<SystemInfo> {
   if (!isTauri()) {
-    return {
-      os: navigator.platform,
-      arch: 'unknown',
-      family: 'web',
-    }
+    return { os: navigator.platform, arch: 'unknown', family: 'web' }
   }
-
   return invoke<SystemInfo>('get_system_info')
 }
 
-/**
- * Set window always on top
- */
 export async function setAlwaysOnTop(alwaysOnTop: boolean): Promise<void> {
   if (!isTauri()) return
-
   await invoke('set_always_on_top', { alwaysOnTop })
 }
 
-/**
- * Minimize window to system tray
- */
 export async function minimizeToTray(): Promise<void> {
   if (!isTauri()) return
-
   await invoke('minimize_to_tray')
 }
 
-/**
- * Request user attention (flash window)
- */
 export async function requestAttention(): Promise<void> {
   if (!isTauri()) return
-
   await invoke('request_attention')
 }
 
@@ -180,47 +132,31 @@ export async function requestAttention(): Promise<void> {
 // Window Management
 // ============================================
 
-/**
- * Close the current window
- */
 export async function closeWindow(): Promise<void> {
   if (!isTauri()) return
-
-  const { appWindow } = await import('@tauri-apps/api/window')
-  await appWindow.close()
+  const tauri = getTauri()
+  await tauri.window.appWindow.close()
 }
 
-/**
- * Minimize the current window
- */
 export async function minimizeWindow(): Promise<void> {
   if (!isTauri()) return
-
-  const { appWindow } = await import('@tauri-apps/api/window')
-  await appWindow.minimize()
+  const tauri = getTauri()
+  await tauri.window.appWindow.minimize()
 }
 
-/**
- * Maximize/restore the current window
- */
 export async function toggleMaximize(): Promise<void> {
   if (!isTauri()) return
-
-  const { appWindow } = await import('@tauri-apps/api/window')
-  await appWindow.toggleMaximize()
+  const tauri = getTauri()
+  await tauri.window.appWindow.toggleMaximize()
 }
 
-/**
- * Set window title
- */
 export async function setWindowTitle(title: string): Promise<void> {
   if (!isTauri()) {
     document.title = title
     return
   }
-
-  const { appWindow } = await import('@tauri-apps/api/window')
-  await appWindow.setTitle(title)
+  const tauri = getTauri()
+  await tauri.window.appWindow.setTitle(title)
 }
 
 // ============================================
@@ -229,57 +165,43 @@ export async function setWindowTitle(title: string): Promise<void> {
 
 type UnlistenFn = () => void
 
-/**
- * Listen for Tauri events
- */
 export async function listen<T>(
   event: string,
   handler: (payload: T) => void
 ): Promise<UnlistenFn> {
   if (!isTauri()) {
-    // Create a custom event listener for web fallback
     const wrappedHandler = (e: CustomEvent<T>) => handler(e.detail)
     window.addEventListener(event as string, wrappedHandler as EventListener)
     return () => window.removeEventListener(event as string, wrappedHandler as EventListener)
   }
-
-  const { listen: tauriListen } = await import('@tauri-apps/api/event')
-  return tauriListen<T>(event, (e) => handler(e.payload))
+  const tauri = getTauri()
+  return tauri.event.listen(event, (e: any) => handler(e.payload))
 }
 
-/**
- * Emit a Tauri event
- */
 export async function emit<T>(event: string, payload?: T): Promise<void> {
   if (!isTauri()) {
     window.dispatchEvent(new CustomEvent(event, { detail: payload }))
     return
   }
-
-  const { emit: tauriEmit } = await import('@tauri-apps/api/event')
-  await tauriEmit(event, payload)
+  const tauri = getTauri()
+  await tauri.event.emit(event, payload)
 }
 
 // ============================================
 // Global Shortcuts
 // ============================================
 
-/**
- * Register a global shortcut
- */
 export async function registerShortcut(
   shortcut: string,
   handler: () => void
 ): Promise<UnlistenFn> {
   if (!isTauri()) {
-    // Web fallback: use keyboard event listener
     const keydownHandler = (e: KeyboardEvent) => {
       const keys = shortcut.toLowerCase().split('+')
       const ctrl = keys.includes('cmdorctrl') || keys.includes('ctrl')
       const shift = keys.includes('shift')
       const alt = keys.includes('alt')
       const key = keys[keys.length - 1]
-
       if (
         (ctrl ? e.ctrlKey || e.metaKey : true) &&
         (shift ? e.shiftKey : true) &&
@@ -290,24 +212,18 @@ export async function registerShortcut(
         handler()
       }
     }
-
     window.addEventListener('keydown', keydownHandler)
     return () => window.removeEventListener('keydown', keydownHandler)
   }
-
-  const { register, unregister } = await import('@tauri-apps/api/globalShortcut')
-  await register(shortcut, handler)
-  return () => unregister(shortcut)
+  const tauri = getTauri()
+  await tauri.globalShortcut.register(shortcut, handler)
+  return () => tauri.globalShortcut.unregister(shortcut)
 }
 
-/**
- * Unregister all global shortcuts
- */
 export async function unregisterAllShortcuts(): Promise<void> {
   if (!isTauri()) return
-
-  const { unregisterAll } = await import('@tauri-apps/api/globalShortcut')
-  await unregisterAll()
+  const tauri = getTauri()
+  await tauri.globalShortcut.unregisterAll()
 }
 
 // ============================================
@@ -322,41 +238,32 @@ export interface OpenDialogOptions {
   title?: string
 }
 
-/**
- * Open file dialog
- */
 export async function openFileDialog(
   options?: OpenDialogOptions
 ): Promise<string | string[] | null> {
   if (!isTauri()) {
-    // Web fallback using file input
     return new Promise((resolve) => {
       const input = document.createElement('input')
       input.type = 'file'
       input.multiple = options?.multiple ?? false
-
       if (options?.filters) {
         input.accept = options.filters
           .flatMap((f) => f.extensions.map((ext) => `.${ext}`))
           .join(',')
       }
-
       input.onchange = () => {
         if (!input.files || input.files.length === 0) {
           resolve(null)
           return
         }
-
         const files = Array.from(input.files).map((f) => f.name)
         resolve(options?.multiple ? files : files[0])
       }
-
       input.click()
     })
   }
-
-  const { open } = await import('@tauri-apps/api/dialog')
-  return open({
+  const tauri = getTauri()
+  return tauri.dialog.open({
     multiple: options?.multiple,
     directory: options?.directory,
     filters: options?.filters,
@@ -365,21 +272,14 @@ export async function openFileDialog(
   })
 }
 
-/**
- * Save file dialog
- */
 export async function saveFileDialog(options?: {
   filters?: Array<{ name: string; extensions: string[] }>
   defaultPath?: string
   title?: string
 }): Promise<string | null> {
-  if (!isTauri()) {
-    // Web doesn't have a save dialog equivalent
-    return null
-  }
-
-  const { save } = await import('@tauri-apps/api/dialog')
-  return save({
+  if (!isTauri()) return null
+  const tauri = getTauri()
+  return tauri.dialog.save({
     filters: options?.filters,
     defaultPath: options?.defaultPath,
     title: options?.title,

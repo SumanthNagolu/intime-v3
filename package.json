@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "next dev",
     "res3000": "lsof -ti:3000 | xargs kill -9 2>/dev/null || true && NODE_TLS_REJECT_UNAUTHORIZED=0 pnpm dev",
-    "build": "next build --webpack",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint .",
     "test:auth": "tsx scripts/test-auth.ts",

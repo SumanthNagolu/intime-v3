@@ -26,42 +26,29 @@ const nextConfig = {
   transpilePackages: ['@react-pdf/renderer'],
 
   experimental: {
-    // Enable server components by default
     serverActions: {
       allowedOrigins: ['localhost:3000'],
     },
-    // Optimize package imports
     optimizePackageImports: ['react-icons', 'date-fns'],
+  },
+
+  // Exclude large data files from serverless function bundles
+  outputFileTracingExcludes: {
+    '/api/ai/guru': ['./data/rag-knowledge-base/**'],
+    '*': ['./data/rag-knowledge-base/**'],
   },
 
   // Next.js 16 uses Turbopack by default - acknowledge the migration
   turbopack: {},
 
-  // Keep webpack config for fallback (Next.js 16 allows both)
-  webpack: (config, { dev, isServer }) => {
-    // Stub Tauri desktop APIs for web builds (only used at runtime in Tauri shell)
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@tauri-apps/api/tauri': false,
-      '@tauri-apps/api/clipboard': false,
-      '@tauri-apps/api/window': false,
-      '@tauri-apps/api/event': false,
-      '@tauri-apps/api/globalShortcut': false,
-      '@tauri-apps/api/dialog': false,
-    };
-
-    // Suppress warnings from OpenTelemetry and require-in-the-middle
+  // Webpack config (used when building with --webpack flag)
+  webpack: (config) => {
     config.ignoreWarnings = [
       /Critical dependency: the request of a dependency is an expression/,
       /Critical dependency: require function is used in a way in which dependencies cannot be statically extracted/,
       ...(config.ignoreWarnings || [])
     ];
-
-    // Suppress webpack serialization warnings
-    config.infrastructureLogging = {
-      level: 'error',
-    };
-
+    config.infrastructureLogging = { level: 'error' };
     return config;
   },
 };
