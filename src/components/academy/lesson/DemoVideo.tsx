@@ -33,13 +33,17 @@ export function DemoVideo({ video, chapterSlug, onWatched, isWatched }: DemoVide
   })
 
   useEffect(() => {
-    resolveVideoUrl(chapterSlug, video.filename).then(resolved => {
-      if (resolved.startsWith('mux:')) {
-        setVideoSrc({ type: 'mux', playbackId: resolved.slice(4) })
-      } else {
-        setVideoSrc({ type: 'url', url: resolved })
-      }
-    })
+    resolveVideoUrl(chapterSlug, video.filename)
+      .then(resolved => {
+        if (resolved.startsWith('mux:')) {
+          setVideoSrc({ type: 'mux', playbackId: resolved.slice(4) })
+        } else {
+          setVideoSrc({ type: 'url', url: resolved })
+        }
+      })
+      .catch(() => {
+        // Keep fallback URL on error
+      })
   }, [chapterSlug, video.filename])
 
   const handleWatchProgress = useCallback((pct: number) => {

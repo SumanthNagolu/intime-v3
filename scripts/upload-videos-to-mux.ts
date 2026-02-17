@@ -109,6 +109,10 @@ async function checkStatus(mux: Mux, manifest: VideoManifest): Promise<void> {
       if (asset.status !== 'preparing') {
         entry.status = asset.status as VideoEntry['status']
         entry.duration = asset.duration
+        // Update playback ID if missing (e.g., wasn't available during upload)
+        if (!entry.playbackId && asset.playback_ids?.[0]?.id) {
+          entry.playbackId = asset.playback_ids[0].id
+        }
         updated++
         console.log(`  ${key}: ${asset.status}`)
       }
