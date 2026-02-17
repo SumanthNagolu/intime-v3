@@ -53,50 +53,7 @@ export function DemoVideo({ video, chapterSlug, onWatched, isWatched }: DemoVide
     }
   }, [hasReached80, onWatched, video.filename])
 
-  // ── Mux Player ──
-  if (videoSrc.type === 'mux') {
-    return (
-      <div className="rounded-xl border border-warm-light/20 bg-warm-deep shadow-elevation-sm overflow-hidden" id={`video-${video.index}`}>
-        <div className="flex items-center justify-between px-4 py-2.5 border-b border-warm-primary/20">
-          <div className="flex items-center gap-2">
-            <Play className="w-3.5 h-3.5 text-copper-400" />
-            <span className="font-serif text-xs font-medium text-warm-light">
-              Demo {video.index}
-            </span>
-            <span className="font-mono-warm text-xs text-warm-muted">
-              {video.filename}
-            </span>
-          </div>
-          {(isWatched || hasReached80) && (
-            <span className="font-mono-warm text-[9px] font-medium uppercase text-sage-400" style={{ letterSpacing: '2px' }}>
-              Watched
-            </span>
-          )}
-        </div>
-        <React.Suspense fallback={
-          <div className="aspect-video bg-black flex items-center justify-center">
-            <div className="animate-spin w-8 h-8 border-2 border-warm-light/30 border-t-copper-400 rounded-full" />
-          </div>
-        }>
-          <MuxPlayerLazy
-            playbackId={videoSrc.playbackId}
-            streamType="on-demand"
-            accentColor="#B87333"
-            style={{ aspectRatio: '16/9', width: '100%' }}
-            onTimeUpdate={(e: any) => {
-              const el = e.target
-              if (el.duration > 0) {
-                handleWatchProgress(el.currentTime / el.duration)
-              }
-            }}
-            onEnded={() => onWatched?.(video.filename)}
-          />
-        </React.Suspense>
-      </div>
-    )
-  }
-
-  // ── Fallback HTML5 Player (local dev / no manifest) ──
+  // ALL hooks must be declared before any conditional return
   const togglePlay = useCallback(() => {
     if (!videoRef.current) return
     if (isPlaying) {
@@ -161,6 +118,50 @@ export function DemoVideo({ video, chapterSlug, onWatched, isWatched }: DemoVide
     return `${m}:${s.toString().padStart(2, '0')}`
   }
 
+  // ── Mux Player ──
+  if (videoSrc.type === 'mux') {
+    return (
+      <div className="rounded-xl border border-warm-light/20 bg-warm-deep shadow-elevation-sm overflow-hidden" id={`video-${video.index}`}>
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-warm-primary/20">
+          <div className="flex items-center gap-2">
+            <Play className="w-3.5 h-3.5 text-copper-400" />
+            <span className="font-serif text-xs font-medium text-warm-light">
+              Demo {video.index}
+            </span>
+            <span className="font-mono-warm text-xs text-warm-muted">
+              {video.filename}
+            </span>
+          </div>
+          {(isWatched || hasReached80) && (
+            <span className="font-mono-warm text-[9px] font-medium uppercase text-sage-400" style={{ letterSpacing: '2px' }}>
+              Watched
+            </span>
+          )}
+        </div>
+        <React.Suspense fallback={
+          <div className="aspect-video bg-black flex items-center justify-center">
+            <div className="animate-spin w-8 h-8 border-2 border-warm-light/30 border-t-copper-400 rounded-full" />
+          </div>
+        }>
+          <MuxPlayerLazy
+            playbackId={videoSrc.playbackId}
+            streamType="on-demand"
+            accentColor="#B87333"
+            style={{ aspectRatio: '16/9', width: '100%' }}
+            onTimeUpdate={(e: any) => {
+              const el = e.target
+              if (el.duration > 0) {
+                handleWatchProgress(el.currentTime / el.duration)
+              }
+            }}
+            onEnded={() => onWatched?.(video.filename)}
+          />
+        </React.Suspense>
+      </div>
+    )
+  }
+
+  // ── Fallback HTML5 Player (local dev / no manifest) ──
   return (
     <div className="rounded-xl border border-warm-light/20 bg-warm-deep shadow-elevation-sm overflow-hidden" id={`video-${video.index}`}>
       {/* Header */}
