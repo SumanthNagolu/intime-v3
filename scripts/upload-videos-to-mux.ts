@@ -156,6 +156,7 @@ async function main() {
   })
 
   const manifest = loadManifest()
+  if (!manifest.videos) manifest.videos = {}
 
   // Status check mode
   if (statusCheck) {
@@ -177,7 +178,7 @@ async function main() {
 
   if (dryRun) {
     for (const file of files) {
-      const existing = manifest.videos[file.relativePath]
+      const existing = manifest.videos?.[file.relativePath]
       const status = existing ? ` [${existing.status}]` : ''
       console.log(`  ${file.relativePath.padEnd(50)} ${formatBytes(file.size).padStart(10)}${status}`)
     }
