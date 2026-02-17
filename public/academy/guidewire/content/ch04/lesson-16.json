@@ -33,7 +33,7 @@
       "originalNotes": "",
       "notes": "The product model is what defines the parameters for assessing risks and drives the interface of PolicyCenter. It's essential for shaping how insurance products are offered and managed.",
       "narration": "The product model is fundamental to PolicyCenter, defining the parameters for risk assessment and shaping the interface. This model is driven by business requirements, making it a vital component in tailoring insurance products to meet market needs. Let's explore how these elements interact within PolicyCenter.",
-      "ocrText": "Lesson\nobjectives * Define what a “product” is in terms of\n\nPolicyCenter and the product model\n\n* Describe where a Policy Line fits in the\nproduct model\n\n¢ List three important questions to ask when\ndesigning a product",
+      "ocrText": "Lesson\nobjectives * Define what a “product” is in terms of\n\nPolicyCenter and the product model\n\n* Describe where a Policy Line fits in the\nproduct model\n\n• List three important questions to ask when\ndesigning a product",
       "ocrWordCount": 38,
       "ocrConfidence": 89.53,
       "hasTable": false,
@@ -67,7 +67,7 @@
       "originalNotes": "",
       "notes": "The generalized object model provides an overview of how entities in the product model are structured and related.",
       "narration": "Here, we have a look at the generalized object model, which provides a high-level overview of how entities within the product model are structured and interrelated. This structure is pivotal in defining the relationships and interactions between various components of an insurance product.",
-      "ocrText": "| Review: the product model Gi\n\n¢ The product model provides the framework to define products in PolicyCenter\n¢ The product model is where risk is defined for the business\n¢ The product model includes the lines of business, coverages, and coverage terms\n\n¢ The product model is easy to configure using the Product Designer tool",
+      "ocrText": "| Review: the product model Gi\n\n• The product model provides the framework to define products in PolicyCenter\n• The product model is where risk is defined for the business\n• The product model includes the lines of business, coverages, and coverage terms\n\n• The product model is easy to configure using the Product Designer tool",
       "ocrWordCount": 56,
       "ocrConfidence": 90.04,
       "hasTable": false,
@@ -135,7 +135,7 @@
       "originalNotes": "Flexibility and reuse\nMultiple products can incorporate a single pattern, such as General Liability. In this example, both a General Liability product and a Commercial Package product have incorporated a General Liability policy line pattern. From a configuration standpoint, portability among policy lines makes creating products easier.",
       "notes": "Flexibility and reuse\nMultiple products can incorporate a single pattern, such as General Liability. In this example, both a General Liability product and a Commercial Package product have incorporated a General Liability policy line pattern. From a configuration standpoint, portability among policy lines makes creating products easier.",
       "narration": "One of PolicyCenter's strengths is its flexibility and reuse. A single pattern can be used across multiple products, improving configurability and simplifying product creation. For instance, a General Liability pattern can be shared between standalone and packaged products, streamlining development.",
-      "ocrText": "| Flexibility and reuse\n\n¢ Asingle policy line can\nbe used in different\nproducts\n\n¢ This gives you flexibility\nwhen you create new\n\nproducts in the product\nmodel\n\nPolicy Lines\n\nA\n\nGeneral\nLiability\n\nCommercial\nPackage\n\nv\n\nCommercial\nProperty\n\nInland\nMarine\n\nGeneral Liability\n\n4\n\nGeneral\nLiability",
+      "ocrText": "| Flexibility and reuse\n\n• Asingle policy line can\nbe used in different\nproducts\n\n• This gives you flexibility\nwhen you create new\n\nproducts in the product\nmodel\n\nPolicy Lines\n\nA\n\nGeneral\nLiability\n\nCommercial\nPackage\n\nv\n\nCommercial\nProperty\n\nInland\nMarine\n\nGeneral Liability\n\n4\n\nGeneral\nLiability",
       "ocrWordCount": 45,
       "ocrConfidence": 89.81,
       "hasTable": false,
@@ -149,10 +149,10 @@
       "slideNumber": 9,
       "title": "Policy Lines",
       "bodyParagraphs": [],
-      "originalNotes": "Policy Lines\nDevelopers refer to the Policy Line as the PolicyLine pattern. Developers use the pattern to create Policy Line instances and also define a code and name the Policy Line. They also select the Policy Line subtype which they created in the data model. Policy Lines also require at least one coverage currency. All four of these properties appear in the Product Designer tool. Advanced business analysts also could define some of these details. \n\nEach policy line pattern specifies set of:\nCoverage pattems\nCategories for Coverages,\nConditions and Exclusions\nModifiers",
-      "notes": "Policy Lines\nDevelopers refer to the Policy Line as the PolicyLine pattern. Developers use the pattern to create Policy Line instances and also define a code and name the Policy Line. They also select the Policy Line subtype which they created in the data model. Policy Lines also require at least one coverage currency. All four of these properties appear in the Product Designer tool. Advanced business analysts also could define some of these details. \n\nEach policy line pattern specifies set of:\nCoverage pattems\nCategories for Coverages,\nConditions and Exclusions\nModifiers",
+      "originalNotes": "Policy Lines\nDevelopers refer to the Policy Line as the PolicyLine pattern. Developers use the pattern to create Policy Line instances and also define a code and name the Policy Line. They also select the Policy Line subtype which they created in the data model. Policy Lines also require at least one coverage currency. All four of these properties appear in the Product Designer tool. Advanced business analysts also could define some of these details.\n\nEach policy line pattern specifies set of:\nCoverage pattems\nCategories for Coverages,\nConditions and Exclusions\nModifiers",
+      "notes": "Policy Lines\nDevelopers refer to the Policy Line as the PolicyLine pattern. Developers use the pattern to create Policy Line instances and also define a code and name the Policy Line. They also select the Policy Line subtype which they created in the data model. Policy Lines also require at least one coverage currency. All four of these properties appear in the Product Designer tool. Advanced business analysts also could define some of these details.\n\nEach policy line pattern specifies set of:\nCoverage pattems\nCategories for Coverages,\nConditions and Exclusions\nModifiers",
       "narration": "Policy lines, or PolicyLine patterns, are foundational elements in defining insurance products. They include properties such as code, name, subtype, and coverage currency, all configured in the Product Designer. These lines dictate coverages, conditions, exclusions, and modifiers, making them crucial for product customization.",
-      "ocrText": "| Policy Lines G\n\n¢ A Policy Line includes is a set of \"legal and\nbinding\" information about the product.\nExamples include:\n\n* Information about what exposures can be\ncovered on the policy\n\n* Information about what coverages are available\non the policy\n\n¢ Products must have an associated Policy\nLine",
+      "ocrText": "| Policy Lines G\n\n• A Policy Line includes is a set of \"legal and\nbinding\" information about the product.\nExamples include:\n\n* Information about what exposures can be\ncovered on the policy\n\n* Information about what coverages are available\non the policy\n\n• Products must have an associated Policy\nLine",
       "ocrWordCount": 51,
       "ocrConfidence": 90.72,
       "hasTable": false,
@@ -183,8 +183,8 @@
       "slideNumber": 11,
       "title": "Details for Policy Lines",
       "bodyParagraphs": [],
-      "originalNotes": "Details for policy lines\nThis slide shows only a few of many features of a policy line to gather in order to configure the product model's policy line. Other examples of features for a Commercial Property Line include: 1) a location-attached coverables (a location that has a coverage), 2) building-attached coverables (A building that has coverages), 3) exclusions attached to coverables (the coverables you want to support exclusions being attached to).  Not every feature is included for every business requirement.",
-      "notes": "Details for policy lines\nThis slide shows only a few of many features of a policy line to gather in order to configure the product model's policy line. Other examples of features for a Commercial Property Line include: 1) a location-attached coverables (a location that has a coverage), 2) building-attached coverables (A building that has coverages), 3) exclusions attached to coverables (the coverables you want to support exclusions being attached to).  Not every feature is included for every business requirement.",
+      "originalNotes": "Details for policy lines\nThis slide shows only a few of many features of a policy line to gather in order to configure the product model's policy line. Other examples of features for a Commercial Property Line include: 1) a location-attached coverables (a location that has a coverage), 2) building-attached coverables (A building that has coverages), 3) exclusions attached to coverables (the coverables you want to support exclusions being attached to). Not every feature is included for every business requirement.",
+      "notes": "Details for policy lines\nThis slide shows only a few of many features of a policy line to gather in order to configure the product model's policy line. Other examples of features for a Commercial Property Line include: 1) a location-attached coverables (a location that has a coverage), 2) building-attached coverables (A building that has coverages), 3) exclusions attached to coverables (the coverables you want to support exclusions being attached to). Not every feature is included for every business requirement.",
       "narration": "Policy lines are rich in features that need to be configured, such as location-attached and building-attached coverables. These features, including exclusions and modifiers, are tailored to meet diverse business requirements. This customization capability is key to developing products that align with specific insurance needs.",
       "ocrText": "| Details for policy lines Gi\n\nLine name\n\nLine coverables\n\nThe name you enter appears on the\npolicy line tab\n\nThe assets, or exposure to risk, that are CPBlanket\nbeing covered CPBuilding\n\nCommercial Property Line",
       "ocrWordCount": 35,
@@ -203,7 +203,7 @@
       "originalNotes": "Products\nAfter the Policy Line is defined, the product becomes easier to define. Insurers or agents sell products, such as personal auto or workers' compensation policies, to customers. Each individual policy that is sold is an instance of a product in PolicyCenter.",
       "notes": "Products\nAfter the Policy Line is defined, the product becomes easier to define. Insurers or agents sell products, such as personal auto or workers' compensation policies, to customers. Each individual policy that is sold is an instance of a product in PolicyCenter.",
       "narration": "After defining a policy line, configuring the actual product becomes much more straightforward. Products, such as personal auto or workers' compensation policies, are essentially instances of these predefined lines within PolicyCenter. This relationship underscores the importance of a well-structured policy line.",
-      "ocrText": "| Products Gi\n\n¢ In PolicyCenter, the product captures\nmarketing information about the product\n\n* Questions to consider when creating a\nproduct include:\n* The overall business value/value proposition\n\nv * Is the product relevant to individuals,\ncompanies, or both?\n\n+ What specific items disqualify applicants from\nbeing able to purchase products?\n\n« Where is a product available?\n* What policy line(s) are included in a product?",
+      "ocrText": "| Products Gi\n\n• In PolicyCenter, the product captures\nmarketing information about the product\n\n* Questions to consider when creating a\nproduct include:\n* The overall business value/value proposition\n\nv * Is the product relevant to individuals,\ncompanies, or both?\n\n+ What specific items disqualify applicants from\nbeing able to purchase products?\n\n« Where is a product available?\n* What policy line(s) are included in a product?",
       "ocrWordCount": 67,
       "ocrConfidence": 87.81,
       "hasTable": false,
@@ -228,7 +228,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 14,
@@ -251,8 +252,8 @@
       "slideNumber": 15,
       "title": "Designing Your Product — What is Required",
       "bodyParagraphs": [],
-      "originalNotes": "Designing your product — what is required\nIf you are a business analyst, you may be asked to design a new product for your PolicyCenter configuratiom If you are a developer, you will implement the requirements for a product This slide gives an example of what types of questions you ask during the design process. It is not exhaustive, but does cover important aspects that the product model requires. This example is based on a commercial property product. This information is all configurable using the product model tool, Product Designer.",
-      "notes": "Designing your product — what is required\nIf you are a business analyst, you may be asked to design a new product for your PolicyCenter configuratiom If you are a developer, you will implement the requirements for a product This slide gives an example of what types of questions you ask during the design process. It is not exhaustive, but does cover important aspects that the product model requires. This example is based on a commercial property product. This information is all configurable using the product model tool, Product Designer.",
+      "originalNotes": "Designing your product — what is required\nIf you are a business analyst, you may be asked to design a new product for your PolicyCenter configuration If you are a developer, you will implement the requirements for a product This slide gives an example of what types of questions you ask during the design process. It is not exhaustive, but does cover important aspects that the product model requires. This example is based on a commercial property product. This information is all configurable using the product model tool, Product Designer.",
+      "notes": "Designing your product — what is required\nIf you are a business analyst, you may be asked to design a new product for your PolicyCenter configuration If you are a developer, you will implement the requirements for a product This slide gives an example of what types of questions you ask during the design process. It is not exhaustive, but does cover important aspects that the product model requires. This example is based on a commercial property product. This information is all configurable using the product model tool, Product Designer.",
       "narration": "When designing a product, business analysts focus on conceptualizing new offerings while developers implement these requirements. The design process involves addressing key questions about the product's structure, especially for commercial property products. Utilizing the Product Designer tool, these elements are configured to meet business objectives.",
       "ocrText": "| Designing your product — what is required\n\nProduct Feature [Description = fexampte\n\nProduct type\nProduct name\n\nLine of business\n\nProduct account types\nAvailable jurisdictions\n\nPolicy terms\n\nDefault policy term\n\nDefines the business product type\n\nRefers to the label a user sees in the user\ninterface\n\nWhat is the policy line that this product includes.\n\nA package could include more than one line.\nWho can buy this product?\nIn which jurisdiction(s) is this product available?\n\nWhat are the possible terms for this product?\n\nWhat is the most common policy term for this\nproduct?\n\nGi\n\nCommercial\nCommercial Property\n\nCommercial Property Line\n\nAnyone\nIL, NV, CA, HI\n\nAnnual, Other\n\nAnnual",
       "ocrWordCount": 108,
@@ -279,7 +280,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 17,
@@ -305,7 +307,7 @@
       "originalNotes": "",
       "notes": "Review practical implementation scenarios to understand how products and policy lines work in real-world contexts.",
       "narration": "Let's review some practical implementation scenarios to better understand how products and policy lines function in real-world contexts. These examples illustrate the application of theoretical knowledge, highlighting challenges and solutions you might encounter during development.",
-      "ocrText": "Question\n\n,~ — Aset of \"legal and binding\" information about the product is described\n\nx where?\n7\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi",
+      "ocrText": "Question\nA set of \"legal and binding\" information about the product is described\nwhere?\nGi",
       "ocrWordCount": 24,
       "ocrConfidence": 74.62,
       "hasTable": false,
@@ -313,7 +315,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "A set of \"legal and binding\" information about the product is described",
+        "answer": "X where? In the policy line (the PolicyLine pattern). Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 19,
@@ -322,7 +328,7 @@
       "originalNotes": "",
       "notes": "Understand how PolicyCenter integrates with other systems, enhancing product functionality and data flow.",
       "narration": "Integration with other systems is a crucial aspect of PolicyCenter, enhancing product functionality and ensuring seamless data flow. Understanding these integrations helps in developing robust solutions that effectively leverage external resources and systems.",
-      "ocrText": "Answer\n\n,~ — Aset of \"legal and binding\" information about the product is described\nx where?\n¢\n\nIn the policy line (the PolicyLine pattern).\n\nSooo ooo ooo Oooo oOoD\n\nGi",
+      "ocrText": "Answer\nA set of \"legal and binding\" information about the product is described\nwhere?\n•\nIn the policy line (the PolicyLine pattern).\nSooo ooo ooo Oooo oOoD\nGi",
       "ocrWordCount": 30,
       "ocrConfidence": 82.44,
       "hasTable": false,
@@ -339,7 +345,7 @@
       "originalNotes": "",
       "notes": "Considerations for the data model when configuring products, focusing on entity relationships and data flow.",
       "narration": "When configuring products, it's important to consider the data model, focusing on entity relationships and data flow. These considerations ensure that the product model is both effective and efficient, supporting the full range of insurance operations.",
-      "ocrText": "Question\n\n,~ — Although products are the first level of hierarchy in the product model,\nx what should you set up before you set up products?\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi",
+      "ocrText": "Question\nAlthough products are the first level of hierarchy in the product model,\nwhat should you set up before you set up products?\nGi",
       "ocrWordCount": 33,
       "ocrConfidence": 83.2,
       "hasTable": false,
@@ -347,7 +353,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Although products are the first level of hierarchy in the product model,",
+        "answer": "X what should you set up before you set up products? least one policy line and therefore policy lines must be configured before you configure a product for the product model. Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 21,
@@ -356,7 +366,7 @@
       "originalNotes": "",
       "notes": "Learn about common issues encountered during product configuration and how to resolve them effectively.",
       "narration": "Let's talk about troubleshooting common issues you might encounter during product configuration. Understanding these potential pitfalls and their resolutions can save significant time and effort, ensuring a smoother development process.",
-      "ocrText": "Answer Gi\n\n,~ — Although products are the first level of hierarchy in the product model,\nx what should you set up before you set up products?\n\nAlthough products are at the top of the hierarchy, products must be associated with at\nleast one policy line and therefore policy lines must be configured before you configure\na product for the product model.\n\nSooo ooo ooo Oooo oOoD",
+      "ocrText": "Answer Gi\nAlthough products are the first level of hierarchy in the product model,\nwhat should you set up before you set up products?\nAlthough products are at the top of the hierarchy, products must be associated with at\nleast one policy line and therefore policy lines must be configured before you configure\na product for the product model.\nSooo ooo ooo Oooo oOoD",
       "ocrWordCount": 67,
       "ocrConfidence": 92.16,
       "hasTable": false,
@@ -373,7 +383,7 @@
       "originalNotes": "",
       "notes": "Explore best practices for configuring products in PolicyCenter, focusing on efficiency, scalability, and maintainability.",
       "narration": "Exploring best practices for configuring products in PolicyCenter is crucial for achieving efficiency, scalability, and maintainability. These guidelines help ensure that your configurations are robust and adaptable to future changes and expansions.",
-      "ocrText": "Question\n\n,~ — Cana single product having multiple policy line patterns exist? Give an\n\nx example.\n\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi",
+      "ocrText": "Question\nCan a single product having multiple policy line patterns exist? Give an\nexample.\n•\nGi",
       "ocrWordCount": 24,
       "ocrConfidence": 75.05,
       "hasTable": false,
@@ -381,7 +391,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Can a single product having multiple policy line patterns exist? Give an",
+        "answer": "X example. A package can have a single product that includes multiple policy line patterns. The base configuration includes a Commercial Package product that includes three policy lines: General Liability, Commercial Property, and Inland Marine. Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 23,
@@ -390,7 +404,7 @@
       "originalNotes": "",
       "notes": "Delve into advanced techniques for configuring complex product offerings, leveraging PolicyCenter's capabilities.",
       "narration": "Let's delve into advanced configuration techniques for managing complex product offerings within PolicyCenter. Leveraging these capabilities allows developers to create sophisticated and tailored solutions that meet intricate business requirements.",
-      "ocrText": "Answer Gi\n\n,~ — Cana single product having multiple policy line patterns exist? Give an\nx example.\n¢\n\nA package can have a single product that includes multiple policy line patterns.\nThe base configuration includes a Commercial Package product that includes three\npolicy lines: General Liability, Commercial Property, and Inland Marine.\n\nSooo ooo ooo Oooo oOoD",
+      "ocrText": "Answer Gi\nCan a single product having multiple policy line patterns exist? Give an\nexample.\n•\nA package can have a single product that includes multiple policy line patterns.\nThe base configuration includes a Commercial Package product that includes three\npolicy lines: General Liability, Commercial Property, and Inland Marine.\nSooo ooo ooo Oooo oOoD",
       "ocrWordCount": 56,
       "ocrConfidence": 85.47,
       "hasTable": false,
@@ -407,7 +421,7 @@
       "originalNotes": "",
       "notes": "Guide through configuring a new product, focusing on practical steps and considerations.",
       "narration": "In this exercise, we'll guide you through configuring a new product, focusing on practical steps and key considerations. Pay attention to how entities are set up and how attributes are defined, as these are crucial for a successful configuration.",
-      "ocrText": "Lesson\nobjectives * Define what a “product” is in terms of\nreview PolicyCenter and the product model\n\n* Describe where a Policy Line fits in the\nproduct model\n\n¢ List three important questions to ask when\ndesigning a product",
+      "ocrText": "Lesson\nobjectives * Define what a “product” is in terms of\nreview PolicyCenter and the product model\n\n* Describe where a Policy Line fits in the\nproduct model\n\n• List three important questions to ask when\ndesigning a product",
       "ocrWordCount": 39,
       "ocrConfidence": 89.69,
       "hasTable": false,

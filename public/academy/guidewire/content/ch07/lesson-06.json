@@ -11,7 +11,7 @@
   "slides": [
     {
       "slideNumber": 1,
-      "title": "",
+      "title": "Detail Views",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -28,12 +28,12 @@
     },
     {
       "slideNumber": 2,
-      "title": "",
+      "title": "Learning Objectives",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives\n\n¢ Describe the functionality of Detail Views\n\n* Create a new Detail View\n\n¢ Reference a Detail View from a parent\ncontainer\n\n¢ Describe how to make a Detail View editable\n\n¢ Create a Toolbar with Edit Buttons\n\n¢ Understand Dashboards and their use",
+      "ocrText": "Lesson\nobjectives\n\n• Describe the functionality of Detail Views\n\n* Create a new Detail View\n\n• Reference a Detail View from a parent\ncontainer\n\n• Describe how to make a Detail View editable\n\n• Create a Toolbar with Edit Buttons\n\n• Understand Dashboards and their use",
       "ocrWordCount": 46,
       "ocrConfidence": 86.85,
       "hasTable": false,
@@ -45,7 +45,7 @@
     },
     {
       "slideNumber": 3,
-      "title": "",
+      "title": "About Detail Views",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -62,12 +62,12 @@
     },
     {
       "slideNumber": 4,
-      "title": "",
+      "title": "Review: Detail View",
       "bodyParagraphs": [],
       "originalNotes": "Review: Detail View\nDetail view panels are generally designed to use widgets to organize and manage a collection of related pieces of information that constitute a single record. The most obvious example is the set of individual fields of an instance of an entity such as User, Claim, or Policy. There are no constraints imposed by the system as to what information can be displayed by a detail view, however; the view could present information from multiple entities that do not even have to be related to one another, in addition to information that does not derive from an entity at all (such as calculated or static values).\n\nThe purpose of a detail view panel, however, and the recommended practice behind their use, is to present the user with all of the detailed information that is relevant to that interface, and no information that is irrelevant. In general, this means displaying information about the fields of a particular entity and possibly fields from a small number of closely related entities.\n\nDetail view panels must contain at least one column and can contain as many columns as necessary to present the widgets in the most effective way for the user.",
       "notes": "Review: Detail View\nDetail view panels are generally designed to use widgets to organize and manage a collection of related pieces of information that constitute a single record. The most obvious example is the set of individual fields of an instance of an entity such as User, Claim, or Policy. There are no constraints imposed by the system as to what information can be displayed by a detail view, however; the view could present information from multiple entities that do not even have to be related to one another, in addition to information that does not derive from an entity at all (such as calculated or static values).\n\nThe purpose of a detail view panel, however, and the recommended practice behind their use, is to present the user with all of the detailed information that is relevant to that interface, and no information that is irrelevant. In general, this means displaying information about the fields of a particular entity and possibly fields from a small number of closely related entities.\n\nDetail view panels must contain at least one column and can contain as many columns as necessary to present the widgets in the most effective way for the user.",
       "narration": "",
-      "ocrText": "| Review: Detail View Gi\n\n_— o-0) ¢ Asa primary container it organizes\n\nSummary\n\n— a atomic widgets\n\noO\ncee cay G * Typically focuses on a single record,\n\nSummary\n\nra wos but can be more than one\n¢ Allows the user to...\n\n« View an existing record\n\n* Create a new record\n\n« Edit a record\n\n¢ Input Columns help organize atomic\nwidgets to display a related information\n\n¢ Screens and secondary views can\nreference",
+      "ocrText": "| Review: Detail View Gi\n\n_— o-0) • Asa primary container it organizes\n\nSummary\n\n— a atomic widgets\n\noO\ncee cay G * Typically focuses on a single record,\n\nSummary\n\nra wos but can be more than one\n• Allows the user to...\n\n« View an existing record\n\n* Create a new record\n\n« Edit a record\n\n• Input Columns help organize atomic\nwidgets to display a related information\n\n• Screens and secondary views can\nreference",
       "ocrWordCount": 76,
       "ocrConfidence": 80.03,
       "hasTable": false,
@@ -79,10 +79,10 @@
     },
     {
       "slideNumber": 5,
-      "title": "",
+      "title": "Example (1 of 4)",
       "bodyParagraphs": [],
-      "originalNotes": "Example (1 of 4)\nLet's take a look at the structure of the ABContactSummary screen as an example.  First, there must be a Screen -which is the top-level container -to group secondary and primary containers",
-      "notes": "Example (1 of 4)\nLet's take a look at the structure of the ABContactSummary screen as an example.  First, there must be a Screen -which is the top-level container -to group secondary and primary containers",
+      "originalNotes": "Example (1 of 4)\nLet's take a look at the structure of the ABContactSummary screen as an example. First, there must be a Screen -which is the top-level container -to group secondary and primary containers",
+      "notes": "Example (1 of 4)\nLet's take a look at the structure of the ABContactSummary screen as an example. First, there must be a Screen -which is the top-level container -to group secondary and primary containers",
       "narration": "",
       "ocrText": "| Example (1 of 4)\n\nSummary\n\nPolicy Person: Eric Andy\n\nfo SSS\n\n‘Basic information\n\nPublic 1D\n\nAssigned User\ncreated on\nPrimary address\nAddress\n\nAddress Type\nDescription\n\nValid unt\n\nFags\ntrcandy ew Daterlagsed > Reason >\n\nEE 20s oeraacestorthiscntact\n98\nccnsa0ie\nsesitane\n\n{acanada,ca91352\n\nHome\n\nDate unflagged >",
       "ocrWordCount": 46,
@@ -96,12 +96,12 @@
     },
     {
       "slideNumber": 6,
-      "title": "",
+      "title": "Example (2 of 4)",
       "bodyParagraphs": [],
       "originalNotes": "Example (2 of 4)\nThen we add a Card View – which is a secondary container – to group primary containers. (Secondary container is not mandatory, a Detail View could be added directly to a Screen.)",
       "notes": "Example (2 of 4)\nThen we add a Card View – which is a secondary container – to group primary containers. (Secondary container is not mandatory, a Detail View could be added directly to a Screen.)",
       "narration": "",
-      "ocrText": "| Example (2 of 4)\n\nPolicy Person: Eric Andy\n\nSummary\n\nSuggest Least Busy Use\n‘asicinformation\n\nPublic 1D\n\nAssigned User\ncreated on 0619/2018,\n\nPrimary Address\n\nfasiess 1S FieLane\n\n‘Address Type\nDescription\n\nValid unt\n\nDateragged = nesson ¢\nEE 20s oeraacestorthiscntact\n\nDate Unflagged >",
+      "ocrText": "| Example (2 of 4)\n\nPolicy Person: Eric Andy\n\nSummary\n\nSuggest Least Busy Use\n‘asicinformation\n\nPublic 1D\n\nAssigned User\ncreated on 0619/2018,\n\nPrimary Address\n\nfasiess 1S FieLane\n\n‘Address Type\nDescription\n\nValid unt\n\nDateragged = nesson •\nEE 20s oeraacestorthiscntact\n\nDate Unflagged >",
       "ocrWordCount": 42,
       "ocrConfidence": 64.09,
       "hasTable": false,
@@ -113,12 +113,12 @@
     },
     {
       "slideNumber": 7,
-      "title": "",
+      "title": "Example (3 of 4)",
       "bodyParagraphs": [],
       "originalNotes": "Example (3 of 4)\nNext, we add the Detail View Panel. The Detail View Panel must have at least one Input Column. The Input Column will contain the atomic widgets and\ndisplay them using a vertical layout. Technically, you can think about the Detail View as an Input Column container. It must contain one to define the vertical layout..",
       "notes": "Example (3 of 4)\nNext, we add the Detail View Panel. The Detail View Panel must have at least one Input Column. The Input Column will contain the atomic widgets and\ndisplay them using a vertical layout. Technically, you can think about the Detail View as an Input Column container. It must contain one to define the vertical layout..",
       "narration": "",
-      "ocrText": "| Example (3 of 4)\n\nPolicy Person: Eric Andy\n\nSummary\n\nBasics | SociatMedia | Analysis\n\nFlagentries\n\nView DateFlagged Reason > Date untagged >\n\n06/8/2018 Noemallades for thiscontact\n\n¢ Detail View must have at least one Input Column",
+      "ocrText": "| Example (3 of 4)\n\nPolicy Person: Eric Andy\n\nSummary\n\nBasics | SociatMedia | Analysis\n\nFlagentries\n\nView DateFlagged Reason > Date untagged >\n\n06/8/2018 Noemallades for thiscontact\n\n• Detail View must have at least one Input Column",
       "ocrWordCount": 37,
       "ocrConfidence": 69.49,
       "hasTable": false,
@@ -130,12 +130,12 @@
     },
     {
       "slideNumber": 8,
-      "title": "",
+      "title": "Example (4 of 4)",
       "bodyParagraphs": [],
       "originalNotes": "Example (4 of 4)\nbut it can contain more than one to also organize the widgets horizontally in the Detail View. To do that, we add a second Input Column.",
       "notes": "Example (4 of 4)\nbut it can contain more than one to also organize the widgets horizontally in the Detail View. To do that, we add a second Input Column.",
       "narration": "",
-      "ocrText": "| Example (4 of 4)\n\nSummary\n\nBasics | SocialMedia | Analysis\n\nFlagentries\nView DateFlagged Reason >\n\nGEE 102012 oemat acres torthsconaet\n\nos/19/2018\n\n245 FirLane\n{acanada,ca91352\n\n¢ Detail View must have at least one Input Column\n\n¢ Input Columns organize layout and input widgets\n\nDate untagged >",
+      "ocrText": "| Example (4 of 4)\n\nSummary\n\nBasics | SocialMedia | Analysis\n\nFlagentries\nView DateFlagged Reason >\n\nGEE 102012 oemat acres torthsconaet\n\nos/19/2018\n\n245 FirLane\n{acanada,ca91352\n\n• Detail View must have at least one Input Column\n\n• Input Columns organize layout and input widgets\n\nDate untagged >",
       "ocrWordCount": 46,
       "ocrConfidence": 75.51,
       "hasTable": false,
@@ -147,12 +147,12 @@
     },
     {
       "slideNumber": 9,
-      "title": "",
+      "title": "Inline widget vs. PCF file",
       "bodyParagraphs": [],
       "originalNotes": "Inline widget vs. PCF file\nWhen a container such as a detail view panel is a top-level container, it is reusable. A top- level container is a PCF file. Ifthe container is likely to be needed in multiple places, create a PCF file for the container. A Detail View Panel is PCF file that is ideal for multiple references. Other PCF files can reference the reusable container using a reference widget. In TrainingApp, the ABContactSummaryPage contains a Screen with a Panel Ref that references ABContactSummaryDV. Panel Ref widgets are discussed later in this lesson.\n\nWhen a container such as detail view panel is declared as an inline child container, it is not reusable. Other containers cannot reference an inline container A Detail View widget is defined in a Screen, Card, or a List Detail Panel. It is possible to define a variable for a Detail View widget object, but this is uncommon. A Detail View widget inherits the root object associated with its parent.",
       "notes": "Inline widget vs. PCF file\nWhen a container such as a detail view panel is a top-level container, it is reusable. A top- level container is a PCF file. Ifthe container is likely to be needed in multiple places, create a PCF file for the container. A Detail View Panel is PCF file that is ideal for multiple references. Other PCF files can reference the reusable container using a reference widget. In TrainingApp, the ABContactSummaryPage contains a Screen with a Panel Ref that references ABContactSummaryDV. Panel Ref widgets are discussed later in this lesson.\n\nWhen a container such as detail view panel is declared as an inline child container, it is not reusable. Other containers cannot reference an inline container A Detail View widget is defined in a Screen, Card, or a List Detail Panel. It is possible to define a variable for a Detail View widget object, but this is uncommon. A Detail View widget inherits the root object associated with its parent.",
       "narration": "",
-      "ocrText": "| Inline widget vs. PCF file\n\nGi\n_____PetallViewwidget |___DetallMiewPorfie\n\n¢ Differences: ¢ Differences:\n\n+ Not reusable « Reusable\n\n* Inherits parent root object * Takes a root object\n\n* Created as a Detail View widget in the\n\n* Created as separate PCF file and\nparent container’s PCF file\n\nfilename ends with DV\n¢ Similarities: ¢ Similarities:\n« It can exercise control over all elements « It can exercise control over all elements\n\nIf the container is likely to be needed in multiple places, create a reusable PCF file",
+      "ocrText": "| Inline widget vs. PCF file\n\nGi\n_____PetallViewwidget |___DetallMiewPorfie\n\n• Differences: • Differences:\n\n+ Not reusable « Reusable\n\n* Inherits parent root object * Takes a root object\n\n* Created as a Detail View widget in the\n\n* Created as separate PCF file and\nparent container’s PCF file\n\nfilename ends with DV\n• Similarities: • Similarities:\n« It can exercise control over all elements « It can exercise control over all elements\n\nIf the container is likely to be needed in multiple places, create a reusable PCF file",
       "ocrWordCount": 88,
       "ocrConfidence": 87.08,
       "hasTable": false,
@@ -164,7 +164,7 @@
     },
     {
       "slideNumber": 10,
-      "title": "",
+      "title": "Inline widget vs. PCF file example (1 of 8)",
       "bodyParagraphs": [],
       "originalNotes": "Inline widget vs. PCF file example (I of 8)\nOver the next 8 slides, we will look at two examples of how ABContactSummary screen could be implemented, using an inline and then a reusable Detail\nView.\n\nFirst, we create the ABContactSummaryScreen.pcf and define a new root object anABContact : ABContact. (Remember, the root object is the input parameter of the container)",
       "notes": "Inline widget vs. PCF file example (I of 8)\nOver the next 8 slides, we will look at two examples of how ABContactSummary screen could be implemented, using an inline and then a reusable Detail\nView.\n\nFirst, we create the ABContactSummaryScreen.pcf and define a new root object anABContact : ABContact. (Remember, the root object is the input parameter of the container)",
@@ -181,7 +181,7 @@
     },
     {
       "slideNumber": 11,
-      "title": "",
+      "title": "Inline widget vs. PCF file example (2 of 8)",
       "bodyParagraphs": [],
       "originalNotes": "Inline widget vs. PCF file example (2 of 8)\nNext, we add the Card.",
       "notes": "Inline widget vs. PCF file example (2 of 8)\nNext, we add the Card.",
@@ -198,7 +198,7 @@
     },
     {
       "slideNumber": 12,
-      "title": "",
+      "title": "Inline widget vs. PCF file example (3 of 8)",
       "bodyParagraphs": [],
       "originalNotes": "Inline widget vs. PCF file example (3 of 8)\nThen, we add the Detail View.",
       "notes": "Inline widget vs. PCF file example (3 of 8)\nThen, we add the Detail View.",
@@ -215,7 +215,7 @@
     },
     {
       "slideNumber": 13,
-      "title": "",
+      "title": "Inline widget vs. PCF file example (4 of 8)",
       "bodyParagraphs": [],
       "originalNotes": "Inline widget vs. PCF file example (4 of 8)\nAnd finally, we add the Input Column and the atomic widgets. Notice that everything is yellow because they are defined in the same PCF file. In this example, only the Screen is reusable, everything else is inline. Also notice there is only one root object and all the inline containers have direct access (they \"inherit\") to that root object.",
       "notes": "Inline widget vs. PCF file example (4 of 8)\nAnd finally, we add the Input Column and the atomic widgets. Notice that everything is yellow because they are defined in the same PCF file. In this example, only the Screen is reusable, everything else is inline. Also notice there is only one root object and all the inline containers have direct access (they \"inherit\") to that root object.",
@@ -232,7 +232,7 @@
     },
     {
       "slideNumber": 14,
-      "title": "",
+      "title": "Inline widget vs. PCF file example (5 of 8)",
       "bodyParagraphs": [],
       "originalNotes": "Inline widget vs. PCF file example (5 of 8)\nSo how is this done with a reusable Detail View?\n\nFirst we create the ABContactSummaryScreen.pcf and define the new root object anABContact : ABContact.",
       "notes": "Inline widget vs. PCF file example (5 of 8)\nSo how is this done with a reusable Detail View?\n\nFirst we create the ABContactSummaryScreen.pcf and define the new root object anABContact : ABContact.",
@@ -249,7 +249,7 @@
     },
     {
       "slideNumber": 15,
-      "title": "",
+      "title": "Inline widget vs. PCF file example (6 of 8)",
       "bodyParagraphs": [],
       "originalNotes": "Inline widget vs. PCF file example (6 of 8)\nNext, we add the Card.",
       "notes": "Inline widget vs. PCF file example (6 of 8)\nNext, we add the Card.",
@@ -266,7 +266,7 @@
     },
     {
       "slideNumber": 16,
-      "title": "",
+      "title": "Inline widget vs. PCF file example (7 of 8)",
       "bodyParagraphs": [],
       "originalNotes": "Inline widget vs. PCF file example (7 of 8)\nThen, we create a new PCF file: AB Contact Summary DV.pcf and define a new root object anABContact : ABContact.\n\nInput Column and atomic widgets are added to define the layout.\n\nFinally, the AB Contact SummaryDV.pcf file must be included in the AB Contact Summary Screen.pcf To do this, we use the Panel Ref widget. The Panel Refwidget specifies the file name that must be included and also passes in the argument(s) to the included container",
       "notes": "Inline widget vs. PCF file example (7 of 8)\nThen, we create a new PCF file: AB Contact Summary DV.pcf and define a new root object anABContact : ABContact.\n\nInput Column and atomic widgets are added to define the layout.\n\nFinally, the AB Contact SummaryDV.pcf file must be included in the AB Contact Summary Screen.pcf To do this, we use the Panel Ref widget. The Panel Refwidget specifies the file name that must be included and also passes in the argument(s) to the included container",
@@ -283,7 +283,7 @@
     },
     {
       "slideNumber": 17,
-      "title": "",
+      "title": "Inline widget vs. PCF file example (8 of 8)",
       "bodyParagraphs": [],
       "originalNotes": "Inline widget vs. PCF file example (8 of 8)\nFinally, the ABContactSummaryDV.pcf file must be included in the ABContactSummaryScreen.pcf To do this, we use the Panel Ref widget. The Panel Ref widget specifies the file name that must be included and also passes in the argument(s) to the included container",
       "notes": "Inline widget vs. PCF file example (8 of 8)\nFinally, the ABContactSummaryDV.pcf file must be included in the ABContactSummaryScreen.pcf To do this, we use the Panel Ref widget. The Panel Ref widget specifies the file name that must be included and also passes in the argument(s) to the included container",
@@ -300,12 +300,12 @@
     },
     {
       "slideNumber": 18,
-      "title": "",
+      "title": "Toolbars",
       "bodyParagraphs": [],
       "originalNotes": "Toolbars\nA toolbar is a row of widgets associated with a container widget that lets the user take action on the data in the container widget.\n\nA toolbar can be directly added to a Screen, Panel Ref, or List View Input. Toolbars can also be associated with Detail View Panels, Card View Panels, List Detail Panels, and List View Panels. However, there is no direct placement or reference with an Input Set- Typically, an Input Set is referenced or placed in an Input Column in a Detail View Panel.\n\nA toolbar usually has button widgets such as Edit Buttons. When a toolbar is associated with a list view panel, the toolbar may not have any button widgets. This is configuration is covered later in the course.",
       "notes": "Toolbars\nA toolbar is a row of widgets associated with a container widget that lets the user take action on the data in the container widget.\n\nA toolbar can be directly added to a Screen, Panel Ref, or List View Input. Toolbars can also be associated with Detail View Panels, Card View Panels, List Detail Panels, and List View Panels. However, there is no direct placement or reference with an Input Set- Typically, an Input Set is referenced or placed in an Input Column in a Detail View Panel.\n\nA toolbar usually has button widgets such as Edit Buttons. When a toolbar is associated with a list view panel, the toolbar may not have any button widgets. This is configuration is covered later in the course.",
       "narration": "",
-      "ocrText": "| Toolbars G\n\n¢ A toolbar is a horizontal bar containing buttons and other useful widgets. It can be\nused at the top of a Screen or before including a Panel.\n\n¢ Usually has Edit Buttons\n\ne\n\nDetails Details ay\n\n‘Sul Suffoc ‘<none> +",
+      "ocrText": "| Toolbars G\n\n• A toolbar is a horizontal bar containing buttons and other useful widgets. It can be\nused at the top of a Screen or before including a Panel.\n\n• Usually has Edit Buttons\n\ne\n\nDetails Details ay\n\n‘Sul Suffoc ‘<none> +",
       "ocrWordCount": 44,
       "ocrConfidence": 89.39,
       "hasTable": false,
@@ -317,12 +317,12 @@
     },
     {
       "slideNumber": 19,
-      "title": "",
+      "title": "Edit buttons",
       "bodyParagraphs": [],
       "originalNotes": "Edit buttons\nWhen a user clicks Edit, the input widgets switch from read-only to edit mode. In addition, an entry is made in the unsaved work menu for the data backed object (entity) on the screen.\n\nWhen a user clicks Update, the Guidewire application commits the changes to the data backed object on the screen; the input widgets switch from edit mode to read-only mode; and the entry in the unsaved work menu for the data backed object (entity) on the screen is removed.\n\nWhen a user clicks Cancel, the Guidewire application does not commit the changes to the data backed object on the screen; the input widgets switch from edit mode to read-only mode; and the entry in the unsaved work menu for the data backed object (entity) on the screen is removed.",
       "notes": "Edit buttons\nWhen a user clicks Edit, the input widgets switch from read-only to edit mode. In addition, an entry is made in the unsaved work menu for the data backed object (entity) on the screen.\n\nWhen a user clicks Update, the Guidewire application commits the changes to the data backed object on the screen; the input widgets switch from edit mode to read-only mode; and the entry in the unsaved work menu for the data backed object (entity) on the screen is removed.\n\nWhen a user clicks Cancel, the Guidewire application does not commit the changes to the data backed object on the screen; the input widgets switch from edit mode to read-only mode; and the entry in the unsaved work menu for the data backed object (entity) on the screen is removed.",
       "narration": "",
-      "ocrText": "Edit buttons\n\nThe Edit Buttons widget is a set of pre-included toolbar buttons for edit control\n\n¢ Enters edit mode * Commits changes ¢ Discards changes\n¢ Puts the screen in edit * Returns toread-only  -« Returns to read-only\nmode mode with changed mode with unchanged\n¢ Adds entry to data data\nunsaved menu *« Removes entry from + Removes entry from\nunsaved menu unsaved menu\n22 se, 22 BS,\nS > Oy SE SH SY >\n(al RN tH Sn RN (x) (al\n= bg Ns Ny =",
+      "ocrText": "Edit buttons\n\nThe Edit Buttons widget is a set of pre-included toolbar buttons for edit control\n\n• Enters edit mode * Commits changes • Discards changes\n• Puts the screen in edit * Returns toread-only  -« Returns to read-only\nmode mode with changed mode with unchanged\n• Adds entry to data data\nunsaved menu *« Removes entry from + Removes entry from\nunsaved menu unsaved menu\n22 se, 22 BS,\nS > Oy SE SH SY >\n(al RN tH Sn RN (x) (al\n= bg Ns Ny =",
       "ocrWordCount": 89,
       "ocrConfidence": 75.6,
       "hasTable": false,
@@ -334,7 +334,7 @@
     },
     {
       "slideNumber": 20,
-      "title": "",
+      "title": "Social Media (Part C)",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -351,7 +351,7 @@
     },
     {
       "slideNumber": 21,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "Demonstration\nShown here is an example user story requirement requested by a fictional business analyst.",
       "notes": "Demonstration\nShown here is an example user story requirement requested by a fictional business analyst.",
@@ -364,7 +364,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 22,
@@ -385,7 +386,7 @@
     },
     {
       "slideNumber": 23,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "Demonstration\nShown here is an example user story requirement requested by a fictional business analyst.",
       "notes": "Demonstration\nShown here is an example user story requirement requested by a fictional business analyst.",
@@ -398,7 +399,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 24,
@@ -419,7 +421,7 @@
     },
     {
       "slideNumber": 25,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "Demonstration\nShown here is an example user story requirement requested by a fictional business analyst.",
       "notes": "Demonstration\nShown here is an example user story requirement requested by a fictional business analyst.",
@@ -432,7 +434,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 2
     },
     {
       "slideNumber": 26,
@@ -470,12 +473,12 @@
     },
     {
       "slideNumber": 28,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n,~ — ADetail View that displays data must have at least one root object. Why?\n\n4\n¢\n¢\n\nsooo ooo ooo Ooo eo",
+      "ocrText": "Question G\nA Detail View that displays data must have at least one root object. Why?\n•\n•\nsooo ooo ooo Ooo eo",
       "ocrWordCount": 25,
       "ocrConfidence": 74.17,
       "hasTable": false,
@@ -483,16 +486,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "A Detail View that displays data must have at least one root object. Why?",
+        "answer": "The input widgets of a Detail View must reference some object in order to specify where the data they display comes from. This object must be the root object, or an object related to the root object. Therefore, in order to display data, a root object is needed. sSoooOo ooo oOo OS oe"
+      }
     },
     {
       "slideNumber": 29,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer Gi\n\n,~ — ADetail View that displays data must have at least one root object. Why?\n\n¢\n¢\n¢\n\nThe input widgets of a Detail View must reference some object in order to specify\nwhere the data they display comes from. This object must be the root object, or an\nobject related to the root object. Therefore, in order to display data, a root object is\nneeded.\n\nsSoooOo ooo oOo OS oe",
+      "ocrText": "Answer Gi\nA Detail View that displays data must have at least one root object. Why?\n•\n•\n•\nThe input widgets of a Detail View must reference some object in order to specify\nwhere the data they display comes from. This object must be the root object, or an\nobject related to the root object. Therefore, in order to display data, a root object is\nneeded.\nsSoooOo ooo oOo OS oe",
       "ocrWordCount": 73,
       "ocrConfidence": 89.48,
       "hasTable": false,
@@ -504,12 +511,12 @@
     },
     {
       "slideNumber": 30,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n,~ — ADetail View that displays data must have at least one input column.\n¢ Why?\n\n¢\n¢\n\nsooo ooo ooo Ooo eo",
+      "ocrText": "Question G\nA Detail View that displays data must have at least one input column.\n• Why?\n•\n•\nsooo ooo ooo Ooo eo",
       "ocrWordCount": 25,
       "ocrConfidence": 77.35,
       "hasTable": false,
@@ -517,16 +524,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "A Detail View that displays data must have at least one input column.",
+        "answer": "SSoooOo ooo oOo OS oe A Detail View that displays data must have at least one input column. Input columns are used to organize atomic widgets in a Detail View. Every input widget must be in an input column. If a Detail View displays data, then it has at least one input widget, which means it must have at least one input column."
+      }
     },
     {
       "slideNumber": 31,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n7\n¢\n¢\n¢\n\nsSoooOo ooo oOo OS oe\n\nA Detail View that displays data must have at least one input column.\nWhy?\n\nInput columns are used to organize atomic widgets in a Detail View. Every input\nwidget must be in an input column. If a Detail View displays data, then it has at least\none input widget, which means it must have at least one input column.\n\nGi",
+      "ocrText": "Answer\n•\n•\n•\nsSoooOo ooo oOo OS oe\nA Detail View that displays data must have at least one input column.\nWhy?\nInput columns are used to organize atomic widgets in a Detail View. Every input\nwidget must be in an input column. If a Detail View displays data, then it has at least\none input widget, which means it must have at least one input column.\nGi",
       "ocrWordCount": 70,
       "ocrConfidence": 89.13,
       "hasTable": false,
@@ -538,12 +549,12 @@
     },
     {
       "slideNumber": 32,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_~ — What determines if a detail view panel is reusable or not?\n\n4\n¢\n¢\n\nsooo ooo ooo Ooo eo",
+      "ocrText": "Question\nWhat determines if a detail view panel is reusable or not?\n•\n•\nsooo ooo ooo Ooo eo",
       "ocrWordCount": 22,
       "ocrConfidence": 72.48,
       "hasTable": false,
@@ -551,16 +562,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What determines if a detail view panel is reusable or not?",
+        "answer": "SSoooOo ooo oOo OS oe If a Detail View is declared as the parent object of a PCF file, then it is reusable. It can be referenced by any number of other containers."
+      }
     },
     {
       "slideNumber": 33,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n7\n¢\n¢\n¢\n\nsSoooOo ooo oOo OS oe\n\nWhat determines if a Detail View is reusable or not?\n\nIf a Detail View is declared as the parent object of a PCF file, then it is reusable. It can\nbe referenced by any number of other containers.",
+      "ocrText": "Answer\n•\n•\n•\nsSoooOo ooo oOo OS oe\nWhat determines if a Detail View is reusable or not?\nIf a Detail View is declared as the parent object of a PCF file, then it is reusable. It can\nbe referenced by any number of other containers.",
       "ocrWordCount": 48,
       "ocrConfidence": 87.35,
       "hasTable": false,
@@ -572,12 +587,12 @@
     },
     {
       "slideNumber": 34,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,~ — The def property of a Panel Ref usually has a value in the format of “x(y)”\n\n4\no A) What information comes before the parenthesis? (What is the x?)\n\nB) What information is defined within the parenthesis? (What is the y?)\n\nsooo ooo ooo Ooo eo\n\nGi",
+      "ocrText": "Question\nThe def property of a Panel Ref usually has a value in the format of “x(y)”\nA) What information comes before the parenthesis? (What is the x?)\nB) What information is defined within the parenthesis? (What is the y?)\nsooo ooo ooo Ooo eo\nGi",
       "ocrWordCount": 50,
       "ocrConfidence": 85.51,
       "hasTable": false,
@@ -585,16 +600,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "The def property of a Panel Ref usually has a value in the format of “x(y)”",
+        "answer": "A) What information comes before the parenthesis? (What is the x?) B) What information is defined within the parenthesis? (What is the y?) The correct responses are: A) The xis the name of the container to reference. B) The y is a list of objects to pass to the child container to use as root objects. sSoooOo ooo oOo OS oe"
+      }
     },
     {
       "slideNumber": 35,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer Gi\n\n7 ~~ The def property of a Panel Ref usually has a value in the format of “x(y)”\n\n¢\nA) What information comes before the parenthesis? (What is the x?)\n\nB) What information is defined within the parenthesis? (What is the y?)\n\nThe correct responses are:\nA) The xis the name of the container to reference.\n\nB) The y is a list of objects to pass to the child container to use as root objects.\n\nsSoooOo ooo oOo OS oe",
+      "ocrText": "Answer Gi\n7 ~~ The def property of a Panel Ref usually has a value in the format of “x(y)”\n•\nA) What information comes before the parenthesis? (What is the x?)\nB) What information is defined within the parenthesis? (What is the y?)\nThe correct responses are:\nA) The xis the name of the container to reference.\nB) The y is a list of objects to pass to the child container to use as root objects.\nsSoooOo ooo oOo OS oe",
       "ocrWordCount": 82,
       "ocrConfidence": 90.79,
       "hasTable": false,
@@ -606,12 +625,12 @@
     },
     {
       "slideNumber": 36,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,~ — AScreen with Card references a Detail View. The Detail View contains a\nx Text Input widget. To allow the user to edit the text input value, what must\nbe set to editable?\n\nsooo ooo ooo Ooo eo\n\nGi",
+      "ocrText": "Question\nAScreen with Card references a Detail View. The Detail View contains a\nx Text Input widget. To allow the user to edit the text input value, what must\nbe set to editable?\nsooo ooo ooo Ooo eo\nGi",
       "ocrWordCount": 41,
       "ocrConfidence": 85.38,
       "hasTable": false,
@@ -619,16 +638,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "AScreen with Card references a Detail View. The Detail View contains a",
+        "answer": "X Text Input widget. To allow the user to edit the text input value, what must : be set to editable? The Input Widget and all of the containers that directly or indirectly contain it must be set to editable. The editable hierarchy begins with a location PCF Element. Assuming that the Screen declared in a Page location, then the Page location must be set to editable. sSoooOo ooo oOo OS oe"
+      }
     },
     {
       "slideNumber": 37,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer Gi\n\n,~ — AScreen with Card references a Detail View. The Detail View contains a\nx Text Input widget. To allow the user to edit the text input value, what must\n: be set to editable?\n\nThe Input Widget and all of the containers that directly or indirectly contain it must be\nset to editable. The editable hierarchy begins with a location PCF Element. Assuming\nthat the Screen declared in a Page location, then the Page location must be set to\neditable.\n\nsSoooOo ooo oOo OS oe",
+      "ocrText": "Answer Gi\nAScreen with Card references a Detail View. The Detail View contains a\nx Text Input widget. To allow the user to edit the text input value, what must\nbe set to editable?\nThe Input Widget and all of the containers that directly or indirectly contain it must be\nset to editable. The editable hierarchy begins with a location PCF Element. Assuming\nthat the Screen declared in a Page location, then the Page location must be set to\neditable.\nsSoooOo ooo oOo OS oe",
       "ocrWordCount": 88,
       "ocrConfidence": 91.36,
       "hasTable": false,
@@ -640,12 +663,12 @@
     },
     {
       "slideNumber": 38,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\nae In Studio, can you add Edit Buttons directly to:\n\no A) Aninline Detail View widget?\n\nB) ADetail View PCF file?\n\nsooo ooo ooo Ooo eo",
+      "ocrText": "Question\nIn Studio, can you add Edit Buttons directly to:\nA) Aninline Detail View widget?\nB) A Detail View PCF file?\nsooo ooo ooo Ooo eo",
       "ocrWordCount": 27,
       "ocrConfidence": 82.48,
       "hasTable": false,
@@ -653,16 +676,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "In Studio, can you add Edit Buttons directly to:",
+        "answer": "In Studio, can you add Edit Buttons directly to: sSoooOo ooo oOo OS oe An inline Detail View widget? A Detail View PCF file? Correct responses are: No, you cannot add Edit Buttons directly to a Detail View widget. Typically, you add a Toolbar to a Screen. Then you add Edit Buttons to the Toolbar. A Detail View widget can be declared on a Screen. No, you cannot add Edit Buttons directly to a Detail View PCF file. Typically, you add a Toolbar to a Screen. Then you add Edit Buttons to the Toolbar. A Panel Ref can reference the Detail View PCF file."
+      }
     },
     {
       "slideNumber": 39,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n_~ — In Studio, can you add Edit Buttons directly to:\n\n¢\n¢\n¢ A\n\nB\n\nA\n\nsSoooOo ooo oOo OS oe\n\nAn inline Detail View widget?\nA Detail View PCF file?\n\nCorrect responses are:\n\nNo, you cannot add Edit Buttons directly to a Detail View widget. Typically, you\nadd a Toolbar to a Screen. Then you add Edit Buttons to the Toolbar. A Detail\nView widget can be declared on a Screen.\n\nNo, you cannot add Edit Buttons directly to a Detail View PCF file. Typically, you\nadd a Toolbar to a Screen. Then you add Edit Buttons to the Toolbar. A Panel Ref\ncan reference the Detail View PCF file.",
+      "ocrText": "Answer\nIn Studio, can you add Edit Buttons directly to:\n•\n•\n• A\nB\nA\nsSoooOo ooo oOo OS oe\nAn inline Detail View widget?\nA Detail View PCF file?\nCorrect responses are:\nNo, you cannot add Edit Buttons directly to a Detail View widget. Typically, you\nadd a Toolbar to a Screen. Then you add Edit Buttons to the Toolbar. A Detail\nView widget can be declared on a Screen.\nNo, you cannot add Edit Buttons directly to a Detail View PCF file. Typically, you\nadd a Toolbar to a Screen. Then you add Edit Buttons to the Toolbar. A Panel Ref\ncan reference the Detail View PCF file.",
       "ocrWordCount": 113,
       "ocrConfidence": 91.45,
       "hasTable": false,
@@ -674,12 +701,12 @@
     },
     {
       "slideNumber": 40,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,~ — Where do you typically add a toolbar with edit buttons?\n\n4\n¢\n¢\n\nsooo ooo ooo Ooo eo",
+      "ocrText": "Question\nWhere do you typically add a toolbar with edit buttons?\n•\n•\nsooo ooo ooo Ooo eo",
       "ocrWordCount": 21,
       "ocrConfidence": 71.55,
       "hasTable": false,
@@ -687,16 +714,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Where do you typically add a toolbar with edit buttons?",
+        "answer": "SSoooOo ooo oOo OS oe You add a toolbar with edit buttons typically to the Screen container element."
+      }
     },
     {
       "slideNumber": 41,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n7\n¢\n¢\n¢\n\nsSoooOo ooo oOo OS oe\n\nWhere do you typically add a toolbar with edit buttons?\n\nYou add a toolbar with edit buttons typically to the Screen container element.",
+      "ocrText": "Answer\n•\n•\n•\nsSoooOo ooo oOo OS oe\nWhere do you typically add a toolbar with edit buttons?\nYou add a toolbar with edit buttons typically to the Screen container element.",
       "ocrWordCount": 33,
       "ocrConfidence": 83.61,
       "hasTable": false,
@@ -708,12 +739,12 @@
     },
     {
       "slideNumber": 42,
-      "title": "",
+      "title": "Key Takeaways",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives\nreview\n\n¢ Describe the functionality of Detail Views\n\nCreate a new Detail View\n\nReference a Detail View from a parent\ncontainer\n\nDescribe how to make a Detail View editable\nCreate a Toolbar with Edit Buttons",
+      "ocrText": "Lesson\nobjectives\nreview\n\n• Describe the functionality of Detail Views\n\nCreate a new Detail View\n\nReference a Detail View from a parent\ncontainer\n\nDescribe how to make a Detail View editable\nCreate a Toolbar with Edit Buttons",
       "ocrWordCount": 37,
       "ocrConfidence": 94.35,
       "hasTable": false,
@@ -725,7 +756,7 @@
     },
     {
       "slideNumber": 43,
-      "title": "",
+      "title": "Student Exercise",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -756,6 +787,11 @@
       "index": 3,
       "filename": "IS_Fund_06_03.mp4",
       "path": "/academy/guidewire/videos/ch07/IS_Fund_06_03.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "IS_Fund_06_04.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_06_04.mp4"
     }
   ],
   "hasNotes": true,

@@ -97,7 +97,7 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "What are some of the actions that take place in terms of rating after a\n¢ quote is requested?",
+      "question": "What are some of the actions that take place in terms of rating after a\nquote is requested?",
       "referenceAnswer": "Possible answers include:\n1. Rating Engine selects a Rate Book\n2. The Rating Engine calls a Rate Routine for the Cost Item (for example, coverage)\n3. The PolicyCenter Rating Engine constructs the corresponding Worksheet with the\ncalculated results\n4. The results are returned to the calling policy transaction (quote)",
       "questionKey": "slide-8"
     },
@@ -133,21 +133,21 @@
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "Whatis a rate table?",
+      "question": "What is a rate table?",
       "referenceAnswer": "Arate table contains static rates in a table format consisting of one or more rows.",
       "questionKey": "slide-18"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "Whatis a factor?",
+      "question": "What is a factor?",
       "referenceAnswer": "A factor is a value in a rate table that can be a rate factor, class, or tier, or as code for\nuse in further lookups.",
       "questionKey": "slide-20"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "Whatis a parameter set?",
+      "question": "What is a parameter set?",
       "referenceAnswer": "A parameter set enables users to define the usable information available within a rate\nroutine.",
       "questionKey": "slide-22"
     },
@@ -187,7 +187,7 @@
     {
       "type": "knowledge_check",
       "id": "kc-5",
-      "question": "Whatis “rate flow”?",
+      "question": "What is “rate flow”?",
       "referenceAnswer": "Rate flow is the logic in the rating engine plugin that calculates the premium.",
       "questionKey": "slide-27"
     },
@@ -291,7 +291,7 @@
     {
       "type": "knowledge_check",
       "id": "kc-6",
-      "question": "Whatis the process that an actuary or rating analyst must follow in order\n¢ to prepare usable rating content for the configuration developer?",
+      "question": "What is the process that an actuary or rating analyst must follow in order\nto prepare usable rating content for the configuration developer?",
       "referenceAnswer": "Each rating implementation starts from a different place. For example, a rating analyst\nmay have a spreadsheet with existing rating data or it may be contained in the current\nsystem in another format. Actuaries and rating specialists must create content that is\nPolicyCenter ready.",
       "questionKey": "slide-38"
     },

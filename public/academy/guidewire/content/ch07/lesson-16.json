@@ -11,7 +11,7 @@
   "slides": [
     {
       "slideNumber": 1,
-      "title": "",
+      "title": "Popups",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -28,7 +28,7 @@
     },
     {
       "slideNumber": 2,
-      "title": "",
+      "title": "Learning Objectives",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -45,7 +45,7 @@
     },
     {
       "slideNumber": 3,
-      "title": "",
+      "title": "User Story: Policy Details Popup",
       "bodyParagraphs": [],
       "originalNotes": "User Story: Policy Details Popup\nShown here is an example user story requirement requested by a fictional business analyst.",
       "notes": "User Story: Policy Details Popup\nShown here is an example user story requirement requested by a fictional business analyst.",
@@ -79,12 +79,12 @@
     },
     {
       "slideNumber": 5,
-      "title": "",
+      "title": "i Review: Locations",
       "bodyParagraphs": [],
       "originalNotes": "Review: Locations\nNote: Both Widget and Location are conceptual representations in this diagram. There are no <Widget /> or <Location elements. Similarly, both Atomic Widget and Container Widget are conceptual representations. There are no <Atomic Widget or <Container Widget /> elements.",
       "notes": "Review: Locations\nNote: Both Widget and Location are conceptual representations in this diagram. There are no <Widget /> or <Location elements. Similarly, both Atomic Widget and Container Widget are conceptual representations. There are no <Atomic Widget or <Container Widget /> elements.",
       "narration": "",
-      "ocrText": "i Review: Locations\nJ wicgot a7\n—'—_,\n\n¢ Alocation is a PCF element to which a user can\nnavigate\n\n* Locations themselves do not define any visual\n\ncontent, but they can contain Screen container(s)\nthat do\n\n¢ Locations can use system permissions to control\nwhat the users can see/access in the application",
+      "ocrText": "i Review: Locations\nJ wicgot a7\n—'—_,\n\n• Alocation is a PCF element to which a user can\nnavigate\n\n* Locations themselves do not define any visual\n\ncontent, but they can contain Screen container(s)\nthat do\n\n• Locations can use system permissions to control\nwhat the users can see/access in the application",
       "ocrWordCount": 52,
       "ocrConfidence": 89.23,
       "hasTable": false,
@@ -96,12 +96,12 @@
     },
     {
       "slideNumber": 6,
-      "title": "",
+      "title": "i Review: Popups",
       "bodyParagraphs": [],
       "originalNotes": "Review: Popups\nPopup screens are designed to mimic the functionality of a true popup (which is an entirely separate window). True popups are difficult to architect because there is no easy way to avoid synchronization errors in which the system tries to update the same object in two separate windows. Popup locations as architected in Guidewire offer virtually the same functionality while avoiding the synchronization and usability issues.",
       "notes": "Review: Popups\nPopup screens are designed to mimic the functionality of a true popup (which is an entirely separate window). True popups are difficult to architect because there is no easy way to avoid synchronization errors in which the system tries to update the same object in two separate windows. Popup locations as architected in Guidewire offer virtually the same functionality while avoiding the synchronization and usability issues.",
       "narration": "",
-      "ocrText": "i Review: Popups Gi\n\n¢« Apopup contains a single screen and returns the user to the previous pef\nlocation once the popup is closed —lE|\n\n« Automatically has \"Return to <previous location>\" link\n\nSummary\n\nBasics | Social Media\n\nBasic Information\nName\n\nPublic ID\n\nAnalysis\n\nFlag Entries\nDate Unflagged\n\nWilliam Andy View  DateFlagged Reason\nli\nReturn to Summary\n\nabs cess Flag Entry\nFate Flagged 06/19/2018\n\nReason No email address for this contact.\n\nResolution rr",
+      "ocrText": "i Review: Popups Gi\n\n•« Apopup contains a single screen and returns the user to the previous pef\nlocation once the popup is closed —lE|\n\n« Automatically has \"Return to <previous location>\" link\n\nSummary\n\nBasics | Social Media\n\nBasic Information\nName\n\nPublic ID\n\nAnalysis\n\nFlag Entries\nDate Unflagged\n\nWilliam Andy View  DateFlagged Reason\nli\nReturn to Summary\n\nabs cess Flag Entry\nFate Flagged 06/19/2018\n\nReason No email address for this contact.\n\nResolution rr",
       "ocrWordCount": 73,
       "ocrConfidence": 81.58,
       "hasTable": false,
@@ -130,12 +130,12 @@
     },
     {
       "slideNumber": 8,
-      "title": "",
+      "title": "i Why not use browser popup windows?",
       "bodyParagraphs": [],
       "originalNotes": "Why not use browser popup windows?\nPopup screens are designed to mimic the functionality of a true popup (which is an entirely separate window). True popups are difficult to architect because there is no easy way to avoid synchronization errors in which the system tries to update the same object in two separate windows. Popup locations as architected in Guidewire offer virtually the same functionality while avoiding the synchronization and usability issues.",
       "notes": "Why not use browser popup windows?\nPopup screens are designed to mimic the functionality of a true popup (which is an entirely separate window). True popups are difficult to architect because there is no easy way to avoid synchronization errors in which the system tries to update the same object in two separate windows. Popup locations as architected in Guidewire offer virtually the same functionality while avoiding the synchronization and usability issues.",
       "narration": "",
-      "ocrText": "i Why not use browser popup windows?\n\n« Many users configure their web browsers to block popups\n* Even if website or URL is from trusted source\n\n¢ Passing context and objects between browser windows can cause\nsynchronization problems\n\n¢ Multiple popups open for same view\n\n* Popup window is left open while parent (main) window is closed\n* Guidewire popups\n\n* Provide almost all the functionality of true popup windows\n\n« Avoid blocking issues and synchronization problems",
+      "ocrText": "i Why not use browser popup windows?\n\n« Many users configure their web browsers to block popups\n* Even if website or URL is from trusted source\n\n• Passing context and objects between browser windows can cause\nsynchronization problems\n\n• Multiple popups open for same view\n\n* Popup window is left open while parent (main) window is closed\n* Guidewire popups\n\n* Provide almost all the functionality of true popup windows\n\n« Avoid blocking issues and synchronization problems",
       "ocrWordCount": 78,
       "ocrConfidence": 88.65,
       "hasTable": false,
@@ -147,7 +147,7 @@
     },
     {
       "slideNumber": 9,
-      "title": "",
+      "title": "i Popup use case 1: View and edit existing objects",
       "bodyParagraphs": [],
       "originalNotes": "Popup use case 1: View and edit existing objects\nA popup can be used to view and edit an object. When it is either not convenient to edit the object in a location or some of the fields a user might wish to view and/or edit are not displayed in that location, you can use a popup. For example, a list view panel will often only display a limited number of object fields. Some of the cell widgets will be configured as navigation cell widgets. The navigation cells widgets will navigate to a popup so that a user can view and/or edit the object fields.\n\nIn the slide example, the FlagEntryPopup popup is used to view existing flag entry objects and, if the user has sufficient permissions, edit them. However, it cannot be used to create flag entry objects. Flag entries are created only by the application business logic, not manually by a user.\n\nWhen a popup edits an existing object, the popup does not return the object to the parent list view. The parent list view panel already knows about the object, and the object already belongs to the array that is being displayed by the list view. Therefore, the popup simply commits and changes to the object in the database. The parent list view panel then refreshes its information from the database.",
       "notes": "Popup use case 1: View and edit existing objects\nA popup can be used to view and edit an object. When it is either not convenient to edit the object in a location or some of the fields a user might wish to view and/or edit are not displayed in that location, you can use a popup. For example, a list view panel will often only display a limited number of object fields. Some of the cell widgets will be configured as navigation cell widgets. The navigation cells widgets will navigate to a popup so that a user can view and/or edit the object fields.\n\nIn the slide example, the FlagEntryPopup popup is used to view existing flag entry objects and, if the user has sufficient permissions, edit them. However, it cannot be used to create flag entry objects. Flag entries are created only by the application business logic, not manually by a user.\n\nWhen a popup edits an existing object, the popup does not return the object to the parent list view. The parent list view panel already knows about the object, and the object already belongs to the array that is being displayed by the list view. Therefore, the popup simply commits and changes to the object in the database. The parent list view panel then refreshes its information from the database.",
@@ -164,7 +164,7 @@
     },
     {
       "slideNumber": 10,
-      "title": "",
+      "title": "Popup use case 2: Create new objects",
       "bodyParagraphs": [],
       "originalNotes": "Popup use case 2: Create new objects\nYou can configure a popup to create new objects. In most cases, the popup can both create new objects and view and edit existing objects.\n\nWhen a popup creates a new object, the source container (often a list view panel) does not know about the object. The popup must return the object to the source container and the source must commit the object to the appropriate array that is associated with the parent object.",
       "notes": "Popup use case 2: Create new objects\nYou can configure a popup to create new objects. In most cases, the popup can both create new objects and view and edit existing objects.\n\nWhen a popup creates a new object, the source container (often a list view panel) does not know about the object. The popup must return the object to the source container and the source must commit the object to the appropriate array that is associated with the parent object.",
@@ -181,7 +181,7 @@
     },
     {
       "slideNumber": 11,
-      "title": "",
+      "title": "i Popup use case 3: Execute \"popped\" searches",
       "bodyParagraphs": [],
       "originalNotes": "Popup use case 3: Execute \" popped“ searches\nYou can configure a popup to search for an existing record. When a record is located in some portion of the user interface where it would not be convenient to include search functionality, you will often see an implementation of a popped search.",
       "notes": "Popup use case 3: Execute \" popped“ searches\nYou can configure a popup to search for an existing record. When a record is located in some portion of the user interface where it would not be convenient to include search functionality, you will often see an implementation of a popped search.",
@@ -198,7 +198,7 @@
     },
     {
       "slideNumber": 12,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -211,7 +211,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 13,
@@ -232,7 +233,7 @@
     },
     {
       "slideNumber": 14,
-      "title": "",
+      "title": "Review questions",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -249,12 +250,12 @@
     },
     {
       "slideNumber": 15,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_- — Whatare the three primary use cases for popups?\n\n¢\n¢\n4\n\nSSeS eS sees e ses eesaeK",
+      "ocrText": "Question\n_- — What are the three primary use cases for popups?\n•\n•\nSSeS eS sees e ses eesaeK",
       "ocrWordCount": 20,
       "ocrConfidence": 81.41,
       "hasTable": false,
@@ -262,16 +263,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What are the three primary use cases for popups?",
+        "answer": "An What are the three primary use cases for popups? x Viewing and editing existing objects, creating new objects, and executing popped searches. SS See See sess e eases"
+      }
     },
     {
       "slideNumber": 16,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\nan What are the three primary use cases for popups?\nx Viewing and editing existing objects, creating new objects, and executing popped\n\nsearches.\n\nSS See See sess e eases",
+      "ocrText": "Answer\nan What are the three primary use cases for popups?\nx Viewing and editing existing objects, creating new objects, and executing popped\nsearches.\nSS See See sess e eases",
       "ocrWordCount": 30,
       "ocrConfidence": 87.45,
       "hasTable": false,
@@ -283,12 +288,12 @@
     },
     {
       "slideNumber": 17,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_— — What happens if a location's canEdit property evaluates to false?\n\n¢\n¢\n4\n\nSSeS eS sees e ses eesaeK",
+      "ocrText": "Question\nWhat happens if a location's canEdit property evaluates to false?\n•\n•\nSSeS eS sees e ses eesaeK",
       "ocrWordCount": 22,
       "ocrConfidence": 78.37,
       "hasTable": false,
@@ -296,16 +301,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What happens if a location's canEdit property evaluates to false?",
+        "answer": "“ The screen and its contents are non-editable. SS See See sess e eases"
+      }
     },
     {
       "slideNumber": 18,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n,- — What happens if a location's canEdit property evaluates to false?\n\n¢\n“ The screen and its contents are non-editable.\n\nSS See See sess e eases",
+      "ocrText": "Answer\nWhat happens if a location's canEdit property evaluates to false?\n•\n“ The screen and its contents are non-editable.\nSS See See sess e eases",
       "ocrWordCount": 28,
       "ocrConfidence": 82.96,
       "hasTable": false,
@@ -317,12 +326,12 @@
     },
     {
       "slideNumber": 19,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,- — What happens if a location's canVisit property evaluates to false?\n\n¢\n¢\n4\n\nSSeS eS sees e ses eesaeK",
+      "ocrText": "Question\nWhat happens if a location's canVisit property evaluates to false?\n•\n•\nSSeS eS sees e ses eesaeK",
       "ocrWordCount": 22,
       "ocrConfidence": 79.84,
       "hasTable": false,
@@ -330,16 +339,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What happens if a location's canVisit property evaluates to false?",
+        "answer": "X The widget navigating to the location is either not visible or not clickable. SS See See sess e eases"
+      }
     },
     {
       "slideNumber": 20,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n,- — What happens if a location's canVisit property evaluates to false?\n\n¢\nx The widget navigating to the location is either not visible or not clickable.\n\nSS See See sess e eases",
+      "ocrText": "Answer\nWhat happens if a location's canVisit property evaluates to false?\n•\nx The widget navigating to the location is either not visible or not clickable.\nSS See See sess e eases",
       "ocrWordCount": 34,
       "ocrConfidence": 85.64,
       "hasTable": false,
@@ -351,12 +364,12 @@
     },
     {
       "slideNumber": 21,
-      "title": "",
+      "title": "Key Takeaways",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives ¢ Describe the functionality of Popups\n\nreview * Create Popups used to view and edit objects",
+      "ocrText": "Lesson\nobjectives • Describe the functionality of Popups\n\nreview * Create Popups used to view and edit objects",
       "ocrWordCount": 18,
       "ocrConfidence": 90.72,
       "hasTable": false,
@@ -368,7 +381,7 @@
     },
     {
       "slideNumber": 22,
-      "title": "",
+      "title": "Student Exercise",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",

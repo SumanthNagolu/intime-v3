@@ -11,7 +11,7 @@
   "slides": [
     {
       "slideNumber": 1,
-      "title": "",
+      "title": "Using Trouble Tickets to Resolve Issues",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -28,12 +28,12 @@
     },
     {
       "slideNumber": 2,
-      "title": "",
+      "title": "Learning Objectives",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives ¢ Describe the lifecycle of a trouble ticket\n\n¢ Explain how trouble tickets are used to track\nand resolve issues\n\n* Create a trouble ticket with holds and\nassociated activities\n\n« Modify and close trouble tickets",
+      "ocrText": "Lesson\nobjectives • Describe the lifecycle of a trouble ticket\n\n• Explain how trouble tickets are used to track\nand resolve issues\n\n* Create a trouble ticket with holds and\nassociated activities\n\n« Modify and close trouble tickets",
       "ocrWordCount": 38,
       "ocrConfidence": 89.55,
       "hasTable": false,
@@ -62,10 +62,10 @@
     },
     {
       "slideNumber": 4,
-      "title": "",
+      "title": "i Avoiding delinquency",
       "bodyParagraphs": [],
-      "originalNotes": "Setting the context\nMarcus knows that delinquencies are best avoided if possible. He asks Zhang if there is a way to resolve an issue before delinquency occurs. For example,  a policyholder could phone Succeed Insurance to say his or her payment will be late. Zhang explains that the CSR can create a trouble ticket that places a hold on delinquency processing.",
-      "notes": "Setting the context\nMarcus knows that delinquencies are best avoided if possible. He asks Zhang if there is a way to resolve an issue before delinquency occurs. For example,  a policyholder could phone Succeed Insurance to say his or her payment will be late. Zhang explains that the CSR can create a trouble ticket that places a hold on delinquency processing.",
+      "originalNotes": "Setting the context\nMarcus knows that delinquencies are best avoided if possible. He asks Zhang if there is a way to resolve an issue before delinquency occurs. For example, a policyholder could phone Succeed Insurance to say his or her payment will be late. Zhang explains that the CSR can create a trouble ticket that places a hold on delinquency processing.",
+      "notes": "Setting the context\nMarcus knows that delinquencies are best avoided if possible. He asks Zhang if there is a way to resolve an issue before delinquency occurs. For example, a policyholder could phone Succeed Insurance to say his or her payment will be late. Zhang explains that the CSR can create a trouble ticket that places a hold on delinquency processing.",
       "narration": "",
       "ocrText": "i Avoiding delinquency Gi\n\nBusiness\n\nAnalyst \\, = Is there a way to resolve an issue\n: before a delinquency occurs?\n\nSuppose a customer warns us\na the payment will be late .\n\nZhang \\}\nBilling Clerk\n\nAvoiding delinquency\nmakes sense for everyone.\nTrouble tickets are often\nused to place a hold on\ndelinquency processing.",
       "ocrWordCount": 55,
@@ -79,12 +79,12 @@
     },
     {
       "slideNumber": 5,
-      "title": "",
+      "title": "Trouble tickets",
       "bodyParagraphs": [],
-      "originalNotes": "Trouble tickets\nTrouble tickets and trouble ticket holds are BillingCenter tools that help billing personnel track and resolve issues. They provide central management for tracking problems related to accounts,  policies, and producers. Often, a trouble ticket is created in response to a customer inquiry.\n\nThe most powerful feature of trouble tickets is the ability to suspend automatic processing by means of trouble ticket holds. A trouble ticket hold can be applied to delinquency, invoice sending, commission earning, commission payments, payment allocation, and disbursements.\n\nYou can specify a due date and escalation date for a trouble ticket. These dates help users prioritize and manage trouble tickets. When the escalation date is reached and a batch process is run, an icon appears next to the trouble ticket link in the Trouble Tickets screen to flag the trouble ticket as escalated.\n\nA user can create a trouble ticket at any time. In the base application, trouble tickets are not created automatically. However, a developer can write Gosu rules to create trouble tickets automatically when an exception event occurs.",
-      "notes": "Trouble tickets\nTrouble tickets and trouble ticket holds are BillingCenter tools that help billing personnel track and resolve issues. They provide central management for tracking problems related to accounts,  policies, and producers. Often, a trouble ticket is created in response to a customer inquiry.\n\nThe most powerful feature of trouble tickets is the ability to suspend automatic processing by means of trouble ticket holds. A trouble ticket hold can be applied to delinquency, invoice sending, commission earning, commission payments, payment allocation, and disbursements.\n\nYou can specify a due date and escalation date for a trouble ticket. These dates help users prioritize and manage trouble tickets. When the escalation date is reached and a batch process is run, an icon appears next to the trouble ticket link in the Trouble Tickets screen to flag the trouble ticket as escalated.\n\nA user can create a trouble ticket at any time. In the base application, trouble tickets are not created automatically. However, a developer can write Gosu rules to create trouble tickets automatically when an exception event occurs.",
+      "originalNotes": "Trouble tickets\nTrouble tickets and trouble ticket holds are BillingCenter tools that help billing personnel track and resolve issues. They provide central management for tracking problems related to accounts, policies, and producers. Often, a trouble ticket is created in response to a customer inquiry.\n\nThe most powerful feature of trouble tickets is the ability to suspend automatic processing by means of trouble ticket holds. A trouble ticket hold can be applied to delinquency, invoice sending, commission earning, commission payments, payment allocation, and disbursements.\n\nYou can specify a due date and escalation date for a trouble ticket. These dates help users prioritize and manage trouble tickets. When the escalation date is reached and a batch process is run, an icon appears next to the trouble ticket link in the Trouble Tickets screen to flag the trouble ticket as escalated.\n\nA user can create a trouble ticket at any time. In the base application, trouble tickets are not created automatically. However, a developer can write Gosu rules to create trouble tickets automatically when an exception event occurs.",
+      "notes": "Trouble tickets\nTrouble tickets and trouble ticket holds are BillingCenter tools that help billing personnel track and resolve issues. They provide central management for tracking problems related to accounts, policies, and producers. Often, a trouble ticket is created in response to a customer inquiry.\n\nThe most powerful feature of trouble tickets is the ability to suspend automatic processing by means of trouble ticket holds. A trouble ticket hold can be applied to delinquency, invoice sending, commission earning, commission payments, payment allocation, and disbursements.\n\nYou can specify a due date and escalation date for a trouble ticket. These dates help users prioritize and manage trouble tickets. When the escalation date is reached and a batch process is run, an icon appears next to the trouble ticket link in the Trouble Tickets screen to flag the trouble ticket as escalated.\n\nA user can create a trouble ticket at any time. In the base application, trouble tickets are not created automatically. However, a developer can write Gosu rules to create trouble tickets automatically when an exception event occurs.",
       "narration": "",
-      "ocrText": "| Trouble tickets\n\n¢ Atrouble ticket is a mechanism for tracking and resolving issues in\nBillingCenter\n\n¢ Allows multiple users to track and escalate an issue\n\n* Can be used to hold automatic processing\n\n* Can be escalated automatically if trouble ticket is not closed within the expected time\nTrouble ticket lifecycle\n\ndue date escalation date\n\ne=9—_____________|____- ges\n1\n\nCreated by a user or a business rule Flagged in UI Holds released\n\n* Holds placed (optional)\n\n¢ Assigned to an owner",
+      "ocrText": "| Trouble tickets\n\n• Atrouble ticket is a mechanism for tracking and resolving issues in\nBillingCenter\n\n• Allows multiple users to track and escalate an issue\n\n* Can be used to hold automatic processing\n\n* Can be escalated automatically if trouble ticket is not closed within the expected time\nTrouble ticket lifecycle\n\ndue date escalation date\n\ne=9—_____________|____- ges\n1\n\nCreated by a user or a business rule Flagged in UI Holds released\n\n* Holds placed (optional)\n\n• Assigned to an owner",
       "ocrWordCount": 81,
       "ocrConfidence": 87.65,
       "hasTable": false,
@@ -96,10 +96,10 @@
     },
     {
       "slideNumber": 6,
-      "title": "",
+      "title": "i A trouble ticket has an owner and related entities",
       "bodyParagraphs": [],
-      "originalNotes": "A trouble ticket has an owner and related entities\nYou can create a trouble ticket from the Account, Policy, and Producer tabs. Alternatively, youcan create a trouble ticket from your Desktop.\n\nThe trouble ticket is automatically associated with the current account, policy, and policy period  (if created from the Account or Policy tab) or producer (if created from the Producer tab). You can include additional entities when you create or update the trouble ticket. Step 2 of the New Trouble Ticket wizard allows you to add and remove accounts, policies, policy periods, and producers to/from the set of related entities.  If an entity is associated with an open trouble ticket, a trouble ticket alert is displayed on the summary screen for that entity. \n\nThe trouble ticket is always assigned to a single user who is responsible for bringing the issue to a resolution. However, typically multiple parties monitor the trouble ticket and can be assigned tasks (through activities) to support trouble ticket resolution.",
-      "notes": "A trouble ticket has an owner and related entities\nYou can create a trouble ticket from the Account, Policy, and Producer tabs. Alternatively, youcan create a trouble ticket from your Desktop.\n\nThe trouble ticket is automatically associated with the current account, policy, and policy period  (if created from the Account or Policy tab) or producer (if created from the Producer tab). You can include additional entities when you create or update the trouble ticket. Step 2 of the New Trouble Ticket wizard allows you to add and remove accounts, policies, policy periods, and producers to/from the set of related entities.  If an entity is associated with an open trouble ticket, a trouble ticket alert is displayed on the summary screen for that entity. \n\nThe trouble ticket is always assigned to a single user who is responsible for bringing the issue to a resolution. However, typically multiple parties monitor the trouble ticket and can be assigned tasks (through activities) to support trouble ticket resolution.",
+      "originalNotes": "A trouble ticket has an owner and related entities\nYou can create a trouble ticket from the Account, Policy, and Producer tabs. Alternatively, youcan create a trouble ticket from your Desktop.\n\nThe trouble ticket is automatically associated with the current account, policy, and policy period (if created from the Account or Policy tab) or producer (if created from the Producer tab). You can include additional entities when you create or update the trouble ticket. Step 2 of the New Trouble Ticket wizard allows you to add and remove accounts, policies, policy periods, and producers to/from the set of related entities. If an entity is associated with an open trouble ticket, a trouble ticket alert is displayed on the summary screen for that entity.\n\nThe trouble ticket is always assigned to a single user who is responsible for bringing the issue to a resolution. However, typically multiple parties monitor the trouble ticket and can be assigned tasks (through activities) to support trouble ticket resolution.",
+      "notes": "A trouble ticket has an owner and related entities\nYou can create a trouble ticket from the Account, Policy, and Producer tabs. Alternatively, youcan create a trouble ticket from your Desktop.\n\nThe trouble ticket is automatically associated with the current account, policy, and policy period (if created from the Account or Policy tab) or producer (if created from the Producer tab). You can include additional entities when you create or update the trouble ticket. Step 2 of the New Trouble Ticket wizard allows you to add and remove accounts, policies, policy periods, and producers to/from the set of related entities. If an entity is associated with an open trouble ticket, a trouble ticket alert is displayed on the summary screen for that entity.\n\nThe trouble ticket is always assigned to a single user who is responsible for bringing the issue to a resolution. However, typically multiple parties monitor the trouble ticket and can be assigned tasks (through activities) to support trouble ticket resolution.",
       "narration": "",
       "ocrText": "i A trouble ticket has an owner and related entities Gi\n\n« Atrouble ticket has an eee\nowner, who is responsible lao account\nfor ensuring the trouble\nticket is closed\n\n* Owner can be explicitly or [v9] policy\nautomatically assigned when @\ntrouble ticket is created | A'S\n* Atrouble ticket is usually 3) . OOO] Policy\nassociated with an account, owner trouble ticket als Period\npolicy, policy period, and/or =\n\nproducer @\nproducer",
       "ocrWordCount": 74,
@@ -113,12 +113,12 @@
     },
     {
       "slideNumber": 7,
-      "title": "",
+      "title": "Trouble ticket holds",
       "bodyParagraphs": [],
-      "originalNotes": "Trouble ticket holds\nA hold is the method BillingCenter provides for stopping an automated process while an account or policy is in dispute. When you create a trouble ticket, you can select one or more hold types. Depending on the type, the hold can affect an account, a producer, and/or a policy or policy period. A trouble ticket hold is always tied to an existing trouble ticket and cannot exist on its own.\n\nThe hold is released automatically at the time the trouble ticket is closed. If a trouble ticket hold has a release date, it will be released automatically when the release date is reached.\n\nIf a hold is placed on delinquency:\n\nThe hold prevents any delinquency being initiated on the set of related entities.  \nThe hold suspends all processing of existing delinquencies that involve the set of related entities. After the trouble ticket is closed, the delinquency process resumes from the same place in the process where it was stopped.  Event target dates are automatically adjusted as necessary.\n\nNote: Do not confuse a trouble ticket hold with a charge hold,  which is associated with a particular charge. See the BillingCenter Application Guide for details.",
-      "notes": "Trouble ticket holds\nA hold is the method BillingCenter provides for stopping an automated process while an account or policy is in dispute. When you create a trouble ticket, you can select one or more hold types. Depending on the type, the hold can affect an account, a producer, and/or a policy or policy period. A trouble ticket hold is always tied to an existing trouble ticket and cannot exist on its own.\n\nThe hold is released automatically at the time the trouble ticket is closed. If a trouble ticket hold has a release date, it will be released automatically when the release date is reached.\n\nIf a hold is placed on delinquency:\n\nThe hold prevents any delinquency being initiated on the set of related entities.  \nThe hold suspends all processing of existing delinquencies that involve the set of related entities. After the trouble ticket is closed, the delinquency process resumes from the same place in the process where it was stopped.  Event target dates are automatically adjusted as necessary.\n\nNote: Do not confuse a trouble ticket hold with a charge hold,  which is associated with a particular charge. See the BillingCenter Application Guide for details.",
+      "originalNotes": "Trouble ticket holds\nA hold is the method BillingCenter provides for stopping an automated process while an account or policy is in dispute. When you create a trouble ticket, you can select one or more hold types. Depending on the type, the hold can affect an account, a producer, and/or a policy or policy period. A trouble ticket hold is always tied to an existing trouble ticket and cannot exist on its own.\n\nThe hold is released automatically at the time the trouble ticket is closed. If a trouble ticket hold has a release date, it will be released automatically when the release date is reached.\n\nIf a hold is placed on delinquency:\n\nThe hold prevents any delinquency being initiated on the set of related entities.\nThe hold suspends all processing of existing delinquencies that involve the set of related entities. After the trouble ticket is closed, the delinquency process resumes from the same place in the process where it was stopped. Event target dates are automatically adjusted as necessary.\n\nNote: Do not confuse a trouble ticket hold with a charge hold, which is associated with a particular charge. See the BillingCenter Application Guide for details.",
+      "notes": "Trouble ticket holds\nA hold is the method BillingCenter provides for stopping an automated process while an account or policy is in dispute. When you create a trouble ticket, you can select one or more hold types. Depending on the type, the hold can affect an account, a producer, and/or a policy or policy period. A trouble ticket hold is always tied to an existing trouble ticket and cannot exist on its own.\n\nThe hold is released automatically at the time the trouble ticket is closed. If a trouble ticket hold has a release date, it will be released automatically when the release date is reached.\n\nIf a hold is placed on delinquency:\n\nThe hold prevents any delinquency being initiated on the set of related entities.\nThe hold suspends all processing of existing delinquencies that involve the set of related entities. After the trouble ticket is closed, the delinquency process resumes from the same place in the process where it was stopped. Event target dates are automatically adjusted as necessary.\n\nNote: Do not confuse a trouble ticket hold with a charge hold, which is associated with a particular charge. See the BillingCenter Application Guide for details.",
       "narration": "",
-      "ocrText": "| Trouble ticket holds\n\n¢ Atrouble ticket hold blocks automated system behavior while\nbilling problems are investigated and corrected\n\n« Examples: delinquency, invoice sending, disbursements (refunds)\n¢ Holds are automatically released\n\n« When the trouble ticket is closed, or\n\n« When their release dates are reached If they have a release date\n\n¢ You can edit trouble ticket holds\n\nRelated Entities | Notes | Activities | Transactions | Holds\n\nHold Release Date\n\n+ Add or remove holds\n\n« Add, remove, or modify release dates\n\nInvoice / Statement Sending\n\nDelinquency 11/30/2018",
+      "ocrText": "| Trouble ticket holds\n\n• Atrouble ticket hold blocks automated system behavior while\nbilling problems are investigated and corrected\n\n« Examples: delinquency, invoice sending, disbursements (refunds)\n• Holds are automatically released\n\n« When the trouble ticket is closed, or\n\n« When their release dates are reached If they have a release date\n\n• You can edit trouble ticket holds\n\nRelated Entities | Notes | Activities | Transactions | Holds\n\nHold Release Date\n\n+ Add or remove holds\n\n« Add, remove, or modify release dates\n\nInvoice / Statement Sending\n\nDelinquency 11/30/2018",
       "ocrWordCount": 90,
       "ocrConfidence": 87.35,
       "hasTable": false,
@@ -147,7 +147,7 @@
     },
     {
       "slideNumber": 9,
-      "title": "",
+      "title": "i A trouble ticket scenario",
       "bodyParagraphs": [],
       "originalNotes": "Setting the context\nAshley, a policyholder, explains to Zhang that she received an overdue notice while waiting for Succeed Insurance to send her an adjusted bill. Zhang offers to put a hold on billing until the issue is resolved.",
       "notes": "Setting the context\nAshley, a policyholder, explains to Zhang that she received an overdue notice while waiting for Succeed Insurance to send her an adjusted bill. Zhang offers to put a hold on billing until the issue is resolved.",
@@ -164,7 +164,7 @@
     },
     {
       "slideNumber": 10,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -177,7 +177,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 11,
@@ -198,12 +199,12 @@
     },
     {
       "slideNumber": 12,
-      "title": "",
+      "title": "Maintaining a trouble ticket",
       "bodyParagraphs": [],
       "originalNotes": "Maintaining a trouble ticket\nAn open trouble ticket can be edited at any time. Edits include adding or removing related entities, transactions, and holds. Typically, during the lifetime of a trouble ticket, notes and activities are added as needed. Notes are useful for documenting the progress of the trouble ticket issue. Activities provide the means of involving others in the resolution of the issue.\n\nAfter a trouble ticket is closed, it cannot be edited or reopened.",
       "notes": "Maintaining a trouble ticket\nAn open trouble ticket can be edited at any time. Edits include adding or removing related entities, transactions, and holds. Typically, during the lifetime of a trouble ticket, notes and activities are added as needed. Notes are useful for documenting the progress of the trouble ticket issue. Activities provide the means of involving others in the resolution of the issue.\n\nAfter a trouble ticket is closed, it cannot be edited or reopened.",
       "narration": "",
-      "ocrText": "| Maintaining a trouble ticket\n\n* You can edit an open trouble ticket at\n\nany time\n* You can add/remove:\n* Related entities\n* Transactions (for reference only)\n* Holds\n\ne You can create new notes and\nactivities\n\n¢ You cannot edit or reopen\na closed trouble ticket\n\nTrouble Ticket [sw roubierickes |)\n\n‘Trouble Ticket Information\n\nTicket Number 11000000000\nType ‘Customer Complaint\nSubject ‘Change in coverage for DEM00S70\nAssigned To Jane Sweeny (Operations)\nCreated By Super User\nDate Opened 95/05/2019\nDue Date 05/07/2019\nEscalation Date 05/08/2019\nPriority High\n\n‘open\n\nName >\nDEMO0S70\nBAOL-BHOTELS-1\n\nClick to edit Trouble\n\nTicket Information fields\n\nClose\n\nDetailed Description\n\nPolicyholder removed one car from commercial\nauto policy. Bill needs to be adjusted. Placing holds\n‘onbilling and delinquency.\n\nEach tab has its own\nset of edit buttons",
+      "ocrText": "| Maintaining a trouble ticket\n\n* You can edit an open trouble ticket at\n\nany time\n* You can add/remove:\n* Related entities\n* Transactions (for reference only)\n* Holds\n\ne You can create new notes and\nactivities\n\n• You cannot edit or reopen\na closed trouble ticket\n\nTrouble Ticket [sw roubierickes |)\n\n‘Trouble Ticket Information\n\nTicket Number 11000000000\nType ‘Customer Complaint\nSubject ‘Change in coverage for DEM00S70\nAssigned To Jane Sweeny (Operations)\nCreated By Super User\nDate Opened 95/05/2019\nDue Date 05/07/2019\nEscalation Date 05/08/2019\nPriority High\n\n‘open\n\nName >\nDEMO0S70\nBAOL-BHOTELS-1\n\nClick to edit Trouble\n\nTicket Information fields\n\nClose\n\nDetailed Description\n\nPolicyholder removed one car from commercial\nauto policy. Bill needs to be adjusted. Placing holds\n‘onbilling and delinquency.\n\nEach tab has its own\nset of edit buttons",
       "ocrWordCount": 130,
       "ocrConfidence": 86.2,
       "hasTable": false,
@@ -215,12 +216,12 @@
     },
     {
       "slideNumber": 13,
-      "title": "",
+      "title": "i An activity is a reminder to do something",
       "bodyParagraphs": [],
       "originalNotes": "An activity is a reminder to do something\nActivities provide a way to split a trouble ticket into assignable tasks. You can think of an activity as a reminder to do something.\n\nYou can assign a new activity to a specific user or allow automated assignment, which assigns activities based on the rules configured within Guidewire Studio. For example, a business rule can automatically assign an activity to the owner of the trouble ticket.\n\nIf you create a shared activity, it appears on the desktops of every user in the group so that any user can update it\n\nUsers can view activities on the My Activities screen on the Desktop tab. When an open activity reaches its due date, the activity's due date is highlighted in red on the My Activities screen. When an activity is escalated, an escalation icon is placed next to the activity. Escalation rules can be configured that create additional activities (such as sending an email when the escalation date is reached for an incomplete activity).\n\nClosing a trouble ticket changes the status of all open associated activities to Complete.",
       "notes": "An activity is a reminder to do something\nActivities provide a way to split a trouble ticket into assignable tasks. You can think of an activity as a reminder to do something.\n\nYou can assign a new activity to a specific user or allow automated assignment, which assigns activities based on the rules configured within Guidewire Studio. For example, a business rule can automatically assign an activity to the owner of the trouble ticket.\n\nIf you create a shared activity, it appears on the desktops of every user in the group so that any user can update it\n\nUsers can view activities on the My Activities screen on the Desktop tab. When an open activity reaches its due date, the activity's due date is highlighted in red on the My Activities screen. When an activity is escalated, an escalation icon is placed next to the activity. Escalation rules can be configured that create additional activities (such as sending an email when the escalation date is reached for an incomplete activity).\n\nClosing a trouble ticket changes the status of all open associated activities to Complete.",
       "narration": "",
-      "ocrText": "i An activity is a reminder to do something Gi\n\n¢ Activities enable you to split a trouble ticket into assignable tasks\n¢ Activities can be assigned (to others or yourself) or shared\n\n¢ Like trouble tickets, activities have a priority, a due date, and an escalation date\n\n5),\n— | KA * Closing the trouble ticket changes\n\nActivity\nstatus of all open associated\n\nactivities to Complete\n\nActivity Info\n‘Subject Remove late fee\nDescription Policy: BAO1-BHOTELS\n\nip See detailed description on trouble ticket Open activities are on this trouble ticket. Click OK to close the ticket and its\n\nactivities.\n\nPriority High\n\n7 ® OK Cancel\nDue Date 05/17/2019\nEscalation Date 05/31/2019\nAssigned to Dan Henson (Headquarters)\n\nStatus Open",
+      "ocrText": "i An activity is a reminder to do something Gi\n\n• Activities enable you to split a trouble ticket into assignable tasks\n• Activities can be assigned (to others or yourself) or shared\n\n• Like trouble tickets, activities have a priority, a due date, and an escalation date\n\n5),\n— | KA * Closing the trouble ticket changes\n\nActivity\nstatus of all open associated\n\nactivities to Complete\n\nActivity Info\n‘Subject Remove late fee\nDescription Policy: BAO1-BHOTELS\n\nip See detailed description on trouble ticket Open activities are on this trouble ticket. Click OK to close the ticket and its\n\nactivities.\n\nPriority High\n\n7 ® OK Cancel\nDue Date 05/17/2019\nEscalation Date 05/31/2019\nAssigned to Dan Henson (Headquarters)\n\nStatus Open",
       "ocrWordCount": 118,
       "ocrConfidence": 89.14,
       "hasTable": false,
@@ -232,7 +233,7 @@
     },
     {
       "slideNumber": 14,
-      "title": "",
+      "title": "i Removing a late fee",
       "bodyParagraphs": [],
       "originalNotes": "Setting the context\nAshley is pleased that her issue has been resolved. However, she would like the late fee to be removed. Zhang will make that change.",
       "notes": "Setting the context\nAshley is pleased that her issue has been resolved. However, she would like the late fee to be removed. Zhang will make that change.",
@@ -249,7 +250,7 @@
     },
     {
       "slideNumber": 15,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -262,7 +263,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 16,
@@ -300,12 +302,12 @@
     },
     {
       "slideNumber": 18,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n_- — Whatare the primary entities that can be associated with a trouble ticket?\n\n7\n¢\n¢\n\nSSeS ee ee eee Soo Se Seoe",
+      "ocrText": "Question G\n_- — What are the primary entities that can be associated with a trouble ticket?\n•\n•",
       "ocrWordCount": 26,
       "ocrConfidence": 78.08,
       "hasTable": false,
@@ -313,16 +315,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What are the primary entities that can be associated with a trouble ticket?",
+        "answer": "Oo Account, producer, policy, and policy period."
+      }
     },
     {
       "slideNumber": 19,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer Gi\n\n_- — Whatare the primary entities that can be associated with a trouble ticket?\n\n¢\noo Account, producer, policy, and policy period.\n\nSoe ee ee eee Soo eSeoe Ss",
+      "ocrText": "Answer Gi\n_- — What are the primary entities that can be associated with a trouble ticket?\n•\noo Account, producer, policy, and policy period.\nSoe ee ee eee Soo eSeoe Ss",
       "ocrWordCount": 31,
       "ocrConfidence": 78.72,
       "hasTable": false,
@@ -334,12 +340,12 @@
     },
     {
       "slideNumber": 20,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_— — Whatis the result of associating an entity with a trouble ticket?\n\n7\n¢\n¢\n\nSSeS ee ee eee Soo Se Seoe",
+      "ocrText": "Question\nWhat is the result of associating an entity with a trouble ticket?\n•\n•",
       "ocrWordCount": 24,
       "ocrConfidence": 77.42,
       "hasTable": false,
@@ -347,16 +353,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What is the result of associating an entity with a trouble ticket?",
+        "answer": "Oo An alert is displayed on the summary screen of the associated entity (if you select both the policy and policy period, you will see two alerts on the Policy Summary screen). Also, any trouble ticket holds are applied to entities in the set of related entities."
+      }
     },
     {
       "slideNumber": 21,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer Gi\n\n_- — Whatis the result of associating an entity with a trouble ticket?\n¢\noo An alert is displayed on the summary screen of the associated entity (if you select both\nthe policy and policy period, you will see two alerts on the Policy Summary screen).\n\nAlso, any trouble ticket holds are applied to entities in the set of related entities.\n\nSoe ee ee eee Soo eSeoe Ss",
+      "ocrText": "Answer Gi\n_- — What is the result of associating an entity with a trouble ticket?\n•\noo An alert is displayed on the summary screen of the associated entity (if you select both\nthe policy and policy period, you will see two alerts on the Policy Summary screen).\nAlso, any trouble ticket holds are applied to entities in the set of related entities.\nSoe ee ee eee Soo eSeoe Ss",
       "ocrWordCount": 70,
       "ocrConfidence": 88.94,
       "hasTable": false,
@@ -368,12 +378,12 @@
     },
     {
       "slideNumber": 22,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_— — !fa trouble ticket hold is placed on invoice sending, what happens on the\nY bill date of a related invoice?\n\nSSeS ee ee eee Soo Se Seoe\n\nGi",
+      "ocrText": "Question\n!fa trouble ticket hold is placed on invoice sending, what happens on the\nY bill date of a related invoice?\nGi",
       "ocrWordCount": 31,
       "ocrConfidence": 75.9,
       "hasTable": false,
@@ -381,16 +391,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "!fa trouble ticket hold is placed on invoice sending, what happens on the",
+        "answer": "7 bill date of a related invoice? On the bill date, the invoice status is changed to Carried Forward and the invoice items are moved to the next planned invoice."
+      }
     },
     {
       "slideNumber": 23,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n_— — !fa trouble ticket hold is placed on invoice sending, what happens on the\n7 bill date of a related invoice?\n\nOn the bill date, the invoice status is changed to Carried Forward and the invoice\nitems are moved to the next planned invoice.\n\n¢\n\nSoe ee ee eee Soo eSeoe Ss\n\nGi",
+      "ocrText": "Answer\n!fa trouble ticket hold is placed on invoice sending, what happens on the\nbill date of a related invoice?\nOn the bill date, the invoice status is changed to Carried Forward and the invoice\nitems are moved to the next planned invoice.\n•\nSoe ee ee eee Soo eSeoe Ss\nGi",
       "ocrWordCount": 55,
       "ocrConfidence": 84.11,
       "hasTable": false,
@@ -402,12 +416,12 @@
     },
     {
       "slideNumber": 24,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_- — fahold is placed on delinquency and the trouble ticket is subsequently\n¢ closed, what happens to incomplete delinquency events with target\n¢ 5\ndates in the past?\n\nSSeS ee ee eee Soo Se Seoe\n\nGi",
+      "ocrText": "Question\n_- — fahold is placed on delinquency and the trouble ticket is subsequently\n• closed, what happens to incomplete delinquency events with target\n• 5\ndates in the past?\nGi",
       "ocrWordCount": 38,
       "ocrConfidence": 77.92,
       "hasTable": false,
@@ -415,16 +429,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "If a hold is placed on delinquency and the trouble ticket is subsequently",
+        "answer": "• closed, what happens to incomplete delinquency events with target dates in the past? The target dates of those events are adjusted to occur in the future."
+      }
     },
     {
       "slideNumber": 25,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n_- — 'fahold is placed on delinquency and the trouble ticket is subsequently\n¢ closed, what happens to incomplete delinquency events with target\n¢ S\ndates in the past?\n\nThe target dates of those events are adjusted to occur in the future.\n\nSoe ee ee eee Soo eSeoe Ss\n\nGi",
+      "ocrText": "Answer\n_- — 'fahold is placed on delinquency and the trouble ticket is subsequently\n• closed, what happens to incomplete delinquency events with target\n• S\ndates in the past?\nThe target dates of those events are adjusted to occur in the future.\nSoe ee ee eee Soo eSeoe Ss\nGi",
       "ocrWordCount": 51,
       "ocrConfidence": 84.92,
       "hasTable": false,
@@ -436,12 +454,12 @@
     },
     {
       "slideNumber": 26,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_- — Why is it advisable to complete all associated activities before you close\n¢ a trouble ticket?\n\n¢\n¢\n\nSSeS ee ee eee Soo Se Seoe\n\nGi",
+      "ocrText": "Question\n_- — Why is it advisable to complete all associated activities before you close\n• a trouble ticket?\n•\n•\nGi",
       "ocrWordCount": 29,
       "ocrConfidence": 77.03,
       "hasTable": false,
@@ -449,16 +467,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Why is it advisable to complete all associated activities before you close",
+        "answer": "7 a trouble ticket? Each activity represents a task that needs to be done. If an activity is not completed, this is an indication of a task that has not been completed."
+      }
     },
     {
       "slideNumber": 27,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n_- — Why is it advisable to complete all associated activities before you close\n7 a trouble ticket?\n¢\nEach activity represents a task that needs to be done. If an activity is not completed,\n\nthis is an indication of a task that has not been completed.\n\nSoe ee ee eee Soo eSeoe Ss\n\nGi",
+      "ocrText": "Answer\n_- — Why is it advisable to complete all associated activities before you close\na trouble ticket?\n•\nEach activity represents a task that needs to be done. If an activity is not completed,\nthis is an indication of a task that has not been completed.\nSoe ee ee eee Soo eSeoe Ss\nGi",
       "ocrWordCount": 56,
       "ocrConfidence": 86.86,
       "hasTable": false,
@@ -470,12 +492,12 @@
     },
     {
       "slideNumber": 28,
-      "title": "",
+      "title": "Key Takeaways",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives ¢ Describe the lifecycle of a trouble ticket\n\nreview ¢ Explain how trouble tickets are used to track\nand resolve issues\n* Create a trouble ticket with holds and\nassociated activities\n« Modify and close trouble tickets",
+      "ocrText": "Lesson\nobjectives • Describe the lifecycle of a trouble ticket\n\nreview • Explain how trouble tickets are used to track\nand resolve issues\n* Create a trouble ticket with holds and\nassociated activities\n« Modify and close trouble tickets",
       "ocrWordCount": 39,
       "ocrConfidence": 89.69,
       "hasTable": false,
@@ -487,7 +509,7 @@
     },
     {
       "slideNumber": 29,
-      "title": "",
+      "title": "Student Exercise",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -513,6 +535,11 @@
       "index": 2,
       "filename": "Billing_13_02.mp4",
       "path": "/academy/guidewire/videos/ch06/Billing_13_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "Billing_13_03.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_13_03.mp4"
     }
   ],
   "hasNotes": true,

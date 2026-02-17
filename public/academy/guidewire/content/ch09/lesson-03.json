@@ -11,7 +11,7 @@
   "slides": [
     {
       "slideNumber": 1,
-      "title": "",
+      "title": "Configuring Claim Intake",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -28,12 +28,12 @@
     },
     {
       "slideNumber": 2,
-      "title": "",
+      "title": "Learning Objectives",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives\n\n¢ Configure the behavior of the FNOL Wizard",
+      "ocrText": "Lesson\nobjectives\n\n• Configure the behavior of the FNOL Wizard",
       "ocrWordCount": 10,
       "ocrConfidence": 90.0,
       "hasTable": false,
@@ -62,7 +62,7 @@
     },
     {
       "slideNumber": 4,
-      "title": "",
+      "title": "i Wizards",
       "bodyParagraphs": [],
       "originalNotes": "Wizards\nThis lesson discusses the FNOL (First Notice of Loss) Wizard, but there are several other wizards in the base application, most of which concern the creation of payments. The principles of organization for the FNOL Wizard apply to these other wizards as well.\nThe steps available in a wizard can vary based on conditions like loss type and policy type. The steps shown above are for a Personal Auto claim.",
       "notes": "Wizards\nThis lesson discusses the FNOL (First Notice of Loss) Wizard, but there are several other wizards in the base application, most of which concern the creation of payments. The principles of organization for the FNOL Wizard apply to these other wizards as well.\nThe steps available in a wizard can vary based on conditions like loss type and policy type. The steps shown above are for a Personal Auto claim.",
@@ -79,10 +79,10 @@
     },
     {
       "slideNumber": 5,
-      "title": "",
+      "title": "i Comparing wizards to location",
       "bodyParagraphs": [],
-      "originalNotes": "Comparing wizards to location groups \nWizards — like location groups — are locations. Both have a side bar listing multiple pages or steps. They also have an info bar and actions menu which are shared by these screens.\n\nThe principal difference between a wizard and a location group is that a wizard is a list of sequential  (and optionally non-sequential) screens, or steps, that together perform some complex task in a logical order",
-      "notes": "Comparing wizards to location groups \nWizards — like location groups — are locations. Both have a side bar listing multiple pages or steps. They also have an info bar and actions menu which are shared by these screens.\n\nThe principal difference between a wizard and a location group is that a wizard is a list of sequential  (and optionally non-sequential) screens, or steps, that together perform some complex task in a logical order",
+      "originalNotes": "Comparing wizards to location groups\nWizards — like location groups — are locations. Both have a side bar listing multiple pages or steps. They also have an info bar and actions menu which are shared by these screens.\n\nThe principal difference between a wizard and a location group is that a wizard is a list of sequential (and optionally non-sequential) screens, or steps, that together perform some complex task in a logical order",
+      "notes": "Comparing wizards to location groups\nWizards — like location groups — are locations. Both have a side bar listing multiple pages or steps. They also have an info bar and actions menu which are shared by these screens.\n\nThe principal difference between a wizard and a location group is that a wizard is a list of sequential (and optionally non-sequential) screens, or steps, that together perform some complex task in a logical order",
       "narration": "",
       "ocrText": "i Comparing wizards to location groups Ga\n\nBoth wizards and location groups have a shared info bar, actions menu,\nand side bar listing pages or steps\n\nof 5: Add claim infc\n\n‘rb one + ae, ng Ot\n\nLOCATION\nGROUP\n\n‘ype © sn snes * Aide © Wetton etonOuner © fede © Sens © Wend? Qu",
       "ocrWordCount": 55,
@@ -96,12 +96,12 @@
     },
     {
       "slideNumber": 6,
-      "title": "",
+      "title": "i Contrasting wizards to location",
       "bodyParagraphs": [],
       "originalNotes": "Contrasting wizards to location groups\nA distinction needs to be made between step availability and menu link visibility. Visibility controls whether a menu link appears or not. This functionality is available to both wizard and non-wizard menu links.\n\nAvailability controls whether a visible menu link is available or not. This functionality is also available to both wizard and non- wizard menu links.\n\nHowever, availability for a wizard menu link is typically based on where a user is within the wizard so that, for example, you cannot move directly from step two to step four without completing step three.\n\nLocation within a wizard does not typically change a menu link’s visibilityt",
       "notes": "Contrasting wizards to location groups\nA distinction needs to be made between step availability and menu link visibility. Visibility controls whether a menu link appears or not. This functionality is available to both wizard and non-wizard menu links.\n\nAvailability controls whether a visible menu link is available or not. This functionality is also available to both wizard and non- wizard menu links.\n\nHowever, availability for a wizard menu link is typically based on where a user is within the wizard so that, for example, you cannot move directly from step two to step four without completing step three.\n\nLocation within a wizard does not typically change a menu link’s visibilityt",
       "narration": "",
-      "ocrText": "i Contrasting wizards to location groups\n\n¢ Wizards have...\n\n| Sequential steps\n\nStep 3 of 5: Add claim information\n\nAbility to make step availability\ndepend on where the user is in\nthe wizard\n\ncm pag\n\noil]\n\nToolbar for navigating the\nwizard’s steps\n\n¢ Unlike location groups,\nwizards declare steps\ndirectly, not through pages",
+      "ocrText": "i Contrasting wizards to location groups\n\n• Wizards have...\n\n| Sequential steps\n\nStep 3 of 5: Add claim information\n\nAbility to make step availability\ndepend on where the user is in\nthe wizard\n\ncm pag\n\noil]\n\nToolbar for navigating the\nwizard’s steps\n\n• Unlike location groups,\nwizards declare steps\ndirectly, not through pages",
       "ocrWordCount": 53,
       "ocrConfidence": 89.59,
       "hasTable": false,
@@ -113,12 +113,12 @@
     },
     {
       "slideNumber": 7,
-      "title": "",
+      "title": "I Wizard and Wizard Step Structure",
       "bodyParagraphs": [],
       "originalNotes": "Wizard and Wizard Step Structure\nThe architecture of a wizard is somewhat simpler than that of a location group. A wizard’s architecture consists of wizard steps, and each wizard step points directly to a screen.",
       "notes": "Wizard and Wizard Step Structure\nThe architecture of a wizard is somewhat simpler than that of a location group. A wizard’s architecture consists of wizard steps, and each wizard step points directly to a screen.",
       "narration": "",
-      "ocrText": "I Wizard and Wizard Step Structure Gi\n\n¢ Two levels of configuration:\n\nic Wizard\n+ Wizard level\n+ Entry point and navigation to wizard\n+ Permissions to visit and edit ar n> —> screen]\n: Wizara: Step\n+ Wizard step level sD —> screen\n* Screen that a step renders i Wizard Step\n+ Step logic (visibility, editability, next step)\n> El\n* Step order Wizard Step\n\nIndependent steps",
+      "ocrText": "I Wizard and Wizard Step Structure Gi\n\n• Two levels of configuration:\n\nic Wizard\n+ Wizard level\n+ Entry point and navigation to wizard\n+ Permissions to visit and edit ar n> —> screen]\n: Wizara: Step\n+ Wizard step level sD —> screen\n* Screen that a step renders i Wizard Step\n+ Step logic (visibility, editability, next step)\n> El\n* Step order Wizard Step\n\nIndependent steps",
       "ocrWordCount": 69,
       "ocrConfidence": 83.42,
       "hasTable": false,
@@ -130,12 +130,12 @@
     },
     {
       "slideNumber": 8,
-      "title": "",
+      "title": "I Wizard Step Sets",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "I Wizard Step Sets Gi\n\n¢ Wizard steps may be grouped together\n\nooo ooo eee ssssssecccccccccsccssssssssees\ninto wizard step sets ==\n= =\n* Wizard step sets let developers specify i lhe\nlogic which is identical for multiple Wizard Step\nsteps\n\n¢ Aseries of wizard steps may be relevant\nonly for property claims\n* These steps may be grouped into a wizard i Wizard Step\nstep set which had a visibility condition of :\n\"visible if the claim's loss type i 7 : one\nype is property’ Se — screen]\n: Wizard Step",
+      "ocrText": "I Wizard Step Sets Gi\n\n• Wizard steps may be grouped together\n\nooo ooo eee ssssssecccccccccsccssssssssees\ninto wizard step sets ==\n= =\n* Wizard step sets let developers specify i lhe\nlogic which is identical for multiple Wizard Step\nsteps\n\n• Aseries of wizard steps may be relevant\nonly for property claims\n* These steps may be grouped into a wizard i Wizard Step\nstep set which had a visibility condition of :\n\"visible if the claim's loss type i 7 : one\nype is property’ Se — screen]\n: Wizard Step",
       "ocrWordCount": 93,
       "ocrConfidence": 84.17,
       "hasTable": false,
@@ -147,12 +147,12 @@
     },
     {
       "slideNumber": 9,
-      "title": "",
+      "title": "Wizard Entry Points",
       "bodyParagraphs": [],
-      "originalNotes": "Wizard Entry Points\nIn the example above, the FNOLWizard wizard has four entry points. The third entry point has a signature of  \"FNOLWizard(Claim)\". It expects a single object of type Claim, which is referred to within the PCF page as \"Claim\".\n\nLocations can have multiple entry points. This is useful when a single location can be referenced from different places with different known pieces of information.\n\nFor example, the FNOLWizard can be accessed with no object (as seen in the first entry point), with a set of information including a Policy Type object (as seen in the second entry point), with a claim (as seen in the third entry point), or with a search criteria  (as seen in the fourth entry point).",
-      "notes": "Wizard Entry Points\nIn the example above, the FNOLWizard wizard has four entry points. The third entry point has a signature of  \"FNOLWizard(Claim)\". It expects a single object of type Claim, which is referred to within the PCF page as \"Claim\".\n\nLocations can have multiple entry points. This is useful when a single location can be referenced from different places with different known pieces of information.\n\nFor example, the FNOLWizard can be accessed with no object (as seen in the first entry point), with a set of information including a Policy Type object (as seen in the second entry point), with a claim (as seen in the third entry point), or with a search criteria  (as seen in the fourth entry point).",
+      "originalNotes": "Wizard Entry Points\nIn the example above, the FNOLWizard wizard has four entry points. The third entry point has a signature of \"FNOLWizard(Claim)\". It expects a single object of type Claim, which is referred to within the PCF page as \"Claim\".\n\nLocations can have multiple entry points. This is useful when a single location can be referenced from different places with different known pieces of information.\n\nFor example, the FNOLWizard can be accessed with no object (as seen in the first entry point), with a set of information including a Policy Type object (as seen in the second entry point), with a claim (as seen in the third entry point), or with a search criteria (as seen in the fourth entry point).",
+      "notes": "Wizard Entry Points\nIn the example above, the FNOLWizard wizard has four entry points. The third entry point has a signature of \"FNOLWizard(Claim)\". It expects a single object of type Claim, which is referred to within the PCF page as \"Claim\".\n\nLocations can have multiple entry points. This is useful when a single location can be referenced from different places with different known pieces of information.\n\nFor example, the FNOLWizard can be accessed with no object (as seen in the first entry point), with a set of information including a Policy Type object (as seen in the second entry point), with a claim (as seen in the third entry point), or with a search criteria (as seen in the fourth entry point).",
       "narration": "",
-      "ocrText": "| Wizard Entry Points G\n\n¢ Provide name and signature for navigation widgets to call the location\nProperties: [= Properties (x) Variables BB code |\n| +E]t ¥ [vocation Entry Point This signature\n\nFNOLWizard0. signature*  FNOLWizard(Claim: Claim) <== _ requires a Claim\nFNOLWizard(policyTy variable called Claim\n\nFNOLWizard(searchC\n\n¢ Each object expected in the signature of each entry point must be declared on the\nVariables tab Properties: | Hs Propeies @) entry pois | code\n\n+= hi Variable\njv Treaturecategory.Featurecategory Basic!\nname* Claim\n\nclaim\nlV \\FeatureCategory.FeatureCategory Advanced! Defines the Claim variable\n\ninitialvValue wizardinfo.createclain()",
+      "ocrText": "| Wizard Entry Points G\n\n• Provide name and signature for navigation widgets to call the location\nProperties: [= Properties (x) Variables BB code |\n| +E]t ¥ [vocation Entry Point This signature\n\nFNOLWizard0. signature*  FNOLWizard(Claim: Claim) <== _ requires a Claim\nFNOLWizard(policyTy variable called Claim\n\nFNOLWizard(searchC\n\n• Each object expected in the signature of each entry point must be declared on the\nVariables tab Properties: | Hs Propeies @) entry pois | code\n\n+= hi Variable\njv Treaturecategory.Featurecategory Basic!\nname* Claim\n\nclaim\nlV \\FeatureCategory.FeatureCategory Advanced! Defines the Claim variable\n\ninitialvValue wizardinfo.createclain()",
       "ocrWordCount": 92,
       "ocrConfidence": 75.78,
       "hasTable": false,
@@ -164,10 +164,10 @@
     },
     {
       "slideNumber": 10,
-      "title": "",
+      "title": "i Navigating to a wizard",
       "bodyParagraphs": [],
-      "originalNotes": "Navigating to a wizard\nMost navigation widgets have an action attribute, which defines where to navigate to when the widget is clicked. The syntax for an action attribute which navigates to a location is:\npcf.LocationEntryPoint. method(objectList), where\n\nLocationEntryPoint is (one of) the location entry point(s) defined on the destination location's Entry Points tab.\n\nmethod is the method used to navigate to the location (which, for location groups, is almost always \"go\")-\n\nobjectList is a comma- delimited list of zero to many objects. This list must match the number of objects and the type which are expected by the location entry point. \nIn the example above, the Claim tab has a New Claim menu item- This menu item has an action of \"FNOLWizard.go()\". The go()  method indicates that clicking the menu item should navigate the user to that location. (The empty parentheses indicate that no object is to be passed to that location.) The location to navigate to is the one that has an entry point of \"FNOLWizard\".\n\nOn the Entry Points tab of the FNOLWizard, four entry points have been defined,  including one which has no arguments. Because this corresponds to the menu item, this is the location to which the user will be navigated when the user clicks the menu item.",
-      "notes": "Navigating to a wizard\nMost navigation widgets have an action attribute, which defines where to navigate to when the widget is clicked. The syntax for an action attribute which navigates to a location is:\npcf.LocationEntryPoint. method(objectList), where\n\nLocationEntryPoint is (one of) the location entry point(s) defined on the destination location's Entry Points tab.\n\nmethod is the method used to navigate to the location (which, for location groups, is almost always \"go\")-\n\nobjectList is a comma- delimited list of zero to many objects. This list must match the number of objects and the type which are expected by the location entry point. \nIn the example above, the Claim tab has a New Claim menu item- This menu item has an action of \"FNOLWizard.go()\". The go()  method indicates that clicking the menu item should navigate the user to that location. (The empty parentheses indicate that no object is to be passed to that location.) The location to navigate to is the one that has an entry point of \"FNOLWizard\".\n\nOn the Entry Points tab of the FNOLWizard, four entry points have been defined,  including one which has no arguments. Because this corresponds to the menu item, this is the location to which the user will be navigated when the user clicks the menu item.",
+      "originalNotes": "Navigating to a wizard\nMost navigation widgets have an action attribute, which defines where to navigate to when the widget is clicked. The syntax for an action attribute which navigates to a location is:\npcf. LocationEntryPoint. method(objectList), where\n\nLocationEntryPoint is (one of) the location entry point(s) defined on the destination location's Entry Points tab.\n\nmethod is the method used to navigate to the location (which, for location groups, is almost always \"go\")-\n\nobjectList is a comma- delimited list of zero to many objects. This list must match the number of objects and the type which are expected by the location entry point.\nIn the example above, the Claim tab has a New Claim menu item- This menu item has an action of \"FNOLWizard.go()\". The go() method indicates that clicking the menu item should navigate the user to that location. (The empty parentheses indicate that no object is to be passed to that location.) The location to navigate to is the one that has an entry point of \"FNOLWizard\".\n\nOn the Entry Points tab of the FNOLWizard, four entry points have been defined, including one which has no arguments. Because this corresponds to the menu item, this is the location to which the user will be navigated when the user clicks the menu item.",
+      "notes": "Navigating to a wizard\nMost navigation widgets have an action attribute, which defines where to navigate to when the widget is clicked. The syntax for an action attribute which navigates to a location is:\npcf. LocationEntryPoint. method(objectList), where\n\nLocationEntryPoint is (one of) the location entry point(s) defined on the destination location's Entry Points tab.\n\nmethod is the method used to navigate to the location (which, for location groups, is almost always \"go\")-\n\nobjectList is a comma- delimited list of zero to many objects. This list must match the number of objects and the type which are expected by the location entry point.\nIn the example above, the Claim tab has a New Claim menu item- This menu item has an action of \"FNOLWizard.go()\". The go() method indicates that clicking the menu item should navigate the user to that location. (The empty parentheses indicate that no object is to be passed to that location.) The location to navigate to is the one that has an entry point of \"FNOLWizard\".\n\nOn the Entry Points tab of the FNOLWizard, four entry points have been defined, including one which has no arguments. Because this corresponds to the menu item, this is the location to which the user will be navigated when the user clicks the menu item.",
       "narration": "",
       "ocrText": "i Navigating to a wizard G\n\nCalling the wizard, for example from a tab bar, uses the Wizard’s “go” method.\n\n* Syntax:\nEntryPointOfLocation.go(variablesToPass)\n\nBravsarpct\n\nDesktop | ClaimTab ( || Search || Address Book Dashboard Menu Item\n1 v IFeatureCat\n\nlew (TermClaim Proper) ‘action\nrey ia”\n4 label\n\n—_—\n\nGicuipewire Desktop | ~ Clim | + | Search| ~ — Addres\n\nNew Claim\nAct ciaime: Q\n\n(000-00-001303 Brittany Turner\n\nActions",
       "ocrWordCount": 69,
@@ -181,7 +181,7 @@
     },
     {
       "slideNumber": 11,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -194,7 +194,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 12,
@@ -215,7 +216,7 @@
     },
     {
       "slideNumber": 13,
-      "title": "",
+      "title": "Configuring wizards",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -232,7 +233,7 @@
     },
     {
       "slideNumber": 14,
-      "title": "",
+      "title": "I Variant Steps",
       "bodyParagraphs": [],
       "originalNotes": "Variant Steps\nNote the differences between the Loss Details screen for an Auto policy and for a Worker’s Compensation policy.\nThe next demo will explain how this is done.",
       "notes": "Variant Steps\nNote the differences between the Loss Details screen for an Auto policy and for a Worker’s Compensation policy.\nThe next demo will explain how this is done.",
@@ -249,12 +250,12 @@
     },
     {
       "slideNumber": 15,
-      "title": "",
+      "title": "i Mode property",
       "bodyParagraphs": [],
-      "originalNotes": "Mode property\nA PCF file can differ based on circumstances like the Loss Type of a claim. The different versions of the PCF are called modes.\n\nThe different modes of the PCF file all have the same name, but with different suffixes. The SUfflX is a code drawn from a list. The list may be a defined object, as\nshown in the first example, or it can be an explicitly defined pair,  as in the second example.\n\nOnly legitimate code values from the list are normally allowed. If the value of the mode property evaluates to something that does not match one of the modal suffixes for the PCF, a runtime error occurs — unless there is a -default mode in the modal set, in which case any value of the mode property that does not match any of the other modes defaults to that mode. For this reason, it is usually good practice to create a default mode for any modal PCF you create.",
-      "notes": "Mode property\nA PCF file can differ based on circumstances like the Loss Type of a claim. The different versions of the PCF are called modes.\n\nThe different modes of the PCF file all have the same name, but with different suffixes. The SUfflX is a code drawn from a list. The list may be a defined object, as\nshown in the first example, or it can be an explicitly defined pair,  as in the second example.\n\nOnly legitimate code values from the list are normally allowed. If the value of the mode property evaluates to something that does not match one of the modal suffixes for the PCF, a runtime error occurs — unless there is a -default mode in the modal set, in which case any value of the mode property that does not match any of the other modes defaults to that mode. For this reason, it is usually good practice to create a default mode for any modal PCF you create.",
+      "originalNotes": "Mode property\nA PCF file can differ based on circumstances like the Loss Type of a claim. The different versions of the PCF are called modes.\n\nThe different modes of the PCF file all have the same name, but with different suffixes. The SUfflX is a code drawn from a list. The list may be a defined object, as\nshown in the first example, or it can be an explicitly defined pair, as in the second example.\n\nOnly legitimate code values from the list are normally allowed. If the value of the mode property evaluates to something that does not match one of the modal suffixes for the PCF, a runtime error occurs — unless there is a -default mode in the modal set, in which case any value of the mode property that does not match any of the other modes defaults to that mode. For this reason, it is usually good practice to create a default mode for any modal PCF you create.",
+      "notes": "Mode property\nA PCF file can differ based on circumstances like the Loss Type of a claim. The different versions of the PCF are called modes.\n\nThe different modes of the PCF file all have the same name, but with different suffixes. The SUfflX is a code drawn from a list. The list may be a defined object, as\nshown in the first example, or it can be an explicitly defined pair, as in the second example.\n\nOnly legitimate code values from the list are normally allowed. If the value of the mode property evaluates to something that does not match one of the modal suffixes for the PCF, a runtime error occurs — unless there is a -default mode in the modal set, in which case any value of the mode property that does not match any of the other modes defaults to that mode. For this reason, it is usually good practice to create a default mode for any modal PCF you create.",
       "narration": "",
-      "ocrText": "i Mode property Ga\n\n¢ Some PCFs have modes\n\nFNOLWizard_NewLossDetailsScreer\n\ndefault\n‘NOLWizard_NewLossDetailsScreer] PR\n‘NOLWizard_NewLossDetailsScreem Trav.\n5] FNOLWizard_NewLossDetailsScree, WC.\n\n¢ Different “versions” of the “same” object\n\n¢ Differentiated by a suffix added to the object\nname after a dot\n\n¢ PCF modes are specified by the mode “2°**\n\nY IReatureCategory.FeatureCategory Basic!\n\nproperty in the parent object ig Ciasiclossdetas\n\n‘gv.config.LOBAbstraction. ForClaim. ForLoasType.getUiMode (Claim)\n\n+ Must be a text value that matches one of —_ —\n\nthe Panel Ref\nsuffixes for that object V tFeatureCategory FeatureCategory.Basic!\net rNoLwizardPindPolicyPanelset (Claim, Wizard)\n\n* Often implemented using a typekey property\nof the parent’s root object\n\nWizard.PageNode? \"search\" : \"Create\"",
+      "ocrText": "i Mode property Ga\n\n• Some PCFs have modes\n\nFNOLWizard_NewLossDetailsScreer\n\ndefault\n‘NOLWizard_NewLossDetailsScreer] PR\n‘NOLWizard_NewLossDetailsScreem Trav.\n5] FNOLWizard_NewLossDetailsScree, WC.\n\n• Different “versions” of the “same” object\n\n• Differentiated by a suffix added to the object\nname after a dot\n\n• PCF modes are specified by the mode “2°**\n\nY IReatureCategory.FeatureCategory Basic!\n\nproperty in the parent object ig Ciasiclossdetas\n\n‘gv.config.LOBAbstraction. ForClaim. ForLoasType.getUiMode (Claim)\n\n+ Must be a text value that matches one of —_ —\n\nthe Panel Ref\nsuffixes for that object V tFeatureCategory FeatureCategory.Basic!\net rNoLwizardPindPolicyPanelset (Claim, Wizard)\n\n* Often implemented using a typekey property\nof the parent’s root object\n\nWizard.PageNode? \"search\" : \"Create\"",
       "ocrWordCount": 103,
       "ocrConfidence": 82.09,
       "hasTable": false,
@@ -266,7 +267,7 @@
     },
     {
       "slideNumber": 16,
-      "title": "",
+      "title": "i Shared Section Mode",
       "bodyParagraphs": [],
       "originalNotes": "Shared Section Mode\nThe Shared Section Mode widget is clickable within Guidewire Studio. Selecting a mode from the widget displays the different modes of the panel set.\n\nNote that the mode property for the Panel or Input Set Ref isgenerated automatically by Studio, and cannot be edited.",
       "notes": "Shared Section Mode\nThe Shared Section Mode widget is clickable within Guidewire Studio. Selecting a mode from the widget displays the different modes of the panel set.\n\nNote that the mode property for the Panel or Input Set Ref isgenerated automatically by Studio, and cannot be edited.",
@@ -283,7 +284,7 @@
     },
     {
       "slideNumber": 17,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -296,7 +297,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 18,
@@ -317,10 +319,10 @@
     },
     {
       "slideNumber": 19,
-      "title": "",
+      "title": "I Order of wizard steps",
       "bodyParagraphs": [],
-      "originalNotes": "Order of wizard steps\nLike the locations in a location group, the steps of a wizard are simply listed sequentially. This list defines the order in which the steps are presented by the wizard in the side bar..\n\nThe \"Find Policy\" step is at the top of the FNOLWizard.pcf file,  and applies to claims of all LOBs.  Steps 2 and onwards aredetermined by the LOB. The numbering shown above is the steps used by a General Liability claim.",
-      "notes": "Order of wizard steps\nLike the locations in a location group, the steps of a wizard are simply listed sequentially. This list defines the order in which the steps are presented by the wizard in the side bar..\n\nThe \"Find Policy\" step is at the top of the FNOLWizard.pcf file,  and applies to claims of all LOBs.  Steps 2 and onwards aredetermined by the LOB. The numbering shown above is the steps used by a General Liability claim.",
+      "originalNotes": "Order of wizard steps\nLike the locations in a location group, the steps of a wizard are simply listed sequentially. This list defines the order in which the steps are presented by the wizard in the side bar..\n\nThe \"Find Policy\" step is at the top of the FNOLWizard.pcf file, and applies to claims of all LOBs. Steps 2 and onwards aredetermined by the LOB. The numbering shown above is the steps used by a General Liability claim.",
+      "notes": "Order of wizard steps\nLike the locations in a location group, the steps of a wizard are simply listed sequentially. This list defines the order in which the steps are presented by the wizard in the side bar..\n\nThe \"Find Policy\" step is at the top of the FNOLWizard.pcf file, and applies to claims of all LOBs. Steps 2 and onwards aredetermined by the LOB. The numbering shown above is the steps used by a General Liability claim.",
       "narration": "",
       "ocrText": "I Order of wizard steps\n\nDetermined by order in which they appear in the wizard PCF file.\n\n1\nNot used in GL\n\nNO 1 BON\n\nFNOLWizard.pcf\n\nGrnowvizardpct\n\nFind Policy: FNOLWizard FindPolicyScreen(Claim, wizardinfo)\n\n‘wizardinfo SelectRiskUnitsLabel: FNOLWizard_PickPolicyRiskUnitsScreen( Claim, wizardinfo )\n\n“OLD * + DisplayKey.get(‘Wizard.NewClaimWizard NewClaimMainContacts Label”): NewClaimWizard_MainContactsScreen(Claim, wizardinfo)\n{Term.LossDetails Proper): NewClaimWizard_LossDetailsScreen(Claim, wizardinfo)\n\n(Term Exposures Proper): NewClaimWizard_ExposuresScreen(Claim, wizardinfo)\n\nParties Involved: NewClaimWizard_PartiesinvolvedScreen(Claim, wizardinfo)\n\nDocuments: NewClaimWizard_DocumentsScreen(Claim, wizardinfo)\n\n‘Save & Assign (Term.Claim.Proper): NewClaimWizard_AssignScreen(Claim, wizardinfo)\n\nGi\n\nGeneral Liability steps\n\nNew Claim Wizard\n\nAy",
       "ocrWordCount": 76,
@@ -334,10 +336,10 @@
     },
     {
       "slideNumber": 20,
-      "title": "",
+      "title": "I Steps in the wizard",
       "bodyParagraphs": [],
-      "originalNotes": "Steps in the wizard\nThe wizard step above is instructive. From the id* property, we know that it represents the Services step of the FNOL wizard.\n\nThe screen* propeny tells us the screen which is displayed by this  wizard step.\n\nThe mode property tells us that there are multiple modes of the screen, and that the mode is selected based on the loss type of the claim.\n\nBecause the allowFinish property is set to true, we know that the user can click the Finish button from this step.\n\nBecause the available property is set to something other than true, we know that this screen is not available for all claims.",
-      "notes": "Steps in the wizard\nThe wizard step above is instructive. From the id* property, we know that it represents the Services step of the FNOL wizard.\n\nThe screen* propeny tells us the screen which is displayed by this  wizard step.\n\nThe mode property tells us that there are multiple modes of the screen, and that the mode is selected based on the loss type of the claim.\n\nBecause the allowFinish property is set to true, we know that the user can click the Finish button from this step.\n\nBecause the available property is set to something other than true, we know that this screen is not available for all claims.",
+      "originalNotes": "Steps in the wizard\nThe wizard step above is instructive. From the id* property, we know that it represents the Services step of the FNOL wizard.\n\nThe screen* propeny tells us the screen which is displayed by this wizard step.\n\nThe mode property tells us that there are multiple modes of the screen, and that the mode is selected based on the loss type of the claim.\n\nBecause the allowFinish property is set to true, we know that the user can click the Finish button from this step.\n\nBecause the available property is set to something other than true, we know that this screen is not available for all claims.",
+      "notes": "Steps in the wizard\nThe wizard step above is instructive. From the id* property, we know that it represents the Services step of the FNOL wizard.\n\nThe screen* propeny tells us the screen which is displayed by this wizard step.\n\nThe mode property tells us that there are multiple modes of the screen, and that the mode is selected based on the loss type of the claim.\n\nBecause the allowFinish property is set to true, we know that the user can click the Finish button from this step.\n\nBecause the available property is set to something other than true, we know that this screen is not available for all claims.",
       "narration": "",
       "ocrText": "I Steps in the wizard\n\nRepresent screens\n\nrvicesScreen(Claim, wizardinfo)\n\nWizard Step\nY IFeatureCategory.FeatureCategory Basic!\n\niat Services\n\nmode gw. config. LOBAbstraction. ForClain. ForLossType.getUIMode (Claim)\n\nscreen” FNOLWizard_ServicesScreen(Claim, wizardInfo)\n\ntitle\" DisplayRey.get (\"Wizard.NewClainiizard.NewClainservices.Step\", wizardinfo.CurrentstepNunber, wizardInfo.TotalNumberofsteps)\n\\ IFeatureCategory.FeatureCategory Advanced!\n\nallowFinish true\n\nallowNext\n\navailable wizardInfo. TsServicesstepavailable\n\n@ | evPotss4-123456 | Ins:RayNewton | Dol:03/26/2018 | St:Draft\n\nStep 4 of 5: Services\n\nnl",
       "ocrWordCount": 55,
@@ -351,10 +353,10 @@
     },
     {
       "slideNumber": 21,
-      "title": "",
+      "title": "Step sets in the Wizard",
       "bodyParagraphs": [],
-      "originalNotes": "Step sets in the Wizard\nThe Wizard Step Set serves the purpose of grouping several steps and giving them common availability and visibility properties. Within the step set,  the individual steps often have their available and visible properties set to true, so that whenever the step set is available and visible, so are the individual steps.\n\nTo add a step to a step set, drag it from the toolbox and drop it in the appropriate spot.",
-      "notes": "Step sets in the Wizard\nThe Wizard Step Set serves the purpose of grouping several steps and giving them common availability and visibility properties. Within the step set,  the individual steps often have their available and visible properties set to true, so that whenever the step set is available and visible, so are the individual steps.\n\nTo add a step to a step set, drag it from the toolbox and drop it in the appropriate spot.",
+      "originalNotes": "Step sets in the Wizard\nThe Wizard Step Set serves the purpose of grouping several steps and giving them common availability and visibility properties. Within the step set, the individual steps often have their available and visible properties set to true, so that whenever the step set is available and visible, so are the individual steps.\n\nTo add a step to a step set, drag it from the toolbox and drop it in the appropriate spot.",
+      "notes": "Step sets in the Wizard\nThe Wizard Step Set serves the purpose of grouping several steps and giving them common availability and visibility properties. Within the step set, the individual steps often have their available and visible properties set to true, so that whenever the step set is available and visible, so are the individual steps.\n\nTo add a step to a step set, drag it from the toolbox and drop it in the appropriate spot.",
       "narration": "",
       "ocrText": "Step sets in the Wizard G\n\nStep sets are represented in a wizard-by-Wizard Step Set objects.\n\nGB rnowizardpct Properties B=\n| Wizard Step Set\nDocuments: NewClaimWizard_DocumentsScreen(Claim, wizardinfo)\nV tFeatureCategory.FeatureCategory Basic!\nie” FullWizardStepSet\n\n‘Save & Assign (Term.Claim.Proper): NewClaimWizard_AssignScreen(Claim, wizardinfo)\nV IFeatureCategory.FeatureCategory Advanced!\n\nSave (Term Claim Proper: NewClaimWizard.SummaryScreen\\Claim, wizardino) avilable wizardinfo.tetossTypeset\nmode\nVisible _‘wizardinfo.useolawizardstep()\n\nBasic Info: FNOLWizard_BasicInfoScreen(Claim, wizardinfo)\n\n(Term.LossDetails Proper}: FNOLWizard_NewLossDetailsScreen(Claim, wizardinfo)\n\nServices: FNOLWizard_ServicesScreen(Claim, wizardinfo)\n\nSave & Assign (Term.Claim.Proper): FNOLWizard_AssignSaveScreen(Claim, wizardinfo)",
       "ocrWordCount": 69,
@@ -368,7 +370,7 @@
     },
     {
       "slideNumber": 22,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -381,7 +383,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 2
     },
     {
       "slideNumber": 23,
@@ -419,12 +422,12 @@
     },
     {
       "slideNumber": 25,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_— — Whatis the structure of a wizard?\n\n¢\n7\n¢\n\nee",
+      "ocrText": "Question\nWhat is the structure of a wizard?\n•\n•",
       "ocrWordCount": 13,
       "ocrConfidence": 81.59,
       "hasTable": false,
@@ -432,16 +435,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What is the structure of a wizard?",
+        "answer": "• The correct answer is it is a list of sequential (and optionally non-sequential) steps, that together perform some complex task in a logical order, as a logical unit of work."
+      }
     },
     {
       "slideNumber": 26,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n_— — Whatis the structure of a wizard?\n\n¢\n\n¢\n¢ The correct answer is it is a list of sequential (and optionally non-sequential) steps,\nthat together perform some complex task in a logical order, as a logical unit of work.\n\nSe see aS SSeS\n\nnl",
+      "ocrText": "Answer\nWhat is the structure of a wizard?\n•\n•\n• The correct answer is it is a list of sequential (and optionally non-sequential) steps,\nthat together perform some complex task in a logical order, as a logical unit of work.\nnl",
       "ocrWordCount": 47,
       "ocrConfidence": 84.92,
       "hasTable": false,
@@ -453,12 +460,12 @@
     },
     {
       "slideNumber": 27,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_- — How does a wizard reference a screen, and howis this different from\n\nKs how a location group references a screen?\n¢\n\nee\n\nGi",
+      "ocrText": "Question\n_- — How does a wizard reference a screen, and howis this different from\nKs how a location group references a screen?\n•\nee\nGi",
       "ocrWordCount": 26,
       "ocrConfidence": 78.87,
       "hasTable": false,
@@ -466,16 +473,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "How does a wizard reference a screen, and howis this different from",
+        "answer": "Ka how a location group references a screen? The correct answer is a wizard directly references a screen via a wizard step, as opposed to a location group which references a screen via a page."
+      }
     },
     {
       "slideNumber": 28,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer G\n\n,- — How does a wizard reference a screen, and howis this different from\nKa how a location group references a screen?\n¢\nThe correct answer is a wizard directly references a screen via a wizard step, as\nopposed to a location group which references a screen via a page.\n\nSe see aS SSeS",
+      "ocrText": "Answer G\nHow does a wizard reference a screen, and howis this different from\nKa how a location group references a screen?\n•\nThe correct answer is a wizard directly references a screen via a wizard step, as\nopposed to a location group which references a screen via a page.",
       "ocrWordCount": 56,
       "ocrConfidence": 82.98,
       "hasTable": false,
@@ -487,12 +498,12 @@
     },
     {
       "slideNumber": 29,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_— — What happens when a screen’s mode property does not match any of\nKs the defined modes?\n\nee\n\nGi",
+      "ocrText": "Question\nWhat happens when a screen’s mode property does not match any of\nKs the defined modes?\nee\nGi",
       "ocrWordCount": 21,
       "ocrConfidence": 84.32,
       "hasTable": false,
@@ -500,16 +511,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What happens when a screen’s mode property does not match any of",
+        "answer": "Ka the defined modes? The correct answer is if there is a default mode defined, that mode of the screen is displayed; otherwise, a runtime error occurs."
+      }
     },
     {
       "slideNumber": 30,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n_— — What happens when a screen’s mode property does not match any of\nKa the defined modes?\n\nThe correct answer is if there is a default mode defined, that mode of the screen is\ndisplayed; otherwise, a runtime error occurs.\n\nSe see aS SSeS\n\nGi",
+      "ocrText": "Answer\nWhat happens when a screen’s mode property does not match any of\nKa the defined modes?\nThe correct answer is if there is a default mode defined, that mode of the screen is\ndisplayed; otherwise, a runtime error occurs.\nGi",
       "ocrWordCount": 47,
       "ocrConfidence": 86.06,
       "hasTable": false,
@@ -521,7 +536,7 @@
     },
     {
       "slideNumber": 31,
-      "title": "",
+      "title": "Student Exercise",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -538,12 +553,12 @@
     },
     {
       "slideNumber": 32,
-      "title": "",
+      "title": "Key Takeaways",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives\nreview\n\n¢ Configure the behavior of the FNOL Wizard",
+      "ocrText": "Lesson\nobjectives\nreview\n\n• Configure the behavior of the FNOL Wizard",
       "ocrWordCount": 11,
       "ocrConfidence": 90.55,
       "hasTable": false,
@@ -569,6 +584,11 @@
       "index": 3,
       "filename": "CC_03_03.mp4",
       "path": "/academy/guidewire/videos/ch09/CC_03_03.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "CC_03_04.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_03_04.mp4"
     }
   ],
   "hasNotes": true,

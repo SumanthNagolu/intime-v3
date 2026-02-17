@@ -212,21 +212,21 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "ae Does a transaction require approval when:\no A) tis not flagged by transaction approval rules but exceeds the user's authority\n\nlimits?\n\nB) Itdoes not exceed the user's authority limits but is flagged by transaction approval\nrules?\n\nC) It exceeds the user's authority limits and is flagged by transaction approval rules?\n\nen",
+      "question": "Does a transaction require approval when:\nA) tis not flagged by transaction approval rules but exceeds the user's authority\nlimits?\nB) Itdoes not exceed the user's authority limits but is flagged by transaction approval\nrules?\nC) It exceeds the user's authority limits and is flagged by transaction approval rules?",
       "referenceAnswer": "The answer for all three is the same. The transaction requires approval in all three\ncases.",
       "questionKey": "slide-28"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": ",~ — Anauthority limit consists of criteria and an amount. What three values\n\nx can optionally be specified to create the condition?\n\n¢\n\nen",
+      "question": "An authority limit consists of criteria and an amount. What three values\ncan optionally be specified to create the condition?",
       "referenceAnswer": "Policy type, coverage type, and cost type.",
       "questionKey": "slide-30"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": ",~ — What two things does ClaimCenter do when it determines that a\n\nx transaction requires approval?\n\nen",
+      "question": "What two things does ClaimCenter do when it determines that a\ntransaction requires approval?",
       "referenceAnswer": "It sets the transaction status to pending approval and it creates an approval activity\n(which is typically routed to a supervisor).",
       "questionKey": "slide-32"
     },

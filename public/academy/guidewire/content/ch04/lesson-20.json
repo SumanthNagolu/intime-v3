@@ -64,10 +64,10 @@
       "slideNumber": 4,
       "title": "Question Sets in Detail: Usage and Configuration",
       "bodyParagraphs": [],
-      "originalNotes": "Question sets (I of 3)\nQuestion sets are used to determine whether a person qualifies for a particular product,  either right before they enter the wizard or through accumulated information indicating an unacceptably large level of risk that is not tied to a single issue. A question set gives you a way to determine to whom to market a product, and a way to collect underwriting information that is not pertinent to the rating process.\n\nQuestion sets are linked to the Product in the product model. Questions are not reusable across question sets. If you want the same question asked in two different question sets, you need to create the questions two times. However, question sets can be associated with multiple products. If there are several questions you want to ask for more than one product, you could put those questions in a single question set and then associate that question set with each product.",
-      "notes": "Question sets (I of 3)\nQuestion sets are used to determine whether a person qualifies for a particular product,  either right before they enter the wizard or through accumulated information indicating an unacceptably large level of risk that is not tied to a single issue. A question set gives you a way to determine to whom to market a product, and a way to collect underwriting information that is not pertinent to the rating process.\n\nQuestion sets are linked to the Product in the product model. Questions are not reusable across question sets. If you want the same question asked in two different question sets, you need to create the questions two times. However, question sets can be associated with multiple products. If there are several questions you want to ask for more than one product, you could put those questions in a single question set and then associate that question set with each product.",
+      "originalNotes": "Question sets (I of 3)\nQuestion sets are used to determine whether a person qualifies for a particular product, either right before they enter the wizard or through accumulated information indicating an unacceptably large level of risk that is not tied to a single issue. A question set gives you a way to determine to whom to market a product, and a way to collect underwriting information that is not pertinent to the rating process.\n\nQuestion sets are linked to the Product in the product model. Questions are not reusable across question sets. If you want the same question asked in two different question sets, you need to create the questions two times. However, question sets can be associated with multiple products. If there are several questions you want to ask for more than one product, you could put those questions in a single question set and then associate that question set with each product.",
+      "notes": "Question sets (I of 3)\nQuestion sets are used to determine whether a person qualifies for a particular product, either right before they enter the wizard or through accumulated information indicating an unacceptably large level of risk that is not tied to a single issue. A question set gives you a way to determine to whom to market a product, and a way to collect underwriting information that is not pertinent to the rating process.\n\nQuestion sets are linked to the Product in the product model. Questions are not reusable across question sets. If you want the same question asked in two different question sets, you need to create the questions two times. However, question sets can be associated with multiple products. If there are several questions you want to ask for more than one product, you could put those questions in a single question set and then associate that question set with each product.",
       "narration": "Let’s explore question sets in more detail. They serve as a mechanism for pre-qualifying potential policyholders by asking targeted questions. Linked to the product model, they help insurers decide who to market which products to, while collecting underwriting information. Remember, questions in a set are unique to that set, meaning you’ll need to duplicate questions for use in different sets. This ensures that each product can be tailored precisely to the insurer's requirements.",
-      "ocrText": "| Question sets (1 of 3)\n\n* Question sets expedite underwriting\n\n¢« Sample question sets are available in\nthe base configuration\n\n* Question sets are linked to a product",
+      "ocrText": "| Question sets (1 of 3)\n\n* Question sets expedite underwriting\n\n•« Sample question sets are available in\nthe base configuration\n\n* Question sets are linked to a product",
       "ocrWordCount": 29,
       "ocrConfidence": 88.4,
       "hasTable": false,
@@ -84,7 +84,7 @@
       "originalNotes": "Question sets (2 of 3)\nQuestion sets are not suitable for rating or integrations, nor are they suitable for capturing detailed information about a specific object, such as a vehicle or building. Question sets arebest used for underwriting applications. Do not use Question sets to collect information about coverables or anything related directly to rating.\n\nIf you are handling data that will be used in the rating process, consider using modifiers as an alternative to question sets. If you are handling data related to specific objects, such as automobiles or buildings, then use datamodel fields to accommodate the requirement.",
       "notes": "Question sets (2 of 3)\nQuestion sets are not suitable for rating or integrations, nor are they suitable for capturing detailed information about a specific object, such as a vehicle or building. Question sets arebest used for underwriting applications. Do not use Question sets to collect information about coverables or anything related directly to rating.\n\nIf you are handling data that will be used in the rating process, consider using modifiers as an alternative to question sets. If you are handling data related to specific objects, such as automobiles or buildings, then use datamodel fields to accommodate the requirement.",
       "narration": "While powerful, question sets have limitations. They are not intended for rating or integration purposes, nor for detailed data collection about specific insurable objects like vehicles. For rating data, modifiers are more appropriate, and for specific object data, consider leveraging data model fields. This distinction ensures that data is not only collected appropriately but also used effectively across PolicyCenter.",
-      "ocrText": "| Question sets (2 of 3)\n\n¢ PolicyCenter can display a set of\nquestions when a submission job\ninitiates\n* Question sets\n* Can be used to determine offerings\n\n* Can include logic designed to collect\ndetailed information to help evaluate risk\n\n« Are not suitable for rating or integration\n\neee\n\n@",
+      "ocrText": "| Question sets (2 of 3)\n\n• PolicyCenter can display a set of\nquestions when a submission job\ninitiates\n* Question sets\n* Can be used to determine offerings\n\n* Can include logic designed to collect\ndetailed information to help evaluate risk\n\n« Are not suitable for rating or integration\n\neee\n\n@",
       "ocrWordCount": 52,
       "ocrConfidence": 89.71,
       "hasTable": false,
@@ -98,10 +98,10 @@
       "slideNumber": 6,
       "title": "Primary Purpose of Question Sets",
       "bodyParagraphs": [],
-      "originalNotes": "Question sets (3 of 3)\nThe primary use of a question set is to evaluate risk. This information is not used for rating,  or as data to pass on to other systems. The base configuration uses pre-qualification question sets exclusively in submission transactions. However, question sets can collect information at different points during policy processing, for example,  questions for locations.",
-      "notes": "Question sets (3 of 3)\nThe primary use of a question set is to evaluate risk. This information is not used for rating,  or as data to pass on to other systems. The base configuration uses pre-qualification question sets exclusively in submission transactions. However, question sets can collect information at different points during policy processing, for example,  questions for locations.",
+      "originalNotes": "Question sets (3 of 3)\nThe primary use of a question set is to evaluate risk. This information is not used for rating, or as data to pass on to other systems. The base configuration uses pre-qualification question sets exclusively in submission transactions. However, question sets can collect information at different points during policy processing, for example, questions for locations.",
+      "notes": "Question sets (3 of 3)\nThe primary use of a question set is to evaluate risk. This information is not used for rating, or as data to pass on to other systems. The base configuration uses pre-qualification question sets exclusively in submission transactions. However, question sets can collect information at different points during policy processing, for example, questions for locations.",
       "narration": "Question sets' primary purpose is to evaluate risk, focusing on information critical to underwriting rather than rating. Typically, these sets are used during the submission process to filter out unsuitable risks early on. However, they can also be applied at various stages in the policy lifecycle, such as capturing location-specific details. This flexibility allows insurers to fine-tune their risk assessment processes.",
-      "ocrText": "| Question sets (3 of 3)\n\nQualification\n\n‘Commercial Auto Pre-Qualification\n\nDid agent inspect vehicles? Yes @)No\nAny vehicles customized, altered or which have special equipment? Yes @)No\nWith exception of encumbrances, are any vehicles not solely owned by and registered to applicant? Yes @)No\nAny past, present or planned operation including manufacture, installation, removal, encasement, or encapsulation of asbestos? () Yes (@) No\nHow many hours per day are vehicles in use? <none> >\n\n¢ After selecting the product type, PolicyCenter might display a pre-qualification\nscreen made up of a question set\n\n¢ This kind of question set is intended to aid in risk evaluation",
+      "ocrText": "| Question sets (3 of 3)\n\nQualification\n\n‘Commercial Auto Pre-Qualification\n\nDid agent inspect vehicles? Yes @)No\nAny vehicles customized, altered or which have special equipment? Yes @)No\nWith exception of encumbrances, are any vehicles not solely owned by and registered to applicant? Yes @)No\nAny past, present or planned operation including manufacture, installation, removal, encasement, or encapsulation of asbestos? () Yes (@) No\nHow many hours per day are vehicles in use? <none> >\n\n• After selecting the product type, PolicyCenter might display a pre-qualification\nscreen made up of a question set\n\n• This kind of question set is intended to aid in risk evaluation",
       "ocrWordCount": 105,
       "ocrConfidence": 89.57,
       "hasTable": false,
@@ -126,7 +126,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 8,
@@ -160,7 +161,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 10,
@@ -203,7 +205,7 @@
       "originalNotes": "Offerings\nInsurers want to be able to create offerings quickly, often based on a similar pre-existing product. PolicyCenter provides the tools to quickly and easily create offerings based on an existing product definitiom You start with the base product definition, and then tailor it to define a specific offering. The offerings allow customers to modify default values for coverages, coverage terms. It is possible to switch between different offerings within a given product, between different products is not possible.\n\n In the base configuration, the following products provide offerings:\nBusinessowners\nCommercial Auto\nCommercial Package\nGeneral Liability\nPersonal Auto",
       "notes": "Offerings\nInsurers want to be able to create offerings quickly, often based on a similar pre-existing product. PolicyCenter provides the tools to quickly and easily create offerings based on an existing product definitiom You start with the base product definition, and then tailor it to define a specific offering. The offerings allow customers to modify default values for coverages, coverage terms. It is possible to switch between different offerings within a given product, between different products is not possible.\n\n In the base configuration, the following products provide offerings:\nBusinessowners\nCommercial Auto\nCommercial Package\nGeneral Liability\nPersonal Auto",
       "narration": "Offerings enhance product customization by allowing modifications to default values for coverages and terms. This flexibility is crucial in meeting diverse customer needs. While users can switch between different offerings within a product, it’s important to note that switching between products isn’t supported. This ensures consistency within each product line, while still providing customization where it matters most.",
-      "ocrText": "| Offerings\n\n¢ Insurers could have hundreds of types\nof offerings based on existing base\nproduct definitions\n\n¢ Offerings provide a way for insurers to\nreach specific buyers\n\nBase product\ndefinition\n\n<9\n<9\nxO\n\n<9\nxO\nRS\n\nxO\n<9\n<9",
+      "ocrText": "| Offerings\n\n• Insurers could have hundreds of types\nof offerings based on existing base\nproduct definitions\n\n• Offerings provide a way for insurers to\nreach specific buyers\n\nBase product\ndefinition\n\n<9\n<9\nxO\n\n<9\nxO\nRS\n\nxO\n<9\n<9",
       "ocrWordCount": 40,
       "ocrConfidence": 89.28,
       "hasTable": false,
@@ -217,10 +219,10 @@
       "slideNumber": 13,
       "title": "Offerings in the Submission Process",
       "bodyParagraphs": [],
-      "originalNotes": "Offerings in PolicyCenter\nAn offering is the first step in the submission process inPolicyCenter. The process of creating a policy will begin with the user selecting an offering. If the user selects another offering,  he will see any associated prequalification questions on the Qualification screen. These work the same way as question sets at the product level they might disqualify him from a particular offering, and/or influence rating.  Offerings can change what appears for a coverage and other pages within the submission. If you do not define a specific Offering in the product model, then the offering is set to the PolicyLine-specific setting.",
-      "notes": "Offerings in PolicyCenter\nAn offering is the first step in the submission process inPolicyCenter. The process of creating a policy will begin with the user selecting an offering. If the user selects another offering,  he will see any associated prequalification questions on the Qualification screen. These work the same way as question sets at the product level they might disqualify him from a particular offering, and/or influence rating.  Offerings can change what appears for a coverage and other pages within the submission. If you do not define a specific Offering in the product model, then the offering is set to the PolicyLine-specific setting.",
+      "originalNotes": "Offerings in PolicyCenter\nAn offering is the first step in the submission process inPolicyCenter. The process of creating a policy will begin with the user selecting an offering. If the user selects another offering, he will see any associated prequalification questions on the Qualification screen. These work the same way as question sets at the product level they might disqualify him from a particular offering, and/or influence rating. Offerings can change what appears for a coverage and other pages within the submission. If you do not define a specific Offering in the product model, then the offering is set to the PolicyLine-specific setting.",
+      "notes": "Offerings in PolicyCenter\nAn offering is the first step in the submission process inPolicyCenter. The process of creating a policy will begin with the user selecting an offering. If the user selects another offering, he will see any associated prequalification questions on the Qualification screen. These work the same way as question sets at the product level they might disqualify him from a particular offering, and/or influence rating. Offerings can change what appears for a coverage and other pages within the submission. If you do not define a specific Offering in the product model, then the offering is set to the PolicyLine-specific setting.",
       "narration": "In PolicyCenter, selecting an offering is the first step in the submission process. This decision impacts the options and questions presented throughout the submission. Offerings can influence prequalification questions and the visibility of certain coverages, streamlining the process and ensuring customers receive relevant options. Understanding this workflow is essential for effective product management.",
-      "ocrText": "| Offerings in PolicyCenter Gi\n\nEB Submission (Draft) Commercial Auto Eff. 18-08-28 RayNewton Account # 000143542\n\nOfferings\n\nOffering Selection Standard a\n\n| <none>\n\nStandard\n\nSpecial Risk\n\n¢ This example shows the first step of a submission for a Commercial Auto policy\n\n¢ The Offering can be associated with a question set",
+      "ocrText": "| Offerings in PolicyCenter Gi\n\nEB Submission (Draft) Commercial Auto Eff. 18-08-28 RayNewton Account # 000143542\n\nOfferings\n\nOffering Selection Standard a\n\n| <none>\n\nStandard\n\nSpecial Risk\n\n• This example shows the first step of a submission for a Commercial Auto policy\n\n• The Offering can be associated with a question set",
       "ocrWordCount": 51,
       "ocrConfidence": 85.0,
       "hasTable": false,
@@ -234,10 +236,10 @@
       "slideNumber": 14,
       "title": "When to Use Offerings",
       "bodyParagraphs": [],
-      "originalNotes": "When to use Offerings\nOne example of a marketing program is a version of BOP that is pre-defined for a franchise. Another example is a targeted commercial auto product offering only a limited number of options for local delivery companies. The appropriate program could be dependent upon information collected during the submission process itself.\n\nIn the US, regulatory bodies are often oblivious to marketing programs, as long as there is noevidence that discriminatory practices are being used to assign programs to insureds. Regulatory bodies are interested in the filed rates, forms, andunderwriting rules, but these are not typically unique to a particular program.\n\nIn Canada, programs might be referred to as \"packaged policies\"or as \"programs\". The distinction is that packaged policies are targeting a particular risk profile,  while a program would be intended for a particular broker or for policies within a large corporate account. In Canada, there is a greater possibility that rating and forms might be unique to the program used, such as a discount being applied for a particular program. It remainstrue, however, that regulators are\ntypically not interested in programs or packaged policies.",
-      "notes": "When to use Offerings\nOne example of a marketing program is a version of BOP that is pre-defined for a franchise. Another example is a targeted commercial auto product offering only a limited number of options for local delivery companies. The appropriate program could be dependent upon information collected during the submission process itself.\n\nIn the US, regulatory bodies are often oblivious to marketing programs, as long as there is noevidence that discriminatory practices are being used to assign programs to insureds. Regulatory bodies are interested in the filed rates, forms, andunderwriting rules, but these are not typically unique to a particular program.\n\nIn Canada, programs might be referred to as \"packaged policies\"or as \"programs\". The distinction is that packaged policies are targeting a particular risk profile,  while a program would be intended for a particular broker or for policies within a large corporate account. In Canada, there is a greater possibility that rating and forms might be unique to the program used, such as a discount being applied for a particular program. It remainstrue, however, that regulators are\ntypically not interested in programs or packaged policies.",
+      "originalNotes": "When to use Offerings\nOne example of a marketing program is a version of BOP that is pre-defined for a franchise. Another example is a targeted commercial auto product offering only a limited number of options for local delivery companies. The appropriate program could be dependent upon information collected during the submission process itself.\n\nIn the US, regulatory bodies are often oblivious to marketing programs, as long as there is noevidence that discriminatory practices are being used to assign programs to insureds. Regulatory bodies are interested in the filed rates, forms, andunderwriting rules, but these are not typically unique to a particular program.\n\nIn Canada, programs might be referred to as \"packaged policies\"or as \"programs\". The distinction is that packaged policies are targeting a particular risk profile, while a program would be intended for a particular broker or for policies within a large corporate account. In Canada, there is a greater possibility that rating and forms might be unique to the program used, such as a discount being applied for a particular program. It remainstrue, however, that regulators are\ntypically not interested in programs or packaged policies.",
+      "notes": "When to use Offerings\nOne example of a marketing program is a version of BOP that is pre-defined for a franchise. Another example is a targeted commercial auto product offering only a limited number of options for local delivery companies. The appropriate program could be dependent upon information collected during the submission process itself.\n\nIn the US, regulatory bodies are often oblivious to marketing programs, as long as there is noevidence that discriminatory practices are being used to assign programs to insureds. Regulatory bodies are interested in the filed rates, forms, andunderwriting rules, but these are not typically unique to a particular program.\n\nIn Canada, programs might be referred to as \"packaged policies\"or as \"programs\". The distinction is that packaged policies are targeting a particular risk profile, while a program would be intended for a particular broker or for policies within a large corporate account. In Canada, there is a greater possibility that rating and forms might be unique to the program used, such as a discount being applied for a particular program. It remainstrue, however, that regulators are\ntypically not interested in programs or packaged policies.",
       "narration": "Offerings are ideal for creating targeted insurance programs, like a Businessowners policy for franchises or a commercial auto product for delivery companies. Regulatory considerations vary by region, but generally, offerings focus on market needs rather than regulatory specifics. In Canada, for instance, offerings might include unique rating and forms, whereas in the US, the focus might be more on non-discriminatory program assignments.",
-      "ocrText": "| When to use Offerings\n\n¢ Offerings define specific product types\n\n¢ Offerings are useful for marketing\npolicies to a specific affinity group or\nmarketing segment\n\n£9",
+      "ocrText": "| When to use Offerings\n\n• Offerings define specific product types\n\n• Offerings are useful for marketing\npolicies to a specific affinity group or\nmarketing segment\n\n£9",
       "ocrWordCount": 27,
       "ocrConfidence": 91.15,
       "hasTable": false,
@@ -251,8 +253,8 @@
       "slideNumber": 15,
       "title": "Offerings and Availability",
       "bodyParagraphs": [],
-      "originalNotes": "Offerings and Availability\nBecause offerings are built on top of the product model, they inherit all the capabilities of the product model. In particular, you apply the availability of all product model entities before you calculate the contents of the offering- Whether a given coverage appears to the user depends both on the availability of the coverage as defined by the product model, as well as by the inclusion of the coverage in the offering.\n\nAn offering can be made available based on the above factors. Users can use offerings for the following use cases too:\nBusiness-specific products: An insurer offers a business program that consists of a set of common coverages- The insurer offers specialized products based on this business program. These specialized products are offered to retailers, autoshops, and the hospitality industry, among others. These specialized products offer coverage levels appropriate for each business type. Affinity groups: Some insurers write policies that are based on a group membership of the insured. These affinity group policies offer a subset of the available coverages, group-specific default values, and possibly group-specific  value choices for the coverage terms. Often the policy is subject to a special rate agreement, and so must obey various restrictions on the coverages and terms offered.\nPrograms or tiers of coverages: This is similar in concept to the affinity group. The classic example is Bronze, Silver,  and Gold programs,  where the user can choose increasing levels of coverage at increasing cost. Programs can also offer different coverages- An analogous case in commercial insurance is the creation of products for a particular industry, business profile, or franchisee.",
-      "notes": "Offerings and Availability\nBecause offerings are built on top of the product model, they inherit all the capabilities of the product model. In particular, you apply the availability of all product model entities before you calculate the contents of the offering- Whether a given coverage appears to the user depends both on the availability of the coverage as defined by the product model, as well as by the inclusion of the coverage in the offering.\n\nAn offering can be made available based on the above factors. Users can use offerings for the following use cases too:\nBusiness-specific products: An insurer offers a business program that consists of a set of common coverages- The insurer offers specialized products based on this business program. These specialized products are offered to retailers, autoshops, and the hospitality industry, among others. These specialized products offer coverage levels appropriate for each business type. Affinity groups: Some insurers write policies that are based on a group membership of the insured. These affinity group policies offer a subset of the available coverages, group-specific default values, and possibly group-specific  value choices for the coverage terms. Often the policy is subject to a special rate agreement, and so must obey various restrictions on the coverages and terms offered.\nPrograms or tiers of coverages: This is similar in concept to the affinity group. The classic example is Bronze, Silver,  and Gold programs,  where the user can choose increasing levels of coverage at increasing cost. Programs can also offer different coverages- An analogous case in commercial insurance is the creation of products for a particular industry, business profile, or franchisee.",
+      "originalNotes": "Offerings and Availability\nBecause offerings are built on top of the product model, they inherit all the capabilities of the product model. In particular, you apply the availability of all product model entities before you calculate the contents of the offering- Whether a given coverage appears to the user depends both on the availability of the coverage as defined by the product model, as well as by the inclusion of the coverage in the offering.\n\nAn offering can be made available based on the above factors. Users can use offerings for the following use cases too:\nBusiness-specific products: An insurer offers a business program that consists of a set of common coverages- The insurer offers specialized products based on this business program. These specialized products are offered to retailers, autoshops, and the hospitality industry, among others. These specialized products offer coverage levels appropriate for each business type. Affinity groups: Some insurers write policies that are based on a group membership of the insured. These affinity group policies offer a subset of the available coverages, group-specific default values, and possibly group-specific value choices for the coverage terms. Often the policy is subject to a special rate agreement, and so must obey various restrictions on the coverages and terms offered.\nPrograms or tiers of coverages: This is similar in concept to the affinity group. The classic example is Bronze, Silver, and Gold programs, where the user can choose increasing levels of coverage at increasing cost. Programs can also offer different coverages- An analogous case in commercial insurance is the creation of products for a particular industry, business profile, or franchisee.",
+      "notes": "Offerings and Availability\nBecause offerings are built on top of the product model, they inherit all the capabilities of the product model. In particular, you apply the availability of all product model entities before you calculate the contents of the offering- Whether a given coverage appears to the user depends both on the availability of the coverage as defined by the product model, as well as by the inclusion of the coverage in the offering.\n\nAn offering can be made available based on the above factors. Users can use offerings for the following use cases too:\nBusiness-specific products: An insurer offers a business program that consists of a set of common coverages- The insurer offers specialized products based on this business program. These specialized products are offered to retailers, autoshops, and the hospitality industry, among others. These specialized products offer coverage levels appropriate for each business type. Affinity groups: Some insurers write policies that are based on a group membership of the insured. These affinity group policies offer a subset of the available coverages, group-specific default values, and possibly group-specific value choices for the coverage terms. Often the policy is subject to a special rate agreement, and so must obey various restrictions on the coverages and terms offered.\nPrograms or tiers of coverages: This is similar in concept to the affinity group. The classic example is Bronze, Silver, and Gold programs, where the user can choose increasing levels of coverage at increasing cost. Programs can also offer different coverages- An analogous case in commercial insurance is the creation of products for a particular industry, business profile, or franchisee.",
       "narration": "Offerings inherit capabilities from the product model, which influences their availability. Whether a coverage appears depends on both its product model configuration and its inclusion in the offering. For instance, a business-specific offering might include common coverages tailored for industries like hospitality or retail, while affinity group offerings cater to members with specific needs. This layered approach ensures that offerings are both comprehensive and targeted.",
       "ocrText": "| Offerings and Availability\n\nOfferings can be made available based\non any of the following factors:\n\n* Start and end date\n* Job type\n\n* State\n\n* Industry\n\n* Offerings question set answers",
       "ocrWordCount": 33,
@@ -279,7 +281,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 2
     },
     {
       "slideNumber": 17,
@@ -305,7 +308,7 @@
       "originalNotes": "",
       "notes": "Discuss metrics and feedback loops for offerings.",
       "narration": "Evaluating the effectiveness of offerings involves analyzing key metrics and establishing feedback loops. Track sales performance, customer satisfaction, and market penetration to gauge success. Regularly review offerings to ensure they remain competitive and aligned with evolving market demands. Continuous improvement is key to maintaining effective offerings.",
-      "ocrText": "Question\n\n_~ — What is a question set and when should it be used?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "ocrText": "Question\nWhat is a question set and when should it be used?\n•\n•",
       "ocrWordCount": 23,
       "ocrConfidence": 74.25,
       "hasTable": false,
@@ -313,7 +316,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What is a question set and when should it be used?",
+        "answer": "Product. Question sets are used to determine whether a person qualifies for a particular product, either right before they enter the wizard or through accumulated information indicating an unacceptably large level of risk that isn't tied to any one single issue. Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 19,
@@ -322,7 +329,7 @@
       "originalNotes": "",
       "notes": "Explore a real-world example of effective offering use.",
       "narration": "Let’s examine a case study of successful offering implementation. Consider a commercial auto product tailored for local delivery businesses that resulted in increased market share and reduced claim costs. This case highlights the importance of understanding customer needs and leveraging offerings to address them effectively. It’s a great example of how strategic use of offerings can drive business success.",
-      "ocrText": "Answer Gi\n\n_~ — What is a question set and when should it be used?\n\n¢\n¢\n¢\n\nQuestion sets are used primarily to evaluate risk and qualification for an insurance\nproduct. Question sets are used to determine whether a person qualifies for a\nparticular product, either right before they enter the wizard or through accumulated\ninformation indicating an unacceptably large level of risk that isn't tied to any one\nsingle issue.\n\nSooo ooo ooo Oooo oOoD",
+      "ocrText": "Answer Gi\nWhat is a question set and when should it be used?\n•\n•\n•\nQuestion sets are used primarily to evaluate risk and qualification for an insurance\nproduct. Question sets are used to determine whether a person qualifies for a\nparticular product, either right before they enter the wizard or through accumulated\ninformation indicating an unacceptably large level of risk that isn't tied to any one\nsingle issue.\nSooo ooo ooo Oooo oOoD",
       "ocrWordCount": 77,
       "ocrConfidence": 90.55,
       "hasTable": false,
@@ -339,7 +346,7 @@
       "originalNotes": "",
       "notes": "Identify common challenges and strategies for overcoming them.",
       "narration": "Managing offerings presents several challenges, such as maintaining consistency across products and ensuring regulatory compliance. Strategies for overcoming these challenges include robust testing, clear documentation, and ongoing training for product teams. By proactively addressing these issues, insurers can maximize the benefits of their offerings while minimizing risks.",
-      "ocrText": "Question\n\nae What is an offering and what is its purpose?\n\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "ocrText": "Question\nWhat is an offering and what is its purpose?\n•\n•",
       "ocrWordCount": 19,
       "ocrConfidence": 76.44,
       "hasTable": false,
@@ -347,7 +354,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What is an offering and what is its purpose?",
+        "answer": "Sooo ooo ooo Oooo oOoD What is an offering and what is its purpose? An Offering lets insurers define different product types based on existing base product definitions. The primary use case of offerings is to define specific product types."
+      }
     },
     {
       "slideNumber": 21,
@@ -356,7 +367,7 @@
       "originalNotes": "",
       "notes": "Discuss integration considerations for offerings.",
       "narration": "Integrating offerings with other systems requires careful planning to ensure data consistency and process alignment. Consider how offerings interact with billing, claims, and other insurance processes. Effective integration ensures that offerings provide a seamless experience for both customers and internal teams. This integration is crucial for maintaining operational efficiency and customer satisfaction.",
-      "ocrText": "Answer\n\n7\n¢\n¢\n¢\n\nSooo ooo ooo Oooo oOoD\n\nWhat is an offering and what is its purpose?\n\nAn Offering lets insurers define different product types based on existing base product\ndefinitions. The primary use case of offerings is to define specific product types.",
+      "ocrText": "Answer\n•\n•\n•\nSooo ooo ooo Oooo oOoD\nWhat is an offering and what is its purpose?\nAn Offering lets insurers define different product types based on existing base product\ndefinitions. The primary use case of offerings is to define specific product types.",
       "ocrWordCount": 45,
       "ocrConfidence": 88.17,
       "hasTable": false,
@@ -373,7 +384,7 @@
       "originalNotes": "",
       "notes": "Explore potential future developments in offerings.",
       "narration": "Looking ahead, offerings are likely to become even more personalized and data-driven. Advances in technology and data analytics will enable insurers to create hyper-targeted offerings that meet the specific needs of individual customers. Staying informed about these trends will help you anticipate market changes and position your offerings for future success.",
-      "ocrText": "Question\n\n_~ — List at least two factors that make an offering available.\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "ocrText": "Question\nList at least two factors that make an offering available.\n•\n•",
       "ocrWordCount": 22,
       "ocrConfidence": 66.21,
       "hasTable": false,
@@ -381,7 +392,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "List at least two factors that make an offering available.",
+        "answer": "Sooo ooo ooo Oooo oOoD Start and end date, Job type, State, Industry, offerings question set answers."
+      }
     },
     {
       "slideNumber": 23,
@@ -390,7 +405,7 @@
       "originalNotes": "",
       "notes": "Summarize key points covered on question sets and offerings.",
       "narration": "As we wrap up, let’s review the key takeaways. Question sets are essential for risk evaluation and pre-qualification, while offerings provide the flexibility needed for product customization. Both elements are integral to the product model, enhancing how insurers interact with customers. Mastering these components will enable you to develop effective, targeted insurance solutions.",
-      "ocrText": "Answer\n\n7\n¢\n¢\n¢\n\nSooo ooo ooo Oooo oOoD\n\nList at least two factors that make an offering available.\n\nStart and end date, Job type, State, Industry, offerings question set answers.",
+      "ocrText": "Answer\n•\n•\n•\nSooo ooo ooo Oooo oOoD\nList at least two factors that make an offering available.\nStart and end date, Job type, State, Industry, offerings question set answers.",
       "ocrWordCount": 32,
       "ocrConfidence": 85.72,
       "hasTable": false,

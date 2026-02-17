@@ -33,7 +33,7 @@
       "originalNotes": "",
       "notes": "Visual representation of the renewal process.",
       "narration": "In this section, we'll look at the renewal process from a high-level perspective. Understanding this workflow is key to managing policy periods, coverage changes, and premium adjustments. This process begins well before a policy term ends, involving both automated and manual steps.",
-      "ocrText": "Lesson\nobjectives\n\n¢ Describe the renewal process in PolicyCenter\nat a high level\n\n¢ Describe a simple business renewal flow\n\n¢ Explain how pre-renewal works in\nPolicyCenter",
+      "ocrText": "Lesson\nobjectives\n\n• Describe the renewal process in PolicyCenter\nat a high level\n\n• Describe a simple business renewal flow\n\n• Explain how pre-renewal works in\nPolicyCenter",
       "ocrWordCount": 27,
       "ocrConfidence": 87.07,
       "hasTable": false,
@@ -64,10 +64,10 @@
       "slideNumber": 4,
       "title": "Renewals in PolicyCenter",
       "bodyParagraphs": [],
-      "originalNotes": "Renewals\nThe policy renewing process begins before the current policyterm expires. Renewals extend a policy into a new term, and are configurable in PolicyCenter-\n\nThis discussion covers renewals in the base application.\nCreates new policy period\nMay include change in coverages\nMay include change in premium due to change in rates",
-      "notes": "Renewals\nThe policy renewing process begins before the current policyterm expires. Renewals extend a policy into a new term, and are configurable in PolicyCenter-\n\nThis discussion covers renewals in the base application.\nCreates new policy period\nMay include change in coverages\nMay include change in premium due to change in rates",
+      "originalNotes": "Renewals\nThe policy renewing process begins before the current policyterm expires. Renewals extend a policy into a new term, and are configurable in PolicyCenter.\nThis discussion covers renewals in the base application.\nCreates new policy period\nMay include change in coverages\nMay include change in premium due to change in rates",
+      "notes": "Renewals\nThe policy renewing process begins before the current policyterm expires. Renewals extend a policy into a new term, and are configurable in PolicyCenter.\nThis discussion covers renewals in the base application.\nCreates new policy period\nMay include change in coverages\nMay include change in premium due to change in rates",
       "narration": "Renewals in PolicyCenter extend a policy into a new term, potentially involving coverage changes and premium adjustments. This flexibility is why renewals are highly configurable. As developers, we need to understand how these configurations impact the data model, particularly entities like PolicyPeriod and PolicyTerm.",
-      "ocrText": "| Renewals\n\neoe\n\nNew policy term\n\n¢ The renewal process begins before the current term expires\n¢ Renewals extend policies into a new term\n\n¢« Renewals are configurable",
+      "ocrText": "| Renewals\n\neoe\n\nNew policy term\n\n• The renewal process begins before the current term expires\n• Renewals extend policies into a new term\n\n•« Renewals are configurable",
       "ocrWordCount": 28,
       "ocrConfidence": 86.97,
       "hasTable": false,
@@ -101,7 +101,7 @@
       "originalNotes": "",
       "notes": "Exploration of the renewal workflow.",
       "narration": "The renewal workflow is a sophisticated process that automates the quoting and binding of renewals. It involves various checkpoints where conditions are verified, and documents may be sent. Understanding this workflow is essential for developers, as it dictates how and when certain actions occur within the system.",
-      "ocrText": "| Processing renewals G\n\nAutomatic\nManual\n\nNew policy term\n\n¢ Fully automatic renewal by the renewal workflow\n\n* Some renewals may be referred for end user review",
+      "ocrText": "| Processing renewals G\n\nAutomatic\nManual\n\nNew policy term\n\n• Fully automatic renewal by the renewal workflow\n\n* Some renewals may be referred for end user review",
       "ocrWordCount": 27,
       "ocrConfidence": 90.86,
       "hasTable": false,
@@ -115,10 +115,10 @@
       "slideNumber": 7,
       "title": "End Results of a Renewal Job",
       "bodyParagraphs": [],
-      "originalNotes": "End results of a renewal job\nDefinitions:\nNon-renewed: An insurer might choose not to renew apolicy since the policy is considered financially unfavorable (e-g-, too many claims filed against the policy). Renewals can be highly regulated from jurisdiction to jurisdiction, including restrictions relating to non-renewal due to losses.  There are also restrictions in many jurisdictions related to rate increases on renewals in excess of a maximum percent. Finally, restrictions exist in almost all jurisdictions relating to the insurer non- renewing without providing a specified amount of prior notice. Renewal regulation at a jurisdiction level is a consumer protection issue and focuses primarily on personal lines (homeowners,  personal auto)- It is much harder to place on commercial lines- \n\nNot taken: An insured may choose not to renew a policy because they found a better- priced policy elsewhere, or because the policy premium has changed (due to changes in the industry or claims made against the original policy). \n\nShort-term renewal (not shown): In some cases, a policy may be renewed \"short term\"; the policy is renewed but it is not renewed for the full term (typically for a small fraction of the full term)- One common situation where this  occurs involves cancellation- When an insurer cancels a policy, jurisdiction laws may stipulate that the insurer must provide a certain amount of advance notice (i.e., 60 days) prior to the policy being cancelled- If the insurer wants to cancel the policy, but the policy is due to be renewed within the advance notice period (renewal date is in 45 days), then the insurer may renew the policy for a short period of time simply to provide the appropriate amount of advanced notice  (15 days).",
-      "notes": "End results of a renewal job\nDefinitions:\nNon-renewed: An insurer might choose not to renew apolicy since the policy is considered financially unfavorable (e-g-, too many claims filed against the policy). Renewals can be highly regulated from jurisdiction to jurisdiction, including restrictions relating to non-renewal due to losses.  There are also restrictions in many jurisdictions related to rate increases on renewals in excess of a maximum percent. Finally, restrictions exist in almost all jurisdictions relating to the insurer non- renewing without providing a specified amount of prior notice. Renewal regulation at a jurisdiction level is a consumer protection issue and focuses primarily on personal lines (homeowners,  personal auto)- It is much harder to place on commercial lines- \n\nNot taken: An insured may choose not to renew a policy because they found a better- priced policy elsewhere, or because the policy premium has changed (due to changes in the industry or claims made against the original policy). \n\nShort-term renewal (not shown): In some cases, a policy may be renewed \"short term\"; the policy is renewed but it is not renewed for the full term (typically for a small fraction of the full term)- One common situation where this  occurs involves cancellation- When an insurer cancels a policy, jurisdiction laws may stipulate that the insurer must provide a certain amount of advance notice (i.e., 60 days) prior to the policy being cancelled- If the insurer wants to cancel the policy, but the policy is due to be renewed within the advance notice period (renewal date is in 45 days), then the insurer may renew the policy for a short period of time simply to provide the appropriate amount of advanced notice  (15 days).",
+      "originalNotes": "End results of a renewal job\nDefinitions:\nNon-renewed: An insurer might choose not to renew apolicy since the policy is considered financially unfavorable (e-g-, too many claims filed against the policy). Renewals can be highly regulated from jurisdiction to jurisdiction, including restrictions relating to non-renewal due to losses. There are also restrictions in many jurisdictions related to rate increases on renewals in excess of a maximum percent. Finally, restrictions exist in almost all jurisdictions relating to the insurer non- renewing without providing a specified amount of prior notice. Renewal regulation at a jurisdiction level is a consumer protection issue and focuses primarily on personal lines (homeowners, personal auto)- It is much harder to place on commercial lines.\nNot taken: An insured may choose not to renew a policy because they found a better- priced policy elsewhere, or because the policy premium has changed (due to changes in the industry or claims made against the original policy).\n\nShort-term renewal (not shown): In some cases, a policy may be renewed \"short term\"; the policy is renewed but it is not renewed for the full term (typically for a small fraction of the full term)- One common situation where this occurs involves cancellation- When an insurer cancels a policy, jurisdiction laws may stipulate that the insurer must provide a certain amount of advance notice (i.e., 60 days) prior to the policy being cancelled- If the insurer wants to cancel the policy, but the policy is due to be renewed within the advance notice period (renewal date is in 45 days), then the insurer may renew the policy for a short period of time simply to provide the appropriate amount of advanced notice (15 days).",
+      "notes": "End results of a renewal job\nDefinitions:\nNon-renewed: An insurer might choose not to renew apolicy since the policy is considered financially unfavorable (e-g-, too many claims filed against the policy). Renewals can be highly regulated from jurisdiction to jurisdiction, including restrictions relating to non-renewal due to losses. There are also restrictions in many jurisdictions related to rate increases on renewals in excess of a maximum percent. Finally, restrictions exist in almost all jurisdictions relating to the insurer non- renewing without providing a specified amount of prior notice. Renewal regulation at a jurisdiction level is a consumer protection issue and focuses primarily on personal lines (homeowners, personal auto)- It is much harder to place on commercial lines.\nNot taken: An insured may choose not to renew a policy because they found a better- priced policy elsewhere, or because the policy premium has changed (due to changes in the industry or claims made against the original policy).\n\nShort-term renewal (not shown): In some cases, a policy may be renewed \"short term\"; the policy is renewed but it is not renewed for the full term (typically for a small fraction of the full term)- One common situation where this occurs involves cancellation- When an insurer cancels a policy, jurisdiction laws may stipulate that the insurer must provide a certain amount of advance notice (i.e., 60 days) prior to the policy being cancelled- If the insurer wants to cancel the policy, but the policy is due to be renewed within the advance notice period (renewal date is in 45 days), then the insurer may renew the policy for a short period of time simply to provide the appropriate amount of advanced notice (15 days).",
       "narration": "The outcomes of a renewal job include non-renewed, not taken, and short-term renewal. These outcomes are influenced by both insurer and insured decisions, and are subject to jurisdictional regulations. As developers, we must ensure that these outcomes are correctly handled within the system, adhering to legal and business rules.",
-      "ocrText": "| End results of a renewal job\n\n(rl tal E\n\nRenewed\nNon-renewed\nNot taken\n\nNew policy term\n\n¢ Renewed: policy continues for another term\n¢ Non-renewed: insurer decides not to renew\n\n¢ Not taken: insured chose not to renew",
+      "ocrText": "| End results of a renewal job\n\n(rl tal E\n\nRenewed\nNon-renewed\nNot taken\n\nNew policy term\n\n• Renewed: policy continues for another term\n• Non-renewed: insurer decides not to renew\n\n• Not taken: insured chose not to renew",
       "ocrWordCount": 39,
       "ocrConfidence": 83.92,
       "hasTable": false,
@@ -132,10 +132,10 @@
       "slideNumber": 8,
       "title": "Renewal Wizard Interface",
       "bodyParagraphs": [],
-      "originalNotes": "Renewal wizard: user interface renewal\nThe renewal wizard is how users gather and display renewal information in the PolicyCenter user interface. The wizard is relevant only for renewals which are manually started or for renewals which are referred to end users. An automatically-started renewal may end up in the manual flow if the \"Edit  Transaction\" button was clicked.",
-      "notes": "Renewal wizard: user interface renewal\nThe renewal wizard is how users gather and display renewal information in the PolicyCenter user interface. The wizard is relevant only for renewals which are manually started or for renewals which are referred to end users. An automatically-started renewal may end up in the manual flow if the \"Edit  Transaction\" button was clicked.",
+      "originalNotes": "Renewal wizard: user interface renewal\nThe renewal wizard is how users gather and display renewal information in the PolicyCenter user interface. The wizard is relevant only for renewals which are manually started or for renewals which are referred to end users. An automatically-started renewal may end up in the manual flow if the \"Edit Transaction\" button was clicked.",
+      "notes": "Renewal wizard: user interface renewal\nThe renewal wizard is how users gather and display renewal information in the PolicyCenter user interface. The wizard is relevant only for renewals which are manually started or for renewals which are referred to end users. An automatically-started renewal may end up in the manual flow if the \"Edit Transaction\" button was clicked.",
       "narration": "The renewal wizard in PolicyCenter is crucial for user-driven renewals, providing a structured UI for managing renewal data. It's particularly useful when manual intervention is needed, allowing users to modify or review renewal details. Developers may customize this interface through PCF files to meet specific business needs.",
-      "ocrText": "| Renewal wizard: user interface renewal i\n\n++\no+\n\nNew Policy Pp = ane .\n. Edit View Billing Bind\nbisinreninl > [EZ contract fed Quotec » | rome » info [lag Renewal\nenew\n\n¢ Used for manual renewals\n\n¢ Used for referred renewals (policy will change on renewal)",
+      "ocrText": "| Renewal wizard: user interface renewal i\n\n++\no+\n\nNew Policy Pp = ane .\n. Edit View Billing Bind\nbisinreninl > [EZ contract fed Quotec » | rome » info [lag Renewal\nenew\n\n• Used for manual renewals\n\n• Used for referred renewals (policy will change on renewal)",
       "ocrWordCount": 49,
       "ocrConfidence": 78.46,
       "hasTable": false,
@@ -203,7 +203,7 @@
       "originalNotes": "Pre-renewal direction\nIf a policy has a pre-renewal direction, it can be deleted orchanged. For example, you could delete a non-renew direction, which would result in the policy renewing. Or, a non-renew direction could be changed to a not taken direction.) You can not have two or more pre-renewal directions for a single policy. A pre-renewal direction cannot be created for a policy period which has already been renewed.",
       "notes": "Pre-renewal direction\nIf a policy has a pre-renewal direction, it can be deleted orchanged. For example, you could delete a non-renew direction, which would result in the policy renewing. Or, a non-renew direction could be changed to a not taken direction.) You can not have two or more pre-renewal directions for a single policy. A pre-renewal direction cannot be created for a policy period which has already been renewed.",
       "narration": "Modifying pre-renewal directions allows flexibility in how a policy is renewed. Whether changing a non-renew to a not-taken, or vice versa, these modifications can significantly impact the renewal outcome. Developers should ensure that such changes are reflected accurately in the system's data model.",
-      "ocrText": "| Pre-renewal direction i\n\n¢ Pre-renewal direction is specified in PolicyCenter as a special set of instructions\ndetailing how to renew the policy\n\n* Generally, the pre-renewal will be non-renew, not taken or referred\n\n¢ Apolicy can have only one active pre-renewal direction",
+      "ocrText": "| Pre-renewal direction i\n\n• Pre-renewal direction is specified in PolicyCenter as a special set of instructions\ndetailing how to renew the policy\n\n* Generally, the pre-renewal will be non-renew, not taken or referred\n\n• Apolicy can have only one active pre-renewal direction",
       "ocrWordCount": 43,
       "ocrConfidence": 88.41,
       "hasTable": false,
@@ -217,8 +217,8 @@
       "slideNumber": 13,
       "title": "Demonstration: Managing Pre-renewal Directions",
       "bodyParagraphs": [],
-      "originalNotes": "Demonstration\nDEMO:\n1.From Actions, select Pre- renewal Direction. Add only one pre-renewal direction to a policy. Click Edit. Describe each direction.\n2.Select Non-Renew.\n3.Select a Non-Renew Reason.\n4.On the right side, fill out the note. Add a subject and text to the note.\n5.Save the changes to the pre- renewal direction.\n6.Click Actions -> Pre-Renewal Direction again to verify that the pre-renewal is set. You can edit, delete, or view the notes.\nOn the policy summarypage is a link to the existing pre-renewal direction.",
-      "notes": "Demonstration\nDEMO:\n1.From Actions, select Pre- renewal Direction. Add only one pre-renewal direction to a policy. Click Edit. Describe each direction.\n2.Select Non-Renew.\n3.Select a Non-Renew Reason.\n4.On the right side, fill out the note. Add a subject and text to the note.\n5.Save the changes to the pre- renewal direction.\n6.Click Actions -> Pre-Renewal Direction again to verify that the pre-renewal is set. You can edit, delete, or view the notes.\nOn the policy summarypage is a link to the existing pre-renewal direction.",
+      "originalNotes": "Demonstration\nDEMO:\n1. From Actions, select Pre- renewal Direction. Add only one pre-renewal direction to a policy. Click Edit. Describe each direction.\n2. Select Non-Renew.\n3. Select a Non-Renew Reason.\n4. On the right side, fill out the note. Add a subject and text to the note.\n5. Save the changes to the pre- renewal direction.\n6. Click Actions -> Pre-Renewal Direction again to verify that the pre-renewal is set. You can edit, delete, or view the notes.\nOn the policy summarypage is a link to the existing pre-renewal direction.",
+      "notes": "Demonstration\nDEMO:\n1. From Actions, select Pre- renewal Direction. Add only one pre-renewal direction to a policy. Click Edit. Describe each direction.\n2. Select Non-Renew.\n3. Select a Non-Renew Reason.\n4. On the right side, fill out the note. Add a subject and text to the note.\n5. Save the changes to the pre- renewal direction.\n6. Click Actions -> Pre-Renewal Direction again to verify that the pre-renewal is set. You can edit, delete, or view the notes.\nOn the policy summarypage is a link to the existing pre-renewal direction.",
       "narration": "In this demonstration, we'll walk through managing pre-renewal directions. Start by selecting 'Pre-renewal Direction' from the Actions menu, then add a new direction and choose 'Non-Renew'. Enter a reason and save your changes. This hands-on demo highlights how pre-renewal directions are set and modified in PolicyCenter.",
       "ocrText": "| Demonstration G\n\nPre-renewal direction\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
       "ocrWordCount": 35,
@@ -228,7 +228,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 14,
@@ -262,7 +263,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 16,
@@ -296,7 +298,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 2
     },
     {
       "slideNumber": 18,
@@ -319,8 +322,8 @@
       "slideNumber": 19,
       "title": "In-depth Look at Renewal Workflow",
       "bodyParagraphs": [],
-      "originalNotes": "Renewal process\nThe renewal job can be started automatically by the start renewal batch job, which searches for policies expiring in X days and begins the renewal process. It can also be manually started from the user interface. Both batch jobs and the manual process will start the same renewal Workflow.\n\nThe renewal workflow is an automated process which quotes the renewal, checks conditions or sends documents at various times- When it reaches the effective date of the new term, it completes the renewal job. If the renewal job has a non- renew or not-taken pre- renewal direction, it will end up in a state of non-renew or not-taken. Otherwise, it is automatically bound and Renewed.\n\nThe automated renewal workflow may be manually interrupted by editing the policy transaction. This normally occurs when the underwriter or agent wants to make changes to the renewal job. The renewal job can take a different path, from non- renew to renewed or vice versa. Before the renewal is quoted again, you have the option to non-renew or not- taken even though there is no pre-renewal direction. This completes the renewal job.\n\nAfter you manually quote the renewal job, there are twobind options. In this path, a renewal job that starts with a non-renewal or not-taken pre- renewal direction may be bound and renewed.\n\n Bind options -> Renew : Puts the renewal job back into the renewal workflow and it iseventually renewed.  Bind options -> Issue now .  Binds the renewal job immediately and completes the job.\n\nThe edit policy transaction can be edited many times before the renewal workflow is completed",
-      "notes": "Renewal process\nThe renewal job can be started automatically by the start renewal batch job, which searches for policies expiring in X days and begins the renewal process. It can also be manually started from the user interface. Both batch jobs and the manual process will start the same renewal Workflow.\n\nThe renewal workflow is an automated process which quotes the renewal, checks conditions or sends documents at various times- When it reaches the effective date of the new term, it completes the renewal job. If the renewal job has a non- renew or not-taken pre- renewal direction, it will end up in a state of non-renew or not-taken. Otherwise, it is automatically bound and Renewed.\n\nThe automated renewal workflow may be manually interrupted by editing the policy transaction. This normally occurs when the underwriter or agent wants to make changes to the renewal job. The renewal job can take a different path, from non- renew to renewed or vice versa. Before the renewal is quoted again, you have the option to non-renew or not- taken even though there is no pre-renewal direction. This completes the renewal job.\n\nAfter you manually quote the renewal job, there are twobind options. In this path, a renewal job that starts with a non-renewal or not-taken pre- renewal direction may be bound and renewed.\n\n Bind options -> Renew : Puts the renewal job back into the renewal workflow and it iseventually renewed.  Bind options -> Issue now .  Binds the renewal job immediately and completes the job.\n\nThe edit policy transaction can be edited many times before the renewal workflow is completed",
+      "originalNotes": "Renewal process\nThe renewal job can be started automatically by the start renewal batch job, which searches for policies expiring in X days and begins the renewal process. It can also be manually started from the user interface. Both batch jobs and the manual process will start the same renewal Workflow.\n\nThe renewal workflow is an automated process which quotes the renewal, checks conditions or sends documents at various times- When it reaches the effective date of the new term, it completes the renewal job. If the renewal job has a non- renew or not-taken pre- renewal direction, it will end up in a state of non-renew or not-taken. Otherwise, it is automatically bound and Renewed.\n\nThe automated renewal workflow may be manually interrupted by editing the policy transaction. This normally occurs when the underwriter or agent wants to make changes to the renewal job. The renewal job can take a different path, from non- renew to renewed or vice versa. Before the renewal is quoted again, you have the option to non-renew or not- taken even though there is no pre-renewal direction. This completes the renewal job.\n\nAfter you manually quote the renewal job, there are twobind options. In this path, a renewal job that starts with a non-renewal or not-taken pre- renewal direction may be bound and renewed.\n\n Bind options -> Renew : Puts the renewal job back into the renewal workflow and it iseventually renewed. Bind options -> Issue now . Binds the renewal job immediately and completes the job.\n\nThe edit policy transaction can be edited many times before the renewal workflow is completed",
+      "notes": "Renewal process\nThe renewal job can be started automatically by the start renewal batch job, which searches for policies expiring in X days and begins the renewal process. It can also be manually started from the user interface. Both batch jobs and the manual process will start the same renewal Workflow.\n\nThe renewal workflow is an automated process which quotes the renewal, checks conditions or sends documents at various times- When it reaches the effective date of the new term, it completes the renewal job. If the renewal job has a non- renew or not-taken pre- renewal direction, it will end up in a state of non-renew or not-taken. Otherwise, it is automatically bound and Renewed.\n\nThe automated renewal workflow may be manually interrupted by editing the policy transaction. This normally occurs when the underwriter or agent wants to make changes to the renewal job. The renewal job can take a different path, from non- renew to renewed or vice versa. Before the renewal is quoted again, you have the option to non-renew or not- taken even though there is no pre-renewal direction. This completes the renewal job.\n\nAfter you manually quote the renewal job, there are twobind options. In this path, a renewal job that starts with a non-renewal or not-taken pre- renewal direction may be bound and renewed.\n\n Bind options -> Renew : Puts the renewal job back into the renewal workflow and it iseventually renewed. Bind options -> Issue now . Binds the renewal job immediately and completes the job.\n\nThe edit policy transaction can be edited many times before the renewal workflow is completed",
       "narration": "The renewal workflow in PolicyCenter is a detailed sequence of steps that automate the quoting and binding of renewals. It starts with a batch job or manual initiation, leading to quoting, condition checks, and eventual binding. Developers should ensure that each step is correctly configured to reflect the business rules and policies.",
       "ocrText": "Automated renewal i\n\nRenewal Workflow workflows\n\nReaches effective\n\nAutomatic date of the new term\n\nHas pre-\nrenewal\ndirection\n\nEdit Policy\nTransaction\n(optional)\n\nOF Quoted\n\n———>\nChanges\n\nRenewed\n\nIssue now",
       "ocrWordCount": 29,
@@ -339,7 +342,7 @@
       "originalNotes": "",
       "notes": "How to set up batch jobs for automatic renewals.",
       "narration": "Configuring batch jobs for renewals allows you to automate the initiation of renewal processes. These jobs need to be tailored to search for policies nearing expiration and kickstart the renewal process. Developers should understand how to configure these jobs to handle various policy types and renewal timings.",
-      "ocrText": "Question\n\n_~ — What are the three ways that a renewal job can end?\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say",
+      "ocrText": "Question\nWhat are the three ways that a renewal job can end?\n•\n•\nSoS oD DD DDS De Say",
       "ocrWordCount": 23,
       "ocrConfidence": 60.08,
       "hasTable": false,
@@ -347,7 +350,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What are the three ways that a renewal job can end?",
+        "answer": "Renewed, non-renewal (when the insurer chooses not to renew the policy) or not taken (when the insured chooses not to renew the policy). Sop DD DD SDSS oe"
+      }
     },
     {
       "slideNumber": 21,
@@ -356,7 +363,7 @@
       "originalNotes": "",
       "notes": "Discuss how exceptions are managed in renewal workflows.",
       "narration": "Exceptions in the renewal workflow, such as policy changes or regulatory constraints, require careful handling to ensure compliance and accuracy. Developers should focus on implementing exception handling mechanisms that allow for manual intervention when necessary, ensuring smooth processing of renewals.",
-      "ocrText": "Answer\n\nae What are the three ways that a renewal job can end?\n\n¢\n¢\n\nRenewed, non-renewal (when the insurer chooses not to renew the policy) or not\ntaken (when the insured chooses not to renew the policy).\n\nSop DD DD SDSS oe",
+      "ocrText": "Answer\nWhat are the three ways that a renewal job can end?\n•\n•\nRenewed, non-renewal (when the insurer chooses not to renew the policy) or not\ntaken (when the insured chooses not to renew the policy).\nSop DD DD SDSS oe",
       "ocrWordCount": 43,
       "ocrConfidence": 84.27,
       "hasTable": false,
@@ -373,7 +380,7 @@
       "originalNotes": "",
       "notes": "Discuss customization of the UI for renewal processes.",
       "narration": "Customizing the user interface for renewals involves modifying PCF files to enhance user experience and ensure that all necessary information is captured. Developers should focus on creating intuitive interfaces that facilitate easy navigation and data entry, supporting both automated and manual renewal processes.",
-      "ocrText": "Question G\n\n,— — Under what two circumstances is the renewal wizard typically used?\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say",
+      "ocrText": "Question G\nUnder what two circumstances is the renewal wizard typically used?\n•\n•\nSoS oD DD DDS De Say",
       "ocrWordCount": 23,
       "ocrConfidence": 65.24,
       "hasTable": false,
@@ -381,7 +388,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Under what two circumstances is the renewal wizard typically used?",
+        "answer": "The renewal wizard is typically used when the renewal is started manually or when the policy must be changed at renewal time. Sop DD DD SDSS oe"
+      }
     },
     {
       "slideNumber": 23,
@@ -390,7 +401,7 @@
       "originalNotes": "",
       "notes": "Discuss integration of the renewal process with external systems.",
       "narration": "Integrating renewals with external systems, such as rating engines or document management systems, ensures that all aspects of the renewal process are synchronized. Developers should focus on using integration patterns that facilitate seamless data exchange and ensure consistency across systems.",
-      "ocrText": "Answer a\n\n,~ — Under what two circumstances is the renewal wizard typically used?\n\n¢\n¢\n¢\n\nThe renewal wizard is typically used when the renewal is started manually or when the\npolicy must be changed at renewal time.\n\nSop DD DD SDSS oe",
+      "ocrText": "Answer a\nUnder what two circumstances is the renewal wizard typically used?\n•\n•\n•\nThe renewal wizard is typically used when the renewal is started manually or when the\npolicy must be changed at renewal time.\nSop DD DD SDSS oe",
       "ocrWordCount": 44,
       "ocrConfidence": 82.17,
       "hasTable": false,
@@ -407,7 +418,7 @@
       "originalNotes": "",
       "notes": "Discuss how to ensure regulatory compliance in renewal processes.",
       "narration": "Ensuring compliance in renewals involves configuring the system to adhere to jurisdictional regulations and business rules. Developers should focus on implementing checks and balances within the workflow to ensure that all regulatory requirements are met during the renewal process.",
-      "ocrText": "Question\n\n,~ — Consider a situation where the insured is offered a renewal, but never\nx makes the payment. What is the renewal’s state? HINT: The renewal flow\ntimes out.\n\nSoS oD DD DDS De Say\n\nGi",
+      "ocrText": "Question\nConsider a situation where the insured is offered a renewal, but never\nmakes the payment. What is the renewal’s state? HINT: The renewal flow\ntimes out.\nSoS oD DD DDS De Say\nGi",
       "ocrWordCount": 37,
       "ocrConfidence": 77.92,
       "hasTable": false,
@@ -415,7 +426,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Consider a situation where the insured is offered a renewal, but never",
+        "answer": "X makes the payment. What is the renewal’s state? HINT: The renewal flow : times out. The renewal flow does time out, and the renewal term is Not Taken. Sop DD DD SDSS oe"
+      }
     },
     {
       "slideNumber": 25,
@@ -424,7 +439,7 @@
       "originalNotes": "",
       "notes": "Discuss the role of reporting and analytics in renewals.",
       "narration": "Reporting and analytics play a crucial role in understanding and optimizing the renewal process. By leveraging PolicyCenter's reporting capabilities, developers can provide insights into renewal trends, success rates, and areas for improvement. This data-driven approach aids in strategic decision-making.",
-      "ocrText": "Answer\n\n/~ — Consider a situation where the insured is offered a renewal, but never\nx makes the payment. What is the renewal’s state? HINT: The renewal flow\n: times out.\n\nThe renewal flow does time out, and the renewal term is Not Taken.\n\nSop DD DD SDSS oe\n\nGi",
+      "ocrText": "Answer\n/~ — Consider a situation where the insured is offered a renewal, but never\nmakes the payment. What is the renewal’s state? HINT: The renewal flow\ntimes out.\nThe renewal flow does time out, and the renewal term is Not Taken.\nSop DD DD SDSS oe\nGi",
       "ocrWordCount": 50,
       "ocrConfidence": 83.75,
       "hasTable": false,
@@ -441,7 +456,7 @@
       "originalNotes": "",
       "notes": "Guide on troubleshooting common renewal issues.",
       "narration": "Troubleshooting renewal issues involves identifying and resolving problems that may arise during the renewal process. Developers should focus on understanding common pitfalls, such as data discrepancies or workflow misconfigurations, and implement solutions to ensure smooth processing.",
-      "ocrText": "Question\n\n,~ — How many pre-renewal directions can a policy have?\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say",
+      "ocrText": "Question\nHow many pre-renewal directions can a policy have?\n•\n•\nSoS oD DD DDS De Say",
       "ocrWordCount": 20,
       "ocrConfidence": 60.45,
       "hasTable": false,
@@ -449,7 +464,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "How many pre-renewal directions can a policy have?",
+        "answer": "A policy may have any number of pre-renewal directions, but there is only one active pre-renewal renewal direction at a time . Sop DD DD SDSS oe"
+      }
     },
     {
       "slideNumber": 27,
@@ -458,7 +477,7 @@
       "originalNotes": "",
       "notes": "Discuss best practices in managing renewals.",
       "narration": "Adopting best practices in renewal management ensures efficiency and accuracy. Developers should focus on maintaining clear documentation, implementing robust testing procedures, and leveraging automation where possible to streamline renewal processes and reduce errors.",
-      "ocrText": "Answer\n\n,~ — How many pre-renewal directions can a policy have?\n\n¢\n¢\n¢\n\nA policy may have any number of pre-renewal directions, but there is only one active\npre-renewal renewal direction at a time .\n\nSop DD DD SDSS oe",
+      "ocrText": "Answer\nHow many pre-renewal directions can a policy have?\n•\n•\n•\nA policy may have any number of pre-renewal directions, but there is only one active\npre-renewal renewal direction at a time .\nSop DD DD SDSS oe",
       "ocrWordCount": 41,
       "ocrConfidence": 77.33,
       "hasTable": false,
@@ -475,7 +494,7 @@
       "originalNotes": "",
       "notes": "Explore a case study of a successful renewal process implementation.",
       "narration": "In this case study, we'll examine a successful renewal implementation that leveraged automation and customization to meet business goals. Developers can learn from this example by understanding the strategies used to overcome challenges and achieve a seamless renewal process.",
-      "ocrText": "Question\n\n,~ — When should you not create a pre-renewal direction?\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say",
+      "ocrText": "Question\nWhen should you not create a pre-renewal direction?\n•\n•\nSoS oD DD DDS De Say",
       "ocrWordCount": 20,
       "ocrConfidence": 62.82,
       "hasTable": false,
@@ -483,7 +502,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "When should you not create a pre-renewal direction?",
+        "answer": "You should not create a pre-renewal direction if you want to renew the policy and do not need human review of the job while it's being executed. Sop DD DD SDSS oe"
+      }
     },
     {
       "slideNumber": 29,
@@ -492,7 +515,7 @@
       "originalNotes": "",
       "notes": "Discuss emerging trends and technologies in renewals.",
       "narration": "Emerging trends in policy renewals, such as AI-driven analytics and increased automation, are shaping the future of the industry. Developers should stay informed about these trends to anticipate changes and adapt systems to leverage new technologies for enhanced renewal processes.",
-      "ocrText": "Answer\n\n,~ — When should you not create a pre-renewal direction?\n¢\n\n¢\n¢\n\nYou should not create a pre-renewal direction if you want to renew the policy and do\nnot need human review of the job while it's being executed.\n\nSop DD DD SDSS oe",
+      "ocrText": "Answer\nWhen should you not create a pre-renewal direction?\n•\n•\n•\nYou should not create a pre-renewal direction if you want to renew the policy and do\nnot need human review of the job while it's being executed.\nSop DD DD SDSS oe",
       "ocrWordCount": 46,
       "ocrConfidence": 83.25,
       "hasTable": false,
@@ -509,7 +532,7 @@
       "originalNotes": "",
       "notes": "Engage participants in a Q&A session to discuss renewal topics.",
       "narration": "Let's open the floor for an interactive Q&A session. This is an opportunity to dive deeper into specific renewal topics, address any questions, and discuss real-world scenarios. Your insights and queries will enrich our understanding of the renewal process in PolicyCenter.",
-      "ocrText": "Lesson\nobj ectives * Describe the renewal process in PolicyCenter\nreview at a high level\n\n¢ Describe a simple business renewal flow\n¢ Explain how pre-renewal works in\nPolicyCenter",
+      "ocrText": "Lesson\nobj ectives * Describe the renewal process in PolicyCenter\nreview at a high level\n\n• Describe a simple business renewal flow\n• Explain how pre-renewal works in\nPolicyCenter",
       "ocrWordCount": 29,
       "ocrConfidence": 88.21,
       "hasTable": false,

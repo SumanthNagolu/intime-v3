@@ -136,35 +136,35 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "Name two business situations in which it might be useful to use modal\n¢ PCFs.\n\nee ee a",
+      "question": "Name two business situations in which it might be useful to use modal\nPCFs.",
       "referenceAnswer": "¢ PCFs.\nPossible answers: Different types of contacts (individual vs. business); different lines\nof business (auto vs. property).",
       "questionKey": "slide-13"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "Foragiven set of modal PCFs, what two things must all of the PCFs have\nie in common?\n7\n\nee ee a",
+      "question": "For agiven set of modal PCFs, what two things must all of the PCFs have\nin common?",
       "referenceAnswer": "All of the files must have the same required variables (identical in number, order, and\ntype), as well as the same ID.",
       "questionKey": "slide-15"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "Cana PCF have more than one mode?\n\n4\n¢\n¢\n\nee ee a",
+      "question": "Can a PCF have more than one mode?",
       "referenceAnswer": "Yes.",
       "questionKey": "slide-17"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "Can the same mode be used by more than one PCF within the same\n¢ modal set?\n\n¢\n¢\n\nee ee a",
+      "question": "Can the same mode be used by more than one PCF within the same\nmodal set?",
       "referenceAnswer": "No. If the same mode is used in multiple PCFs in the same set, then the application\ncannot determine which file to use and a runtime error occurs.",
       "questionKey": "slide-19"
     },
     {
       "type": "knowledge_check",
       "id": "kc-5",
-      "question": "What happens if a reference identifies a mode, but there is no PCF with\n¢ that mode in the set?\n\n¢\n¢\n\nee ee a",
+      "question": "What happens if a reference identifies a mode, but there is no PCF with\nthat mode in the set?",
       "referenceAnswer": "If a PCF with a mode of \"default\" exists, then that default is used. Otherwise, a runtime\nerror occurs.",
       "questionKey": "slide-21"
     },

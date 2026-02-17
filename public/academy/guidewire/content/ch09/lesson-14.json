@@ -11,7 +11,7 @@
   "slides": [
     {
       "slideNumber": 1,
-      "title": "",
+      "title": "Configuring Claim History",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -28,7 +28,7 @@
     },
     {
       "slideNumber": 2,
-      "title": "",
+      "title": "Learning Objectives",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -45,7 +45,7 @@
     },
     {
       "slideNumber": 3,
-      "title": "",
+      "title": "History records",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -62,7 +62,7 @@
     },
     {
       "slideNumber": 4,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -75,7 +75,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 5,
@@ -96,12 +97,12 @@
     },
     {
       "slideNumber": 6,
-      "title": "",
+      "title": "Claim history",
       "bodyParagraphs": [],
       "originalNotes": "Claim history\nBecause records are uneditable, the claim history acts as a legally referenceable record of who did what with respect to a given claim.\nBy configuring history events, the History screen can include any kind of event an insurer wants to track. For example, it can track changes to a field, including both old and new values.",
       "notes": "Claim history\nBecause records are uneditable, the claim history acts as a legally referenceable record of who did what with respect to a given claim.\nBy configuring history events, the History screen can include any kind of event an insurer wants to track. For example, it can track changes to a field, including both old and new values.",
       "narration": "",
-      "ocrText": "| Claim history\n\n¢ Is an uneditable record of important events and actions taken on the claim\n\nGi\n\nIncludes obvious actions such as edits\n\n« Also includes more trivial events such as viewing the claim\n\nHistory\n\nall\nType Related To\nViewed Entire claim\nViewed Entire claim\nFlagged Entire claim\n\nDatachange Entire claim\n\nUser\nAndy Applegate\nAndy Applegate\nSystem User\n\nSuper User\n\nBe\nEvent Time Stamp > Description Link\n08/03/2018 10:57 AM\n08/01/2018 4:40 PM\n\n08/01/2018 4:30PM —_Flag set: Overdue high priority activity: Review coverage in question\n08/01/2018 4:13PM Coverage is in question for this claim",
+      "ocrText": "| Claim history\n\n• Is an uneditable record of important events and actions taken on the claim\n\nGi\n\nIncludes obvious actions such as edits\n\n« Also includes more trivial events such as viewing the claim\n\nHistory\n\nall\nType Related To\nViewed Entire claim\nViewed Entire claim\nFlagged Entire claim\n\nDatachange Entire claim\n\nUser\nAndy Applegate\nAndy Applegate\nSystem User\n\nSuper User\n\nBe\nEvent Time Stamp > Description Link\n08/03/2018 10:57 AM\n08/01/2018 4:40 PM\n\n08/01/2018 4:30PM —_Flag set: Overdue high priority activity: Review coverage in question\n08/01/2018 4:13PM Coverage is in question for this claim",
       "ocrWordCount": 95,
       "ocrConfidence": 88.26,
       "hasTable": false,
@@ -113,10 +114,10 @@
     },
     {
       "slideNumber": 7,
-      "title": "",
+      "title": "History record",
       "bodyParagraphs": [],
-      "originalNotes": "History record\nEach history record documents a single event-\nClaim history record fields\ninclude:\nType - The claim event causing the entry in the History table, such as an exposure being opened, closed or reopened, a stopped check, an activity's due date changed, and so on.   \nRelated To - Whether the event relates to the entire claim or one of its parts, like an exposure or reserve line.\nUser - Person who caused the event.\nEvent Time Stamp – Date and time the event occurred (in descending order, by default).\nDescription - A brief description of the event. This is provided for history entries written by ClaimCenter, and you may add your own when you write rules that create custom history events. \nLink — If available, a link to the DV (Detail View) of the object's details. In the base configuration, links are enabled for Transaction Approvals. That way, you can rapidly review the Approval information — if the Approval was approved or rejected, and why or why noto Note that the creation of a Reserve is not recorded in Claim history in the base application.\nDescription and Link are optional fields.",
-      "notes": "History record\nEach history record documents a single event-\nClaim history record fields\ninclude:\nType - The claim event causing the entry in the History table, such as an exposure being opened, closed or reopened, a stopped check, an activity's due date changed, and so on.   \nRelated To - Whether the event relates to the entire claim or one of its parts, like an exposure or reserve line.\nUser - Person who caused the event.\nEvent Time Stamp – Date and time the event occurred (in descending order, by default).\nDescription - A brief description of the event. This is provided for history entries written by ClaimCenter, and you may add your own when you write rules that create custom history events. \nLink — If available, a link to the DV (Detail View) of the object's details. In the base configuration, links are enabled for Transaction Approvals. That way, you can rapidly review the Approval information — if the Approval was approved or rejected, and why or why noto Note that the creation of a Reserve is not recorded in Claim history in the base application.\nDescription and Link are optional fields.",
+      "originalNotes": "History record\nEach history record documents a single event.\nClaim history record fields\ninclude:\nType - The claim event causing the entry in the History table, such as an exposure being opened, closed or reopened, a stopped check, an activity's due date changed, and so on.\nRelated To - Whether the event relates to the entire claim or one of its parts, like an exposure or reserve line.\nUser - Person who caused the event.\nEvent Time Stamp – Date and time the event occurred (in descending order, by default).\nDescription - A brief description of the event. This is provided for history entries written by ClaimCenter, and you may add your own when you write rules that create custom history events.\nLink — If available, a link to the DV (Detail View) of the object's details. In the base configuration, links are enabled for Transaction Approvals. That way, you can rapidly review the Approval information — if the Approval was approved or rejected, and why or why noto Note that the creation of a Reserve is not recorded in Claim history in the base application.\nDescription and Link are optional fields.",
+      "notes": "History record\nEach history record documents a single event.\nClaim history record fields\ninclude:\nType - The claim event causing the entry in the History table, such as an exposure being opened, closed or reopened, a stopped check, an activity's due date changed, and so on.\nRelated To - Whether the event relates to the entire claim or one of its parts, like an exposure or reserve line.\nUser - Person who caused the event.\nEvent Time Stamp – Date and time the event occurred (in descending order, by default).\nDescription - A brief description of the event. This is provided for history entries written by ClaimCenter, and you may add your own when you write rules that create custom history events.\nLink — If available, a link to the DV (Detail View) of the object's details. In the base configuration, links are enabled for Transaction Approvals. That way, you can rapidly review the Approval information — if the Approval was approved or rejected, and why or why noto Note that the creation of a Reserve is not recorded in Claim history in the base application.\nDescription and Link are optional fields.",
       "narration": "",
       "ocrText": "| History record\n\n* Is an entry in the claim history, documenting a single recordable claim action or\n\nevent\n\n* Every history record has these\n\nfields:\n* Type\n* Related To\n* User\n\n« Event Time Stamp\n\nHistory\n\nAll\nType Related To\nViewed Entire claim\n\n* These fields are optional:\n\n* Description\n* Link\n\nUser Event Time Stamp +\nAndy Applegate 08/03/2018 10:57 AM\n\nDescription\n\nGi",
       "ocrWordCount": 66,
@@ -130,10 +131,10 @@
     },
     {
       "slideNumber": 8,
-      "title": "",
+      "title": "Claim history type",
       "bodyParagraphs": [],
-      "originalNotes": "Claim history type\nThe base application claim history event types are defined inthe History Type typelist. These history events will be generatedby ClaimCenter by default regardless of configuration. More details on these event types can be found in the ClaimCenter Application Guide, under the Claim History section.",
-      "notes": "Claim history type\nThe base application claim history event types are defined inthe History Type typelist. These history events will be generatedby ClaimCenter by default regardless of configuration. More details on these event types can be found in the ClaimCenter Application Guide, under the Claim History section.",
+      "originalNotes": "Claim history type\nThe base application claim history event types are defined in the History Type typelist. These history events will be generatedby ClaimCenter by default regardless of configuration. More details on these event types can be found in the ClaimCenter Application Guide, under the Claim History section.",
+      "notes": "Claim history type\nThe base application claim history event types are defined in the History Type typelist. These history events will be generatedby ClaimCenter by default regardless of configuration. More details on these event types can be found in the ClaimCenter Application Guide, under the Claim History section.",
       "narration": "",
       "ocrText": "| Claim history type\n\nIs the claim event causing the history record to be created\n\n+ Example: Closing a claim is an event which produces a history record of\ntype “Closed”\n\nHistory screen has a history type filter\n\n+ Can search for history events of a particular type\n\nClaimCenter comes with standard history types which trigger\nautomatically created claim history records\n\n+ Standard events include editing, assigning, viewing, approvals, and so\non\n\n+ Some events are not included in history in the base application, such as\ncreating activities and creating reserves\n\nClaimCenter may be configured to have custom history types\n\n+ This defines additional events which are added to the claim history\n\nHistory\n\nGi\n\nAll\n\nall\nActivity due date changed\nActivity escalation date moved\nApproval or Rejection\nArchived\n\nAssigned\n\nCatastrophe warning\n\nCheck deleted\n\nCheck stopped\n\nCheck transferred\n\nCheck voided\n\nClosed\n\nCustom\n\nFlagged\n\nImported\n\nLitigated\n\nOpened\n\nPolicy edited\n\nPolicy selected or refreshed\nReferred",
       "ocrWordCount": 152,
@@ -147,10 +148,10 @@
     },
     {
       "slideNumber": 9,
-      "title": "",
+      "title": "HistoryType typelist",
       "bodyParagraphs": [],
-      "originalNotes": "HistoryType typelist\nHistory Type cannot be edited because it is an internal typelist- However, note the type •Custom\",  which enables the use of customhistory types, as we will see later in this lesson.",
-      "notes": "HistoryType typelist\nHistory Type cannot be edited because it is an internal typelist- However, note the type •Custom\",  which enables the use of customhistory types, as we will see later in this lesson.",
+      "originalNotes": "HistoryType typelist\nHistory Type cannot be edited because it is an internal typelist- However, note the type •Custom\", which enables the use of customhistory types, as we will see later in this lesson.",
+      "notes": "HistoryType typelist\nHistory Type cannot be edited because it is an internal typelist- However, note the type •Custom\", which enables the use of customhistory types, as we will see later in this lesson.",
       "narration": "",
       "ocrText": "| HistoryType typelist G\n\n* Can be viewed in the Data Dictionary or Studio lvisoonpers\n* Cannot be edited sis area-ony fe\n\nVoshowaly) ee =\n\nName Pio\n\n‘Typecodes pecode assignment | Assigned\nfanoroval [Approval or Rejection [A referral was approvediejected true pecode reopened Reopened\narchived Avchived [Claim was archived rue ypecode flagged Flagged. «= 1\nassionment [Assigned Claim, exposure or subrogation was assigned rue pecode impc Imported\ncatastrophe | Catastrophe warning [Catastrophe warning true lypecods .\nasckadees  [Onesk dees cneck was aeetes we ppecde pliseleted Poe sete. 2\ncheckstonned [Check stopped [A check was stopped true code esclationnud | Activity escal\nchecktansterced [Check transferred [A check was transferred to another claim rue chedtvoided\ncheckvoided [Check voided [A check was voided rue checistopped Check stopped\nclosed Closed (aim, exposure, or subrogation was closed eve checkdeleted Check deleted\ncustom (Custom [A custom history event happened, see CustomType for details eve checkransferr.. Check transte\ndelayed [Activity due date changed | Due date on an activity was changed true 1 panel\nescalaicnand [Activiy escalation date moved] The escalation date on an actviy was changed true lypecodscatasvophe | atastonhe ~ | 1\nagoed Flagged [Claim tagged indicator status was changed eve pecodd retened | Referned\nmao Imported [aim or exposure was imported tve pecode reserveceated Reserve creat. 1\ninoated Liigatea Claim was ligated eve code cust Custom\nfonened Opened [A new claim or exposure was opened rue ‘ypecode polc Policyedited -1\npolcyedied [Poly edited The policy was edited, and thus marked unvertied rue yecode approval | Approval or R",
       "ocrWordCount": 254,
@@ -164,12 +165,12 @@
     },
     {
       "slideNumber": 10,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,- — Whatis a ClaimCenter claim history record?\n\n7\n¢\n¢\n\nSS eee eee ee Soo e Sse",
+      "ocrText": "Question\nWhat is a ClaimCenter claim history record?\n•\n•",
       "ocrWordCount": 19,
       "ocrConfidence": 64.82,
       "hasTable": false,
@@ -177,16 +178,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What is a ClaimCenter claim history record?",
+        "answer": "An uneditable record of some important event or action taken on the claim. Soe ee eon eee Soe e ese Ss"
+      }
     },
     {
       "slideNumber": 11,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer Gi\n\n,- — Whatis a ClaimCenter claim history record?\ny ¢\n¢\nThe correct answer is an uneditable record of some important event or action taken on\nthe claim.\n\nSoe ee eon eee Soe e ese Ss",
+      "ocrText": "Answer Gi\nWhat is a ClaimCenter claim history record?\ny •\n•\nThe correct answer is an uneditable record of some important event or action taken on\nthe claim.\nSoe ee eon eee Soe e ese Ss",
       "ocrWordCount": 38,
       "ocrConfidence": 83.97,
       "hasTable": false,
@@ -198,12 +203,12 @@
     },
     {
       "slideNumber": 12,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_- — !fno active rules write claim history records, will any claim history\n¢ records be written?\n\n¢\n¢\n\nSS eee eee ee Soo e Sse",
+      "ocrText": "Question\n_- — !fno active rules write claim history records, will any claim history\n• records be written?\n•\n•",
       "ocrWordCount": 27,
       "ocrConfidence": 70.29,
       "hasTable": false,
@@ -211,16 +216,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "!fno active rules write claim history records, will any claim history",
+        "answer": "Y records be written? The correct answer is yes, the base history types are automatically tracked, and do not depend on rules. Soe ee eon eee Soe e ese Ss"
+      }
     },
     {
       "slideNumber": 13,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n_- — !fno active rules write claim history records, will any claim history\nY records be written?\n¢\n\nThe correct answer is yes, the base history types are automatically tracked, and do\nnot depend on rules.\n\nSoe ee eon eee Soe e ese Ss",
+      "ocrText": "Answer\n_- — !fno active rules write claim history records, will any claim history\nY records be written?\n•\nThe correct answer is yes, the base history types are automatically tracked, and do\nnot depend on rules.\nSoe ee eon eee Soe e ese Ss",
       "ocrWordCount": 45,
       "ocrConfidence": 84.28,
       "hasTable": false,
@@ -249,12 +258,12 @@
     },
     {
       "slideNumber": 15,
-      "title": "",
+      "title": "Creating custom claim history types",
       "bodyParagraphs": [],
       "originalNotes": "Creating custom claim history types\nYou can add new history types to the CustomHistoryType typelist and use them to create custom history events using preupdate rules.\n\nWhen you add a custom history event to a claim's history, the value in the Name field appears as the history type.\n\nThe image shows the CustomHistoryType typelist as it appears in the base application.",
       "notes": "Creating custom claim history types\nYou can add new history types to the CustomHistoryType typelist and use them to create custom history events using preupdate rules.\n\nWhen you add a custom history event to a claim's history, the value in the Name field appears as the history type.\n\nThe image shows the CustomHistoryType typelist as it appears in the base application.",
       "narration": "",
-      "ocrText": "| Creating custom claim history types\n\n¢ Must be added to CustomHistoryType typelist\n\n* Defines history events that may be tracked by configured rules\n\n¢ Many custom history types are predefined in the base application\n\n* You can add new custom history types\n\nElement\n\ntypelistextension\n\ntypecode\ntypecode\ntypecode\ntypecode\ntypecode\ntypecode\ntypecode\ntypecode\n\nCode\nCustomHistoryType\nante\newner\nExport\nDataChange\ncreate_recovery_bill\ncatastrophe\nemail\n\nwarning\n\nName\n\nCustom history event type...\n\nAuto: No fault rating\nExposure with no reserves\nExported to mainframe\nData change\n\nCreate recovery bill\nGuidewire catastrophe rul...\nEmail sent\n\nWarning\n\n“Name” property appears\nin the “type” column on the\nClaim History screen.",
+      "ocrText": "| Creating custom claim history types\n\n• Must be added to CustomHistoryType typelist\n\n* Defines history events that may be tracked by configured rules\n\n• Many custom history types are predefined in the base application\n\n* You can add new custom history types\n\nElement\n\ntypelistextension\n\ntypecode\ntypecode\ntypecode\ntypecode\ntypecode\ntypecode\ntypecode\ntypecode\n\nCode\nCustomHistoryType\nante\newner\nExport\nDataChange\ncreate_recovery_bill\ncatastrophe\nemail\n\nwarning\n\nName\n\nCustom history event type...\n\nAuto: No fault rating\nExposure with no reserves\nExported to mainframe\nData change\n\nCreate recovery bill\nGuidewire catastrophe rul...\nEmail sent\n\nWarning\n\n“Name” property appears\nin the “type” column on the\nClaim History screen.",
       "ocrWordCount": 102,
       "ocrConfidence": 90.93,
       "hasTable": false,
@@ -266,12 +275,12 @@
     },
     {
       "slideNumber": 16,
-      "title": "",
+      "title": "Recording custom history events",
       "bodyParagraphs": [],
       "originalNotes": "Recording custom history events\nIn the image, we use the base application's \"exposure with no reserves\" custom history type to create a history record when an exposure with no reserves is created or updated.",
       "notes": "Recording custom history events\nIn the image, we use the base application's \"exposure with no reserves\" custom history type to create a history record when an exposure with no reserves is created or updated.",
       "narration": "",
-      "ocrText": "| Recording custom history events Gi\n\n* Create a preupdate rule that captures the history condition\n\n¢ The action uses the createCustomHistoryEvent () method on Claim\n\n¢ Syntax: Claim.createCustomHistoryEvent(CustomHistory Type. TC_CustomHistoryType, Text)\n* Claim is the claim to which you are adding a history record\n* CustomHistoryType is the history type\n* Textis the text to be displayed in the history record’s description column (on the screen)\n\nUSES:\n\nCONDITION (exposure : entity.Exposure) :\n\nreturn exposure.ReserveLines.length == 0\n\nACTION (exposure : entity.Exposure, actions : gw.rules.Action):",
+      "ocrText": "| Recording custom history events Gi\n\n* Create a preupdate rule that captures the history condition\n\n• The action uses the createCustomHistoryEvent () method on Claim\n\n• Syntax: Claim.createCustomHistoryEvent(CustomHistory Type. TC_CustomHistoryType, Text)\n* Claim is the claim to which you are adding a history record\n* CustomHistoryType is the history type\n* Textis the text to be displayed in the history record’s description column (on the screen)\n\nUSES:\n\nCONDITION (exposure : entity.Exposure) :\n\nreturn exposure.ReserveLines.length == 0\n\nACTION (exposure : entity.Exposure, actions : gw.rules.Action):",
       "ocrWordCount": 84,
       "ocrConfidence": 88.72,
       "hasTable": false,
@@ -283,12 +292,12 @@
     },
     {
       "slideNumber": 17,
-      "title": "",
+      "title": "Testing fields for changes",
       "bodyParagraphs": [],
       "originalNotes": "Testing fields for changes\nYou can find out whether a field has changed using the isFieldChanged() method. This is useful for setting the condition on a preupdate rule.",
       "notes": "Testing fields for changes\nYou can find out whether a field has changed using the isFieldChanged() method. This is useful for setting the condition on a preupdate rule.",
       "narration": "",
-      "ocrText": "| Testing fields for changes\n\n¢« Use the isFieldChanged () method\n° Syntax:\n* entity.isFieldChanged(entity#field) or entity.isFieldChanged(field)\n\n« Returns boolean\n\nCONDITION (claim : entity.Claim):\nreturn claim.isCoverageInQuestionFactorsNotEmpty ()\n\nor flaim.isFieldChanged (\"CoverageInQuestion\")",
+      "ocrText": "| Testing fields for changes\n\n•« Use the isFieldChanged () method\n° Syntax:\n* entity.isFieldChanged(entity#field) or entity.isFieldChanged(field)\n\n« Returns boolean\n\nCONDITION (claim : entity.Claim):\nreturn claim.isCoverageInQuestionFactorsNotEmpty ()\n\nor flaim.isFieldChanged (\"CoverageInQuestion\")",
       "ocrWordCount": 30,
       "ocrConfidence": 79.1,
       "hasTable": false,
@@ -300,12 +309,12 @@
     },
     {
       "slideNumber": 18,
-      "title": "",
+      "title": "Finding original field values",
       "bodyParagraphs": [],
       "originalNotes": "Finding original field values\nYou can find the original value for a changed field using the getOriginaIValue() method. This is useful both for conditions and for setting the description field ofa claim history entry.",
       "notes": "Finding original field values\nYou can find the original value for a changed field using the getOriginaIValue() method. This is useful both for conditions and for setting the description field ofa claim history entry.",
       "narration": "",
-      "ocrText": "| Finding original field values\n\nGi\n\n¢ To determine the original value of a changed field, use the getoriginalvValue ()\nmethod\n\n¢ Syntax\nentity.getOriginalValue(entity#field) or entity.getOriginalValue(field)\n\nReturns an ordinary object\n\nNeed to cast the result in order\nto get the display name",
+      "ocrText": "| Finding original field values\n\nGi\n\n• To determine the original value of a changed field, use the getoriginalvValue ()\nmethod\n\n• Syntax\nentity.getOriginalValue(entity#field) or entity.getOriginalValue(field)\n\nReturns an ordinary object\n\nNeed to cast the result in order\nto get the display name",
       "ocrWordCount": 42,
       "ocrConfidence": 91.12,
       "hasTable": false,
@@ -317,7 +326,7 @@
     },
     {
       "slideNumber": 19,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -330,7 +339,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 20,
@@ -368,12 +378,12 @@
     },
     {
       "slideNumber": 22,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_— — |sit possible to define new types of history events?\n\n7\n¢\n¢\n\nSS eee eee ee Soo e Sse",
+      "ocrText": "Question\n|sit possible to define new types of history events?\n•\n•",
       "ocrWordCount": 22,
       "ocrConfidence": 66.45,
       "hasTable": false,
@@ -381,16 +391,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "|sit possible to define new types of history events?",
+        "answer": "Yes, by adding them to the CustomHistoryType typelist and creating rules to record them. Soe ee eon eee Soe e ese Ss"
+      }
     },
     {
       "slideNumber": 23,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n_— — |sit possible to define new types of history events?\ny ¢\n¢\nThe correct answer is yes, by adding them to the CustomHistoryType typelist and\ncreating rules to record them.\n\nSoe ee eon eee Soe e ese Ss",
+      "ocrText": "Answer\n|sit possible to define new types of history events?\ny •\n•\nThe correct answer is yes, by adding them to the CustomHistoryType typelist and\ncreating rules to record them.\nSoe ee eon eee Soe e ese Ss",
       "ocrWordCount": 41,
       "ocrConfidence": 83.23,
       "hasTable": false,
@@ -402,7 +416,7 @@
     },
     {
       "slideNumber": 24,
-      "title": "",
+      "title": "Student Exercise",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -419,7 +433,7 @@
     },
     {
       "slideNumber": 25,
-      "title": "",
+      "title": "Key Takeaways",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -445,6 +459,11 @@
       "index": 2,
       "filename": "CC_14_02.mp4",
       "path": "/academy/guidewire/videos/ch09/CC_14_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "CC_14_03.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_14_03.mp4"
     }
   ],
   "hasNotes": true,

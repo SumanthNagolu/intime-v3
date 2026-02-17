@@ -11,7 +11,7 @@
   "slides": [
     {
       "slideNumber": 1,
-      "title": "",
+      "title": "Managing Direct Bill Payments",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -28,12 +28,12 @@
     },
     {
       "slideNumber": 2,
-      "title": "",
+      "title": "Learning Objectives",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives ¢ Describe two ways to move a suspense\n\npayment to the applicable unapplied fund\n* Correct a payment allocation\n¢ Move surplus unapplied funds between\naccounts and policies",
+      "ocrText": "Lesson\nobjectives • Describe two ways to move a suspense\n\npayment to the applicable unapplied fund\n* Correct a payment allocation\n• Move surplus unapplied funds between\naccounts and policies",
       "ocrWordCount": 30,
       "ocrConfidence": 89.53,
       "hasTable": false,
@@ -62,7 +62,7 @@
     },
     {
       "slideNumber": 4,
-      "title": "",
+      "title": "i Handling suspense payments",
       "bodyParagraphs": [],
       "originalNotes": "Setting the context\nMarcus wants to know what happens to a suspense payment when the target of the payment becomes known to BillingCenter. Samuel tells him there are twoways to release the money—anautomatic method and a manual one.",
       "notes": "Setting the context\nMarcus wants to know what happens to a suspense payment when the target of the payment becomes known to BillingCenter. Samuel tells him there are twoways to release the money—anautomatic method and a manual one.",
@@ -79,12 +79,12 @@
     },
     {
       "slideNumber": 5,
-      "title": "",
+      "title": "Releasing a suspense payment (1 of 2)",
       "bodyParagraphs": [],
       "originalNotes": "Releasing a suspense payment (I of 2)\nSuspense payments can be moved to the applicable unapplied fund either automatically or manually.\n\nThe Suspense Payment batch process is responsible for automatically releasing a suspense payment. When the Suspense Payment batch process runs, it searches for the target of each payment stored in a SuspensePayment unapplied fund. It checks whether the target account, policy, or producer exists. If so, the batch process moves the money from the SuspensePayment unapplied fund to the applicable unapplied fund.\n\nAfter a suspense payment is placed in the applicable unapplied fund, BillingCenterallocates it in the same way as any other money in an unapplied fund.",
       "notes": "Releasing a suspense payment (I of 2)\nSuspense payments can be moved to the applicable unapplied fund either automatically or manually.\n\nThe Suspense Payment batch process is responsible for automatically releasing a suspense payment. When the Suspense Payment batch process runs, it searches for the target of each payment stored in a SuspensePayment unapplied fund. It checks whether the target account, policy, or producer exists. If so, the batch process moves the money from the SuspensePayment unapplied fund to the applicable unapplied fund.\n\nAfter a suspense payment is placed in the applicable unapplied fund, BillingCenterallocates it in the same way as any other money in an unapplied fund.",
       "narration": "",
-      "ocrText": "Releasing a suspense payment (1 of 2) Gi\n\nAutomatic method\n\n¢ After BillingCenter receives the required information (account, policy, or producer)\nfor a suspense payment, the Suspense Payment batch process releases the\nsuspense payment\n\n« Example: When BillingCenter receives an Issuance billing request for Policy A:\n\nSuspense Payment batch process\n\no——@)\n\nSuspensePayment Designated Unapplied\nUnapplied (Policy A) (Policy A)\n\n@",
+      "ocrText": "Releasing a suspense payment (1 of 2) Gi\n\nAutomatic method\n\n• After BillingCenter receives the required information (account, policy, or producer)\nfor a suspense payment, the Suspense Payment batch process releases the\nsuspense payment\n\n« Example: When BillingCenter receives an Issuance billing request for Policy A:\n\nSuspense Payment batch process\n\no——@)\n\nSuspensePayment Designated Unapplied\nUnapplied (Policy A) (Policy A)\n\n@",
       "ocrWordCount": 60,
       "ocrConfidence": 91.38,
       "hasTable": false,
@@ -98,8 +98,8 @@
       "slideNumber": 6,
       "title": "",
       "bodyParagraphs": [],
-      "originalNotes": "Releasing a suspense payment (2 of 2)\nThe Suspense Payments screen on the Desktop lists all payments held in suspense.  When the missing target account,  policy, or producer is added to BillingCenter, you can manually move the relevant suspense payment to the unapplied fund for the target. The target of the highlighted suspense payment in the top screenshot is a policy.\n\nThe Apply Suspense Payment popup lets you search for the target. You can also change the target if necessary. Clicking Update releases the suspense payment to the applicable unapplied fund. The suspense payment will no longer be listed on the Suspense Payments screen. To view the released payment in the unapplied fund, go to either the Account Summary or Policy Summary and click the Total Unapplied amount. In the example, a check has been received for a policy but is not yet allocated (\"allotted\").\n\nThe Suspense Payments screen has both Edit and Apply links, which take you to similar popups. Edit allows you to change the suspense paymentamount and add or update a note, whereas Apply does not.\n\nAfter a suspense payment is placed in the applicable unapplied fund, BillingCenter allocates it in the same way as any other money in an unapplied fund.",
-      "notes": "Releasing a suspense payment (2 of 2)\nThe Suspense Payments screen on the Desktop lists all payments held in suspense.  When the missing target account,  policy, or producer is added to BillingCenter, you can manually move the relevant suspense payment to the unapplied fund for the target. The target of the highlighted suspense payment in the top screenshot is a policy.\n\nThe Apply Suspense Payment popup lets you search for the target. You can also change the target if necessary. Clicking Update releases the suspense payment to the applicable unapplied fund. The suspense payment will no longer be listed on the Suspense Payments screen. To view the released payment in the unapplied fund, go to either the Account Summary or Policy Summary and click the Total Unapplied amount. In the example, a check has been received for a policy but is not yet allocated (\"allotted\").\n\nThe Suspense Payments screen has both Edit and Apply links, which take you to similar popups. Edit allows you to change the suspense paymentamount and add or update a note, whereas Apply does not.\n\nAfter a suspense payment is placed in the applicable unapplied fund, BillingCenter allocates it in the same way as any other money in an unapplied fund.",
+      "originalNotes": "Releasing a suspense payment (2 of 2)\nThe Suspense Payments screen on the Desktop lists all payments held in suspense. When the missing target account, policy, or producer is added to BillingCenter, you can manually move the relevant suspense payment to the unapplied fund for the target. The target of the highlighted suspense payment in the top screenshot is a policy.\n\nThe Apply Suspense Payment popup lets you search for the target. You can also change the target if necessary. Clicking Update releases the suspense payment to the applicable unapplied fund. The suspense payment will no longer be listed on the Suspense Payments screen. To view the released payment in the unapplied fund, go to either the Account Summary or Policy Summary and click the Total Unapplied amount. In the example, a check has been received for a policy but is not yet allocated (\"allotted\").\n\nThe Suspense Payments screen has both Edit and Apply links, which take you to similar popups. Edit allows you to change the suspense paymentamount and add or update a note, whereas Apply does not.\n\nAfter a suspense payment is placed in the applicable unapplied fund, BillingCenter allocates it in the same way as any other money in an unapplied fund.",
+      "notes": "Releasing a suspense payment (2 of 2)\nThe Suspense Payments screen on the Desktop lists all payments held in suspense. When the missing target account, policy, or producer is added to BillingCenter, you can manually move the relevant suspense payment to the unapplied fund for the target. The target of the highlighted suspense payment in the top screenshot is a policy.\n\nThe Apply Suspense Payment popup lets you search for the target. You can also change the target if necessary. Clicking Update releases the suspense payment to the applicable unapplied fund. The suspense payment will no longer be listed on the Suspense Payments screen. To view the released payment in the unapplied fund, go to either the Account Summary or Policy Summary and click the Total Unapplied amount. In the example, a check has been received for a policy but is not yet allocated (\"allotted\").\n\nThe Suspense Payments screen has both Edit and Apply links, which take you to similar popups. Edit allows you to change the suspense paymentamount and add or update a note, whereas Apply does not.\n\nAfter a suspense payment is placed in the applicable unapplied fund, BillingCenter allocates it in the same way as any other money in an unapplied fund.",
       "narration": "",
       "ocrText": "",
       "ocrWordCount": 0,
@@ -113,7 +113,7 @@
     },
     {
       "slideNumber": 7,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -126,7 +126,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 8,
@@ -147,7 +148,7 @@
     },
     {
       "slideNumber": 9,
-      "title": "",
+      "title": "Fixing a payment issue",
       "bodyParagraphs": [],
       "originalNotes": "Setting the context\nMarcus would like to know how to fix a mistake when someone has allocated a payment to the wrong account or policy. Zhang comments that the Payments screen provides various actions you can take to fix a payment issue.",
       "notes": "Setting the context\nMarcus would like to know how to fix a mistake when someone has allocated a payment to the wrong account or policy. Zhang comments that the Payments screen provides various actions you can take to fix a payment issue.",
@@ -164,10 +165,10 @@
     },
     {
       "slideNumber": 10,
-      "title": "",
+      "title": "i Modifying a payment",
       "bodyParagraphs": [],
-      "originalNotes": "Modifying a payment\nThe same set of actions is available from both the Payments screen for the account and the Account Details screen.  The Modify Payment Details action is listed only if the payment has not been allocated. All the other actions are listed for both allocated and unallocated payments.\n\nHere is a brief summary of the payment actions:\n\nModify Payment Details— modify the payment amount and payment instrument details\n\nModify Distribution—modify both payment details and payment allocation \n\nReverse- reverse the payment, for example if an account has been closed or a check was returned\n\nMove to Account/Unapplied Fund—move money from one unapplied fund to another\n\nMove To Suspense—move money to a SuspensePayment unapplied fund\n\nTransaction—show the accounting for the payment  (not really an action)\n\nSee the BillingCenterApplicatjon Guide for details.",
-      "notes": "Modifying a payment\nThe same set of actions is available from both the Payments screen for the account and the Account Details screen.  The Modify Payment Details action is listed only if the payment has not been allocated. All the other actions are listed for both allocated and unallocated payments.\n\nHere is a brief summary of the payment actions:\n\nModify Payment Details— modify the payment amount and payment instrument details\n\nModify Distribution—modify both payment details and payment allocation \n\nReverse- reverse the payment, for example if an account has been closed or a check was returned\n\nMove to Account/Unapplied Fund—move money from one unapplied fund to another\n\nMove To Suspense—move money to a SuspensePayment unapplied fund\n\nTransaction—show the accounting for the payment  (not really an action)\n\nSee the BillingCenterApplicatjon Guide for details.",
+      "originalNotes": "Modifying a payment\nThe same set of actions is available from both the Payments screen for the account and the Account Details screen. The Modify Payment Details action is listed only if the payment has not been allocated. All the other actions are listed for both allocated and unallocated payments.\n\nHere is a brief summary of the payment actions:\n\nModify Payment Details— modify the payment amount and payment instrument details\n\nModify Distribution—modify both payment details and payment allocation\n\nReverse- reverse the payment, for example if an account has been closed or a check was returned\n\nMove to Account/Unapplied Fund—move money from one unapplied fund to another\n\nMove To Suspense—move money to a SuspensePayment unapplied fund\n\nTransaction—show the accounting for the payment (not really an action)\n\nSee the BillingCenterApplicatjon Guide for details.",
+      "notes": "Modifying a payment\nThe same set of actions is available from both the Payments screen for the account and the Account Details screen. The Modify Payment Details action is listed only if the payment has not been allocated. All the other actions are listed for both allocated and unallocated payments.\n\nHere is a brief summary of the payment actions:\n\nModify Payment Details— modify the payment amount and payment instrument details\n\nModify Distribution—modify both payment details and payment allocation\n\nReverse- reverse the payment, for example if an account has been closed or a check was returned\n\nMove to Account/Unapplied Fund—move money from one unapplied fund to another\n\nMove To Suspense—move money to a SuspensePayment unapplied fund\n\nTransaction—show the accounting for the payment (not really an action)\n\nSee the BillingCenterApplicatjon Guide for details.",
       "narration": "",
       "ocrText": "i Modifying a payment Gi\n\n« You can modify a payment from two places on the Account tab\n\nAccount > Payments Account > Overview > Details\n\nPayments Recent Payments Received\n\nMRSIRENE[ unseen = PepwertOet] Peynescnstranent | Grits | Uneppted Fond | Arce\nSS SS ee sopo08 cash Bntmios $5000\n\nosjasizo1e Check 1234-885622 BOtiKLoG $521.90 EEE spzsrzore creck sa34-00-5622 BOO 0g $521.90\n\n001\n| scion: ~ B00t og «sso |\n\nees Modify Payment Details\n\nModify Distribution\n\nAvailable for unallocated payments only\n\nReverse\nMove To Account/Unapplied Fund\nMove To Suspense\n\nUndistribute ——— Available for allocated payments only\n\nTransaction",
       "ocrWordCount": 96,
@@ -181,10 +182,10 @@
     },
     {
       "slideNumber": 11,
-      "title": "",
+      "title": "i Modifying a payment allocation =",
       "bodyParagraphs": [],
-      "originalNotes": "Modifying a payment allocation\nThe screen for modifying a payment should look familiar to you—it is the same as the Direct Bill Payment screen.\n\nTo modify the payment allocation so that it includes an invoice item on a different policy (belonging to the same account):\n\n1.Select Actions Modify Distribution from the Actions menu for the payment.\n\n2.In the Modify Payment screen, click Override.\n\n3.If the account uses cash separation (which our example does use), click Add Items.\n\n4.Find and select the item from the target policy.\n\n5.Click Add Selected Items. The added item is indicated with a plus sign on the left.\n\n6.Enter the desired amount in the Override Amount field for the added item.\n\nThe highlighted row in the Preview Distribution area of the screen shows the result of the steps listed above.\n\n7. Click Execute to complete the reallocation.",
-      "notes": "Modifying a payment allocation\nThe screen for modifying a payment should look familiar to you—it is the same as the Direct Bill Payment screen.\n\nTo modify the payment allocation so that it includes an invoice item on a different policy (belonging to the same account):\n\n1.Select Actions Modify Distribution from the Actions menu for the payment.\n\n2.In the Modify Payment screen, click Override.\n\n3.If the account uses cash separation (which our example does use), click Add Items.\n\n4.Find and select the item from the target policy.\n\n5.Click Add Selected Items. The added item is indicated with a plus sign on the left.\n\n6.Enter the desired amount in the Override Amount field for the added item.\n\nThe highlighted row in the Preview Distribution area of the screen shows the result of the steps listed above.\n\n7. Click Execute to complete the reallocation.",
+      "originalNotes": "Modifying a payment allocation\nThe screen for modifying a payment should look familiar to you—it is the same as the Direct Bill Payment screen.\n\nTo modify the payment allocation so that it includes an invoice item on a different policy (belonging to the same account):\n\n1. Select Actions Modify Distribution from the Actions menu for the payment.\n\n2. In the Modify Payment screen, click Override.\n\n3. If the account uses cash separation (which our example does use), click Add Items.\n\n4. Find and select the item from the target policy.\n\n5. Click Add Selected Items. The added item is indicated with a plus sign on the left.\n\n6. Enter the desired amount in the Override Amount field for the added item.\n\nThe highlighted row in the Preview Distribution area of the screen shows the result of the steps listed above.\n\n7. Click Execute to complete the reallocation.",
+      "notes": "Modifying a payment allocation\nThe screen for modifying a payment should look familiar to you—it is the same as the Direct Bill Payment screen.\n\nTo modify the payment allocation so that it includes an invoice item on a different policy (belonging to the same account):\n\n1. Select Actions Modify Distribution from the Actions menu for the payment.\n\n2. In the Modify Payment screen, click Override.\n\n3. If the account uses cash separation (which our example does use), click Add Items.\n\n4. Find and select the item from the target policy.\n\n5. Click Add Selected Items. The added item is indicated with a plus sign on the left.\n\n6. Enter the desired amount in the Override Amount field for the added item.\n\nThe highlighted row in the Preview Distribution area of the screen shows the result of the steps listed above.\n\n7. Click Execute to complete the reallocation.",
       "narration": "",
       "ocrText": "i Modifying a payment allocation =\n\nTo include an invoice item from a different policy\n\npre QName eacknowk GlobatLogtcs Acounte DEMOGOIS ete, 2038\nMody Distibution > Modify Payment (manne)\nReverse\necon Payment Deas This Payoent\nMove To Account/Unapplied Fund\nSelected Account ® benoooss * (coum ~)EEB | ssiasie 5650.00\nMove To Suspense\nSelected ccountName _Blckhawk Global Logstics Dinu seso00\nUndistrbute ayn lnseapense -\nTransaction Received Date sojosa0ie Coutatrat -\nUneppied Fund 001 HAWHLOG\n\nPreview Distribution\nDistribution | Suspenseltems | Collatera item\n\nSelectitems where the | Payer + | ts| Account > | Include Only | Upto amount\n\n=\n\nUnpaid Amount Amount Te Apply Override Amount\n\nGroup By Invoice = | Aggregate Byltem ~ | SortBy Invoice Date * | Go:\n\nItem Policy Period# Invoice # Invoice BillDate Invoke Due Date Owner Payer\n\nSubtotal $1,230 $1,122.30 $128.10\nInvoice # 1000000057 (Billed); Due On: 10/19/2018; Unpaid Balance: $0.00,\nInstallment Premium 8001-BHAWKLOG-1 1000000057 09/24/2018 Billed) 10/19/2018 -—-DEMo001S _DEMO00:5, $521.90 - ss2190§\n\nSubtotal $521.90 : $521.90",
       "ocrWordCount": 162,
@@ -198,10 +199,10 @@
     },
     {
       "slideNumber": 12,
-      "title": "",
+      "title": "i Moving an incorrectly receipted payment",
       "bodyParagraphs": [],
-      "originalNotes": "Moving an incorrectly receipted payment\nIn the example, the payment was credited incorrectly to the designated unapplied fund for BOOI-BHAWKLOG. The example shows two different scenarios:\n\nMove Direct Bill Payment example: Suppose the payment was for a different policy belonging to the same account. In this case, you would select Move To Account/Unapplied Fund.  The Move Direct Bill Payment screen allows you to select a different account number and/or unapplied fund. On the same screen, you can specify the payment allocation as you would do for a new policy (the Preview Distribution portion of the screen is not shown in the slide).\n\nMove Payment to Suspense Payment example: Suppose the payment was for an account or policy that BillingCenter does not know about yet. In this case, you would select Move To Suspense. In the Move Payment to Suspense Payment popup, you can select either Account # or Policy # and enter number of the expected account or policy.",
-      "notes": "Moving an incorrectly receipted payment\nIn the example, the payment was credited incorrectly to the designated unapplied fund for BOOI-BHAWKLOG. The example shows two different scenarios:\n\nMove Direct Bill Payment example: Suppose the payment was for a different policy belonging to the same account. In this case, you would select Move To Account/Unapplied Fund.  The Move Direct Bill Payment screen allows you to select a different account number and/or unapplied fund. On the same screen, you can specify the payment allocation as you would do for a new policy (the Preview Distribution portion of the screen is not shown in the slide).\n\nMove Payment to Suspense Payment example: Suppose the payment was for an account or policy that BillingCenter does not know about yet. In this case, you would select Move To Suspense. In the Move Payment to Suspense Payment popup, you can select either Account # or Policy # and enter number of the expected account or policy.",
+      "originalNotes": "Moving an incorrectly receipted payment\nIn the example, the payment was credited incorrectly to the designated unapplied fund for BOOI-BHAWKLOG. The example shows two different scenarios:\n\nMove Direct Bill Payment example: Suppose the payment was for a different policy belonging to the same account. In this case, you would select Move To Account/Unapplied Fund. The Move Direct Bill Payment screen allows you to select a different account number and/or unapplied fund. On the same screen, you can specify the payment allocation as you would do for a new policy (the Preview Distribution portion of the screen is not shown in the slide).\n\nMove Payment to Suspense Payment example: Suppose the payment was for an account or policy that BillingCenter does not know about yet. In this case, you would select Move To Suspense. In the Move Payment to Suspense Payment popup, you can select either Account # or Policy # and enter number of the expected account or policy.",
+      "notes": "Moving an incorrectly receipted payment\nIn the example, the payment was credited incorrectly to the designated unapplied fund for BOOI-BHAWKLOG. The example shows two different scenarios:\n\nMove Direct Bill Payment example: Suppose the payment was for a different policy belonging to the same account. In this case, you would select Move To Account/Unapplied Fund. The Move Direct Bill Payment screen allows you to select a different account number and/or unapplied fund. On the same screen, you can specify the payment allocation as you would do for a new policy (the Preview Distribution portion of the screen is not shown in the slide).\n\nMove Payment to Suspense Payment example: Suppose the payment was for an account or policy that BillingCenter does not know about yet. In this case, you would select Move To Suspense. In the Move Payment to Suspense Payment popup, you can select either Account # or Policy # and enter number of the expected account or policy.",
       "narration": "",
       "ocrText": "i Moving an incorrectly receipted payment Gi\n\nPayments\n\nPaymentReceived Last 30Days +\n\nPomeniDate | Revered PaymentinsrumestChechiRef?—_UnappedFund | Amount\nscion ~ ee Check reese 200 ssaiso\nsweats cash 00H sesnc0\n\nPrevious Versions\nMove To Account/Unapplied Fund\n\nMove To Suspense\n\nUndisribute\n\nTransaction\n\nMove Payment to Suspense Payment ©\n\nIdentifying Information\n\nMove Direct Bill Payment eer)\n\nPayment Instrument\n‘Recount Originating Account # DEMoo01s Payment Instrument Cash\nOriginating Account # DeHoo01s, ‘Account Name Blackhawk Global Logistics\n\nOriginating Unapplied Fund 8001-BHAWKLOG\n\nPayment Data\n\nSelected Accout  (Demooors 10/08/2018\nSelected Ae Blackhawk Global Logistics\nPayment $650.00\nReceived Date 10/08/2018\n\nSuspense Payment Details\nAmount $650.00\n\n© Account\n\n‘Unapplied Fund | GLor-BHAWKLOG\n\nPolicy #",
       "ocrWordCount": 105,
@@ -215,7 +216,7 @@
     },
     {
       "slideNumber": 13,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -228,7 +229,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 14,
@@ -266,12 +268,12 @@
     },
     {
       "slideNumber": 16,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n,~ — Designate each action as one of: Automatic (in 1 step), Manual, Both, or\nY Neither (can’t be done):\n\na 1) Move a payment to a suspense payment\n2) Apply a suspense payment to an invoice item\n\n3) Move a suspense payment from a Suspense Payment Unapplied fund to another\nunapplied fund\n\n4) Change the target account # of a payment that has already been allocated\n\n5) Add an invoice item from one policy to a payment distribution (allocation) of\nanother policy\n\nSSeS ee ee eee Soo Se Seoe",
+      "ocrText": "Question G\nDesignate each action as one of: Automatic (in 1 step), Manual, Both, or\nY Neither (can’t be done):\na 1) Move a payment to a suspense payment\n2) Apply a suspense payment to an invoice item\n3) Move a suspense payment from a Suspense Payment Unapplied fund to another\nunapplied fund\n4) Change the target account # of a payment that has already been allocated\n5) Add an invoice item from one policy to a payment distribution (allocation) of\nanother policy",
       "ocrWordCount": 92,
       "ocrConfidence": 88.97,
       "hasTable": false,
@@ -279,16 +281,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Designate each action as one of: Automatic (in 1 step), Manual, Both, or",
+        "answer": "Y Neither (can’t be done): 1) Move a payment to a suspense payment Manual 2) Apply a suspense payment to an invoice item Neither 3) Move a suspense payment from a Suspense Payment Unapplied fund to another unapplied fund Both 4) Change the target account # of a payment that has already been allocated Manual 5) Add an invoice item from one policy to a payment distribution (allocation) of another policy Manual"
+      }
     },
     {
       "slideNumber": 17,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer Gi\n\n,~ — Designate each action as one of: Automatic (in 1 step), Manual, Both, or\nY Neither (can’t be done):\n4\n\n1) Move a payment to a suspense payment Manual\n2) Apply a suspense payment to an invoice item Neither\n\n3) Move a suspense payment from a Suspense Payment Unapplied fund to another\nunapplied fund Both\n\n4) Change the target account # of a payment that has already been allocated\nManual\n\n5) Add an invoice item from one policy to a payment distribution (allocation) of\nanother policy Manual\n\nSoe ee ee eee Soo eSeoe Ss",
+      "ocrText": "Answer Gi\nDesignate each action as one of: Automatic (in 1 step), Manual, Both, or\nY Neither (can’t be done):\n1) Move a payment to a suspense payment Manual\n2) Apply a suspense payment to an invoice item Neither\n3) Move a suspense payment from a Suspense Payment Unapplied fund to another\nunapplied fund Both\n4) Change the target account # of a payment that has already been allocated\nManual\n5) Add an invoice item from one policy to a payment distribution (allocation) of\nanother policy Manual\nSoe ee ee eee Soo eSeoe Ss",
       "ocrWordCount": 97,
       "ocrConfidence": 88.12,
       "hasTable": false,
@@ -300,12 +306,12 @@
     },
     {
       "slideNumber": 18,
-      "title": "",
+      "title": "Key Takeaways",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives ¢ Describe two ways to move a suspense\n\nreview payment to the applicable unapplied fund\n* Correct a payment allocation\n¢ Move surplus unapplied funds between\naccounts and policies",
+      "ocrText": "Lesson\nobjectives • Describe two ways to move a suspense\n\nreview payment to the applicable unapplied fund\n* Correct a payment allocation\n• Move surplus unapplied funds between\naccounts and policies",
       "ocrWordCount": 31,
       "ocrConfidence": 89.71,
       "hasTable": false,
@@ -317,7 +323,7 @@
     },
     {
       "slideNumber": 19,
-      "title": "",
+      "title": "Student Exercise",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -343,6 +349,11 @@
       "index": 2,
       "filename": "Billing_11_02.mp4",
       "path": "/academy/guidewire/videos/ch06/Billing_11_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "Billing_11_03.mp4",
+      "path": "/academy/guidewire/videos/ch06/Billing_11_03.mp4"
     }
   ],
   "hasNotes": true,

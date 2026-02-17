@@ -33,7 +33,7 @@
       "originalNotes": "",
       "notes": "Visual representation of how policy transactions are organized over time.",
       "narration": "Policy transaction graphs are essential for visualizing how different policy changes are sequenced over time. These graphs help us understand the flow of transactions and how each change impacts the subsequent ones. We'll explore how effective dates play a critical role in determining the sequence and impact of policy changes.",
-      "ocrText": "Lesson\nobjectives\n\n* Define an out-of-sequence (OOS) transaction\n\n¢ Explain how PolicyCenter handles an OOS\ntransaction\n\n* Define conflicting transactions\n\n« Describe how a conflict between transactions\nis resolved in PolicyCenter",
+      "ocrText": "Lesson\nobjectives\n\n* Define an out-of-sequence (OOS) transaction\n\n• Explain how PolicyCenter handles an OOS\ntransaction\n\n* Define conflicting transactions\n\n« Describe how a conflict between transactions\nis resolved in PolicyCenter",
       "ocrWordCount": 31,
       "ocrConfidence": 85.84,
       "hasTable": false,
@@ -64,8 +64,8 @@
       "slideNumber": 4,
       "title": "Review: Policy Transaction Graphs",
       "bodyParagraphs": [],
-      "originalNotes": "Review: Policy transaction graphs\nMany policy jobs have effective dates later than the effective date of any existing bound revisions for that contractual period. The change implicitly applies from the job's effective date until the end of the contractual policy period.  For example, increasing coverage on an effective date applies for the rest of the contractual period. Canceling a policy is effective for the rest of the policy period.",
-      "notes": "Review: Policy transaction graphs\nMany policy jobs have effective dates later than the effective date of any existing bound revisions for that contractual period. The change implicitly applies from the job's effective date until the end of the contractual policy period.  For example, increasing coverage on an effective date applies for the rest of the contractual period. Canceling a policy is effective for the rest of the policy period.",
+      "originalNotes": "Review: Policy transaction graphs\nMany policy jobs have effective dates later than the effective date of any existing bound revisions for that contractual period. The change implicitly applies from the job's effective date until the end of the contractual policy period. For example, increasing coverage on an effective date applies for the rest of the contractual period. Canceling a policy is effective for the rest of the policy period.",
+      "notes": "Review: Policy transaction graphs\nMany policy jobs have effective dates later than the effective date of any existing bound revisions for that contractual period. The change implicitly applies from the job's effective date until the end of the contractual policy period. For example, increasing coverage on an effective date applies for the rest of the contractual period. Canceling a policy is effective for the rest of the policy period.",
       "narration": "Policy transaction graphs articulate how policy jobs with later effective dates affect existing bound revisions within the contractual period. For instance, increasing coverage partway through the term will apply for the rest of the period. This visual representation is crucial for understanding how changes, like cancellations, take effect immediately and impact subsequent transactions.",
       "ocrText": "| Review: Policy transaction graphs fa\n\nPolicy comes Policy renewed\ninto effect or expires\nSubmission\nChange 1\nChange 2\nRenewal iD uo0\n\nGuidewire documentation uses graphic convention to represent how transactions\nchange policies over time\n\n* Horizontal axis represents the policy term (“real-time”)\n\n« Vertical axis represents the policy as modeled in PolicyCenter (“model time”)",
       "ocrWordCount": 55,
@@ -98,10 +98,10 @@
       "slideNumber": 6,
       "title": "What Can or Cannot Be Out-of-Sequence",
       "bodyParagraphs": [],
-      "originalNotes": "What can or cannot be out-of- sequence \nA Submission transaction cannot be out-of-sequence since the submission creates the policy. The policy must exist before an OOS transaction can occur. A Renewal cannot be an OOS transaction for similar reasons. For example, a renewal extends the policy for another term. If arenewal has not yet completed, there is no new term, therefore,  therefore, therefore, other transactions such as changes, can only affect the current term. \n\nAudits cannot be conducted OOS because OOS audits do not have an edit effective date and do not result in modifying the policy’s structure. While a Premium Report or Check Audit can technically be OOS to a future bound change, cancellation, reinstatement, rewrite or renewal, it is never created as an OOS transaction because it does not modify the policy's structure and no changes need to be merged. If a change is made after a final audit, the final audit is reversed",
-      "notes": "What can or cannot be out-of- sequence \nA Submission transaction cannot be out-of-sequence since the submission creates the policy. The policy must exist before an OOS transaction can occur. A Renewal cannot be an OOS transaction for similar reasons. For example, a renewal extends the policy for another term. If arenewal has not yet completed, there is no new term, therefore,  therefore, therefore, other transactions such as changes, can only affect the current term. \n\nAudits cannot be conducted OOS because OOS audits do not have an edit effective date and do not result in modifying the policy’s structure. While a Premium Report or Check Audit can technically be OOS to a future bound change, cancellation, reinstatement, rewrite or renewal, it is never created as an OOS transaction because it does not modify the policy's structure and no changes need to be merged. If a change is made after a final audit, the final audit is reversed",
+      "originalNotes": "What can or cannot be out-of- sequence\nA Submission transaction cannot be out-of-sequence since the submission creates the policy. The policy must exist before an OOS transaction can occur. A Renewal cannot be an OOS transaction for similar reasons. For example, a renewal extends the policy for another term. If arenewal has not yet completed, there is no new term, therefore, therefore, therefore, other transactions such as changes, can only affect the current term.\n\nAudits cannot be conducted OOS because OOS audits do not have an edit effective date and do not result in modifying the policy’s structure. While a Premium Report or Check Audit can technically be OOS to a future bound change, cancellation, reinstatement, rewrite or renewal, it is never created as an OOS transaction because it does not modify the policy's structure and no changes need to be merged. If a change is made after a final audit, the final audit is reversed",
+      "notes": "What can or cannot be out-of- sequence\nA Submission transaction cannot be out-of-sequence since the submission creates the policy. The policy must exist before an OOS transaction can occur. A Renewal cannot be an OOS transaction for similar reasons. For example, a renewal extends the policy for another term. If arenewal has not yet completed, there is no new term, therefore, therefore, therefore, other transactions such as changes, can only affect the current term.\n\nAudits cannot be conducted OOS because OOS audits do not have an edit effective date and do not result in modifying the policy’s structure. While a Premium Report or Check Audit can technically be OOS to a future bound change, cancellation, reinstatement, rewrite or renewal, it is never created as an OOS transaction because it does not modify the policy's structure and no changes need to be merged. If a change is made after a final audit, the final audit is reversed",
       "narration": "Not all transactions can be out-of-sequence. For example, submissions and renewals establish new policy terms, making them inherently sequential. Audits are another story; they don't alter the policy structure, so they aren't typically created as OOS transactions. Understanding these nuances helps developers correctly handle policy changes and maintain data consistency.",
-      "ocrText": "| What can or cannot be out-of-sequence i\n\n* Policy Changes * Submissions\n* Cancellations « Renewals\n\n¢ Reinstatements ¢ Audits\n\n¢ Rewrites",
+      "ocrText": "| What can or cannot be out-of-sequence i\n\n* Policy Changes * Submissions\n* Cancellations « Renewals\n\n• Reinstatements • Audits\n\n• Rewrites",
       "ocrWordCount": 23,
       "ocrConfidence": 69.96,
       "hasTable": false,
@@ -200,8 +200,8 @@
       "slideNumber": 12,
       "title": "Demonstration: Identifying OOS Transactions",
       "bodyParagraphs": [],
-      "originalNotes": "Demonstration\nPreparation: Give an example of what makes transactions out of sequence.\nBASE INFO: On January 1, a customer adds a new auto policy effective all year for a red car. The effective date is January 1\n CHANGE 1: On March 1, the customer increases a specific coverage on the car to $20,000 effective through the year end. The effective date for the change\nis March 1-\nCHANGE 2: On March 2, the customer calls to say that he had the car painted blue on February\n1. The effective date of this change is February 1, which is earlier than Change I's effective date.\nThe last change in this example is out-of-sequence. Change 2 has an effective date whichoccurs before Change 1. A transaction (job) is out of sequence if its effective date is earlier than other transactions (jobs) bound on the policy for thatcontractual period.\n\nBefore you begin: Go to any account and create or copy apersonal auto policy for EricaBillings for one vehicle. \n\nNotes: In order to raise a conflictthat requires resolution, you need to attempt to change the samefield at two different points in time.\nPreparation: IJsing the same policy, try to change the Medical Limit liability coverage on the personal auto policy at two different points in time.",
-      "notes": "Demonstration\nPreparation: Give an example of what makes transactions out of sequence.\nBASE INFO: On January 1, a customer adds a new auto policy effective all year for a red car. The effective date is January 1\n CHANGE 1: On March 1, the customer increases a specific coverage on the car to $20,000 effective through the year end. The effective date for the change\nis March 1-\nCHANGE 2: On March 2, the customer calls to say that he had the car painted blue on February\n1. The effective date of this change is February 1, which is earlier than Change I's effective date.\nThe last change in this example is out-of-sequence. Change 2 has an effective date whichoccurs before Change 1. A transaction (job) is out of sequence if its effective date is earlier than other transactions (jobs) bound on the policy for thatcontractual period.\n\nBefore you begin: Go to any account and create or copy apersonal auto policy for EricaBillings for one vehicle. \n\nNotes: In order to raise a conflictthat requires resolution, you need to attempt to change the samefield at two different points in time.\nPreparation: IJsing the same policy, try to change the Medical Limit liability coverage on the personal auto policy at two different points in time.",
+      "originalNotes": "Demonstration\nPreparation: Give an example of what makes transactions out of sequence.\nBASE INFO: On January 1, a customer adds a new auto policy effective all year for a red car. The effective date is January 1\n CHANGE 1: On March 1, the customer increases a specific coverage on the car to $20,000 effective through the year end. The effective date for the change\nis March 1.\nCHANGE 2: On March 2, the customer calls to say that he had the car painted blue on February\n1. The effective date of this change is February 1, which is earlier than Change I's effective date.\nThe last change in this example is out-of-sequence. Change 2 has an effective date whichoccurs before Change 1. A transaction (job) is out of sequence if its effective date is earlier than other transactions (jobs) bound on the policy for thatcontractual period.\n\nBefore you begin: Go to any account and create or copy apersonal auto policy for EricaBillings for one vehicle.\n\nNotes: In order to raise a conflictthat requires resolution, you need to attempt to change the samefield at two different points in time.\nPreparation: IJsing the same policy, try to change the Medical Limit liability coverage on the personal auto policy at two different points in time.",
+      "notes": "Demonstration\nPreparation: Give an example of what makes transactions out of sequence.\nBASE INFO: On January 1, a customer adds a new auto policy effective all year for a red car. The effective date is January 1\n CHANGE 1: On March 1, the customer increases a specific coverage on the car to $20,000 effective through the year end. The effective date for the change\nis March 1.\nCHANGE 2: On March 2, the customer calls to say that he had the car painted blue on February\n1. The effective date of this change is February 1, which is earlier than Change I's effective date.\nThe last change in this example is out-of-sequence. Change 2 has an effective date whichoccurs before Change 1. A transaction (job) is out of sequence if its effective date is earlier than other transactions (jobs) bound on the policy for thatcontractual period.\n\nBefore you begin: Go to any account and create or copy apersonal auto policy for EricaBillings for one vehicle.\n\nNotes: In order to raise a conflictthat requires resolution, you need to attempt to change the samefield at two different points in time.\nPreparation: IJsing the same policy, try to change the Medical Limit liability coverage on the personal auto policy at two different points in time.",
       "narration": "Let's walk through an example to understand how transactions can become out-of-sequence. Suppose a customer adds a new auto policy effective January 1st. On March 1st, they increase coverage, but then report a change on February 1st, making it out-of-sequence. This example highlights the importance of effective date management and provides insight into how to handle such scenarios in PolicyCenter.",
       "ocrText": "| Demonstration G\n\nOut-of-sequence transactions and\n= resolving conflicts\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
       "ocrWordCount": 39,
@@ -211,14 +211,15 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 13,
       "title": "Demonstration: Managing OOS Conflicts",
       "bodyParagraphs": [],
-      "originalNotes": "Demonstration\nPreparation: Give an example of what makes transactions out of sequence.\nBASE INFO: On January 1, a customer adds a new auto policy effective all year for a red car. The effective date is January 1\n CHANGE 1: On March 1, the customer increases a specific coverage on the car to $20,000 effective through the year end. The effective date for the change\nis March 1-\nCHANGE 2: On March 2, the customer calls to say that he had the car painted blue on February\n1. The effective date of this change is February 1, which is earlier than Change I's effective date.\nThe last change in this example is out-of-sequence. Change 2 has an effective date whichoccurs before Change 1. A transaction (job) is out of sequence if its effective date is earlier than other transactions (jobs) bound on the policy for thatcontractual period.\n\nBefore you begin: Go to any account and create or copy apersonal auto policy for EricaBillings for one vehicle. \n\nNotes: In order to raise a conflictthat requires resolution, you need to attempt to change the samefield at two different points in time.\nPreparation: IJsing the same policy, try to change the Medical Limit liability coverage on the personal auto policy at two different points in time.",
-      "notes": "Demonstration\nPreparation: Give an example of what makes transactions out of sequence.\nBASE INFO: On January 1, a customer adds a new auto policy effective all year for a red car. The effective date is January 1\n CHANGE 1: On March 1, the customer increases a specific coverage on the car to $20,000 effective through the year end. The effective date for the change\nis March 1-\nCHANGE 2: On March 2, the customer calls to say that he had the car painted blue on February\n1. The effective date of this change is February 1, which is earlier than Change I's effective date.\nThe last change in this example is out-of-sequence. Change 2 has an effective date whichoccurs before Change 1. A transaction (job) is out of sequence if its effective date is earlier than other transactions (jobs) bound on the policy for thatcontractual period.\n\nBefore you begin: Go to any account and create or copy apersonal auto policy for EricaBillings for one vehicle. \n\nNotes: In order to raise a conflictthat requires resolution, you need to attempt to change the samefield at two different points in time.\nPreparation: IJsing the same policy, try to change the Medical Limit liability coverage on the personal auto policy at two different points in time.",
+      "originalNotes": "Demonstration\nPreparation: Give an example of what makes transactions out of sequence.\nBASE INFO: On January 1, a customer adds a new auto policy effective all year for a red car. The effective date is January 1\n CHANGE 1: On March 1, the customer increases a specific coverage on the car to $20,000 effective through the year end. The effective date for the change\nis March 1.\nCHANGE 2: On March 2, the customer calls to say that he had the car painted blue on February\n1. The effective date of this change is February 1, which is earlier than Change I's effective date.\nThe last change in this example is out-of-sequence. Change 2 has an effective date whichoccurs before Change 1. A transaction (job) is out of sequence if its effective date is earlier than other transactions (jobs) bound on the policy for thatcontractual period.\n\nBefore you begin: Go to any account and create or copy apersonal auto policy for EricaBillings for one vehicle.\n\nNotes: In order to raise a conflictthat requires resolution, you need to attempt to change the samefield at two different points in time.\nPreparation: IJsing the same policy, try to change the Medical Limit liability coverage on the personal auto policy at two different points in time.",
+      "notes": "Demonstration\nPreparation: Give an example of what makes transactions out of sequence.\nBASE INFO: On January 1, a customer adds a new auto policy effective all year for a red car. The effective date is January 1\n CHANGE 1: On March 1, the customer increases a specific coverage on the car to $20,000 effective through the year end. The effective date for the change\nis March 1.\nCHANGE 2: On March 2, the customer calls to say that he had the car painted blue on February\n1. The effective date of this change is February 1, which is earlier than Change I's effective date.\nThe last change in this example is out-of-sequence. Change 2 has an effective date whichoccurs before Change 1. A transaction (job) is out of sequence if its effective date is earlier than other transactions (jobs) bound on the policy for thatcontractual period.\n\nBefore you begin: Go to any account and create or copy apersonal auto policy for EricaBillings for one vehicle.\n\nNotes: In order to raise a conflictthat requires resolution, you need to attempt to change the samefield at two different points in time.\nPreparation: IJsing the same policy, try to change the Medical Limit liability coverage on the personal auto policy at two different points in time.",
       "narration": "In this demonstration, we'll explore how conflicts arise in out-of-sequence transactions. By attempting to change the same field at different times, we create a scenario that requires resolution. This exercise will illustrate the practical steps developers need to take to resolve these conflicts and ensure policy continuity.",
       "ocrText": "",
       "ocrWordCount": 0,
@@ -237,7 +238,7 @@
       "originalNotes": "",
       "notes": "Real-world examples of implementing out-of-sequence transactions in PolicyCenter.",
       "narration": "In real-world scenarios, out-of-sequence transactions often occur due to backdated policy changes or corrections. Handling these requires leveraging PolicyCenter's robust framework to ensure changes are accurately reflected across the policy timeline. Developers need to understand both the technical and business aspects to effectively manage these changes.",
-      "ocrText": "Question\n\n,~ — What makes a transaction out-of-sequence?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "ocrText": "Question\nWhat makes a transaction out-of-sequence?\n•\n•",
       "ocrWordCount": 17,
       "ocrConfidence": 65.43,
       "hasTable": false,
@@ -245,7 +246,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What makes a transaction out-of-sequence?",
+        "answer": "A transaction is out-of-sequence if it is entered after some other bound transaction but has an effective date earlier than the effective date of the first bound transaction. Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 15,
@@ -254,7 +259,7 @@
       "originalNotes": "",
       "notes": "Understanding the data model entities involved in out-of-sequence transactions.",
       "narration": "The Guidewire data model is pivotal in managing out-of-sequence transactions. Entities like PolicyPeriod and Job serve as the foundation for tracking changes. Developers must understand how these entities relate and interact to maintain data integrity and ensure seamless integration of OOS transactions.",
-      "ocrText": "Answer\n\nae What makes a transaction out-of-sequence?\n\n¢\n¢\n\nA transaction is out-of-sequence if it is entered after some other bound transaction but\nhas an effective date earlier than the effective date of the first bound transaction.\n\nSooo ooo ooo Oooo oOoD",
+      "ocrText": "Answer\nWhat makes a transaction out-of-sequence?\n•\n•\nA transaction is out-of-sequence if it is entered after some other bound transaction but\nhas an effective date earlier than the effective date of the first bound transaction.\nSooo ooo ooo Oooo oOoD",
       "ocrWordCount": 42,
       "ocrConfidence": 85.05,
       "hasTable": false,
@@ -271,7 +276,7 @@
       "originalNotes": "",
       "notes": "Opportunities for customization in handling out-of-sequence transactions.",
       "narration": "Guidewire PolicyCenter offers extensive customization options for handling out-of-sequence transactions. By tailoring the system to meet specific business needs, developers can enhance the handling of these transactions. This might involve Gosu scripting or modifying PCF files to better manage the unique requirements of OOS scenarios.",
-      "ocrText": "Question\n\n,7~ — Cana submission be out-of-sequence? Why or why not?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "ocrText": "Question\nCan a submission be out-of-sequence? Why or why not?\n•\n•",
       "ocrWordCount": 20,
       "ocrConfidence": 65.33,
       "hasTable": false,
@@ -279,7 +284,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Can a submission be out-of-sequence? Why or why not?",
+        "answer": "Can a submission be out-of-sequence? Why or why not? No, a submission can never be out-of-sequence. A submission creates a policy and therefore must be the first transaction that can be issued against a policy. You cannot have transactions effective earlier than the policy's creation date. Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 17,
@@ -288,7 +297,7 @@
       "originalNotes": "",
       "notes": "Exploring integration patterns that support out-of-sequence transaction handling.",
       "narration": "Effective handling of out-of-sequence transactions often involves integration with external systems. By utilizing integration patterns like web services or batch processing, developers can ensure that all changes are synchronized across systems. This alignment is crucial for maintaining data consistency and policy accuracy.",
-      "ocrText": "Answer a\n\nae Can a submission be out-of-sequence? Why or why not?\n\n¢\n¢\n\nNo, a submission can never be out-of-sequence. A submission creates a policy and\ntherefore must be the first transaction that can be issued against a policy. You cannot\nhave transactions effective earlier than the policy's creation date.\n\nSooo ooo ooo Oooo oOoD",
+      "ocrText": "Answer a\nCan a submission be out-of-sequence? Why or why not?\n•\n•\nNo, a submission can never be out-of-sequence. A submission creates a policy and\ntherefore must be the first transaction that can be issued against a policy. You cannot\nhave transactions effective earlier than the policy's creation date.\nSooo ooo ooo Oooo oOoD",
       "ocrWordCount": 56,
       "ocrConfidence": 88.7,
       "hasTable": false,
@@ -305,7 +314,7 @@
       "originalNotes": "",
       "notes": "User interface considerations for presenting out-of-sequence transactions.",
       "narration": "The user interface plays a critical role in managing out-of-sequence transactions. Clear UI patterns help users understand the sequence of changes and any potential conflicts. Developers should focus on creating intuitive interfaces that guide users through the resolution process, enhancing the overall user experience.",
-      "ocrText": "Question G\n\nCan a change be out-of-sequence? When you start an out-of-sequence\n\n,’ transaction, how do you know that it is an out-of-sequence transaction?\n\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "ocrText": "Question G\nCan a change be out-of-sequence? When you start an out-of-sequence\n,’ transaction, how do you know that it is an out-of-sequence transaction?\n•\n•",
       "ocrWordCount": 32,
       "ocrConfidence": 81.17,
       "hasTable": false,
@@ -313,7 +322,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Can a change be out-of-sequence? When you start an out-of-sequence",
+        "answer": ",’ _ transaction, how do you know that it is an out-of-sequence transaction? Yes, a change can be out-of-sequence. PolicyCenter displays an \"out-of-sequence\" dialog box before starting the wizard and displays a warning label at the top of the wizard screens. Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 19,
@@ -322,7 +335,7 @@
       "originalNotes": "",
       "notes": "Leveraging Gosu scripting to resolve conflicts in out-of-sequence transactions.",
       "narration": "Gosu scripting is a powerful tool for resolving conflicts in out-of-sequence transactions. By writing custom scripts, developers can automate conflict resolution based on predefined business logic. This approach not only improves efficiency but also ensures that policies remain consistent and accurate.",
-      "ocrText": "Answer a\n\nCan a change be out-of-sequence? When you start an out-of-sequence\n\n,’ _ transaction, how do you know that it is an out-of-sequence transaction?\n\n¢\n¢\n\nYes, a change can be out-of-sequence. PolicyCenter displays an \"out-of-sequence\"\ndialog box before starting the wizard and displays a warning label at the top of the\nwizard screens.\n\nSooo ooo ooo Oooo oOoD",
+      "ocrText": "Answer a\nCan a change be out-of-sequence? When you start an out-of-sequence\n,’ _ transaction, how do you know that it is an out-of-sequence transaction?\n•\n•\nYes, a change can be out-of-sequence. PolicyCenter displays an \"out-of-sequence\"\ndialog box before starting the wizard and displays a warning label at the top of the\nwizard screens.\nSooo ooo ooo Oooo oOoD",
       "ocrWordCount": 60,
       "ocrConfidence": 88.7,
       "hasTable": false,
@@ -339,7 +352,7 @@
       "originalNotes": "",
       "notes": "Key best practices for managing out-of-sequence transactions effectively.",
       "narration": "Managing out-of-sequence transactions requires adherence to best practices, such as maintaining a clear understanding of effective dates and leveraging PolicyCenter's built-in capabilities. By following these practices, developers can ensure that policy changes are handled smoothly, minimizing disruptions and maintaining data integrity.",
-      "ocrText": "Question\n\n_ _ What criteria does PolicyCenter use to determine if an out-of-sequence\n,’ __ transaction conflicts with a \"later effective\" transaction?\n\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi",
+      "ocrText": "Question\nWhat criteria does PolicyCenter use to determine if an out-of-sequence\n,’ __ transaction conflicts with a \"later effective\" transaction?\n•\n•\nGi",
       "ocrWordCount": 31,
       "ocrConfidence": 77.43,
       "hasTable": false,
@@ -347,7 +360,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What criteria does PolicyCenter use to determine if an out-of-sequence",
+        "answer": ",’ _ transaction conflicts with a \"later effective\" transaction? If each transaction changes a single given field to a different value, then the two transactions are in conflict. Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 21,
@@ -356,7 +373,7 @@
       "originalNotes": "",
       "notes": "Identifying and overcoming common challenges in managing out-of-sequence transactions.",
       "narration": "Out-of-sequence transactions present several challenges, such as managing conflicting changes and maintaining policy accuracy. By understanding these challenges, developers can proactively address them through strategic planning and robust system configuration. This ensures that the policy lifecycle remains seamless and uninterrupted.",
-      "ocrText": "Answer\n\nWhat criteria does PolicyCenter use to determine if an out-of-sequence\n,’ _ transaction conflicts with a \"later effective\" transaction?\n\n¢\n¢\n\nIf each transaction changes a single given field to a different value, then the two\ntransactions are in conflict.\n\nSooo ooo ooo Oooo oOoD\n\nGi",
+      "ocrText": "Answer\nWhat criteria does PolicyCenter use to determine if an out-of-sequence\n,’ _ transaction conflicts with a \"later effective\" transaction?\n•\n•\nIf each transaction changes a single given field to a different value, then the two\ntransactions are in conflict.\nSooo ooo ooo Oooo oOoD\nGi",
       "ocrWordCount": 47,
       "ocrConfidence": 85.93,
       "hasTable": false,
@@ -373,7 +390,7 @@
       "originalNotes": "",
       "notes": "A real-world case study of successful out-of-sequence transaction management.",
       "narration": "Let's examine a case study where effective management of out-of-sequence transactions led to successful policy administration. This example highlights key strategies and solutions implemented to overcome challenges and maintain policy integrity. By learning from real-world scenarios, developers can apply similar approaches in their implementations.",
-      "ocrText": "Question G\n\n_~ — 'fthere are no conflicts, what additional work must the end user do?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "ocrText": "Question G\n'fthere are no conflicts, what additional work must the end user do?\n•\n•",
       "ocrWordCount": 25,
       "ocrConfidence": 71.68,
       "hasTable": false,
@@ -381,7 +398,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "If there are no conflicts, what additional work must the end user do?",
+        "answer": "When there are no conflicts, there is no additional work. PolicyCenter automatically merges the data from the two transactions. Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 23,
@@ -390,7 +411,7 @@
       "originalNotes": "",
       "notes": "Exploring advanced techniques for handling complex out-of-sequence transactions.",
       "narration": "For complex out-of-sequence transactions, advanced techniques such as data mapping and custom validation rules can be employed. These techniques allow developers to handle intricate scenarios with precision, ensuring that all policy changes are accurately reflected and conflicts are minimized.",
-      "ocrText": "Answer a\n\n_~ — 'fthere are no conflicts, what additional work must the end user do?\n\n¢\n¢\n¢\n\nWhen there are no conflicts, there is no additional work. PolicyCenter automatically\nmerges the data from the two transactions.\n\nSooo ooo ooo Oooo oOoD",
+      "ocrText": "Answer a\n'fthere are no conflicts, what additional work must the end user do?\n•\n•\n•\nWhen there are no conflicts, there is no additional work. PolicyCenter automatically\nmerges the data from the two transactions.\nSooo ooo ooo Oooo oOoD",
       "ocrWordCount": 43,
       "ocrConfidence": 84.15,
       "hasTable": false,
@@ -407,7 +428,7 @@
       "originalNotes": "",
       "notes": "Effective troubleshooting strategies for resolving issues with out-of-sequence transactions.",
       "narration": "Troubleshooting out-of-sequence transaction issues requires a methodical approach. By analyzing transaction logs and understanding data flow, developers can identify root causes and implement solutions. This proactive troubleshooting ensures that policy changes are applied correctly and efficiently.",
-      "ocrText": "Question\n\n_ _ If there is at least one conflict, what additional work must the end user\nra do?\n7\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi",
+      "ocrText": "Question\nIf there is at least one conflict, what additional work must the end user\ndo?\nGi",
       "ocrWordCount": 27,
       "ocrConfidence": 78.38,
       "hasTable": false,
@@ -415,7 +436,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "If there is at least one conflict, what additional work must the end user",
+        "answer": "For each conflict, the end user must identify whether or not the earlier effective-dated value overrides the future effective-dated value in the future slice of the policy. Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 25,
@@ -424,7 +449,7 @@
       "originalNotes": "",
       "notes": "Exploring emerging trends and technologies in managing out-of-sequence transactions.",
       "narration": "As technology evolves, new trends in out-of-sequence transaction management are emerging. From AI-driven conflict resolution to enhanced data analytics, these innovations offer new opportunities for developers to improve policy processing. Staying informed about these trends is key to maintaining a competitive edge in policy administration.",
-      "ocrText": "Answer a\n\n__ If there is at least one conflict, what additional work must the end user\n“ do?\n74\n\nFor each conflict, the end user must identify whether or not the earlier effective-dated\nvalue overrides the future effective-dated value in the future slice of the policy.\n\nSooo ooo ooo Oooo oOoD",
+      "ocrText": "Answer a\nIf there is at least one conflict, what additional work must the end user\n“ do?\n74\nFor each conflict, the end user must identify whether or not the earlier effective-dated\nvalue overrides the future effective-dated value in the future slice of the policy.\nSooo ooo ooo Oooo oOoD",
       "ocrWordCount": 52,
       "ocrConfidence": 90.83,
       "hasTable": false,
@@ -441,7 +466,7 @@
       "originalNotes": "",
       "notes": "Summarizing key points and insights from the session on out-of-sequence transactions.",
       "narration": "We've covered a lot of ground regarding out-of-sequence transactions in PolicyCenter. Key takeaways include understanding the importance of effective date management, resolving conflicts, and leveraging customization and integration patterns. These insights will equip you to handle OOS transactions effectively, ensuring policy accuracy and integrity.",
-      "ocrText": "Lesson\nobjectives * Define an out-of-sequence (OOS) transaction\n\nreview ¢ Explain how PolicyCenter handles an OOS\ntransaction\n* Define conflicting transactions\n« Describe how a conflict between transactions\nis resolved in PolicyCenter",
+      "ocrText": "Lesson\nobjectives * Define an out-of-sequence (OOS) transaction\n\nreview • Explain how PolicyCenter handles an OOS\ntransaction\n* Define conflicting transactions\n« Describe how a conflict between transactions\nis resolved in PolicyCenter",
       "ocrWordCount": 32,
       "ocrConfidence": 86.12,
       "hasTable": false,

@@ -33,7 +33,7 @@
       "originalNotes": "",
       "notes": "Claims processing involves several stages, from initial reporting to final settlement. Each stage requires careful handling of data and coordination among various user roles.",
       "narration": "Claims processing is a dynamic journey, beginning with the initial report and culminating in the final settlement. Each stage demands precise data management and coordination among different user roles within ClaimCenter. As we proceed, we'll uncover how ClaimCenter orchestrates these stages, ensuring efficient and accurate claims handling.",
-      "ocrText": "Lesson\nobjectives ¢ Describe the role of ClaimCenter in managing\n\nclaims\n\n¢ Describe the process of logging in to\nClaimCenter\n\n¢ Describe the different user roles used in\nClaimCenter\n\n¢ Describe the general workflow of a claim",
+      "ocrText": "Lesson\nobjectives • Describe the role of ClaimCenter in managing\n\nclaims\n\n• Describe the process of logging in to\nClaimCenter\n\n• Describe the different user roles used in\nClaimCenter\n\n• Describe the general workflow of a claim",
       "ocrWordCount": 37,
       "ocrConfidence": 89.81,
       "hasTable": false,
@@ -67,7 +67,7 @@
       "originalNotes": "ClaimCenter Internal User Types\nClaimCenter (CC) is a browser- based application that enables users to participate in claims processing. The most common internal user types of ClaimCenter at a carrier are shown in this slide and these are the primary user types that will be discussed in this course.",
       "notes": "ClaimCenter Internal User Types\nClaimCenter (CC) is a browser- based application that enables users to participate in claims processing. The most common internal user types of ClaimCenter at a carrier are shown in this slide and these are the primary user types that will be discussed in this course.",
       "narration": "ClaimCenter, being a browser-based application, facilitates the participation of various internal user types in claims processing. Key roles include adjusters, supervisors, and claims managers, each contributing uniquely to the lifecycle of a claim. Understanding these roles will help us develop features that cater to their specific needs and improve the overall workflow.",
-      "ocrText": "| ClaimCenter Internal User Types\n\nSe adjuster = =e\n—_———————— > .\n\nice\n¢ Browser-based application\n¢ Supports the most common types of internal user types:\n\n+ Customer Service Representatives (who create claims) (CSRs)\n+ Adjusters (who act on claims)\n+ Supervisors (who supervise users and approve work)\n\n@ customer service rep —_— —\n—_—_—_—_—_——— She mn RO SS\n\nFa -: @ supervisor Se as ea",
+      "ocrText": "| ClaimCenter Internal User Types\n\nSe adjuster = =e\n—_———————— > .\n\nice\n• Browser-based application\n• Supports the most common types of internal user types:\n\n+ Customer Service Representatives (who create claims) (CSRs)\n+ Adjusters (who act on claims)\n+ Supervisors (who supervise users and approve work)\n\n@ customer service rep —_— —\n—_—_—_—_—_——— She mn RO SS\n\nFa -: @ supervisor Se as ea",
       "ocrWordCount": 66,
       "ocrConfidence": 75.96,
       "hasTable": false,
@@ -81,8 +81,8 @@
       "slideNumber": 5,
       "title": "The Value Proposition of ClaimCenter",
       "bodyParagraphs": [],
-      "originalNotes": "The value proposition of ClaimCenter\nClaimCenter is a claim-centric solution. All of the data pertaining to a claim is centralized in the claim file. This includes information on policies, financials,  diaries, documents, parties involved, and litigation. All users have an integrated and holistic view of the claim.\n\nClaimCenter facilitates collaboration among claims workers by providing one centralized location where all information needed to adjudicate the claim can be uniformly worked on and shared concurrently. ClaimCenter provides a wide span of control for supervisors by providing them with real-time team statistics and the ability to not only manage the team but to also control and direct team activities.",
-      "notes": "The value proposition of ClaimCenter\nClaimCenter is a claim-centric solution. All of the data pertaining to a claim is centralized in the claim file. This includes information on policies, financials,  diaries, documents, parties involved, and litigation. All users have an integrated and holistic view of the claim.\n\nClaimCenter facilitates collaboration among claims workers by providing one centralized location where all information needed to adjudicate the claim can be uniformly worked on and shared concurrently. ClaimCenter provides a wide span of control for supervisors by providing them with real-time team statistics and the ability to not only manage the team but to also control and direct team activities.",
+      "originalNotes": "The value proposition of ClaimCenter\nClaimCenter is a claim-centric solution. All of the data pertaining to a claim is centralized in the claim file. This includes information on policies, financials, diaries, documents, parties involved, and litigation. All users have an integrated and holistic view of the claim.\n\nClaimCenter facilitates collaboration among claims workers by providing one centralized location where all information needed to adjudicate the claim can be uniformly worked on and shared concurrently. ClaimCenter provides a wide span of control for supervisors by providing them with real-time team statistics and the ability to not only manage the team but to also control and direct team activities.",
+      "notes": "The value proposition of ClaimCenter\nClaimCenter is a claim-centric solution. All of the data pertaining to a claim is centralized in the claim file. This includes information on policies, financials, diaries, documents, parties involved, and litigation. All users have an integrated and holistic view of the claim.\n\nClaimCenter facilitates collaboration among claims workers by providing one centralized location where all information needed to adjudicate the claim can be uniformly worked on and shared concurrently. ClaimCenter provides a wide span of control for supervisors by providing them with real-time team statistics and the ability to not only manage the team but to also control and direct team activities.",
       "narration": "ClaimCenter stands out as a claim-centric solution, centralizing all data related to a claim within a single file. This holistic view encompasses policies, financials, diaries, documents, parties involved, and litigation. By unifying these elements, ClaimCenter enables seamless collaboration and decision-making, empowering claims workers with comprehensive insights at every step.",
       "ocrText": "| The value proposition of ClaimCenter G\n\no—s\n\nPONS i\nWot hy\nparties {Al <— notes\n\nClaimCenter makes the claims\nprocess:\n+ Claim-centric\n\n+ Collaborative\n\n+ Controlled O",
       "ocrWordCount": 28,
@@ -126,7 +126,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 8,
@@ -149,8 +150,8 @@
       "slideNumber": 9,
       "title": "Login Process in ClaimCenter",
       "bodyParagraphs": [],
-      "originalNotes": "Authentication and authorization\nAuthentication is the process of verifying a user is who he or she claims to be. Authorization is the process of determining which objects a user is allowed to view and edit and what actions a user is allowed to take- When an end user attempts to log on to an application, the following occurs:\n\nThe user supplies their username and password to ClaimCenter via the login page.\n\nClaimCenter queries the authentication system  (which could be a separate system accessed through an integration point or the ClaimCenter database itself) to authenticate the user-\n\nClaimCenter queries the ClaimCenter database to determine permissions are assigned to the user and what the user's start page is Permissions determine which screens the user can navigate to and which actions the user can perform. The startup view is the first page rendered after log in-\n\nClaimCenter renders the appropriate startup view with permissions appropriate for that user.\n\nOut-of-box, authentication is managed through the ClaimCenter database. There is a table in the database which stores usernames and password. (The system can also be configured to authenticate against an existing user domain structure.)\n\nClaimCenter can be configured to lock an account after a user attempts to log in a certain number of times without providing the correct password. (This feature is designed to prevent someone circumventing the authentication process toillegally log on to the application.) When an account is locked, it must be unlocked by a manager. In the base application, the number of attempts before locking the account is 3, but this number can be configured-",
-      "notes": "Authentication and authorization\nAuthentication is the process of verifying a user is who he or she claims to be. Authorization is the process of determining which objects a user is allowed to view and edit and what actions a user is allowed to take- When an end user attempts to log on to an application, the following occurs:\n\nThe user supplies their username and password to ClaimCenter via the login page.\n\nClaimCenter queries the authentication system  (which could be a separate system accessed through an integration point or the ClaimCenter database itself) to authenticate the user-\n\nClaimCenter queries the ClaimCenter database to determine permissions are assigned to the user and what the user's start page is Permissions determine which screens the user can navigate to and which actions the user can perform. The startup view is the first page rendered after log in-\n\nClaimCenter renders the appropriate startup view with permissions appropriate for that user.\n\nOut-of-box, authentication is managed through the ClaimCenter database. There is a table in the database which stores usernames and password. (The system can also be configured to authenticate against an existing user domain structure.)\n\nClaimCenter can be configured to lock an account after a user attempts to log in a certain number of times without providing the correct password. (This feature is designed to prevent someone circumventing the authentication process toillegally log on to the application.) When an account is locked, it must be unlocked by a manager. In the base application, the number of attempts before locking the account is 3, but this number can be configured-",
+      "originalNotes": "Authentication and authorization\nAuthentication is the process of verifying a user is who he or she claims to be. Authorization is the process of determining which objects a user is allowed to view and edit and what actions a user is allowed to take- When an end user attempts to log on to an application, the following occurs:\n\nThe user supplies their username and password to ClaimCenter via the login page.\n\nClaimCenter queries the authentication system (which could be a separate system accessed through an integration point or the ClaimCenter database itself) to authenticate the user.\n\nClaimCenter queries the ClaimCenter database to determine permissions are assigned to the user and what the user's start page is Permissions determine which screens the user can navigate to and which actions the user can perform. The startup view is the first page rendered after log in.\nClaimCenter renders the appropriate startup view with permissions appropriate for that user.\n\nOut-of-box, authentication is managed through the ClaimCenter database. There is a table in the database which stores usernames and password. (The system can also be configured to authenticate against an existing user domain structure.)\n\nClaimCenter can be configured to lock an account after a user attempts to log in a certain number of times without providing the correct password. (This feature is designed to prevent someone circumventing the authentication process to illegally log on to the application.) When an account is locked, it must be unlocked by a manager. In the base application, the number of attempts before locking the account is 3, but this number can be configured.",
+      "notes": "Authentication and authorization\nAuthentication is the process of verifying a user is who he or she claims to be. Authorization is the process of determining which objects a user is allowed to view and edit and what actions a user is allowed to take- When an end user attempts to log on to an application, the following occurs:\n\nThe user supplies their username and password to ClaimCenter via the login page.\n\nClaimCenter queries the authentication system (which could be a separate system accessed through an integration point or the ClaimCenter database itself) to authenticate the user.\n\nClaimCenter queries the ClaimCenter database to determine permissions are assigned to the user and what the user's start page is Permissions determine which screens the user can navigate to and which actions the user can perform. The startup view is the first page rendered after log in.\nClaimCenter renders the appropriate startup view with permissions appropriate for that user.\n\nOut-of-box, authentication is managed through the ClaimCenter database. There is a table in the database which stores usernames and password. (The system can also be configured to authenticate against an existing user domain structure.)\n\nClaimCenter can be configured to lock an account after a user attempts to log in a certain number of times without providing the correct password. (This feature is designed to prevent someone circumventing the authentication process to illegally log on to the application.) When an account is locked, it must be unlocked by a manager. In the base application, the number of attempts before locking the account is 3, but this number can be configured.",
       "narration": "The login process in ClaimCenter begins with the user providing their credentials on the login page. The system then authenticates these credentials, either through its own database or an integrated authentication system. This ensures that only authorized users gain access to the system, maintaining the integrity and security of claim data.",
       "ocrText": "and password\n\nusername iv)\n\n——_—_—_—_\nDesktop: Activities\n\n| Authentication and authorization\n\nClaimCenter\n\nauthenticated?\nwhat permissions?\nwhich start page?\nSe\n\nYes!\nView claim, ...\nDesktop: Activities\n\ncc data",
       "ocrWordCount": 27,
@@ -194,7 +195,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 12,
@@ -262,7 +264,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 2
     },
     {
       "slideNumber": 16,
@@ -288,7 +291,7 @@
       "originalNotes": "Claim Summary\nThere are three sections of the Claim Summary panel:\n\nBasics — This section shows how long the claim has been open at a glance. It also shows the target closure days for a claim of this type. It includes a description of the claim.\n\nFinancials — This section gives a high-level view of the current state of the financials for this claim. It shows the Gross incurred, which is a summary of the recorded exposures and reserve lines, as well as what has been paid on the claim to date.\n\nHigh-Risk Indicators — This section shows any high-risk indicators such as In Litigation, Coverage in Question, or other flags.\n\nThe Sidebar shows all of the menu links that are available to the current user on this claim The adjuster uses this menu to navigate to specific parts of the claim file to see or update details about the claim.",
       "notes": "Claim Summary\nThere are three sections of the Claim Summary panel:\n\nBasics — This section shows how long the claim has been open at a glance. It also shows the target closure days for a claim of this type. It includes a description of the claim.\n\nFinancials — This section gives a high-level view of the current state of the financials for this claim. It shows the Gross incurred, which is a summary of the recorded exposures and reserve lines, as well as what has been paid on the claim to date.\n\nHigh-Risk Indicators — This section shows any high-risk indicators such as In Litigation, Coverage in Question, or other flags.\n\nThe Sidebar shows all of the menu links that are available to the current user on this claim The adjuster uses this menu to navigate to specific parts of the claim file to see or update details about the claim.",
       "narration": "In the adjudication process, adjusters play a critical role in enriching claim data. They can add various details, such as witnesses or new claimants, to the Parties Involved section. This flexibility ensures that all pertinent information is captured, aiding in thorough investigations and accurate claim resolutions.",
-      "ocrText": "| Claim Summary\n\n« Basics\n+ How long the claim has been open\n+ Target closure days\n+ Description\n\n¢ Financials\n* Current state of financials\n* Gross incurred\n+ Paid to date\n\n¢ High-Risk Indicators\n* Shows and high-risk indicators for the claim\n+ Mouse over shows some details\n* Shows multiple indicators if present",
+      "ocrText": "| Claim Summary\n\n« Basics\n+ How long the claim has been open\n+ Target closure days\n+ Description\n\n• Financials\n* Current state of financials\n* Gross incurred\n+ Paid to date\n\n• High-Risk Indicators\n* Shows and high-risk indicators for the claim\n+ Mouse over shows some details\n* Shows multiple indicators if present",
       "ocrWordCount": 56,
       "ocrConfidence": 88.89,
       "hasTable": false,
@@ -330,7 +333,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 3
     },
     {
       "slideNumber": 20,
@@ -353,8 +357,8 @@
       "slideNumber": 21,
       "title": "Financials Approval Workflow",
       "bodyParagraphs": [],
-      "originalNotes": "Loss Details\nDuring the adjudication process and adjuster may add information to the claim. The changes could range from adding a witness to Parties Involved, to adding additional claimants.\n\nHere are just a few of the items that an adjuster may add to a claim.\n\nDescription — What happened? Where?\n\nDetails of the injured worker — Who was injuredQ Can we contact him, and how?\n\nDetails of the injury — What is injured, and how badlyQ How did it happen?\n\nEmployment details — Data that helps determine how much \"lost time\" coverage may be required.\n\nCompensability factors — Data that helps determine whether this injury is legitimately covered by the Worker’s Compensation policy.",
-      "notes": "Loss Details\nDuring the adjudication process and adjuster may add information to the claim. The changes could range from adding a witness to Parties Involved, to adding additional claimants.\n\nHere are just a few of the items that an adjuster may add to a claim.\n\nDescription — What happened? Where?\n\nDetails of the injured worker — Who was injuredQ Can we contact him, and how?\n\nDetails of the injury — What is injured, and how badlyQ How did it happen?\n\nEmployment details — Data that helps determine how much \"lost time\" coverage may be required.\n\nCompensability factors — Data that helps determine whether this injury is legitimately covered by the Worker’s Compensation policy.",
+      "originalNotes": "Loss Details\nDuring the adjudication process and adjuster may add information to the claim. The changes could range from adding a witness to Parties Involved, to adding additional claimants.\n\nHere are just a few of the items that an adjuster may add to a claim.\n\nDescription — What happened? Where?\n\nDetails of the injured worker — Who was injured? Can we contact him, and how?\n\nDetails of the injury — What is injured, and how badly? How did it happen?\n\nEmployment details — Data that helps determine how much \"lost time\" coverage may be required.\n\nCompensability factors — Data that helps determine whether this injury is legitimately covered by the Worker’s Compensation policy.",
+      "notes": "Loss Details\nDuring the adjudication process and adjuster may add information to the claim. The changes could range from adding a witness to Parties Involved, to adding additional claimants.\n\nHere are just a few of the items that an adjuster may add to a claim.\n\nDescription — What happened? Where?\n\nDetails of the injured worker — Who was injured? Can we contact him, and how?\n\nDetails of the injury — What is injured, and how badly? How did it happen?\n\nEmployment details — Data that helps determine how much \"lost time\" coverage may be required.\n\nCompensability factors — Data that helps determine whether this injury is legitimately covered by the Worker’s Compensation policy.",
       "narration": "The approval workflow in ClaimCenter is designed to ensure accountability in financial transactions. Transactions that meet certain criteria bypass approval and are processed immediately, while others enter a \"pending approval\" state. This mechanism ensures that more complex transactions are reviewed, maintaining the financial integrity and compliance of the claims process.",
       "ocrText": "| Loss Details\n\nGeneral loss information is often captured\non the Loss Details screen, such as\ninformation about:\n\n* Description of the incident\n\n* Details of the injured worker\n* Details of the injury\n\n* Compensability factors\n\nLoss Details\n\nDetails\nLoss Details\n\nDescription\n\nSpecific Activity Being\nPerformed\n\nEquipment Used\nLocation\n\nLocation Description\nLocation Code\n\nAccident Premises?\n\nState of Jurisdiction\nJurisdiction Claim Number\nInjured Worker\n\nName\n\nContact Prohibited?\nPhone\n\nAddress\n\nWorker fell from 2nd story scaffolding\n\n1846 Yount La.\nHollywood, CA91357\n\nLoss Location\n101 (£46 Yount Ln., Hollywood, CA 91357)\nEmployer\n\nCalifornia\n\nWilly Ounn\nNo\n619-275-2346\n\n435 Duarte Ave, Arcadia, CA 91006",
       "ocrWordCount": 101,
@@ -398,7 +402,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 4
     },
     {
       "slideNumber": 24,
@@ -419,7 +424,7 @@
     },
     {
       "slideNumber": 25,
-      "title": "",
+      "title": "Exposures",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -436,7 +441,7 @@
     },
     {
       "slideNumber": 26,
-      "title": "",
+      "title": "As a supervisor, | need to ensure that all",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -453,7 +458,7 @@
     },
     {
       "slideNumber": 27,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -466,7 +471,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 5
     },
     {
       "slideNumber": 28,
@@ -487,7 +493,7 @@
     },
     {
       "slideNumber": 29,
-      "title": "",
+      "title": "Supervisor",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -504,7 +510,7 @@
     },
     {
       "slideNumber": 30,
-      "title": "",
+      "title": "Adjusters can issue payments up to a",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -521,7 +527,7 @@
     },
     {
       "slideNumber": 31,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -534,7 +540,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 6
     },
     {
       "slideNumber": 32,
@@ -555,12 +562,12 @@
     },
     {
       "slideNumber": 33,
-      "title": "",
+      "title": "Financials approval",
       "bodyParagraphs": [],
       "originalNotes": "Financials approval\nIf a transaction does not require approval, it is acted on immediately. If a transactions does require approval, it is put in a \"pending approval\" state.",
       "notes": "Financials approval\nIf a transaction does not require approval, it is acted on immediately. If a transactions does require approval, it is put in a \"pending approval\" state.",
       "narration": "",
-      "ocrText": "| Financials approval G\n\ncs)\n\n“16 +$50,000\n\n¢ ClaimCenter reviews every transaction to determine if it requires approval\n\n* Two mechanisms for identifying transactions that require approval\n« Authority limits\n\n+ Transaction approval rules",
+      "ocrText": "| Financials approval G\n\ncs)\n\n“16 +$50,000\n\n• ClaimCenter reviews every transaction to determine if it requires approval\n\n* Two mechanisms for identifying transactions that require approval\n« Authority limits\n\n+ Transaction approval rules",
       "ocrWordCount": 34,
       "ocrConfidence": 84.39,
       "hasTable": false,
@@ -572,7 +579,7 @@
     },
     {
       "slideNumber": 34,
-      "title": "",
+      "title": "Part of my job is to ensure that my team has Claims &",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -589,7 +596,7 @@
     },
     {
       "slideNumber": 35,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -602,7 +609,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 7
     },
     {
       "slideNumber": 36,
@@ -623,7 +631,7 @@
     },
     {
       "slideNumber": 37,
-      "title": "",
+      "title": "Reassigning objects",
       "bodyParagraphs": [],
       "originalNotes": "Reassigning objects\nWhen a claim is reassigned, all exposures and activities belonging to the original owner are also reassigned to the new owner. Any exposure or activity belonging to a user other than the claim owner remains with that user.\n\nWhen an exposure is reassigned, all activities associated with the exposure that belonged to the original owner are also reassigned to the new owner. Any activity associated with the exposure which belongs to a user other than the claim owner remains with that user.",
       "notes": "Reassigning objects\nWhen a claim is reassigned, all exposures and activities belonging to the original owner are also reassigned to the new owner. Any exposure or activity belonging to a user other than the claim owner remains with that user.\n\nWhen an exposure is reassigned, all activities associated with the exposure that belonged to the original owner are also reassigned to the new owner. Any activity associated with the exposure which belongs to a user other than the claim owner remains with that user.",
@@ -640,12 +648,12 @@
     },
     {
       "slideNumber": 38,
-      "title": "",
+      "title": "Key Takeaways",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives ¢ Describe the role of ClaimCenter in managing\nreview ; claims\n\nDescribe the process of logging in to\nClaimCenter\n\n¢ Describe the different user roles used in\nClaimCenter\n\n¢ Describe the general workflow of a claim",
+      "ocrText": "Lesson\nobjectives • Describe the role of ClaimCenter in managing\nreview ; claims\n\nDescribe the process of logging in to\nClaimCenter\n\n• Describe the different user roles used in\nClaimCenter\n\n• Describe the general workflow of a claim",
       "ocrWordCount": 38,
       "ocrConfidence": 89.45,
       "hasTable": false,
@@ -657,12 +665,12 @@
     },
     {
       "slideNumber": 39,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n,— — What does an end user need to access a Guidewire application?\n\n¢\n¢\n¢4\n\n-S e S  e  e H",
+      "ocrText": "Question G\nWhat does an end user need to access a Guidewire application?\n•\n•\n•4\n-S e S  e  e H",
       "ocrWordCount": 24,
       "ocrConfidence": 85.82,
       "hasTable": false,
@@ -670,16 +678,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What does an end user need to access a Guidewire application?",
+        "answer": "A supported web browser and a valid username and password."
+      }
     },
     {
       "slideNumber": 40,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n,— — What does an end user need to access a Guidewire application?\n\n¢\n¢\n7\n\nA supported web browser and a valid username and password.\n\n-SS SS e  e e  e H",
+      "ocrText": "Answer\nWhat does an end user need to access a Guidewire application?\n•\n•\nA supported web browser and a valid username and password.",
       "ocrWordCount": 34,
       "ocrConfidence": 79.54,
       "hasTable": false,
@@ -691,12 +703,12 @@
     },
     {
       "slideNumber": 41,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n,~ — When a user attempts to log into ClaimCenter, what three pieces of\nof information does the application attempt to determine?\n\n-S e S  e  e H",
+      "ocrText": "Question G\nWhen a user attempts to log into ClaimCenter, what three pieces of\nof information does the application attempt to determine?\n-S e S  e  e H",
       "ocrWordCount": 30,
       "ocrConfidence": 81.08,
       "hasTable": false,
@@ -704,16 +716,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "When a user attempts to log into ClaimCenter, what three pieces of",
+        "answer": "Fa information does the application attempt to determine? 1.Whether or not the user can be authenticated, 2.What are the user's roles (permissions), and 3.What is the user's startup page."
+      }
     },
     {
       "slideNumber": 42,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer G\n\n,~ — When a user attempts to log into ClaimCenter, what three pieces of\nFa information does the application attempt to determine?\n\n1.Whether or not the user can be authenticated,\n2.What are the user's roles (permissions), and\n\n3.What is the user's startup page.\n\n-SS SS e  e e  e H",
+      "ocrText": "Answer G\nWhen a user attempts to log into ClaimCenter, what three pieces of\nFa information does the application attempt to determine?\n1.Whether or not the user can be authenticated,\n2.What are the user's roles (permissions), and\n3.What is the user's startup page.",
       "ocrWordCount": 52,
       "ocrConfidence": 85.7,
       "hasTable": false,
@@ -725,12 +741,12 @@
     },
     {
       "slideNumber": 43,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n_— — What is one thing that determines what data is gathered on a claim intake\n\nof screen?\n4\n\n-S e S  e  e H",
+      "ocrText": "Question G\nWhat is one thing that determines what data is gathered on a claim intake\nof screen?\n-S e S  e  e H",
       "ocrWordCount": 27,
       "ocrConfidence": 80.79,
       "hasTable": false,
@@ -738,16 +754,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What is one thing that determines what data is gathered on a claim intake",
+        "answer": "Fa screen? The type of claim (personal auto, homeowners, worker's comp.)"
+      }
     },
     {
       "slideNumber": 44,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer G\n\n_— — What is one thing that determines what data is gathered on a claim intake\nFa screen?\n7\n\nThe type of claim (personal auto, homeowners, worker's comp.)\n\n-SS SS e  e e  e H",
+      "ocrText": "Answer G\nWhat is one thing that determines what data is gathered on a claim intake\nFa screen?\nThe type of claim (personal auto, homeowners, worker's comp.)",
       "ocrWordCount": 37,
       "ocrConfidence": 80.71,
       "hasTable": false,
@@ -759,12 +779,12 @@
     },
     {
       "slideNumber": 45,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n,— — What is the purpose of an exposure?\n\n¢\n¢\n¢4\n\n-S e S  e  e H",
+      "ocrText": "Question G\nWhat is the purpose of an exposure?\n•\n•\n•4\n-S e S  e  e H",
       "ocrWordCount": 20,
       "ocrConfidence": 83.23,
       "hasTable": false,
@@ -772,16 +792,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What is the purpose of an exposure?",
+        "answer": "An exposure is used to track potential payments on one coverage, for one claimant."
+      }
     },
     {
       "slideNumber": 46,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer G\n\na What is the purpose of an exposure?\n\n¢\n7\n\nAn exposure is used to track potential payments on one coverage, for one claimant.\n\n-SS SS e  e e  e H",
+      "ocrText": "Answer G\na What is the purpose of an exposure?\n•\nAn exposure is used to track potential payments on one coverage, for one claimant.",
       "ocrWordCount": 33,
       "ocrConfidence": 86.81,
       "hasTable": false,
@@ -793,12 +817,12 @@
     },
     {
       "slideNumber": 47,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n,— — What are two mechanisms used to determine if a transaction requires\n\nof approval?\n¢4\n\n-S e S  e  e H",
+      "ocrText": "Question G\nWhat are two mechanisms used to determine if a transaction requires\nof approval?\n•4\n-S e S  e  e H",
       "ocrWordCount": 24,
       "ocrConfidence": 72.41,
       "hasTable": false,
@@ -806,16 +830,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What are two mechanisms used to determine if a transaction requires",
+        "answer": "Fa approval? Authority limits and transaction approval rules are used to identify which transactions require approval."
+      }
     },
     {
       "slideNumber": 48,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer G\n\n_— — What are two mechanisms used to determine if a transaction requires\nFa approval?\n7\n\nAuthority limits and transaction approval rules are used to identify which transactions\nrequire approval.\n\n-SS SS e  e e  e H",
+      "ocrText": "Answer G\nWhat are two mechanisms used to determine if a transaction requires\nFa approval?\nAuthority limits and transaction approval rules are used to identify which transactions\nrequire approval.",
       "ocrWordCount": 39,
       "ocrConfidence": 80.48,
       "hasTable": false,

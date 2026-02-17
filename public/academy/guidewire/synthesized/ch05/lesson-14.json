@@ -347,28 +347,28 @@
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "How could you easily determine the number of roles that enable users to\now create matters?",
+      "question": "How could you easily determine the number of roles that enable users to\ncreate matters?",
       "referenceAnswer": "You could view the create matter permission in the security dictionary to see which\nroles contain that permission. Note that this only works for the base product, because\nthe security dictionary will not update based on any changes that a project team or\nsecurity administrator makes to the roles.",
       "questionKey": "slide-37"
     },
     {
       "type": "knowledge_check",
       "id": "kc-5",
-      "question": "Agiven user appears on the access control list for claim 234-22-147282,\now but that user cannot view or edit the claim. How could this happen?",
+      "question": "Agiven user appears on the access control list for claim 234-22-147282,\nbut that user cannot view or edit the claim. How could this happen?",
       "referenceAnswer": "The user probably lacks the system permission to view and/or edit claims. In order to\nview or edit a claim, the user must have the system permission and appear on the\nACL.",
       "questionKey": "slide-39"
     },
     {
       "type": "knowledge_check",
       "id": "kc-6",
-      "question": "Asecurity profile can specify criteria for three types of access. What are\now the three types of access?",
+      "question": "Asecurity profile can specify criteria for three types of access. What are\nthe three types of access?",
       "referenceAnswer": "Own access, view access, edit access.",
       "questionKey": "slide-41"
     },
     {
       "type": "knowledge_check",
       "id": "kc-7",
-      "question": "Iwo different claims that use the same security profile can have two\n¢ completely different access control lists. Why?",
+      "question": "Two different claims that use the same security profile can have two\ncompletely different access control lists. Why?",
       "referenceAnswer": "The security profile generates a list of users based on the criteria. The users who meet\nthe criteria vary from claim to claim. For example, if a profile says only the claim owner\nand members of his group can view and edit the claim, then two claims will have\ndifferent access control lists if they are owned by users in different groups.",
       "questionKey": "slide-43"
     },

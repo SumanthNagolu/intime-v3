@@ -363,7 +363,7 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "Identify if each statement about an XML model is True or False.\n\n“ A)\nB)\n©)\nD)\n\nE)\n\nIt can take any number of input values.\nIt has a published XSD.\nIt can make use of conditional statements and for loops.\n\nIt can include values from both the object that triggered the message event and objects\nrelated to the triggering object.\n\nIt can be used only for payload generation",
+      "question": "Identify if each statement about an XML model is True or False.\n“ A)\nB)\n©)\nD)\nE)\nIt can take any number of input values.\nIt has a published XSD.\nIt can make use of conditional statements and for loops.\nIt can include values from both the object that triggered the message event and objects\nrelated to the triggering object.\nIt can be used only for payload generation",
       "referenceAnswer": "aa Identify if each statement about an XML model is True or False.\n\nc A) Itcan take any number of input values. False — XML models always have a single input,\nwhich is the object upon which to base the XML to be generated.\n\nB) Ithasapublished XSD. True\nC) Itcan make use of conditional statements and forloops. False\n\nD)_ Itcan include values from both the object that triggered the message event and objects\nrelated to the triggering object. True — XML models can do this by including fields from the\nrelated objects in the XML model.\n\nE) Itcan be used only for payload generation False — XML models can be used anywhere.",
       "questionKey": "slide-30"
     },

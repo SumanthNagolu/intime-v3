@@ -11,7 +11,7 @@
   "slides": [
     {
       "slideNumber": 1,
-      "title": "",
+      "title": "Managing Service Requests",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -28,12 +28,12 @@
     },
     {
       "slideNumber": 2,
-      "title": "",
+      "title": "Learning Objectives",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives\n\n* Describe the purpose of services on claims\n\n« Request services for new or existing claims\n\n¢ Record vendor progress during the service\nrequest lifecycle with or without a vendor\nportal",
+      "ocrText": "Lesson\nobjectives\n\n* Describe the purpose of services on claims\n\n« Request services for new or existing claims\n\n• Record vendor progress during the service\nrequest lifecycle with or without a vendor\nportal",
       "ocrWordCount": 33,
       "ocrConfidence": 90.69,
       "hasTable": false,
@@ -45,7 +45,7 @@
     },
     {
       "slideNumber": 3,
-      "title": "",
+      "title": "Business requirement",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -62,12 +62,12 @@
     },
     {
       "slideNumber": 4,
-      "title": "",
+      "title": "Vendor services",
       "bodyParagraphs": [],
-      "originalNotes": "Vendor services\nVendor services help identify the right vendors for a given incident or claim. The adjuster can search for and assign work, or services, to a specific vendor Once a service is assigned to a vendor,  the adjuster can manage and follow services on a claim from the inception of the service request to completion of the work and payment for the service. A claims adjuster may request a quote, services only, or both.\n\nA history of all service requests, whether they are in progress, or completed, is available from the Services screen on a claim.\n\nThe Vendor tag on the vendor in ContactManager determines whether the contact is an identifiable ClaimCenter vendor. An important distinction is that the Vendor tag, not the contact type, distinguishes vendors from other contacts in ContactManager. This is because a service vendor may be either a company or a person.",
-      "notes": "Vendor services\nVendor services help identify the right vendors for a given incident or claim. The adjuster can search for and assign work, or services, to a specific vendor Once a service is assigned to a vendor,  the adjuster can manage and follow services on a claim from the inception of the service request to completion of the work and payment for the service. A claims adjuster may request a quote, services only, or both.\n\nA history of all service requests, whether they are in progress, or completed, is available from the Services screen on a claim.\n\nThe Vendor tag on the vendor in ContactManager determines whether the contact is an identifiable ClaimCenter vendor. An important distinction is that the Vendor tag, not the contact type, distinguishes vendors from other contacts in ContactManager. This is because a service vendor may be either a company or a person.",
+      "originalNotes": "Vendor services\nVendor services help identify the right vendors for a given incident or claim. The adjuster can search for and assign work, or services, to a specific vendor Once a service is assigned to a vendor, the adjuster can manage and follow services on a claim from the inception of the service request to completion of the work and payment for the service. A claims adjuster may request a quote, services only, or both.\n\nA history of all service requests, whether they are in progress, or completed, is available from the Services screen on a claim.\n\nThe Vendor tag on the vendor in Contact Manager determines whether the contact is an identifiable ClaimCenter vendor. An important distinction is that the Vendor tag, not the contact type, distinguishes vendors from other contacts in Contact Manager. This is because a service vendor may be either a company or a person.",
+      "notes": "Vendor services\nVendor services help identify the right vendors for a given incident or claim. The adjuster can search for and assign work, or services, to a specific vendor Once a service is assigned to a vendor, the adjuster can manage and follow services on a claim from the inception of the service request to completion of the work and payment for the service. A claims adjuster may request a quote, services only, or both.\n\nA history of all service requests, whether they are in progress, or completed, is available from the Services screen on a claim.\n\nThe Vendor tag on the vendor in Contact Manager determines whether the contact is an identifiable ClaimCenter vendor. An important distinction is that the Vendor tag, not the contact type, distinguishes vendors from other contacts in Contact Manager. This is because a service vendor may be either a company or a person.",
       "narration": "",
-      "ocrText": "| Vendor services i\n\n¢ Allow claim adjusters to search for vendors who provide a specific service\n\n¢ Help adjusters track progress of a service\n\n¢ The vendor tag in ContactManager identifies contacts as vendors\n\npf Q=\n(a\n(rN ClaimCenter e@ Contact Manager\n\nClaims in need of Contacts designated\nvendor services as vendors",
+      "ocrText": "| Vendor services i\n\n• Allow claim adjusters to search for vendors who provide a specific service\n\n• Help adjusters track progress of a service\n\n• The vendor tag in ContactManager identifies contacts as vendors\n\npf Q=\n(a\n(rN ClaimCenter e@ Contact Manager\n\nClaims in need of Contacts designated\nvendor services as vendors",
       "ocrWordCount": 53,
       "ocrConfidence": 85.7,
       "hasTable": false,
@@ -79,7 +79,7 @@
     },
     {
       "slideNumber": 5,
-      "title": "",
+      "title": "Service request scenario",
       "bodyParagraphs": [],
       "originalNotes": "Service request scenario\nAssigning a vendor to a claim can occur at the initial intake of the claim or later. When a user adds a service to a claim, they can select one of 3 different request types. It can be to perform the service if the type of service would not require a quote. It can be for a quote only, or it can be to provide a quote and perform the service. The quote and perform service request is for a full- service lifecycle, including a record of the quote documents and estimates and service work.",
       "notes": "Service request scenario\nAssigning a vendor to a claim can occur at the initial intake of the claim or later. When a user adds a service to a claim, they can select one of 3 different request types. It can be to perform the service if the type of service would not require a quote. It can be for a quote only, or it can be to provide a quote and perform the service. The quote and perform service request is for a full- service lifecycle, including a record of the quote documents and estimates and service work.",
@@ -96,7 +96,7 @@
     },
     {
       "slideNumber": 6,
-      "title": "",
+      "title": "Possible vendor responses",
       "bodyParagraphs": [],
       "originalNotes": "Possible vendor responses\nWhen a request is sent to a vendor, there are several possible responses. The vendor may agree to provide a quote and may provide that quote either through a vendor portal, or directly to the adjuster. They may also decline a request, for whatever reason, or they may accept the request with a specific time frame extension.",
       "notes": "Possible vendor responses\nWhen a request is sent to a vendor, there are several possible responses. The vendor may agree to provide a quote and may provide that quote either through a vendor portal, or directly to the adjuster. They may also decline a request, for whatever reason, or they may accept the request with a specific time frame extension.",
@@ -113,10 +113,10 @@
     },
     {
       "slideNumber": 7,
-      "title": "",
+      "title": "Adding a service to a claim: New Claim Wizard fa",
       "bodyParagraphs": [],
-      "originalNotes": "Adding a service to a claim: New Claim Wizard\nIn the New Claim Wizard, there are two ways to add services. The first is on the incident details screen. In this example, the incident is a vehicle. The user can add details and select services for the incident. Any details required for adding the service must be entered while adding the service. For example,  if an autobody repair service is added, the user must find and select a repair shop for the service as well as provide the service address.\n\nThe New Claim Wizard also has a step that is dedicated to Vendor Services. This screen behaves just like the incident details Screen",
-      "notes": "Adding a service to a claim: New Claim Wizard\nIn the New Claim Wizard, there are two ways to add services. The first is on the incident details screen. In this example, the incident is a vehicle. The user can add details and select services for the incident. Any details required for adding the service must be entered while adding the service. For example,  if an autobody repair service is added, the user must find and select a repair shop for the service as well as provide the service address.\n\nThe New Claim Wizard also has a step that is dedicated to Vendor Services. This screen behaves just like the incident details Screen",
+      "originalNotes": "Adding a service to a claim: New Claim Wizard\nIn the New Claim Wizard, there are two ways to add services. The first is on the incident details screen. In this example, the incident is a vehicle. The user can add details and select services for the incident. Any details required for adding the service must be entered while adding the service. For example, if an autobody repair service is added, the user must find and select a repair shop for the service as well as provide the service address.\n\nThe New Claim Wizard also has a step that is dedicated to Vendor Services. This screen behaves just like the incident details Screen",
+      "notes": "Adding a service to a claim: New Claim Wizard\nIn the New Claim Wizard, there are two ways to add services. The first is on the incident details screen. In this example, the incident is a vehicle. The user can add details and select services for the incident. Any details required for adding the service must be entered while adding the service. For example, if an autobody repair service is added, the user must find and select a repair shop for the service as well as provide the service address.\n\nThe New Claim Wizard also has a step that is dedicated to Vendor Services. This screen behaves just like the incident details Screen",
       "narration": "",
       "ocrText": "Adding a service to a claim: New Claim Wizard fa\n\nOn the Vehicle Details screen\n\n© Vehicle Details\n\nOn the Services screen",
       "ocrWordCount": 22,
@@ -130,12 +130,12 @@
     },
     {
       "slideNumber": 8,
-      "title": "",
+      "title": "Adding a service to a claim: Claim page",
       "bodyParagraphs": [],
       "originalNotes": "Adding a service to a claim: Claim page\nYou can add services to a claim anytime in the lifecycle of a claim. From the Actions menu, select New Service. The Add Service screen allows you to select either the claim or incident the service is related to. Just like in the New Claim Wizard, the user selects the type of request, quote, perform, or quote and perform, the vendor and the service address.",
       "notes": "Adding a service to a claim: Claim page\nYou can add services to a claim anytime in the lifecycle of a claim. From the Actions menu, select New Service. The Add Service screen allows you to select either the claim or incident the service is related to. Just like in the New Claim Wizard, the user selects the type of request, quote, perform, or quote and perform, the vendor and the service address.",
       "narration": "",
-      "ocrText": "| Adding a service to a claim: Claim page\n\n¢ Use Actions > New > Service\n\n« Requirements are the same as from the New\nClaim Wizard\n\nFF csincenter vestop ©\n\n(000-00-000203) + Search |* Address Book |»\n\nNew New Aetivity\n\nAdd Service\nRelated To. >* Vehicle: 2013 Ford XLT (LGW7867 / Califomia) +\nServices to Perform\n\nCategory > Subcategory > Service Type\n‘No data to display\n\nVendor\nfame + [ers ui auto Rep Sy -]\nLocation Sen Mateo, case\n\nCommunication Method\n\nGuidewire Portal\n\n| ovisj2o18 a\nCustomer Contact + | Andrew Wiliams a -|\nService Address » [Sania cs04 =\n\n‘San Mateo, CAS#404",
+      "ocrText": "| Adding a service to a claim: Claim page\n\n• Use Actions > New > Service\n\n« Requirements are the same as from the New\nClaim Wizard\n\nFF csincenter vestop ©\n\n(000-00-000203) + Search |* Address Book |»\n\nNew New Aetivity\n\nAdd Service\nRelated To. >* Vehicle: 2013 Ford XLT (LGW7867 / Califomia) +\nServices to Perform\n\nCategory > Subcategory > Service Type\n‘No data to display\n\nVendor\nfame + [ers ui auto Rep Sy -]\nLocation Sen Mateo, case\n\nCommunication Method\n\nGuidewire Portal\n\n| ovisj2o18 a\nCustomer Contact + | Andrew Wiliams a -|\nService Address » [Sania cs04 =\n\n‘San Mateo, CAS#404",
       "ocrWordCount": 104,
       "ocrConfidence": 69.46,
       "hasTable": false,
@@ -147,12 +147,12 @@
     },
     {
       "slideNumber": 9,
-      "title": "",
+      "title": "Service metrics",
       "bodyParagraphs": [],
-      "originalNotes": "Service metrics\nAssigned services provide a way to track vendor performance over time. When the vendor is assigned to perform a service, ClaimCenter collects metrics for evaluating the vendor performance for the request. The metrics include quote timeliness,  response time, service timeliness, and invoice vs quote variance.\n\nQuote only service requests, do not measure service timelines or invoice variances.",
-      "notes": "Service metrics\nAssigned services provide a way to track vendor performance over time. When the vendor is assigned to perform a service, ClaimCenter collects metrics for evaluating the vendor performance for the request. The metrics include quote timeliness,  response time, service timeliness, and invoice vs quote variance.\n\nQuote only service requests, do not measure service timelines or invoice variances.",
+      "originalNotes": "Service metrics\nAssigned services provide a way to track vendor performance over time. When the vendor is assigned to perform a service, ClaimCenter collects metrics for evaluating the vendor performance for the request. The metrics include quote timeliness, response time, service timeliness, and invoice vs quote variance.\n\nQuote only service requests, do not measure service timelines or invoice variances.",
+      "notes": "Service metrics\nAssigned services provide a way to track vendor performance over time. When the vendor is assigned to perform a service, ClaimCenter collects metrics for evaluating the vendor performance for the request. The metrics include quote timeliness, response time, service timeliness, and invoice vs quote variance.\n\nQuote only service requests, do not measure service timelines or invoice variances.",
       "narration": "",
-      "ocrText": "| Service metrics\n\n* Services keep track of vendor performance over time\n\n¢ Metrics are kept for:\n\nQuote timeliness\n\nService timeliness (measured against the estimate)\n\nVariance of invoice to quote\n\nAnd so on\n\nMetrics\n\nStatus\n\nMetric\n\nResponse Time\n\nQuote Timeliness\n\nService Timeliness\n\nInvoice Variance vs. Quote\nNumber Of Delays\n\nCycle Time\n\nValue\nO hours\nCompleted on time\nCompleted 5 days early\n(8%)\n0\n\nhours\n\nTarget\n8 hours\nOdays\nS days\n0%\n0)",
+      "ocrText": "| Service metrics\n\n* Services keep track of vendor performance over time\n\n• Metrics are kept for:\n\nQuote timeliness\n\nService timeliness (measured against the estimate)\n\nVariance of invoice to quote\n\nAnd so on\n\nMetrics\n\nStatus\n\nMetric\n\nResponse Time\n\nQuote Timeliness\n\nService Timeliness\n\nInvoice Variance vs. Quote\nNumber Of Delays\n\nCycle Time\n\nValue\nO hours\nCompleted on time\nCompleted 5 days early\n(8%)\n0\n\nhours\n\nTarget\n8 hours\nOdays\nS days\n0%\n0)",
       "ocrWordCount": 72,
       "ocrConfidence": 86.4,
       "hasTable": false,
@@ -164,10 +164,10 @@
     },
     {
       "slideNumber": 10,
-      "title": "",
+      "title": "Lifecycle of a service",
       "bodyParagraphs": [],
-      "originalNotes": "Lifecycle of a service\nService request lifecycles differ slightly depending on the type of request. For example a quote only service focuses on receiving the quote in a timely manner rather than managing and tracking the work. The lifecycle for a quote and perform service includes everything from the inception of the request to\npayment for the service. \nThat full lifecycle starts with the creation of the service request followed by the vendor either accepting, declining, or delaying the quote. Once the vendor accepts the request, the next step is to receive and approve the quote.\nIn a quote and perform service, the service can only be marked as complete after the quote has been received and approved.  Once the service is marked as complete and there is an invoice, ClaimCenter may automatically create a payment. This payment is dependent on an existing reserve and limits configured in Straight Through Invoice Processing, or STIP. The base application has a defined limit of $500.",
-      "notes": "Lifecycle of a service\nService request lifecycles differ slightly depending on the type of request. For example a quote only service focuses on receiving the quote in a timely manner rather than managing and tracking the work. The lifecycle for a quote and perform service includes everything from the inception of the request to\npayment for the service. \nThat full lifecycle starts with the creation of the service request followed by the vendor either accepting, declining, or delaying the quote. Once the vendor accepts the request, the next step is to receive and approve the quote.\nIn a quote and perform service, the service can only be marked as complete after the quote has been received and approved.  Once the service is marked as complete and there is an invoice, ClaimCenter may automatically create a payment. This payment is dependent on an existing reserve and limits configured in Straight Through Invoice Processing, or STIP. The base application has a defined limit of $500.",
+      "originalNotes": "Lifecycle of a service\nService request lifecycles differ slightly depending on the type of request. For example a quote only service focuses on receiving the quote in a timely manner rather than managing and tracking the work. The lifecycle for a quote and perform service includes everything from the inception of the request to\npayment for the service.\nThat full lifecycle starts with the creation of the service request followed by the vendor either accepting, declining, or delaying the quote. Once the vendor accepts the request, the next step is to receive and approve the quote.\nIn a quote and perform service, the service can only be marked as complete after the quote has been received and approved. Once the service is marked as complete and there is an invoice, ClaimCenter may automatically create a payment. This payment is dependent on an existing reserve and limits configured in Straight Through Invoice Processing, or STIP. The base application has a defined limit of $500.",
+      "notes": "Lifecycle of a service\nService request lifecycles differ slightly depending on the type of request. For example a quote only service focuses on receiving the quote in a timely manner rather than managing and tracking the work. The lifecycle for a quote and perform service includes everything from the inception of the request to\npayment for the service.\nThat full lifecycle starts with the creation of the service request followed by the vendor either accepting, declining, or delaying the quote. Once the vendor accepts the request, the next step is to receive and approve the quote.\nIn a quote and perform service, the service can only be marked as complete after the quote has been received and approved. Once the service is marked as complete and there is an invoice, ClaimCenter may automatically create a payment. This payment is dependent on an existing reserve and limits configured in Straight Through Invoice Processing, or STIP. The base application has a defined limit of $500.",
       "narration": "",
       "ocrText": "| Lifecycle of a service\n\nVendor accepts, declines, or delays the work\nOnce accepted the quote is required next\n\nIf the quote is acceptable, the adjuster\napproves the quote\n\nAfter the quote is approved, the service can\nbe marked as complete\n\nAdjusters can invoke payment wizard from\nthe service screen\n\nIf Straight Through Invoice Processing\n(STIP) is enabled, a payment may be\nautomatically created\n\nDetails | History | Activities\n\nCancel Service JI Assign\n\nQuote Status\n\nNext Action\n\nAction Owner\n\nRecord Vendor Progress ©\n\nRequested\nWaiting for Quote\n‘Agree to provide quote\n\nBill's Quick Auto Repair",
       "ocrWordCount": 95,
@@ -181,7 +181,7 @@
     },
     {
       "slideNumber": 11,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -194,7 +194,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 12,
@@ -215,12 +216,12 @@
     },
     {
       "slideNumber": 13,
-      "title": "",
+      "title": "Vendor progress: Vendor Claim Portal fa",
       "bodyParagraphs": [],
-      "originalNotes": "Vendor progress: Vendor Claim Portal\nWhen a quote only vendor service request is sent to the vendor through a portal, the vendor sees the service request and has a choice of actions. They can choose Accept Work, Add Quote or Decline Work. In this example, the vendor accepts the work and gives a date by which they expect to send the quote.  Entering this date gives the claims adjuster an idea of when to expect a reply from the vendor, and also provides data that helps evaluate the vendor's timeliness and performance.\n\nNotice the information from ClaimCenter which includes the type of service requested, the ID which is the equivalent of the Claim number, and the Next Step being equivalent to the Next Action in ClaimCenter.\n\nUse of a vendor portal gives adjusters the ability to easily communicate with service providers directly and move through the service request lifecycle. Quotes, invoices and progress milestones such as Vendor Accepted Work, Vendor Completed Quote and so on, are recorded by interaction with a portal.",
-      "notes": "Vendor progress: Vendor Claim Portal\nWhen a quote only vendor service request is sent to the vendor through a portal, the vendor sees the service request and has a choice of actions. They can choose Accept Work, Add Quote or Decline Work. In this example, the vendor accepts the work and gives a date by which they expect to send the quote.  Entering this date gives the claims adjuster an idea of when to expect a reply from the vendor, and also provides data that helps evaluate the vendor's timeliness and performance.\n\nNotice the information from ClaimCenter which includes the type of service requested, the ID which is the equivalent of the Claim number, and the Next Step being equivalent to the Next Action in ClaimCenter.\n\nUse of a vendor portal gives adjusters the ability to easily communicate with service providers directly and move through the service request lifecycle. Quotes, invoices and progress milestones such as Vendor Accepted Work, Vendor Completed Quote and so on, are recorded by interaction with a portal.",
+      "originalNotes": "Vendor progress: Vendor Claim Portal\nWhen a quote only vendor service request is sent to the vendor through a portal, the vendor sees the service request and has a choice of actions. They can choose Accept Work, Add Quote or Decline Work. In this example, the vendor accepts the work and gives a date by which they expect to send the quote. Entering this date gives the claims adjuster an idea of when to expect a reply from the vendor, and also provides data that helps evaluate the vendor's timeliness and performance.\n\nNotice the information from ClaimCenter which includes the type of service requested, the ID which is the equivalent of the Claim number, and the Next Step being equivalent to the Next Action in ClaimCenter.\n\nUse of a vendor portal gives adjusters the ability to easily communicate with service providers directly and move through the service request lifecycle. Quotes, invoices and progress milestones such as Vendor Accepted Work, Vendor Completed Quote and so on, are recorded by interaction with a portal.",
+      "notes": "Vendor progress: Vendor Claim Portal\nWhen a quote only vendor service request is sent to the vendor through a portal, the vendor sees the service request and has a choice of actions. They can choose Accept Work, Add Quote or Decline Work. In this example, the vendor accepts the work and gives a date by which they expect to send the quote. Entering this date gives the claims adjuster an idea of when to expect a reply from the vendor, and also provides data that helps evaluate the vendor's timeliness and performance.\n\nNotice the information from ClaimCenter which includes the type of service requested, the ID which is the equivalent of the Claim number, and the Next Step being equivalent to the Next Action in ClaimCenter.\n\nUse of a vendor portal gives adjusters the ability to easily communicate with service providers directly and move through the service request lifecycle. Quotes, invoices and progress milestones such as Vendor Accepted Work, Vendor Completed Quote and so on, are recorded by interaction with a portal.",
       "narration": "",
-      "ocrText": "| Vendor progress: Vendor Claim Portal fa\n\n* Customer service representative or adjuster requests service from vendor\n\n¢ Vendor can accept or decline work, add a quote, provide status updates, and\nsubmit invoices\n\nService Requests\n\now\n\nw",
+      "ocrText": "| Vendor progress: Vendor Claim Portal fa\n\n* Customer service representative or adjuster requests service from vendor\n\n• Vendor can accept or decline work, add a quote, provide status updates, and\nsubmit invoices\n\nService Requests\n\now\n\nw",
       "ocrWordCount": 37,
       "ocrConfidence": 88.58,
       "hasTable": false,
@@ -232,12 +233,12 @@
     },
     {
       "slideNumber": 14,
-      "title": "",
+      "title": "Vendor progress: without Vendor Claim Portal",
       "bodyParagraphs": [],
-      "originalNotes": "Vendor progress: without Vendor Claim Portal\nWhen a vendor does not have access to the vendor portal, the CSR or adjuster manually records progress for the service.  The data collected and maintained is the same. The only difference is how the information is recorded. Without using the vendor portal, the vendor contacts the adjuster to update the status of the service. Those updates can include acceptance of the service request,  submission of a quote, or even completion of the service.",
-      "notes": "Vendor progress: without Vendor Claim Portal\nWhen a vendor does not have access to the vendor portal, the CSR or adjuster manually records progress for the service.  The data collected and maintained is the same. The only difference is how the information is recorded. Without using the vendor portal, the vendor contacts the adjuster to update the status of the service. Those updates can include acceptance of the service request,  submission of a quote, or even completion of the service.",
+      "originalNotes": "Vendor progress: without Vendor Claim Portal\nWhen a vendor does not have access to the vendor portal, the CSR or adjuster manually records progress for the service. The data collected and maintained is the same. The only difference is how the information is recorded. Without using the vendor portal, the vendor contacts the adjuster to update the status of the service. Those updates can include acceptance of the service request, submission of a quote, or even completion of the service.",
+      "notes": "Vendor progress: without Vendor Claim Portal\nWhen a vendor does not have access to the vendor portal, the CSR or adjuster manually records progress for the service. The data collected and maintained is the same. The only difference is how the information is recorded. Without using the vendor portal, the vendor contacts the adjuster to update the status of the service. Those updates can include acceptance of the service request, submission of a quote, or even completion of the service.",
       "narration": "",
-      "ocrText": "| Vendor progress: without Vendor Claim Portal G\n\n¢ CSR or adjuster manually records vendor progress and adds quotes and invoices\n\nServices\nType | Status Service # Ref # | Assigned To Next Action Action Owner Related To Services\nVehicle: 2013 Ford FX4 (2HG3987 / California)\n23... Andy Applegate ‘Agree to perform ser MB Garage Vehicle: 2013 Fe Car rental\nvice\nAndy Applegate ‘Agree to perform ser Morgan Hill Auto... Vehicle: 2013 Fo... Towing\nvice\n\nDetails History Activities Documents Notes Involces_- Messages\n\nVendor Accepted Work\n\nService Number\n\nInvoices\n\nVendor Declined\nReference Number Vendor Delayed\nProgress rf__Update Reference Number No invoices for this service\nQuote status Waiting for Quote\nNext Action Agree to provide quote\nAction Owner Monterey Beacon Village Motor Works\nRelated To Vehicle: 2013 Ford Fx4 (263987 / California)\n\nNo quotes for this service.\nRequested Quote 1171472016",
+      "ocrText": "| Vendor progress: without Vendor Claim Portal G\n\n• CSR or adjuster manually records vendor progress and adds quotes and invoices\n\nServices\nType | Status Service # Ref # | Assigned To Next Action Action Owner Related To Services\nVehicle: 2013 Ford FX4 (2HG3987 / California)\n23... Andy Applegate ‘Agree to perform ser MB Garage Vehicle: 2013 Fe Car rental\nvice\nAndy Applegate ‘Agree to perform ser Morgan Hill Auto... Vehicle: 2013 Fo... Towing\nvice\n\nDetails History Activities Documents Notes Involces_- Messages\n\nVendor Accepted Work\n\nService Number\n\nInvoices\n\nVendor Declined\nReference Number Vendor Delayed\nProgress rf__Update Reference Number No invoices for this service\nQuote status Waiting for Quote\nNext Action Agree to provide quote\nAction Owner Monterey Beacon Village Motor Works\nRelated To Vehicle: 2013 Ford Fx4 (263987 / California)\n\nNo quotes for this service.\nRequested Quote 1171472016",
       "ocrWordCount": 138,
       "ocrConfidence": 81.93,
       "hasTable": false,
@@ -249,7 +250,7 @@
     },
     {
       "slideNumber": 15,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -262,7 +263,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 16,
@@ -300,12 +302,12 @@
     },
     {
       "slideNumber": 18,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_~ — What different types of requests can an adjuster make on a service\n¢ request?\n\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "ocrText": "Question\nWhat different types of requests can an adjuster make on a service\n• request?\n•\n•",
       "ocrWordCount": 25,
       "ocrConfidence": 80.45,
       "hasTable": false,
@@ -313,16 +315,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What different types of requests can an adjuster make on a service",
+        "answer": "X request? “ Perform Service, Quote, Quote and Perform service. Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 19,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n,~ — What different types of requests can an adjuster make on a service\nx request?\n“ Perform Service, Quote, Quote and Perform service.\n\nSooo ooo ooo Oooo oOoD",
+      "ocrText": "Answer\nWhat different types of requests can an adjuster make on a service\nrequest?\n“ Perform Service, Quote, Quote and Perform service.\nSooo ooo ooo Oooo oOoD",
       "ocrWordCount": 30,
       "ocrConfidence": 84.61,
       "hasTable": false,
@@ -334,12 +340,12 @@
     },
     {
       "slideNumber": 20,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,~ — Whatis one thing that will prevent a service from being marked\nx completed?\n\nSooo oooe sooo oOo oOo oAaDS",
+      "ocrText": "Question\nWhat is one thing that will prevent a service from being marked\ncompleted?",
       "ocrWordCount": 22,
       "ocrConfidence": 79.6,
       "hasTable": false,
@@ -347,16 +353,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What is one thing that will prevent a service from being marked",
+        "answer": "What is one thing that will prevent a service from being marked x completed? If a service is a Quote and Perform Service request, it cannot be marked complete until after the quote is received and approved. Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 21,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n,~ — What is one thing that will prevent a service from being marked\nx completed?\n\nIf a service is a Quote and Perform Service request, it cannot be marked complete\nuntil after the quote is received and approved.\n\nSooo ooo ooo Oooo oOoD",
+      "ocrText": "Answer\nWhat is one thing that will prevent a service from being marked\ncompleted?\nIf a service is a Quote and Perform Service request, it cannot be marked complete\nuntil after the quote is received and approved.\nSooo ooo ooo Oooo oOoD",
       "ocrWordCount": 45,
       "ocrConfidence": 89.37,
       "hasTable": false,
@@ -368,12 +378,12 @@
     },
     {
       "slideNumber": 22,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,~ — When can an invoice be automatically paid?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "ocrText": "Question\nWhen can an invoice be automatically paid?\n•\n•",
       "ocrWordCount": 19,
       "ocrConfidence": 69.94,
       "hasTable": false,
@@ -381,16 +391,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "When can an invoice be automatically paid?",
+        "answer": "When an invoice is entered for a service that is marked complete and there is a matching reserve line. Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 23,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n,~ — When can an invoice be automatically paid?\n\n¢\nWhen an invoice is entered for a service that is marked complete and there is a\n\nmatching reserve line.\n\nSooo ooo ooo Oooo oOoD",
+      "ocrText": "Answer\nWhen can an invoice be automatically paid?\n•\nWhen an invoice is entered for a service that is marked complete and there is a\nmatching reserve line.\nSooo ooo ooo Oooo oOoD",
       "ocrWordCount": 35,
       "ocrConfidence": 88.21,
       "hasTable": false,
@@ -402,12 +416,12 @@
     },
     {
       "slideNumber": 24,
-      "title": "",
+      "title": "Key Takeaways",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives * Describe the purpose of services on claims\n\nreview « Request services from new or existing claims\n¢ Record vendor progress during the service\nrequest lifecycle with or without a vendor\nportal",
+      "ocrText": "Lesson\nobjectives * Describe the purpose of services on claims\n\nreview « Request services from new or existing claims\n• Record vendor progress during the service\nrequest lifecycle with or without a vendor\nportal",
       "ocrWordCount": 34,
       "ocrConfidence": 88.26,
       "hasTable": false,
@@ -419,7 +433,7 @@
     },
     {
       "slideNumber": 25,
-      "title": "",
+      "title": "Student Exercise",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -445,6 +459,11 @@
       "index": 2,
       "filename": "IS_Claim_19_02.mp4",
       "path": "/academy/guidewire/videos/ch05/IS_Claim_19_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "IS_Claim_19_03.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_19_03.mp4"
     }
   ],
   "hasNotes": true,

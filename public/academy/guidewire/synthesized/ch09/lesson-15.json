@@ -119,21 +119,21 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "Whatis the difference between a static permission and an object-based\npermission?",
+      "question": "What is the difference between a static permission and an object-based\npermission?",
       "referenceAnswer": "The correct answer is:\nAstatic permission is granted or revoked for the entire application.\nAn object-based permission is granted on a claim by claim (or exposure by exposure)\nbasis.\nSoe ee eon eee Soe e ese Ss",
       "questionKey": "slide-13"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "Whatis the difference between a permission and an application\npermission key (APK) containing only one permission?",
+      "question": "What is the difference between a permission and an application\npermission key (APK) containing only one permission?",
       "referenceAnswer": "Possible answers:\n* Apermission can be created by a Guidewire configurator, while an APK cannot.\n* Apermission can be added to a role, while an APK cannot.\n* Apermissions check using an APK will execute faster than a permissions check\nwhich directly references a permission.\nSoe ee eon eee Soe e ese Ss",
       "questionKey": "slide-15"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "Whatis the difference between an APK with two permissions (such as\n“create note” and “edit note”) and a role with the same two pennissions?",
+      "question": "What is the difference between an APK with two permissions (such as\n“create note” and “edit note”) and a role with the same two pennissions?",
       "referenceAnswer": "Possible answers:\n\nAn APK is created to optimize permissions checks. A role is created to assign\npermissions to users.\n\nDevelopers can create and modify roles. Developers cannot create or modify APKs.\n\nSoe ee eon eee Soe e ese Ss",
       "questionKey": "slide-17"
     },

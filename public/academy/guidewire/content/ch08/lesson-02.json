@@ -11,7 +11,7 @@
   "slides": [
     {
       "slideNumber": 1,
-      "title": "",
+      "title": "Configuring Location Groups and Pages",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -28,12 +28,12 @@
     },
     {
       "slideNumber": 2,
-      "title": "",
+      "title": "Learning Objectives",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives\n\n¢ Describe the architecture of a location group\n¢ Configure existing location groups\n¢ Create and modify pages",
+      "ocrText": "Lesson\nobjectives\n\n• Describe the architecture of a location group\n• Configure existing location groups\n• Create and modify pages",
       "ocrWordCount": 20,
       "ocrConfidence": 84.65,
       "hasTable": false,
@@ -62,7 +62,7 @@
     },
     {
       "slideNumber": 4,
-      "title": "",
+      "title": "i Location",
       "bodyParagraphs": [],
       "originalNotes": "Location groups\nThe tab bar is the set of tabs that run across the top of the application. The info bar is the set of widgets that appear below the tabs but above the screen area. (In other words, they are the widgets in the horizontal gray strip just above the \"Summary“ label.) Some location groups do not have info bars, in which case the gray strip is not visible- The menu actions are collapsed inside the Actions nmenu.\nAs the user navigates between locations in a location group, the menu links, menu actions, and info bar remain the same. The menu links are the set of clickable labels in the side bar (such as \"Summary\" or \"Contacts\"). A page is a location that contains a single screen in the main frame",
       "notes": "Location groups\nThe tab bar is the set of tabs that run across the top of the application. The info bar is the set of widgets that appear below the tabs but above the screen area. (In other words, they are the widgets in the horizontal gray strip just above the \"Summary“ label.) Some location groups do not have info bars, in which case the gray strip is not visible- The menu actions are collapsed inside the Actions nmenu.\nAs the user navigates between locations in a location group, the menu links, menu actions, and info bar remain the same. The menu links are the set of clickable labels in the side bar (such as \"Summary\" or \"Contacts\"). A page is a location that contains a single screen in the main frame",
@@ -79,7 +79,7 @@
     },
     {
       "slideNumber": 5,
-      "title": "",
+      "title": "i Pages",
       "bodyParagraphs": [],
       "originalNotes": "Pages\nPages are the most common location.\n\nUltimately, the \"groups“ inside location groups are groups of pages- The contents of a location group consist of pages, child location groups, or both. A child location group is simply a sub-group of pages.\n\nA menu link location ref (a \"second level navigation\") can point to either another page or a location group. In the example, the menu link points to a page and the screen contained by the page is rendered alone\n\nin the screen area. In PolicyCenter a location ref mostly points to another page or screen-",
       "notes": "Pages\nPages are the most common location.\n\nUltimately, the \"groups“ inside location groups are groups of pages- The contents of a location group consist of pages, child location groups, or both. A child location group is simply a sub-group of pages.\n\nA menu link location ref (a \"second level navigation\") can point to either another page or a location group. In the example, the menu link points to a page and the screen contained by the page is rendered alone\n\nin the screen area. In PolicyCenter a location ref mostly points to another page or screen-",
@@ -96,7 +96,7 @@
     },
     {
       "slideNumber": 6,
-      "title": "",
+      "title": "i Architecture of a location",
       "bodyParagraphs": [],
       "originalNotes": "Architecture of a location group\nIn the base application, location groups consist of tabs in the tab bar (First-level navigations) and menu links (Second- level navigations).\n\nA first-level navigation location group is a location group that a tab points to (either directly or through a forward). This type of location group is a \"parent-level“ group- If it has an info bar and menu actions, those elements are displayed. A second- level navigation location group can contain pages and other location groups.\n\nA second-level navigation location group is a location group that some other location group contains. This type of location group is a \"child-level“ group- It typically does not have an info bar or menu actions. A second-level navigation location group typically contains only pages or child location groups.\n\nA location group contains location refs. Each location ref points to either a page or another location group. When a location ref points to a page, clicking the label of the location ref (the menu link) renders the page, which renders the associated screen- When a location ref points to a location group, clicking the label of the location ref (the menu link) renders the location group as a set of menu links. The first location refs page is also rendered.",
       "notes": "Architecture of a location group\nIn the base application, location groups consist of tabs in the tab bar (First-level navigations) and menu links (Second- level navigations).\n\nA first-level navigation location group is a location group that a tab points to (either directly or through a forward). This type of location group is a \"parent-level“ group- If it has an info bar and menu actions, those elements are displayed. A second- level navigation location group can contain pages and other location groups.\n\nA second-level navigation location group is a location group that some other location group contains. This type of location group is a \"child-level“ group- It typically does not have an info bar or menu actions. A second-level navigation location group typically contains only pages or child location groups.\n\nA location group contains location refs. Each location ref points to either a page or another location group. When a location ref points to a page, clicking the label of the location ref (the menu link) renders the page, which renders the associated screen- When a location ref points to a location group, clicking the label of the location ref (the menu link) renders the location group as a set of menu links. The first location refs page is also rendered.",
@@ -113,7 +113,7 @@
     },
     {
       "slideNumber": 7,
-      "title": "",
+      "title": "i Location",
       "bodyParagraphs": [],
       "originalNotes": "Location group and page configuration\nThe next section of this lesson discusses locationGroup-level configuration. The section after that discusses page- level configuration.",
       "notes": "Location group and page configuration\nThe next section of this lesson discusses locationGroup-level configuration. The section after that discusses page- level configuration.",
@@ -147,12 +147,12 @@
     },
     {
       "slideNumber": 9,
-      "title": "",
+      "title": "i Information in location",
       "bodyParagraphs": [],
       "originalNotes": "Information in location group PCF\nThe menuActions property specifies the file to use for contents of the Actions menu. It is optional. The infoBar property specifies the file to use for contents of the info bar. It is optional. The tabBar property specifies the file to use for the contents of the tab bar. It is optional. Ctrl + Click on the value for the menuActions, infoBar or tabBar opens the file link.",
       "notes": "Information in location group PCF\nThe menuActions property specifies the file to use for contents of the Actions menu. It is optional. The infoBar property specifies the file to use for contents of the info bar. It is optional. The tabBar property specifies the file to use for the contents of the tab bar. It is optional. Ctrl + Click on the value for the menuActions, infoBar or tabBar opens the file link.",
       "narration": "",
-      "ocrText": "i Information in location group PCF G&G\n\nAccountFile.pcf\n\nEntry Points\n\n‘Summary\nContacts\n\nLocations info |\n\nPolicy Transactions i\n‘Submission Manager\n\nLocation refs\n\n¢ Entry points and required objects\n\nDesktop ~ Account|~ Policy ~ Contact|~ Reinsurance |~ Search v\n\n@Saccount RayNewton Account # €000143542\n\ncreate\nNew Note\n\nNew Document\nNew Email\n\nNew Submission\n\nNew Activity\n\n¢ Location refs point to pages or child location groups\n\n¢ Attributes that point to separate files for tab bar, info bar and menu actions",
+      "ocrText": "i Information in location group PCF G&G\n\nAccountFile.pcf\n\nEntry Points\n\n‘Summary\nContacts\n\nLocations info |\n\nPolicy Transactions i\n‘Submission Manager\n\nLocation refs\n\n• Entry points and required objects\n\nDesktop ~ Account|~ Policy ~ Contact|~ Reinsurance |~ Search v\n\n@Saccount RayNewton Account # €000143542\n\ncreate\nNew Note\n\nNew Document\nNew Email\n\nNew Submission\n\nNew Activity\n\n• Location refs point to pages or child location groups\n\n• Attributes that point to separate files for tab bar, info bar and menu actions",
       "ocrWordCount": 79,
       "ocrConfidence": 85.51,
       "hasTable": false,
@@ -164,10 +164,10 @@
     },
     {
       "slideNumber": 10,
-      "title": "",
+      "title": "i Entry points for location",
       "bodyParagraphs": [],
-      "originalNotes": "Entry points for location group\nIn the example, the AccountFile location group has an entry point named AccountFile- It expects a single object of type Account, which is referred to within the PCF page as \"account\"- \n\nLocation groups can have multiple entry points- This is useful when a single location is referenced from different places with different known pieces of information. (For example, the Admin location group has 3 entry points-\n\nAdmin() - This means it is called without any arguments-\nAdmin(group\nGroupBase) — If the Admin tab is viewed for a group then it needs the groupobject passed-\nAdmin.org OrganizationBase) - If the Administration tab is viewed for an organization it needs the organizationobject passed-\n\nMost navigation widgets have an action attribute, which defines where to navigate when the widget is clicked. The syntax for an action attribute that navigates to a location is:\npcfLocationEnttyP ointmethod(objectList), where\nLocationEnttyPoint is  (one of) the location entry point(s) defined on the destination location's Entry Points tab.\nmethod is the method used tonavigate to the location (either \"push\" or \"go\")- For location groups, this is almost always \"go\"\nobjectList is a comma-delimited list of zero to many objects- This list must match the number of objects and the type which are expected by the location entry point.\n\nFor example, in TabBar-pcf, the action for the Desktop tab is set to Desktop-go(), which is the entry point defined in the location group desktop-pcf-",
-      "notes": "Entry points for location group\nIn the example, the AccountFile location group has an entry point named AccountFile- It expects a single object of type Account, which is referred to within the PCF page as \"account\"- \n\nLocation groups can have multiple entry points- This is useful when a single location is referenced from different places with different known pieces of information. (For example, the Admin location group has 3 entry points-\n\nAdmin() - This means it is called without any arguments-\nAdmin(group\nGroupBase) — If the Admin tab is viewed for a group then it needs the groupobject passed-\nAdmin.org OrganizationBase) - If the Administration tab is viewed for an organization it needs the organizationobject passed-\n\nMost navigation widgets have an action attribute, which defines where to navigate when the widget is clicked. The syntax for an action attribute that navigates to a location is:\npcfLocationEnttyP ointmethod(objectList), where\nLocationEnttyPoint is  (one of) the location entry point(s) defined on the destination location's Entry Points tab.\nmethod is the method used tonavigate to the location (either \"push\" or \"go\")- For location groups, this is almost always \"go\"\nobjectList is a comma-delimited list of zero to many objects- This list must match the number of objects and the type which are expected by the location entry point.\n\nFor example, in TabBar-pcf, the action for the Desktop tab is set to Desktop-go(), which is the entry point defined in the location group desktop-pcf-",
+      "originalNotes": "Entry points for location group\nIn the example, the AccountFile location group has an entry point named AccountFile- It expects a single object of type Account, which is referred to within the PCF page as \"account\"-\n\nLocation groups can have multiple entry points- This is useful when a single location is referenced from different places with different known pieces of information. (For example, the Admin location group has 3 entry points.\nAdmin() - This means it is called without any arguments.\nAdmin(group\nGroupBase) — If the Admin tab is viewed for a group then it needs the groupobject passed.\nAdmin.org OrganizationBase) - If the Administration tab is viewed for an organization it needs the organizationobject passed.\nMost navigation widgets have an action attribute, which defines where to navigate when the widget is clicked. The syntax for an action attribute that navigates to a location is:\npcfLocationEnttyP ointmethod(objectList), where\nLocationEnttyPoint is (one of) the location entry point(s) defined on the destination location's Entry Points tab.\nmethod is the method used tonavigate to the location (either \"push\" or \"go\")- For location groups, this is almost always \"go\"\nobjectList is a comma-delimited list of zero to many objects- This list must match the number of objects and the type which are expected by the location entry point.\n\nFor example, in TabBar-pcf, the action for the Desktop tab is set to Desktop-go(), which is the entry point defined in the location group desktop-pcf-",
+      "notes": "Entry points for location group\nIn the example, the AccountFile location group has an entry point named AccountFile- It expects a single object of type Account, which is referred to within the PCF page as \"account\"-\n\nLocation groups can have multiple entry points- This is useful when a single location is referenced from different places with different known pieces of information. (For example, the Admin location group has 3 entry points.\nAdmin() - This means it is called without any arguments.\nAdmin(group\nGroupBase) — If the Admin tab is viewed for a group then it needs the groupobject passed.\nAdmin.org OrganizationBase) - If the Administration tab is viewed for an organization it needs the organizationobject passed.\nMost navigation widgets have an action attribute, which defines where to navigate when the widget is clicked. The syntax for an action attribute that navigates to a location is:\npcfLocationEnttyP ointmethod(objectList), where\nLocationEnttyPoint is (one of) the location entry point(s) defined on the destination location's Entry Points tab.\nmethod is the method used tonavigate to the location (either \"push\" or \"go\")- For location groups, this is almost always \"go\"\nobjectList is a comma-delimited list of zero to many objects- This list must match the number of objects and the type which are expected by the location entry point.\n\nFor example, in TabBar-pcf, the action for the Desktop tab is set to Desktop-go(), which is the entry point defined in the location group desktop-pcf-",
       "narration": "",
       "ocrText": "i Entry points for location group\n\n1. Define the entry point\n\n- EntryPointName(ObjectName: ObjectType)\n\n- Example: AccountFile(account:Account)\n2. Define each object used in entry point as a variable on Variables tab\n3. Navigate from a widget to a location group\n\n- Syntax for an action attribute in the navigation widget\nEntryPointOfLocation.go(objects ToPass)",
       "ocrWordCount": 52,
@@ -181,12 +181,12 @@
     },
     {
       "slideNumber": 11,
-      "title": "",
+      "title": "i Location",
       "bodyParagraphs": [],
       "originalNotes": "Location group property: canVisit\ncanVisit : The canVlsit attribute determines whether a user can visit the location group. If blank, the canVlsit attribute evaluates to true. When the attribute evaluates to false, the tab is not rendered in the user interface- For example, if the canVisit expression (perm-User.viewteam) in the location group Team .pcf returns false the user does not have permissions to view any team screen and the Team tab is not rendered for that user.\n\nFor example, aapplegate does not have access to the Team tab whereas su (Superuser) has access to the Team tab. Team tab is useful for admin or supervisors. canEdit: In addition to the canVisit property, single-screen locations and wizards also have a canEdit attribute- Location groups do not have the canEdit property. Editability for location groups is controlled at the level of each page-",
       "notes": "Location group property: canVisit\ncanVisit : The canVlsit attribute determines whether a user can visit the location group. If blank, the canVlsit attribute evaluates to true. When the attribute evaluates to false, the tab is not rendered in the user interface- For example, if the canVisit expression (perm-User.viewteam) in the location group Team .pcf returns false the user does not have permissions to view any team screen and the Team tab is not rendered for that user.\n\nFor example, aapplegate does not have access to the Team tab whereas su (Superuser) has access to the Team tab. Team tab is useful for admin or supervisors. canEdit: In addition to the canVisit property, single-screen locations and wizards also have a canEdit attribute- Location groups do not have the canEdit property. Editability for location groups is controlled at the level of each page-",
       "narration": "",
-      "ocrText": "i Location group property: canVisit G&G\n\n¢ lf canVisit evaluates to true, the tab or link to a location group is visible and\nclickable\n\n¢ Editability for location group is controlled at the level of each page",
+      "ocrText": "i Location group property: canVisit G&G\n\n• lf canVisit evaluates to true, the tab or link to a location group is visible and\nclickable\n\n• Editability for location group is controlled at the level of each page",
       "ocrWordCount": 37,
       "ocrConfidence": 87.89,
       "hasTable": false,
@@ -198,7 +198,7 @@
     },
     {
       "slideNumber": 12,
-      "title": "",
+      "title": "i Steps for creating a location",
       "bodyParagraphs": [],
       "originalNotes": "Steps for creating a location group\nWhen creating the location group, there is no requirement to add an extension to the filename, but it is a good practice to add the suffix Group-",
       "notes": "Steps for creating a location group\nWhen creating the location group, there is no requirement to add an extension to the filename, but it is a good practice to add the suffix Group-",
@@ -215,7 +215,7 @@
     },
     {
       "slideNumber": 13,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -228,7 +228,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 14,
@@ -249,7 +250,7 @@
     },
     {
       "slideNumber": 15,
-      "title": "",
+      "title": "Page configuration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -266,12 +267,12 @@
     },
     {
       "slideNumber": 16,
-      "title": "",
+      "title": "i Page PCFs",
       "bodyParagraphs": [],
       "originalNotes": "Page PCFs\nA page is actually very simple, as it typically contains just a screen with panel references to the views to embed within it However, the rendering of the page in Studio can look somewhat complex, as all the embedded elements are visible in the page.\n\nEach location ref in the location group has a location attribute which specifies the location whichthe location ref points to. The location is typically a child location group or a page. If the destination location group or page requires one or more objects, then the location attribute must specify which objects to pass-",
       "notes": "Page PCFs\nA page is actually very simple, as it typically contains just a screen with panel references to the views to embed within it However, the rendering of the page in Studio can look somewhat complex, as all the embedded elements are visible in the page.\n\nEach location ref in the location group has a location attribute which specifies the location whichthe location ref points to. The location is typically a child location group or a page. If the destination location group or page requires one or more objects, then the location attribute must specify which objects to pass-",
       "narration": "",
-      "ocrText": "i Page PCFs Gi\n\n« Page PCF file shows references to all embedded content in Studio\n\n* Page content: Screens, Toolbars, PanelRefs, DetailsViews, ListViews and others\n\n« Menu links, Tab bars are also visible in the Page in Studio, but not part of physical page PCF\n¢ Pages are referenced by location refs in location groups\n\n* LocationPropertyOfLocationRef: EntryPointOfPage(objectsToPass)",
+      "ocrText": "i Page PCFs Gi\n\n« Page PCF file shows references to all embedded content in Studio\n\n* Page content: Screens, Toolbars, PanelRefs, DetailsViews, ListViews and others\n\n« Menu links, Tab bars are also visible in the Page in Studio, but not part of physical page PCF\n• Pages are referenced by location refs in location groups\n\n* LocationPropertyOfLocationRef: EntryPointOfPage(objectsToPass)",
       "ocrWordCount": 59,
       "ocrConfidence": 86.9,
       "hasTable": false,
@@ -283,12 +284,12 @@
     },
     {
       "slideNumber": 17,
-      "title": "",
+      "title": "i Page properties",
       "bodyParagraphs": [],
       "originalNotes": "Page properties\nSimilar to a location group’s canVlsit attribute, a user can see links to (and therefore can navigate to) a page only if canVisit evaluates to true.\n\nIf canEdit mode for a page evaluates to false, then the page appears only in read only mode, even if startlnEditMode is set to true.",
       "notes": "Page properties\nSimilar to a location group’s canVlsit attribute, a user can see links to (and therefore can navigate to) a page only if canVisit evaluates to true.\n\nIf canEdit mode for a page evaluates to false, then the page appears only in read only mode, even if startlnEditMode is set to true.",
       "narration": "",
-      "ocrText": "i Page properties G&G\n¢ Title label of a page in the user interface comes from page's title property\n¢ If canVisit evaluates to true, the link to a page is visible and clickable\n« Apage is either in read-only or edit mode\n\n+ If canEdit evaluates to true, the page has Edit/Update buttons\n+ If startInEditMode is true, then page renders in Edit mode",
+      "ocrText": "i Page properties G&G\n• Title label of a page in the user interface comes from page's title property\n• If canVisit evaluates to true, the link to a page is visible and clickable\n« Apage is either in read-only or edit mode\n\n+ If canEdit evaluates to true, the page has Edit/Update buttons\n+ If startInEditMode is true, then page renders in Edit mode",
       "ocrWordCount": 65,
       "ocrConfidence": 89.53,
       "hasTable": false,
@@ -300,7 +301,7 @@
     },
     {
       "slideNumber": 18,
-      "title": "",
+      "title": "i Steps for creating a page",
       "bodyParagraphs": [],
       "originalNotes": "Steps for creating a page\nWhen creating the page,\nthere is no need to add an\nextension to the filename.\nNo file extension is\ngenerated or required for a\npage.\nStep 4: You must include at\nleast one ListView or\nDetaiMew widget You can\ninclude the panels inline or\nby reference.",
       "notes": "Steps for creating a page\nWhen creating the page,\nthere is no need to add an\nextension to the filename.\nNo file extension is\ngenerated or required for a\npage.\nStep 4: You must include at\nleast one ListView or\nDetaiMew widget You can\ninclude the panels inline or\nby reference.",
@@ -317,7 +318,7 @@
     },
     {
       "slideNumber": 19,
-      "title": "",
+      "title": "i Steps for creating a page - continued",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -334,7 +335,7 @@
     },
     {
       "slideNumber": 20,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -347,7 +348,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 21,
@@ -368,12 +370,12 @@
     },
     {
       "slideNumber": 22,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n,~ — When you navigate between locations in a location group:\n\n¢\noo a) What changes?\n\nb) What remains the same?\n\nSS oe ee oe oe oo",
+      "ocrText": "Question G\nWhen you navigate between locations in a location group:\n•\noo a) What changes?\nb) What remains the same?\nSS oe ee oe oe oo",
       "ocrWordCount": 29,
       "ocrConfidence": 68.53,
       "hasTable": false,
@@ -381,16 +383,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "When you navigate between locations in a location group:",
+        "answer": "Oo a) What changes? b) What remains the same? a) The contents of the screen area changes. b) The menu links, menu actions, and info bar remain the same."
+      }
     },
     {
       "slideNumber": 23,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n,~ — When you navigate between locations in a location group:\n\n¢\noo a) What changes?\n\nb) What remains the same?\n\na) The contents of the screen area changes.\n\nb) The menu links, menu actions, and info bar remain the same.\n\nSS Se ee eee eo",
+      "ocrText": "Answer\nWhen you navigate between locations in a location group:\n•\noo a) What changes?\nb) What remains the same?\na) The contents of the screen area changes.\nb) The menu links, menu actions, and info bar remain the same.\nSS Se ee eee eo",
       "ocrWordCount": 47,
       "ocrConfidence": 78.06,
       "hasTable": false,
@@ -402,12 +408,12 @@
     },
     {
       "slideNumber": 24,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n,~ — What two things can a location ref point to?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "ocrText": "Question G\nWhat two things can a location ref point to?\n•\n•\nSS oe ee oe oe oo",
       "ocrWordCount": 22,
       "ocrConfidence": 65.25,
       "hasTable": false,
@@ -415,16 +421,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What two things can a location ref point to?",
+        "answer": "Acchild location group or a page."
+      }
     },
     {
       "slideNumber": 25,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer G\n\n,~ — What two things can a location ref point to?\n\n¢\n4\n¢\n\nAcchild location group or a page.\n\nSS Se ee eee eo",
+      "ocrText": "Answer G\nWhat two things can a location ref point to?\n•\n•\nAcchild location group or a page.\nSS Se ee eee eo",
       "ocrWordCount": 27,
       "ocrConfidence": 73.66,
       "hasTable": false,
@@ -436,12 +446,12 @@
     },
     {
       "slideNumber": 26,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n,~ — What happens if a location group's canVisit attribute evaluates to false?\n\n¢\n4\n¢\n\nSS oe ee oe oe oo",
+      "ocrText": "Question G\nWhat happens if a location group's canVisit attribute evaluates to false?\n•\n•\nSS oe ee oe oe oo",
       "ocrWordCount": 24,
       "ocrConfidence": 67.12,
       "hasTable": false,
@@ -449,16 +459,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What happens if a location group's canVisit attribute evaluates to false?",
+        "answer": "When a location group's canVisit attribute is false, the location group is not rendered in the user interface. For example, if the location group appears on a tab, the tab is not rendered at all."
+      }
     },
     {
       "slideNumber": 27,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer G\n\n,~ — What happens if a location group's canVisit attribute evaluates to false?\n\n¢\n4\n¢\n\nWhen a location group's canVisit attribute is false, the location group is not rendered in\nthe user interface. For example, if the location group appears on a tab, the tab is not\nrendered at all.\n\nSS Se ee eee eo",
+      "ocrText": "Answer G\nWhat happens if a location group's canVisit attribute evaluates to false?\n•\n•\nWhen a location group's canVisit attribute is false, the location group is not rendered in\nthe user interface. For example, if the location group appears on a tab, the tab is not\nrendered at all.\nSS Se ee eee eo",
       "ocrWordCount": 58,
       "ocrConfidence": 84.57,
       "hasTable": false,
@@ -470,12 +484,12 @@
     },
     {
       "slideNumber": 28,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n,7~ — When viewing a location group PCF file in Studio, which Studio tab\n¢ specifies how to navigate to a particular location group?\n\n4\n¢\n\nSS oe ee oe oe oo",
+      "ocrText": "Question G\nWhen viewing a location group PCF file in Studio, which Studio tab\n• specifies how to navigate to a particular location group?\n•\nSS oe ee oe oe oo",
       "ocrWordCount": 34,
       "ocrConfidence": 76.88,
       "hasTable": false,
@@ -483,16 +497,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "When viewing a location group PCF file in Studio, which Studio tab",
+        "answer": "Oo specifies how to navigate to a particular location group? The Entry Points tab. This identifies the \"navigation name\" of the location group as well as any objects needed when navigating to it."
+      }
     },
     {
       "slideNumber": 29,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer G\n\n,~ — When viewing a location group PCF file in Studio, which Studio tab\noo specifies how to navigate to a particular location group?\n¢\n\nThe Entry Points tab. This identifies the \"navigation name\" of the location group as\nwell as any objects needed when navigating to it.\n\nSS Se ee eee eo",
+      "ocrText": "Answer G\nWhen viewing a location group PCF file in Studio, which Studio tab\noo specifies how to navigate to a particular location group?\n•\nThe Entry Points tab. This identifies the \"navigation name\" of the location group as\nwell as any objects needed when navigating to it.\nSS Se ee eee eo",
       "ocrWordCount": 55,
       "ocrConfidence": 84.53,
       "hasTable": false,
@@ -504,12 +522,12 @@
     },
     {
       "slideNumber": 30,
-      "title": "",
+      "title": "Key Takeaways",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives ¢ Describe the architecture of a location group\nreview ¢ Configure existing location groups\n\n¢ Create and modify pages",
+      "ocrText": "Lesson\nobjectives • Describe the architecture of a location group\nreview • Configure existing location groups\n\n• Create and modify pages",
       "ocrWordCount": 21,
       "ocrConfidence": 85.05,
       "hasTable": false,
@@ -521,7 +539,7 @@
     },
     {
       "slideNumber": 31,
-      "title": "",
+      "title": "Student Exercise",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",

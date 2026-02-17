@@ -359,7 +359,7 @@
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "Whatare the possible ways Guidewire can interpret an external system's\na response to a message?",
+      "question": "What are the possible ways Guidewire can interpret an external system's\na response to a message?",
       "referenceAnswer": "Guidewire can interpret an external system's response, if one exists, as a positive\nacknowledgement (ACK), negative acknowledgment (NACK), or duplicate.",
       "questionKey": "slide-34"
     },
@@ -373,14 +373,14 @@
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "Under what circumstances are acknowledgements processed:\n\no A) By the transport plugin?\n\nB) By the reply plugin?\n\nC) Without involvement from any plugin?",
+      "question": "Under what circumstances are acknowledgements processed:\nA) By the transport plugin?\nB) By the reply plugin?\nC) Without involvement from any plugin?",
       "referenceAnswer": "A) When the reply is received synchronously.\n\nB) When the reply is received asynchronously through a listener or polling\nmechanism.\n\nC) When the reply is received asynchronously by an external system call to an API.",
       "questionKey": "slide-38"
     },
     {
       "type": "knowledge_check",
       "id": "kc-5",
-      "question": "When should you use each of the following methods?\n\no A) aMessage.reportError(retryTime)?\n\nB) aMessage.reportError(errorCategory)?",
+      "question": "When should you use each of the following methods?\nA) aMessage.reportError(retryTime)?\nB) aMessage.reportError(errorCategory)?",
       "referenceAnswer": "A) When the message needs to be retried and the message has not reached its\nmaximum number of retries.\n\nB) When the message needs to be retried, but the message has reached its\nmaximum number of retries.",
       "questionKey": "slide-40"
     },

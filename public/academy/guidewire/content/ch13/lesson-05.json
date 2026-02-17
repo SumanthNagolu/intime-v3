@@ -11,7 +11,7 @@
   "slides": [
     {
       "slideNumber": 1,
-      "title": "",
+      "title": "Rate Routines and Parameter Sets",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -28,7 +28,7 @@
     },
     {
       "slideNumber": 2,
-      "title": "",
+      "title": "Learning Objectives",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -45,7 +45,7 @@
     },
     {
       "slideNumber": 3,
-      "title": "",
+      "title": "Rate routines",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -62,7 +62,7 @@
     },
     {
       "slideNumber": 4,
-      "title": "",
+      "title": "Rating user story : Rate routines fa",
       "bodyParagraphs": [],
       "originalNotes": "Rating user story : Rate routines\nA rate routine defines the algorithm used for calculating the rate for coverages, taxes, and other costs on a policy. A rating routine uses the rating algorithm in discreet units, usually by coverage.\n\nRate routine can have steps with:\n\n1) Mathematical operators, conditionals, and assignments that work on rate table lookups\n2) Gosu function calls and policy data.",
       "notes": "Rating user story : Rate routines\nA rate routine defines the algorithm used for calculating the rate for coverages, taxes, and other costs on a policy. A rating routine uses the rating algorithm in discreet units, usually by coverage.\n\nRate routine can have steps with:\n\n1) Mathematical operators, conditionals, and assignments that work on rate table lookups\n2) Gosu function calls and policy data.",
@@ -79,12 +79,12 @@
     },
     {
       "slideNumber": 5,
-      "title": "",
+      "title": "Rate routine structure",
       "bodyParagraphs": [],
       "originalNotes": "Rate routine structure\nYou use rate routines to implement rating algorithms that calculate the properties of the cost for coverages, taxes, and other costs on a policy. The cost properties include the base and adjusted rates, and term amount. You can also create rate routines that do not calculate these properties. These of rate routine types may set up rating information for use by another rate routine. Rate routines are included in a rate book and can be created and edited outside the rate book.",
       "notes": "Rate routine structure\nYou use rate routines to implement rating algorithms that calculate the properties of the cost for coverages, taxes, and other costs on a policy. The cost properties include the base and adjusted rates, and term amount. You can also create rate routines that do not calculate these properties. These of rate routine types may set up rating information for use by another rate routine. Rate routines are included in a rate book and can be created and edited outside the rate book.",
       "narration": "",
-      "ocrText": "| Rate routine structure i\n\n¢ Arate routine has one or more\ninstruction that makes up the rating\nalgorithm\n\n* Each instruction is made up of one or\nmore steps\n\n¢ The rate routine steps may include\nmathematical operators, conditionals\nand assignments that work on the\nrate table lookups",
+      "ocrText": "| Rate routine structure i\n\n• Arate routine has one or more\ninstruction that makes up the rating\nalgorithm\n\n* Each instruction is made up of one or\nmore steps\n\n• The rate routine steps may include\nmathematical operators, conditionals\nand assignments that work on the\nrate table lookups",
       "ocrWordCount": 49,
       "ocrConfidence": 89.72,
       "hasTable": false,
@@ -96,7 +96,7 @@
     },
     {
       "slideNumber": 6,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -109,7 +109,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 7,
@@ -130,12 +131,12 @@
     },
     {
       "slideNumber": 8,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_- — Whatis the purpose of a rate routine?\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD",
+      "ocrText": "Question\n_- — What is the purpose of a rate routine?\n•\n•\nSS oe Oooo ee Oooo ooOoD",
       "ocrWordCount": 19,
       "ocrConfidence": 64.83,
       "hasTable": false,
@@ -143,16 +144,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What is the purpose of a rate routine?",
+        "answer": "Oe The rate routine provides a way to define the rating algorithm for the rating engine. SS oe ooo ee oe oOoOe SoD"
+      }
     },
     {
       "slideNumber": 9,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n_- — Whatis the purpose of a rate routine?\n\n¢\noe The rate routine provides a way to define the rating algorithm for the rating engine.\n\nSS oe ooo ee oe oOoOe SoD",
+      "ocrText": "Answer\n_- — What is the purpose of a rate routine?\n•\noe The rate routine provides a way to define the rating algorithm for the rating engine.\nSS oe ooo ee oe oOoOe SoD",
       "ocrWordCount": 34,
       "ocrConfidence": 76.91,
       "hasTable": false,
@@ -164,7 +169,7 @@
     },
     {
       "slideNumber": 10,
-      "title": "",
+      "title": "About parameter sets",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -181,12 +186,12 @@
     },
     {
       "slideNumber": 11,
-      "title": "",
+      "title": "Parameter sets and the rate routine",
       "bodyParagraphs": [],
       "originalNotes": "Parameter sets and the rate routine\nA parameter set enables users to define the information available for use within a rate routine.\n\nEach rate routine uses a parameter set\n\nParameter sets determine the contextual information that is passed to a rate routine at run-time\n\nParameter sets can be defined for a policy line or remain generic",
       "notes": "Parameter sets and the rate routine\nA parameter set enables users to define the information available for use within a rate routine.\n\nEach rate routine uses a parameter set\n\nParameter sets determine the contextual information that is passed to a rate routine at run-time\n\nParameter sets can be defined for a policy line or remain generic",
       "narration": "",
-      "ocrText": "| Parameter sets and the rate routine\n\n¢« Aparameter set enables users to\ndefine the information available for use\nwithin a rate routine.\n* Each rate routine uses a parameter set\n\n* Parameter sets determine the contextual\ninformation that is passed to a rate routine\nat run-time\n\n* Parameter sets can be defined for a policy\nline or remain generic\n\n¢ Parameter sets are pre-defined",
+      "ocrText": "| Parameter sets and the rate routine\n\n•« Aparameter set enables users to\ndefine the information available for use\nwithin a rate routine.\n* Each rate routine uses a parameter set\n\n* Parameter sets determine the contextual\ninformation that is passed to a rate routine\nat run-time\n\n* Parameter sets can be defined for a policy\nline or remain generic\n\n• Parameter sets are pre-defined",
       "ocrWordCount": 65,
       "ocrConfidence": 90.66,
       "hasTable": false,
@@ -198,7 +203,7 @@
     },
     {
       "slideNumber": 12,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -211,7 +216,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 13,
@@ -232,12 +238,12 @@
     },
     {
       "slideNumber": 14,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,- — Howmany parameter sets are associated with a rate routine?\n\n¢\n4\n¢\n\nSS oe Oooo ee Oooo ooOoD",
+      "ocrText": "Question\nHow many parameter sets are associated with a rate routine?\n•\n•\nSS oe Oooo ee Oooo ooOoD",
       "ocrWordCount": 21,
       "ocrConfidence": 69.05,
       "hasTable": false,
@@ -245,16 +251,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "How many parameter sets are associated with a rate routine?",
+        "answer": "Yy One. SS oe ooo ee oe oOoOe SoD"
+      }
     },
     {
       "slideNumber": 15,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n,- — Howmany parameter sets are associated with a rate routine?\n\nyy One.\n\nSS oe ooo ee oe oOoOe SoD",
+      "ocrText": "Answer\nHow many parameter sets are associated with a rate routine?\nyy One.\nSS oe ooo ee oe oOoOe SoD",
       "ocrWordCount": 21,
       "ocrConfidence": 66.1,
       "hasTable": false,
@@ -266,7 +276,7 @@
     },
     {
       "slideNumber": 16,
-      "title": "",
+      "title": "Key Takeaways",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -283,7 +293,7 @@
     },
     {
       "slideNumber": 17,
-      "title": "",
+      "title": "Student Exercise",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",

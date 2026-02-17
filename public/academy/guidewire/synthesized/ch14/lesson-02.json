@@ -184,14 +184,14 @@
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "e Describe briefly the two CostData constructors.",
+      "question": "Describe briefly the two CostData constructors.",
       "referenceAnswer": "- Date-based constructor is created based on effective and expiration dates,\nusually for a new cost object.\n+ Cost-based constructor is created based on a pre-existing cost object that is\npassed-in as a parameter.",
       "questionKey": "slide-18"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "e Why are KeyValues needed?",
+      "question": "Why are KeyValues needed?",
       "referenceAnswer": "KeyValues property creates a list of the Key Values. The rating engine uses it as it\nmerges CostData objects.",
       "questionKey": "slide-20"
     },

@@ -231,14 +231,14 @@
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "'f the ABLawyer entity has an array of Cases, what type of field is\n: required on the Case entity?",
+      "question": "If  the ABLawyer entity has an array of Cases, what type of field is\nrequired on the Case entity?",
       "referenceAnswer": "The Case entity requires a foreign key field in the ETI definition that specifies the\nfkentity attribute as the ABLawyer entity.",
       "questionKey": "slide-25"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "lodeploy data model changes, are you required to\n\nA) Regenerate the Data Dictionary?\n\nB) Restart the application server?\nC) Restart Studio?",
+      "question": "Lodeploy data model changes, are you required to\nA) Regenerate the Data Dictionary?\nB) Restart the application server?\nC) Restart Studio?",
       "referenceAnswer": "a To deploy data model changes, are you required to:\nx A) No, you are not required to regenerate the data dictionary. Regenerating the data\ndictionary will identify any errors in the data model. If successful, the process will\n\nadd new and modified entities to the data dictionary.\n\nB) Yes, you must restart the application server to deploy the new and modified\nentities. The process creates new database tables and/or upgrades the database.\n\nC) No, Studio is immediately aware of the data model changes. It is not necessary to\nrestart Guidewire Studio.",
       "questionKey": "slide-27"
     },

@@ -286,14 +286,14 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "ae What is a system permission?",
+      "question": "What is a system permission?",
       "referenceAnswer": "System permissions are permissions defined in the SystemPermissionType typelist.",
       "questionKey": "slide-28"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "_~ — Define static and object-based permissions. Give examples.",
+      "question": "Define static and object-based permissions. Give examples.",
       "referenceAnswer": "Static permissions do not take any parameter as argument whereas object-based\npermissions take an object as an argument.\n\nExample of static permission — perm.System.viewteam.\n\nExample of object-based permission — perm.Account.edit( account ).",
       "questionKey": "slide-30"
     },

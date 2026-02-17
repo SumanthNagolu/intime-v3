@@ -272,14 +272,14 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "Suppose the Item Placement Cutoff Date on a payment plan has a value\nY of Due Date. How does the setting impact invoice items on a policy that\n: uses the payment plan?",
+      "question": "Suppose the Item Placement Cutoff Date on a payment plan has a value\nY of Due Date. How does the setting impact invoice items on a policy that\nuses the payment plan?",
       "referenceAnswer": "If account-level billing is being used, each invoice item will be placed on the earliest\ninvoice whose due date comes on or after the invoice item’s placement date. If policy-\nlevel billing is being used, the setting is ignored.",
       "questionKey": "slide-19"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "Suppose an account with account-evel billing has three policies: a\nY monthly, a yearly, and a weekly.\n\na. How many invoice streams does the account have?\n\nb. If the account switches to policy-level billing, will the number of\ninvoice streams be changed?",
+      "question": "Suppose an account with account-evel billing has three policies: a\nY monthly, a yearly, and a weekly.\na. How many invoice streams does the account have?\nb. If the account switches to policy-level billing, will the number of\ninvoice streams be changed?",
       "referenceAnswer": "a. Two. Monthly and yearly use the same invoice stream; weekly requires a\nsecond invoice stream.\n\nb. Yes. The number of invoice streams will be either three (one for each policy)\nor four (one for each policy plus a monthly one for",
       "questionKey": "slide-21"
     },
@@ -330,7 +330,7 @@
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "Identify all the valid combinations of billing level and unapplied fund:\n\na a) Account-level billing with a single unapplied fund\nb) Account-level billing with separate unapplied fund for\neach policy\n\nc) Policy-level billing with a single unapplied fund\n\nd) Policy-level billing with a separate unapplied fund for\neach policy",
+      "question": "Identify all the valid combinations of billing level and unapplied fund:\na a) Account-level billing with a single unapplied fund\nb) Account-level billing with separate unapplied fund for\neach policy\nc) Policy-level billing with a single unapplied fund\nd) Policy-level billing with a separate unapplied fund for\neach policy",
       "referenceAnswer": "(a), (c), and (d) are valid combinations. However, c is rarely used because the primary\nreason for using policy-level billing is the ability to keep unapplied ",
       "questionKey": "slide-29"
     },

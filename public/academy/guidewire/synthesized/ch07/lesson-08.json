@@ -213,21 +213,21 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "Inthe screenshot shown here, what is the array method to return the\n¢ number of objects in the ContactNotes array? What is the value?\n\nGt F Search | ntact | ¥\n\nActions, Person: William Andy\n\nSummary Notes\n\nDetails Contact Note Contact Note Type > Subject a\n\n2018-06-19: William Andy has many general qu..\n\n‘Addresses (3)\n\n2018-06-19: william Andy has a new phone number\n\nMS SS",
+      "question": "In the screenshot shown here, what is the array method to return the\nnumber of objects in the ContactNotes array? What is the value?\nActions, Person: William Andy\nSummary Notes\nDetails Contact Note Contact Note Type > Subject a\n2018-06-19: William Andy has many general qu..\n‘Addresses (3)\n2018-06-19: william Andy has a new phone number\nMS SS",
       "referenceAnswer": "Se\n\n~ ~ Inthe screenshot shown here, what is the array method to return the\n\nnumber of objects in the ContactNotes array? What is the value?\n\nEi TriningApp Search ¥\n\nsummary\n\nDetails\n\n‘Addresses (3)\n\nNotes (5)\n\nSocial Media\n\nContact | ¥\n\nNotes\n\nContact Note Contact Note Type > Subject FI\n\nWilliam Andy\n\nhas many general qu.\n\nin his new lic...\n\ncovered ase...\n\nvar count = array.length or array.Count.\n\nThe total number of elements in the ContactNotes array is 5.",
       "questionKey": "slide-22"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "~ ~ Inthe screenshot shown here, what is the expression to return the count\nof notes that are regarding a problem? What is the count value?\n\n<\n\nG Ar Search +\nActions Person: William Andy\n\nsummary Notes\n\nDetails Contact Note Contact Note Type > Subject [=]\n\nliam Andy has many general qu...\n\n‘Addresses (3)\n\n: William Andy has a new phone number\nNotes (5) liam Andy has more questions...\n2018-06-19: William Andy sent in his new lic.\n\nSocial Media 2018-06-19: Wiliam Andy has discovered ase...",
+      "question": "In the screenshot shown here, what is the expression to return the count\nof notes that are regarding a problem? What is the count value?\n<\nG Ar Search +\nActions Person: William Andy\nsummary Notes\nDetails Contact Note Contact Note Type > Subject [=]\nliam Andy has many general qu...\n‘Addresses (3)\n: William Andy has a new phone number\nNotes (5) liam Andy has more questions...\n2018-06-19: William Andy sent in his new lic.\nSocial Media 2018-06-19: Wiliam Andy has discovered ase...",
       "referenceAnswer": "Inthe screenshot shown here, what is the expression to return the count\n¢ of notes that are regarding a problem? What is the count value?\n\n“ Gi TriningApp Search |¥ Contact |\n\n‘Actions Per\n\nsummary Notes\n\nDetails\n\nContact Note Contact Note Type > Subject Fe]\n\n1s many general QU...\n\nphone number\n\nNotes (5) questions...\n\nSocial Media 2018-06-19: William Andy has discovered ase...\n\nvar countNotes = notes.countWhere( \\ note ->\nnote.ContactNoteType == typekey.ContactNoteType.TC_ PROBLEM)\n\nig\n1 Addresses (3)\n' The total number of elements in the ContactNotes array is 1.",
       "questionKey": "slide-24"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "Inthe screenshot shown here, what is an expression to retum an array of\nContactNotes where the note was created after January 31, 2014?\n\nG rs Search |v ntact |~\nsummary Notes\n\nContact Note Contact Note Type S Subject B\n2018-06-19: William Andy has many general qu...\n\n2018-06-19: william Andy has a new phone number\n\nNotes (5) 2018-06-19: William Andy has more questions...\n\n2018-06-19: William Andy sent in his new lic.\n\nSocial Media 2018-06-19: Wiliam Andy has discovered ase...\n\nMS SS",
+      "question": "In the screenshot shown here, what is an expression to return an array of\nContactNotes where the note was created after January 31, 2014?\nG rs Search |v ntact |~\nsummary Notes\nContact Note Contact Note Type S Subject B\n2018-06-19: William Andy has many general qu...\n2018-06-19: william Andy has a new phone number\nNotes (5) 2018-06-19: William Andy has more questions...\n2018-06-19: William Andy sent in his new lic.\nSocial Media 2018-06-19: Wiliam Andy has discovered ase...\nMS SS",
       "referenceAnswer": "\"02/01/2014™.toDate() )\nSe\n\n_— — Inthe screenshot shown here, what is an expression to retum an array of\n¢ ContactNotes where the note was created after January 31, 2014?\n\nGi TrainingApp Search |¥ Contact |\n\nPerson: William Andy\n\nsummary Notes\n\nDetails Contact Note Type ‘Subject a\n\nny general qu...\n\n‘Addresses (3)\n\n‘ew phone number\nNotes (5) Fe questions ..\nhis new lc...\n\n‘Social Media s discovered a se...\n\nvar filteredNotes = notes.where( \\ note -> note.CreateTime >=\n\"02/01/2014™.toDate() )",
       "questionKey": "slide-26"
     },

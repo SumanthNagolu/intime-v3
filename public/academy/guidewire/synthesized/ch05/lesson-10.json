@@ -309,28 +309,28 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "Betty Baker went through the payment wizard one time. She specified\nthree payees (and there were no joint payees or recurring payments).\n¢ Based on this information alone:\nA. Can you tell how many CheckSets there are?\nB. Can you tell how many checks there are?\n\nc. Can you tell how many payment transactions there are?",
+      "question": "Betty Baker went through the payment wizard one time. She specified\nthree payees (and there were no joint payees or recurring payments).\nBased on this information alone:\nA. Can you tell how many CheckSets there are?\nB. Can you tell how many checks there are?\nc. Can you tell how many payment transactions there are?",
       "referenceAnswer": "A. Can you tell how many CheckSets there are? Yes. There is one.\n(Each iteration of the payment wizard creates one checkset.)\n\nB. Can you tell how many checks there are? Yes. There are three.\n(Unless there are joint payees, each payee has a separate check.\nUnless there are recurring checks, then for three pa",
       "questionKey": "slide-35"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "Acheck includes a $200 final payment from a $500 reserve line. Why\n¢ does ClaimCenter create a second transaction? What is the dollar\n“ amount of this transaction?",
+      "question": "A check includes a $200 final payment from a $500 reserve line. Why\ndoes ClaimCenter create a second transaction? What is the dollar\n“ amount of this transaction?",
       "referenceAnswer": "The second transaction is used to zero out the reserve line. The dollar amount of this\ntransaction will be -$300, since there is $300 remaining after the $200 payment\ntransaction.",
       "questionKey": "slide-37"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "Inwhat status must a check be for a user to delete the check?\n¢\n4\n¢",
+      "question": "In what status must a check be for a user to delete the check?",
       "referenceAnswer": "Awaiting submission",
       "questionKey": "slide-39"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": ",7~ — Can you start the payment wizard when the claim is not at “ability to\n7 pay\"? Why?\n¢",
+      "question": "Can you start the payment wizard when the claim is not at “ability to\npay\"? Why?",
       "referenceAnswer": "No. Validation rules prevent you from starting the payment wizard if the claim is not at\n“ability to pay\".",
       "questionKey": "slide-41"
     },

@@ -11,7 +11,7 @@
   "slides": [
     {
       "slideNumber": 1,
-      "title": "",
+      "title": "The User Interface Architecture",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -28,7 +28,7 @@
     },
     {
       "slideNumber": 2,
-      "title": "",
+      "title": "Learning Objectives",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -62,12 +62,12 @@
     },
     {
       "slideNumber": 4,
-      "title": "",
+      "title": "Guidewire application UI framework",
       "bodyParagraphs": [],
       "originalNotes": "Guidewire application UI framework\nA PCF is an XSD-validated XML document containing elements that describe the structure, layout, and behavior of the web user interface. The majority of this content is defined at the application level, though some is defined at the platform level.\n\nA widget is a PCF element that will be converted into HTML and displayed. This does not mean that a widget itself will always be visible. Some of the widgets are containers that are only used to group other widgets in a specific layout format. Widgets can specify permissions that the logged in user needs to view/edit the data.\n\nA location is a PCF element that a user (or the application itself) can navigate to. It is used to define how users move from one area of the user interface to the next. A location usually specifies:\n\n1) which part of the browser window will be updated if the application/user navigates to the location\n2) what are the permissions that the logged in user needs to viewledit the data in that Location\n\nNote: Both Widget and Location are conceptual representations in this diagram. There are no <Widget /> or <Location elements.",
       "notes": "Guidewire application UI framework\nA PCF is an XSD-validated XML document containing elements that describe the structure, layout, and behavior of the web user interface. The majority of this content is defined at the application level, though some is defined at the platform level.\n\nA widget is a PCF element that will be converted into HTML and displayed. This does not mean that a widget itself will always be visible. Some of the widgets are containers that are only used to group other widgets in a specific layout format. Widgets can specify permissions that the logged in user needs to view/edit the data.\n\nA location is a PCF element that a user (or the application itself) can navigate to. It is used to define how users move from one area of the user interface to the next. A location usually specifies:\n\n1) which part of the browser window will be updated if the application/user navigates to the location\n2) what are the permissions that the logged in user needs to viewledit the data in that Location\n\nNote: Both Widget and Location are conceptual representations in this diagram. There are no <Widget /> or <Location elements.",
       "narration": "",
-      "ocrText": "| Guidewire application UI framework\n\nPCF Element\nHF\n| Widget _ Location |\n\nDisplayable elements of the user Navigable places in the application that\ninterface rendered into HTML a user or the application itself can\nnavigate to\n\n* The PCF (Page Configuration Format) object model is a proprietary application\nframework used to create all Guidewire end-user interfaces\n\n¢ By using the Studio Page Configuration (PCF) editor, you can modify an existing\nPCF file or add a new PCF file and graphically build and manage its elements",
+      "ocrText": "| Guidewire application UI framework\n\nPCF Element\nHF\n| Widget _ Location |\n\nDisplayable elements of the user Navigable places in the application that\ninterface rendered into HTML a user or the application itself can\nnavigate to\n\n* The PCF (Page Configuration Format) object model is a proprietary application\nframework used to create all Guidewire end-user interfaces\n\n• By using the Studio Page Configuration (PCF) editor, you can modify an existing\nPCF file or add a new PCF file and graphically build and manage its elements",
       "ocrWordCount": 86,
       "ocrConfidence": 88.86,
       "hasTable": false,
@@ -79,7 +79,7 @@
     },
     {
       "slideNumber": 5,
-      "title": "",
+      "title": "Atomic widgets",
       "bodyParagraphs": [],
       "originalNotes": "Atomic widgets\nAtomic widgets are individual field items such as inputs, cells, or buttons. They will always be defined within a container widget or location.\n\nNote: Both Widget and Location are conceptual representations in this diagram. There are no <Widget /> or <Location elements. Atomic Widget is also conceptual representation. There is no <Atomic Widget element.",
       "notes": "Atomic widgets\nAtomic widgets are individual field items such as inputs, cells, or buttons. They will always be defined within a container widget or location.\n\nNote: Both Widget and Location are conceptual representations in this diagram. There are no <Widget /> or <Location elements. Atomic Widget is also conceptual representation. There is no <Atomic Widget element.",
@@ -96,12 +96,12 @@
     },
     {
       "slideNumber": 6,
-      "title": "",
+      "title": "Container widgets",
       "bodyParagraphs": [],
       "originalNotes": "Container widgets\nContainer widgets hold other widgets. Each one can be defined either in its own file or as a child container within some other PCF element file.\n\nNote: Both Widget and Location are conceptual representations in this diagram. There are no <Widget /> or <Location elements. Similarly, both Atomic Widget and Container Widget are conceptual representations. There are no <Atomic Widget or <Container Widget /> elements.\n\nThe PCF object model is container-based. Each IJI element is modeled as an object, which may contain other objects. The hierarchical structure simplifies the task of locating and modifying visual elements. Furthermore, each element can be declared as an independent and therefore reusable element.",
       "notes": "Container widgets\nContainer widgets hold other widgets. Each one can be defined either in its own file or as a child container within some other PCF element file.\n\nNote: Both Widget and Location are conceptual representations in this diagram. There are no <Widget /> or <Location elements. Similarly, both Atomic Widget and Container Widget are conceptual representations. There are no <Atomic Widget or <Container Widget /> elements.\n\nThe PCF object model is container-based. Each IJI element is modeled as an object, which may contain other objects. The hierarchical structure simplifies the task of locating and modifying visual elements. Furthermore, each element can be declared as an independent and therefore reusable element.",
       "narration": "",
-      "ocrText": "| Container widgets i\n\n—_——_———_\n\n| Widget | Location\n—\n\n¢ Acontainer widget is a collection of\natomic widgets and/or other\ncontainer widgets\n\n* Organizes data and functionality into\nlogical groups",
+      "ocrText": "| Container widgets i\n\n—_——_———_\n\n| Widget | Location\n—\n\n• Acontainer widget is a collection of\natomic widgets and/or other\ncontainer widgets\n\n* Organizes data and functionality into\nlogical groups",
       "ocrWordCount": 31,
       "ocrConfidence": 80.67,
       "hasTable": false,
@@ -113,7 +113,7 @@
     },
     {
       "slideNumber": 7,
-      "title": "",
+      "title": "Primary container widgets fa",
       "bodyParagraphs": [],
       "originalNotes": "Primary container widgets\nDetail View Panels, List View Panels, and Input Sets are Primary container Widgets. Secondary container widgets are discussed further in this presentatiom",
       "notes": "Primary container widgets\nDetail View Panels, List View Panels, and Input Sets are Primary container Widgets. Secondary container widgets are discussed further in this presentatiom",
@@ -130,12 +130,12 @@
     },
     {
       "slideNumber": 8,
-      "title": "",
+      "title": "Detail View Panels",
       "bodyParagraphs": [],
       "originalNotes": "Detail View Panels\nDetail view panels are generally designed to use widgets to organize and manage a collection of related pieces of information that constitute a single record. The most obvious example is the set of individual fields of an instance of an entity such as User, Claim, or Policy. There are no constraints imposed by the system as to what information can be displayed by a detail view, however; the view could present information from multiple entities that do not even have to be related to one another, in addition to information that does not derive from an entity at all (such as calculated or static values).\n\nThe purpose of a detail view panel, however, and the recommended practice behind their use, is to present the user with all of the detailed information that is relevant to that interface, and no information that is irrelevant. In general, this means displaying information about the fields of a particular entity andpossibly fields from a small number of closely related entities.\n\nDetail view panels must contain at least one column and can contain as many columns as necessary to present the widgets in the most effective way for the",
       "notes": "Detail View Panels\nDetail view panels are generally designed to use widgets to organize and manage a collection of related pieces of information that constitute a single record. The most obvious example is the set of individual fields of an instance of an entity such as User, Claim, or Policy. There are no constraints imposed by the system as to what information can be displayed by a detail view, however; the view could present information from multiple entities that do not even have to be related to one another, in addition to information that does not derive from an entity at all (such as calculated or static values).\n\nThe purpose of a detail view panel, however, and the recommended practice behind their use, is to present the user with all of the detailed information that is relevant to that interface, and no information that is irrelevant. In general, this means displaying information about the fields of a particular entity andpossibly fields from a small number of closely related entities.\n\nDetail view panels must contain at least one column and can contain as many columns as necessary to present the widgets in the most effective way for the",
       "narration": "",
-      "ocrText": "| Detail View Panels G\n— lo -0) * Focus on a single record\n\nDetails\n\n@ | Phone wadireses | SankAccouns * Typically, but can be more than one\n¢ Allow the user to...\n\nwiliam andy\n\n7 2 + View an existing record\nPerson: Witla Andy a * Create a new record\nDetails + Edit a record\n\n——E * Columns help organize atomic\nwidgets to display a related\ninformation\n\n* Screens and secondary views can\nreference\n\n¢ Often referred to as \"Detail View\"",
+      "ocrText": "| Detail View Panels G\n— lo -0) * Focus on a single record\n\nDetails\n\n@ | Phone wadireses | SankAccouns * Typically, but can be more than one\n• Allow the user to...\n\nwiliam andy\n\n7 2 + View an existing record\nPerson: Witla Andy a * Create a new record\nDetails + Edit a record\n\n——E * Columns help organize atomic\nwidgets to display a related\ninformation\n\n* Screens and secondary views can\nreference\n\n• Often referred to as \"Detail View\"",
       "ocrWordCount": 83,
       "ocrConfidence": 82.79,
       "hasTable": false,
@@ -147,12 +147,12 @@
     },
     {
       "slideNumber": 9,
-      "title": "",
+      "title": "J List View Panels",
       "bodyParagraphs": [],
       "originalNotes": "List View Panels\nJust as a detail view panel is designed to allow the user to view detailed information about a single record, a list view panel is designed to allow the user to view summary information about a collection of records.",
       "notes": "List View Panels\nJust as a detail view panel is designed to allow the user to view detailed information about a single record, a list view panel is designed to allow the user to view summary information about a collection of records.",
       "narration": "",
-      "ocrText": "J List View Panels G\n\nPersoninfo | Phone &Addresses | Bank Accounts (0.0)\n\nVerification Check )\nan mpg 6 [pees Personinfo | Phone&Addresses | Bank Accounts oO\n\nACME Credit Union 123-987 345678900\n\nNationalBank 745-222 232323566 Add\nBank Name” Routing Number* Account Number ‘Account Type*\nACME Credit Union 123-987 345678900 Checking\nNational Bank 745-222 232323566 Checking +\n\n¢ Table organizes information that allows the user to view information about multiple\nrecords at the same time\n\n« Uses asmall number of atomic widgets to display the most relevant information\n¢ Screens and secondary views can reference\n¢ Often referred to as \"List View\"",
+      "ocrText": "J List View Panels G\n\nPersoninfo | Phone &Addresses | Bank Accounts (0.0)\n\nVerification Check )\nan mpg 6 [pees Personinfo | Phone&Addresses | Bank Accounts oO\n\nACME Credit Union 123-987 345678900\n\nNationalBank 745-222 232323566 Add\nBank Name” Routing Number* Account Number ‘Account Type*\nACME Credit Union 123-987 345678900 Checking\nNational Bank 745-222 232323566 Checking +\n\n• Table organizes information that allows the user to view information about multiple\nrecords at the same time\n\n« Uses asmall number of atomic widgets to display the most relevant information\n• Screens and secondary views can reference\n• Often referred to as \"List View\"",
       "ocrWordCount": 101,
       "ocrConfidence": 78.84,
       "hasTable": false,
@@ -164,7 +164,7 @@
     },
     {
       "slideNumber": 10,
-      "title": "",
+      "title": "Input Sets io",
       "bodyParagraphs": [],
       "originalNotes": "Input Sets\nFor more information on Detail View Panels, see the product documentation.",
       "notes": "Input Sets\nFor more information on Detail View Panels, see the product documentation.",
@@ -181,7 +181,7 @@
     },
     {
       "slideNumber": 11,
-      "title": "",
+      "title": "Secondary container widgets fa",
       "bodyParagraphs": [],
       "originalNotes": "Secondary container widgets\nPrimary containers are discussed in earlier slides in this presentatiom",
       "notes": "Secondary container widgets\nPrimary containers are discussed in earlier slides in this presentatiom",
@@ -198,12 +198,12 @@
     },
     {
       "slideNumber": 12,
-      "title": "",
+      "title": "Secondary containers",
       "bodyParagraphs": [],
       "originalNotes": "Secondary containers\nA secondary container organizes primary containers.",
       "notes": "Secondary containers\nA secondary container organizes primary containers.",
       "narration": "",
-      "ocrText": "| Secondary containers Gi\n\nDetails\n¢« ACard is a collection of cards, with\n\neach card containing Detail Views or\n\nson info | Phone &Addresses | BankAccounts\n\nName\n\nList Views villam andy\nAddresses _ List Detail Panel _\nwat\nadd r a-\nand) address Type\n+ AList Detail Panel contains a top List ating 1044 Harbor Lane Marina Del Rey, A 86252\n\nView and a bottom view panel that\ndisplay data about the selected list\nitem",
+      "ocrText": "| Secondary containers Gi\n\nDetails\n•« ACard is a collection of cards, with\n\neach card containing Detail Views or\n\nson info | Phone &Addresses | BankAccounts\n\nName\n\nList Views villam andy\nAddresses _ List Detail Panel _\nwat\nadd r a-\nand) address Type\n+ AList Detail Panel contains a top List ating 1044 Harbor Lane Marina Del Rey, A 86252\n\nView and a bottom view panel that\ndisplay data about the selected list\nitem",
       "ocrWordCount": 75,
       "ocrConfidence": 81.26,
       "hasTable": false,
@@ -215,7 +215,7 @@
     },
     {
       "slideNumber": 13,
-      "title": "",
+      "title": "Top-level container widget",
       "bodyParagraphs": [],
       "originalNotes": "Top-level container widget\nTop level containers organize secondary and primary containers.",
       "notes": "Top-level container widget\nTop level containers organize secondary and primary containers.",
@@ -232,7 +232,7 @@
     },
     {
       "slideNumber": 14,
-      "title": "",
+      "title": "Screen",
       "bodyParagraphs": [],
       "originalNotes": "Screen\nShown here is an example of a Screen.",
       "notes": "Screen\nShown here is an example of a Screen.",
@@ -249,12 +249,12 @@
     },
     {
       "slideNumber": 15,
-      "title": "",
+      "title": "Review: Container widget hierarchy",
       "bodyParagraphs": [],
-      "originalNotes": "Review: Container widget hierarchy\nThe arrow indicates that A can contain B. For example, a List View Panel can contain Atomic Widgets but cannot contain a Detail View Panel.\n\nContainer widgets can be classified in four categories:\n\n1. The lowest level is comprised of atomic widgets-\n\n2.Atomic widgets can be directly contained only by primary views (detail view panels and list view panels). The purpose of a primary view is to organize atomic widgets into logical groups.\n\n3.Secondary views (card view panels and list detail panels) organize primary views. Secondary views cannot directly contain most atomic widgets-\n\n4.Screens are the top-level containers. Screens are used to connect what is displayed in the user interface with how users navigate through the user interface. A screen can directly contain both primary views and secondary views, but it cannot directly contain most atomic widgets.\n\n5.There is one exceptional case, when a primary view can be placed into another primary view This will be discussed later in the List Views lesson.\n\n6.A secondary view could contain other secondary views-\n\nInput sets do not readily fall into any of these categories. Input sets fit some of the attributes of primary views. They can contain atomic widgets and organize them into logical groups. Input sets cannot be referenced directly by secondary views or screens. Input set must be embedded into detail view panels and cannot have toolbars directly associated with them.",
-      "notes": "Review: Container widget hierarchy\nThe arrow indicates that A can contain B. For example, a List View Panel can contain Atomic Widgets but cannot contain a Detail View Panel.\n\nContainer widgets can be classified in four categories:\n\n1. The lowest level is comprised of atomic widgets-\n\n2.Atomic widgets can be directly contained only by primary views (detail view panels and list view panels). The purpose of a primary view is to organize atomic widgets into logical groups.\n\n3.Secondary views (card view panels and list detail panels) organize primary views. Secondary views cannot directly contain most atomic widgets-\n\n4.Screens are the top-level containers. Screens are used to connect what is displayed in the user interface with how users navigate through the user interface. A screen can directly contain both primary views and secondary views, but it cannot directly contain most atomic widgets.\n\n5.There is one exceptional case, when a primary view can be placed into another primary view This will be discussed later in the List Views lesson.\n\n6.A secondary view could contain other secondary views-\n\nInput sets do not readily fall into any of these categories. Input sets fit some of the attributes of primary views. They can contain atomic widgets and organize them into logical groups. Input sets cannot be referenced directly by secondary views or screens. Input set must be embedded into detail view panels and cannot have toolbars directly associated with them.",
+      "originalNotes": "Review: Container widget hierarchy\nThe arrow indicates that A can contain B. For example, a List View Panel can contain Atomic Widgets but cannot contain a Detail View Panel.\n\nContainer widgets can be classified in four categories:\n\n1. The lowest level is comprised of atomic widgets-\n\n2. Atomic widgets can be directly contained only by primary views (detail view panels and list view panels). The purpose of a primary view is to organize atomic widgets into logical groups.\n\n3. Secondary views (card view panels and list detail panels) organize primary views. Secondary views cannot directly contain most atomic widgets-\n\n4. Screens are the top-level containers. Screens are used to connect what is displayed in the user interface with how users navigate through the user interface. A screen can directly contain both primary views and secondary views, but it cannot directly contain most atomic widgets.\n\n5. There is one exceptional case, when a primary view can be placed into another primary view This will be discussed later in the List Views lesson.\n\n6.A secondary view could contain other secondary views.\nInput sets do not readily fall into any of these categories. Input sets fit some of the attributes of primary views. They can contain atomic widgets and organize them into logical groups. Input sets cannot be referenced directly by secondary views or screens. Input set must be embedded into detail view panels and cannot have toolbars directly associated with them.",
+      "notes": "Review: Container widget hierarchy\nThe arrow indicates that A can contain B. For example, a List View Panel can contain Atomic Widgets but cannot contain a Detail View Panel.\n\nContainer widgets can be classified in four categories:\n\n1. The lowest level is comprised of atomic widgets-\n\n2. Atomic widgets can be directly contained only by primary views (detail view panels and list view panels). The purpose of a primary view is to organize atomic widgets into logical groups.\n\n3. Secondary views (card view panels and list detail panels) organize primary views. Secondary views cannot directly contain most atomic widgets-\n\n4. Screens are the top-level containers. Screens are used to connect what is displayed in the user interface with how users navigate through the user interface. A screen can directly contain both primary views and secondary views, but it cannot directly contain most atomic widgets.\n\n5. There is one exceptional case, when a primary view can be placed into another primary view This will be discussed later in the List Views lesson.\n\n6.A secondary view could contain other secondary views.\nInput sets do not readily fall into any of these categories. Input sets fit some of the attributes of primary views. They can contain atomic widgets and organize them into logical groups. Input sets cannot be referenced directly by secondary views or screens. Input set must be embedded into detail view panels and cannot have toolbars directly associated with them.",
       "narration": "",
-      "ocrText": "| Review: Container widget hierarchy Gi\n\n* Screen\n* Top-level container that organizes secondary and\nprimary containers\n\nt + Referenced by locations: Page, Wizard, Popup,\nWorksheet\n\n* Secondary containers\n\n* Collections of primary containers organized for\nusability\n\n* Could also contain other secondary containers\n\n¢ Primary containers\netal View + A reusable view that organizes atomic widgets\n\n* In certain cases, a Detail View could also contain a\n| un | List View Panel\n\n« Atomic widgets\n+ Individual elements of data and/or functionality",
+      "ocrText": "| Review: Container widget hierarchy Gi\n\n* Screen\n* Top-level container that organizes secondary and\nprimary containers\n\nt + Referenced by locations: Page, Wizard, Popup,\nWorksheet\n\n* Secondary containers\n\n* Collections of primary containers organized for\nusability\n\n* Could also contain other secondary containers\n\n• Primary containers\netal View + A reusable view that organizes atomic widgets\n\n* In certain cases, a Detail View could also contain a\n| un | List View Panel\n\n« Atomic widgets\n+ Individual elements of data and/or functionality",
       "ocrWordCount": 84,
       "ocrConfidence": 86.74,
       "hasTable": false,
@@ -266,12 +266,12 @@
     },
     {
       "slideNumber": 16,
-      "title": "",
+      "title": "Locations",
       "bodyParagraphs": [],
       "originalNotes": "Locations\nNote: Both Widget and Location are conceptual representations in this diagram. There are no <Widget /> or <Location elements. Similarly, both Atomic Widget and Container Widget are conceptual representations. There are no <Atomic Widget or <Container Widget /> elements.",
       "notes": "Locations\nNote: Both Widget and Location are conceptual representations in this diagram. There are no <Widget /> or <Location elements. Similarly, both Atomic Widget and Container Widget are conceptual representations. There are no <Atomic Widget or <Container Widget /> elements.",
       "narration": "",
-      "ocrText": "| Locations i\neect\n\n————_—_—___\n| Widget\n— —_\n\n¢ Alocation is a PCF element that a user can\nnavigate to\n\n¢ Locations themselves do not define any visual\ncontent, but they can contain screens that do\n\n¢ Locations can use system permissions to\ncontrol what the users can see/access in the\napplication",
+      "ocrText": "| Locations i\neect\n\n————_—_—___\n| Widget\n— —_\n\n• Alocation is a PCF element that a user can\nnavigate to\n\n• Locations themselves do not define any visual\ncontent, but they can contain screens that do\n\n• Locations can use system permissions to\ncontrol what the users can see/access in the\napplication",
       "ocrWordCount": 53,
       "ocrConfidence": 83.96,
       "hasTable": false,
@@ -283,7 +283,7 @@
     },
     {
       "slideNumber": 17,
-      "title": "",
+      "title": "PCF hierarchy review",
       "bodyParagraphs": [],
       "originalNotes": "PCF hierarchy review\nAt the top level, PCF elements are split between widgets and locations. This lesson only addresses the high-level classifications of widgets (both atomic and container) and locations. Discussions of specific widgets and locations will follow in future lessons.",
       "notes": "PCF hierarchy review\nAt the top level, PCF elements are split between widgets and locations. This lesson only addresses the high-level classifications of widgets (both atomic and container) and locations. Discussions of specific widgets and locations will follow in future lessons.",
@@ -300,7 +300,7 @@
     },
     {
       "slideNumber": 18,
-      "title": "",
+      "title": "Example user story",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -317,7 +317,7 @@
     },
     {
       "slideNumber": 19,
-      "title": "",
+      "title": "User Story — Person Info tab",
       "bodyParagraphs": [],
       "originalNotes": "User Story — Person Info tab\nAfter reviewing the out-of-the-box (OOTB) IJI layout, the insurance company wants to implement a few minor changes on the Details screen's Person Info tab. See wireframe for details.",
       "notes": "User Story — Person Info tab\nAfter reviewing the out-of-the-box (OOTB) IJI layout, the insurance company wants to implement a few minor changes on the Details screen's Person Info tab. See wireframe for details.",
@@ -334,10 +334,10 @@
     },
     {
       "slideNumber": 20,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
-      "originalNotes": "Demonstration \nShown here is an example user story requirement requested by a fictional business analyst.",
-      "notes": "Demonstration \nShown here is an example user story requirement requested by a fictional business analyst.",
+      "originalNotes": "Demonstration\nShown here is an example user story requirement requested by a fictional business analyst.",
+      "notes": "Demonstration\nShown here is an example user story requirement requested by a fictional business analyst.",
       "narration": "",
       "ocrText": "| Demonstration G\n\nPerson Info Tab\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
       "ocrWordCount": 36,
@@ -347,7 +347,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 21,
@@ -385,12 +386,12 @@
     },
     {
       "slideNumber": 23,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_— — Define the broad purpose for each element category:\n\n¢\no A) Atomic widgets\n\nB) Container widgets\n\nC) Locations\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD",
+      "ocrText": "Question\nDefine the broad purpose for each element category:\n•\nA) Atomic widgets\nB) Container widgets\nC)\nSooo ODDODSDoDoOoOoDOoOoOoOSD",
       "ocrWordCount": 23,
       "ocrConfidence": 88.76,
       "hasTable": false,
@@ -398,16 +399,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Define the broad purpose for each element category:",
+        "answer": "OY” A) Atomic widgets B) Container widgets C) Locations The correct responses are: A) Atomic widgets display individual elements of data and/or functionality. B) Container widgets group atomic widgets into logical groups. C) Locations define how users move from one place in the application to the next. SOOO ODDDSDoOODDODOoOoS"
+      }
     },
     {
       "slideNumber": 24,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer a\n\n_— — Define the broad purpose for each element category:\n\n¢\noY” A) Atomic widgets\n\nB) Container widgets\n\nC) Locations\n\nThe correct responses are:\nA) Atomic widgets display individual elements of data and/or functionality.\nB) Container widgets group atomic widgets into logical groups.\n\nC) Locations define how users move from one place in the application to the next.\n\nSOOO ODDDSDoOODDODOoOoS",
+      "ocrText": "Answer a\nDefine the broad purpose for each element category:\n•\noY” A) Atomic widgets\nB) Container widgets\nC)\nThe correct responses are:\nA) Atomic widgets display individual elements of data and/or functionality.\nB) Container widgets group atomic widgets into logical groups.\nC) Locations define how users move from one place in the application to the next.\nSOOO ODDDSDoOODDODOoOoS",
       "ocrWordCount": 62,
       "ocrConfidence": 92.63,
       "hasTable": false,
@@ -419,12 +424,12 @@
     },
     {
       "slideNumber": 25,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_— — What does a PCF file define?\n\n¢\n¢\n¢\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD",
+      "ocrText": "Question\nWhat does a PCF file define?\n•\n•\n•\nSooo ODDODSDoDoOoOoDOoOoOoOSD",
       "ocrWordCount": 14,
       "ocrConfidence": 78.85,
       "hasTable": false,
@@ -432,16 +437,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What does a PCF file define?",
+        "answer": "OY” APCF file defines a container widget or location and its contents. SOOO ODDDSDoOODDODOoOoS"
+      }
     },
     {
       "slideNumber": 26,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n_— — What does a PCF file define?\n\n¢\noY” APCF file defines a container widget or location and its contents.\n\nSOOO ODDDSDoOODDODOoOoS",
+      "ocrText": "Answer\nWhat does a PCF file define?\n•\noY” APCF file defines a container widget or location and its contents.\nSOOO ODDDSDoOODDODOoOoS",
       "ocrWordCount": 24,
       "ocrConfidence": 88.91,
       "hasTable": false,
@@ -453,12 +462,12 @@
     },
     {
       "slideNumber": 27,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_- — What does each PCF editor convention mean?\n\n¢\no A) Acontainer widget shaded light blue\n\nB) Alight green line\nC) Ared background\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD",
+      "ocrText": "Question\n_- — What does each PCF editor convention mean?\n•\nA) Acontainer widget shaded light blue\nB) Alight green line\nC) Ared background\nSooo ODDODSDoDoOoOoDOoOoOoOSD",
       "ocrWordCount": 27,
       "ocrConfidence": 86.96,
       "hasTable": false,
@@ -466,16 +475,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What does each PCF editor convention mean?",
+        "answer": "OY” A) Acontainer widget shaded light blue B) Alight green line C) Ared background The correct responses are: A) The container widget is referenced by the current PCF file and Its contents are contained in another file B) For the currently selected widget tool, a new widget of that type will be placed in the current location. C) The PCF file has an error in it. SOOO ODDDSDoOODDODOoOoS"
+      }
     },
     {
       "slideNumber": 28,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer a\n\n_— — What does each PCF editor convention mean?\n\n¢\noY” A) Acontainer widget shaded light blue\n\nB) Alight green line\nC) Ared background\n\nThe correct responses are:\n\nA) The container widget is referenced by the current PCF file and Its contents are\ncontained in another file\n\nB) For the currently selected widget tool, a new widget of that type will be placed in\nthe current location.\n\nC) The PCF file has an error in it.\n\nSOOO ODDDSDoOODDODOoOoS",
+      "ocrText": "Answer a\nWhat does each PCF editor convention mean?\n•\noY” A) Acontainer widget shaded light blue\nB) Alight green line\nC) Ared background\nThe correct responses are:\nA) The container widget is referenced by the current PCF file and Its contents are\ncontained in another file\nB) For the currently selected widget tool, a new widget of that type will be placed in\nthe current location.\nC) The PCF file has an error in it.\nSOOO ODDDSDoOODDODOoOoS",
       "ocrWordCount": 80,
       "ocrConfidence": 91.82,
       "hasTable": false,
@@ -487,12 +500,12 @@
     },
     {
       "slideNumber": 29,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_- — Howdo you deploy PCF changes?\n\n¢\n¢\n¢\n\nSooo ODDODSDoDoOoOoDOoOoOoOSD",
+      "ocrText": "Question\n_- — How do you deploy PCF changes?\n•\n•\n•\nSooo ODDODSDoDoOoOoDOoOoOoOSD",
       "ocrWordCount": 13,
       "ocrConfidence": 76.75,
       "hasTable": false,
@@ -500,16 +513,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "How do you deploy PCF changes?",
+        "answer": "OY” You can restart the server. Restarting the server reloads PCF files at startup. A more efficient approach for development is to Reload the PCF files. With internal tools enabled, you can use the ALT+SHIFT+L keystroke to reload the PCF files. You can also log in with an administrator user account and reload PCF files from the Internal Tools Reload page. SOOO ODDDSDoOODDODOoOoS"
+      }
     },
     {
       "slideNumber": 30,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer a\n\n_- — Howdo you deploy PCF changes?\n¢\noY” You can restart the server. Restarting the server reloads PCF files at startup. A more\nefficient approach for development is to Reload the PCF files. With internal tools\nenabled, you can use the ALT+SHIFT+L keystroke to reload the PCF files. You can\nalso log in with an administrator user account and reload PCF files from the Internal\nTools Reload page.\n\nSOOO ODDDSDoOODDODOoOoS",
+      "ocrText": "Answer a\n_- — How do you deploy PCF changes?\n•\noY” You can restart the server. Restarting the server reloads PCF files at startup. A more\nefficient approach for development is to Reload the PCF files. With internal tools\nenabled, you can use the ALT+SHIFT+L keystroke to reload the PCF files. You can\nalso log in with an administrator user account and reload PCF files from the Internal\nTools Reload page.\nSOOO ODDDSDoOODDODOoOoS",
       "ocrWordCount": 73,
       "ocrConfidence": 92.63,
       "hasTable": false,
@@ -521,7 +538,7 @@
     },
     {
       "slideNumber": 31,
-      "title": "",
+      "title": "Key Takeaways",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -538,7 +555,7 @@
     },
     {
       "slideNumber": 32,
-      "title": "",
+      "title": "Student Exercise",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -559,6 +576,11 @@
       "index": 1,
       "filename": "IS_Fund_04.mp4",
       "path": "/academy/guidewire/videos/ch07/IS_Fund_04.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Fund_02.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_02.mp4"
     }
   ],
   "hasNotes": true,

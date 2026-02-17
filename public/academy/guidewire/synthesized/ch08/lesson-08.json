@@ -196,14 +196,14 @@
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": ", 7 — State true or false:\n¢\noo a) All entities in PolicyCenter can be validated.\n\nb) All validation classes must have a validatelmpl or doValidate method.\nc) The doValidate method should be last method in a class.",
+      "question": "State true or false:\noo a) All entities in PolicyCenter can be validated.\nb) All validation classes must have a validatelmpl or doValidate method.\nc) The doValidate method should be last method in a class.",
       "referenceAnswer": "a) True\nb) True\nc) False",
       "questionKey": "slide-32"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": ",~ — Name the validation context method that produces a string of methods\no that were visited as validation was performed.",
+      "question": "Name the validation context method that produces a string of methods\no that were visited as validation was performed.",
       "referenceAnswer": "The showVisited() method shows a list of methods as a string that were visited as\nvalidation was performed.",
       "questionKey": "slide-34"
     },
@@ -289,7 +289,7 @@
     {
       "type": "knowledge_check",
       "id": "kc-5",
-      "question": ",- — Name the PCF attributes used to invoke class-based validation in a\n¢ popup and in a job wizard.",
+      "question": "Name the PCF attributes used to invoke class-based validation in a\npopup and in a job wizard.",
       "referenceAnswer": "BeforeSave attribute for a job wizard step and beforeCommit attribute on a popup.",
       "questionKey": "slide-38"
     },

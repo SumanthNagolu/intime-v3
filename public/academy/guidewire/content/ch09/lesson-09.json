@@ -11,7 +11,7 @@
   "slides": [
     {
       "slideNumber": 1,
-      "title": "",
+      "title": "Configuring ClaimCenter Financials",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -28,12 +28,12 @@
     },
     {
       "slideNumber": 2,
-      "title": "",
+      "title": "Learning Objectives",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives\n\n¢ Describe the financial model in ClaimCenter\n¢ Write transaction validation rules",
+      "ocrText": "Lesson\nobjectives\n\n• Describe the financial model in ClaimCenter\n• Write transaction validation rules",
       "ocrWordCount": 14,
       "ocrConfidence": 86.57,
       "hasTable": false,
@@ -62,10 +62,10 @@
     },
     {
       "slideNumber": 4,
-      "title": "",
+      "title": "Objects that implement ClaimCenter financials",
       "bodyParagraphs": [],
-      "originalNotes": "Objects that implement ClaimCenter financials\nAn exposure is a set of data used to track a potential payment from one coverage to one claimant. A reserve line is an amount of money set aside for expected payments related to a given exposure. Every exposure ultimately has one or more reserve lines. Transactions modify the amount of money in a reserve line.\n\nA reserve transaction modifies the amount of money set aside for the reserve line.  A payment transaction moves money from a reserve line to a payment (check). A check is a single transfer of money from one or more reserve lines to one or more individuals or organizations, and may refer to a physical check or to an electronic funds transfer.\n\nA payee is a person or organization to whom a check is made payable. Payees include both claimants and people who provided services for the claim  (such as inspectors).",
-      "notes": "Objects that implement ClaimCenter financials\nAn exposure is a set of data used to track a potential payment from one coverage to one claimant. A reserve line is an amount of money set aside for expected payments related to a given exposure. Every exposure ultimately has one or more reserve lines. Transactions modify the amount of money in a reserve line.\n\nA reserve transaction modifies the amount of money set aside for the reserve line.  A payment transaction moves money from a reserve line to a payment (check). A check is a single transfer of money from one or more reserve lines to one or more individuals or organizations, and may refer to a physical check or to an electronic funds transfer.\n\nA payee is a person or organization to whom a check is made payable. Payees include both claimants and people who provided services for the claim  (such as inspectors).",
+      "originalNotes": "Objects that implement ClaimCenter financials\nAn exposure is a set of data used to track a potential payment from one coverage to one claimant. A reserve line is an amount of money set aside for expected payments related to a given exposure. Every exposure ultimately has one or more reserve lines. Transactions modify the amount of money in a reserve line.\n\nA reserve transaction modifies the amount of money set aside for the reserve line. A payment transaction moves money from a reserve line to a payment (check). A check is a single transfer of money from one or more reserve lines to one or more individuals or organizations, and may refer to a physical check or to an electronic funds transfer.\n\nA payee is a person or organization to whom a check is made payable. Payees include both claimants and people who provided services for the claim (such as inspectors).",
+      "notes": "Objects that implement ClaimCenter financials\nAn exposure is a set of data used to track a potential payment from one coverage to one claimant. A reserve line is an amount of money set aside for expected payments related to a given exposure. Every exposure ultimately has one or more reserve lines. Transactions modify the amount of money in a reserve line.\n\nA reserve transaction modifies the amount of money set aside for the reserve line. A payment transaction moves money from a reserve line to a payment (check). A check is a single transfer of money from one or more reserve lines to one or more individuals or organizations, and may refer to a physical check or to an electronic funds transfer.\n\nA payee is a person or organization to whom a check is made payable. Payees include both claimants and people who provided services for the claim (such as inspectors).",
       "narration": "",
       "ocrText": "| Objects that implement ClaimCenter financials Gi\n\nReserve Reserve Payment\nExposure transaction Line transaction Check Payee\n\nExposures track payment from coverage to claimant.\n\n« Areserve line is money set aside for exposure payments\n+ Reserve transactions typically add money to it\n+ Payment transactions move money to checks\n\n* Checks transfer money from carrier to payee\n\n+ “Check” is a ClaimCenter concept that may include electronic fund transfers as well as physical\nchecks",
       "ocrWordCount": 73,
@@ -79,10 +79,10 @@
     },
     {
       "slideNumber": 5,
-      "title": "",
+      "title": "Transactions",
       "bodyParagraphs": [],
-      "originalNotes": "Transactions\nIn most cases, a reserve transaction can be thought of as adding money to a reserve line. However, when the amount of money set aside has been deemed too high, a reserve transaction will be used to subtract money from a reserve line without actually paying that money to a claimant or other party.\n\nA payment transaction moves money from a reserve line to a payment (check). In most cases, a payment transaction can be thought of as subtracting money from a reserve line. However, there are circumstances where a payment transaction credits money to a reserve line, possibly because an error occurred and the payee returned the money to the carrier.)\n\nA recovery reserve transaction denotes money the carrier expects to get from subrogation or salvage- A recovery transaction denotes money which has been collected from subrogation or salvage.  Recall the following definitions:\n\nRecovery - refers to all forms of recouping some of the payments made on a claim- There are two primary forms of recovery: subrogation and salvage- Subrogation • the act of the carrier getting financial reimbursement from a 3rd party when someone insured by the carrier suffers a loss and it is not the insured's fault.\n\nSalvage • the act of the carrier paying the full value of damaged property, taking possession of it, and then attempting to recoup some of the cost by reselling the property (or portions of it).\n\nThe recovery example shown above is for a collision exposure in which the vehicle is a total loss. The carrier plans to pay the insured for the full value of the vehicle,  which is $3500- The carrier then expects to be able to sell the vehicle to a salvage yard and recoup S3500. A single reserve line can include both recovery and non-recovery transactions-",
-      "notes": "Transactions\nIn most cases, a reserve transaction can be thought of as adding money to a reserve line. However, when the amount of money set aside has been deemed too high, a reserve transaction will be used to subtract money from a reserve line without actually paying that money to a claimant or other party.\n\nA payment transaction moves money from a reserve line to a payment (check). In most cases, a payment transaction can be thought of as subtracting money from a reserve line. However, there are circumstances where a payment transaction credits money to a reserve line, possibly because an error occurred and the payee returned the money to the carrier.)\n\nA recovery reserve transaction denotes money the carrier expects to get from subrogation or salvage- A recovery transaction denotes money which has been collected from subrogation or salvage.  Recall the following definitions:\n\nRecovery - refers to all forms of recouping some of the payments made on a claim- There are two primary forms of recovery: subrogation and salvage- Subrogation • the act of the carrier getting financial reimbursement from a 3rd party when someone insured by the carrier suffers a loss and it is not the insured's fault.\n\nSalvage • the act of the carrier paying the full value of damaged property, taking possession of it, and then attempting to recoup some of the cost by reselling the property (or portions of it).\n\nThe recovery example shown above is for a collision exposure in which the vehicle is a total loss. The carrier plans to pay the insured for the full value of the vehicle,  which is $3500- The carrier then expects to be able to sell the vehicle to a salvage yard and recoup S3500. A single reserve line can include both recovery and non-recovery transactions-",
+      "originalNotes": "Transactions\nIn most cases, a reserve transaction can be thought of as adding money to a reserve line. However, when the amount of money set aside has been deemed too high, a reserve transaction will be used to subtract money from a reserve line without actually paying that money to a claimant or other party.\n\nA payment transaction moves money from a reserve line to a payment (check). In most cases, a payment transaction can be thought of as subtracting money from a reserve line. However, there are circumstances where a payment transaction credits money to a reserve line, possibly because an error occurred and the payee returned the money to the carrier.)\n\nA recovery reserve transaction denotes money the carrier expects to get from subrogation or salvage- A recovery transaction denotes money which has been collected from subrogation or salvage. Recall the following definitions:\n\nRecovery - refers to all forms of recouping some of the payments made on a claim- There are two primary forms of recovery: subrogation and salvage- Subrogation • the act of the carrier getting financial reimbursement from a 3rd party when someone insured by the carrier suffers a loss and it is not the insured's fault.\n\nSalvage • the act of the carrier paying the full value of damaged property, taking possession of it, and then attempting to recoup some of the cost by reselling the property (or portions of it).\n\nThe recovery example shown above is for a collision exposure in which the vehicle is a total loss. The carrier plans to pay the insured for the full value of the vehicle, which is $3500- The carrier then expects to be able to sell the vehicle to a salvage yard and recoup S3500. A single reserve line can include both recovery and non-recovery transactions-",
+      "notes": "Transactions\nIn most cases, a reserve transaction can be thought of as adding money to a reserve line. However, when the amount of money set aside has been deemed too high, a reserve transaction will be used to subtract money from a reserve line without actually paying that money to a claimant or other party.\n\nA payment transaction moves money from a reserve line to a payment (check). In most cases, a payment transaction can be thought of as subtracting money from a reserve line. However, there are circumstances where a payment transaction credits money to a reserve line, possibly because an error occurred and the payee returned the money to the carrier.)\n\nA recovery reserve transaction denotes money the carrier expects to get from subrogation or salvage- A recovery transaction denotes money which has been collected from subrogation or salvage. Recall the following definitions:\n\nRecovery - refers to all forms of recouping some of the payments made on a claim- There are two primary forms of recovery: subrogation and salvage- Subrogation • the act of the carrier getting financial reimbursement from a 3rd party when someone insured by the carrier suffers a loss and it is not the insured's fault.\n\nSalvage • the act of the carrier paying the full value of damaged property, taking possession of it, and then attempting to recoup some of the cost by reselling the property (or portions of it).\n\nThe recovery example shown above is for a collision exposure in which the vehicle is a total loss. The carrier plans to pay the insured for the full value of the vehicle, which is $3500- The carrier then expects to be able to sell the vehicle to a salvage yard and recoup S3500. A single reserve line can include both recovery and non-recovery transactions-",
       "narration": "",
       "ocrText": "| Transactions\n\nTransactions modify amount of money in\nreserve line.\n\n« Four types of transactions\n\n+ Reserve transaction — modifies the amount of\nmoney available for the reserve line\n\n+ Payment transaction —- moves money from a\nreserve line to a payment to a claimant or\nother party\n\n« Recovery reserve transaction — denotes\nmoney which the carrier expects to get from\nsubrogation or salvage\n\n* Recovery transaction — denotes money which\nhas been collected from subrogation or\nsalvage\n\nGi\n\nReserve Reserve Payment\ntransaction Line transaction\n+2000 -1850\n\nRecovery Recovery\n\nReserve Reserve Recovery\ntransaction Line transaction\n\n+3500",
       "ocrWordCount": 97,
@@ -96,12 +96,12 @@
     },
     {
       "slideNumber": 6,
-      "title": "",
+      "title": "Transaction model: Transaction and TransactionSet [5",
       "bodyParagraphs": [],
-      "originalNotes": "Transaction model: Transaction and TransactionSet\nA transaction does not exist in isolation. Every transaction is part of a transaction set.\n\nAn easy way to understand the concept of 'TransactionSet' is to think of it as all of the reserve lines created at one time in the 'Set Reserves' screen, or all of the payments created in one pass through the Check Wizard.\n\nIn some cases, there may be only one transaction in the transaction set (such as a single reserve transaction creating a new reserve line, or a single check being issued with a single payment transaction from a single reserve line)- In other cases, there may be multiple transactions in the transaction set (such as two reserve transactions creating two new reserve lines at one time, or three checks being issued, two of which have two payment transactions from different reserve lines).  The information stored at the transaction level is generic to all transactions, such as which reserve line it is associated to, what its status is, and what the transaction amount is.\n\nThe information stored at the TransactionSet level is information generic to all transaction sets, such as what the total claim amount is, and the array of transactions in the transactions set",
-      "notes": "Transaction model: Transaction and TransactionSet\nA transaction does not exist in isolation. Every transaction is part of a transaction set.\n\nAn easy way to understand the concept of 'TransactionSet' is to think of it as all of the reserve lines created at one time in the 'Set Reserves' screen, or all of the payments created in one pass through the Check Wizard.\n\nIn some cases, there may be only one transaction in the transaction set (such as a single reserve transaction creating a new reserve line, or a single check being issued with a single payment transaction from a single reserve line)- In other cases, there may be multiple transactions in the transaction set (such as two reserve transactions creating two new reserve lines at one time, or three checks being issued, two of which have two payment transactions from different reserve lines).  The information stored at the transaction level is generic to all transactions, such as which reserve line it is associated to, what its status is, and what the transaction amount is.\n\nThe information stored at the TransactionSet level is information generic to all transaction sets, such as what the total claim amount is, and the array of transactions in the transactions set",
+      "originalNotes": "Transaction model: Transaction and TransactionSet\nA transaction does not exist in isolation. Every transaction is part of a transaction set.\n\nAn easy way to understand the concept of 'TransactionSet' is to think of it as all of the reserve lines created at one time in the 'Set Reserves' screen, or all of the payments created in one pass through the Check Wizard.\n\nIn some cases, there may be only one transaction in the transaction set (such as a single reserve transaction creating a new reserve line, or a single check being issued with a single payment transaction from a single reserve line)- In other cases, there may be multiple transactions in the transaction set (such as two reserve transactions creating two new reserve lines at one time, or three checks being issued, two of which have two payment transactions from different reserve lines). The information stored at the transaction level is generic to all transactions, such as which reserve line it is associated to, what its status is, and what the transaction amount is.\n\nThe information stored at the TransactionSet level is information generic to all transaction sets, such as what the total claim amount is, and the array of transactions in the transactions set",
+      "notes": "Transaction model: Transaction and TransactionSet\nA transaction does not exist in isolation. Every transaction is part of a transaction set.\n\nAn easy way to understand the concept of 'TransactionSet' is to think of it as all of the reserve lines created at one time in the 'Set Reserves' screen, or all of the payments created in one pass through the Check Wizard.\n\nIn some cases, there may be only one transaction in the transaction set (such as a single reserve transaction creating a new reserve line, or a single check being issued with a single payment transaction from a single reserve line)- In other cases, there may be multiple transactions in the transaction set (such as two reserve transactions creating two new reserve lines at one time, or three checks being issued, two of which have two payment transactions from different reserve lines). The information stored at the transaction level is generic to all transactions, such as which reserve line it is associated to, what its status is, and what the transaction amount is.\n\nThe information stored at the TransactionSet level is information generic to all transaction sets, such as what the total claim amount is, and the array of transactions in the transactions set",
       "narration": "",
-      "ocrText": "| Transaction model: Transaction and TransactionSet [5\n\n¢ The transaction model is heavily subtyped\n\n¢ The top level entities are TransactionSet and Transaction\n\nTransaction TransactionSet\n\nReserveLine ClaimAmount\nStatus Subtype\n\nSubtype Transactions (array)\nTransactionAmount\nTransactionSet\n\nNote: In these diagrams, not all fields are shown.",
+      "ocrText": "| Transaction model: Transaction and TransactionSet [5\n\n• The transaction model is heavily subtyped\n\n• The top level entities are TransactionSet and Transaction\n\nTransaction TransactionSet\n\nReserveLine ClaimAmount\nStatus Subtype\n\nSubtype Transactions (array)\nTransactionAmount\nTransactionSet\n\nNote: In these diagrams, not all fields are shown.",
       "ocrWordCount": 43,
       "ocrConfidence": 91.27,
       "hasTable": false,
@@ -113,10 +113,10 @@
     },
     {
       "slideNumber": 7,
-      "title": "",
+      "title": "Transaction model: Reserve and ReserveSet",
       "bodyParagraphs": [],
-      "originalNotes": "Transaction model: Reserve and ReserveSet\nWhen a reserve is created, the TransactionSet object is subtyped as a ReserveSet and the transaction object is subtyped as a Reserve.\n\nThe Reserve subtype tracks information unique to reserve transactions. In the base application, there are a small number of fields at this level which are complex in nature  (such as TotallncurredGross, which is the total incurred gross for the given reserve).\n\nThe ReserveSet subtype tracks information unique to transaction sets which contain only reserves.  In the base application, there is a single array key in this subtype, the Reserves field which contains an array of Reserve objects",
-      "notes": "Transaction model: Reserve and ReserveSet\nWhen a reserve is created, the TransactionSet object is subtyped as a ReserveSet and the transaction object is subtyped as a Reserve.\n\nThe Reserve subtype tracks information unique to reserve transactions. In the base application, there are a small number of fields at this level which are complex in nature  (such as TotallncurredGross, which is the total incurred gross for the given reserve).\n\nThe ReserveSet subtype tracks information unique to transaction sets which contain only reserves.  In the base application, there is a single array key in this subtype, the Reserves field which contains an array of Reserve objects",
+      "originalNotes": "Transaction model: Reserve and ReserveSet\nWhen a reserve is created, the TransactionSet object is subtyped as a ReserveSet and the transaction object is subtyped as a Reserve.\n\nThe Reserve subtype tracks information unique to reserve transactions. In the base application, there are a small number of fields at this level which are complex in nature (such as TotallncurredGross, which is the total incurred gross for the given reserve).\n\nThe ReserveSet subtype tracks information unique to transaction sets which contain only reserves. In the base application, there is a single array key in this subtype, the Reserves field which contains an array of Reserve objects",
+      "notes": "Transaction model: Reserve and ReserveSet\nWhen a reserve is created, the TransactionSet object is subtyped as a ReserveSet and the transaction object is subtyped as a Reserve.\n\nThe Reserve subtype tracks information unique to reserve transactions. In the base application, there are a small number of fields at this level which are complex in nature (such as TotallncurredGross, which is the total incurred gross for the given reserve).\n\nThe ReserveSet subtype tracks information unique to transaction sets which contain only reserves. In the base application, there is a single array key in this subtype, the Reserves field which contains an array of Reserve objects",
       "narration": "",
       "ocrText": "| Transaction model: Reserve and ReserveSet Gi\n\nAre subtypes of Transaction and TransactionSet.\n\nTransaction\n\nReserveLine\n\nStatus\n\nSubtype\nTransactionAmount\nTransactionSet\n\nReserve\n\nReserveSet\nReserveAmount\n\nTransactionSet\n\nClaimAmount\nSubtype\nTransactions (array)\n\nReserveSet\n\nReserves (array)",
       "ocrWordCount": 30,
@@ -130,10 +130,10 @@
     },
     {
       "slideNumber": 8,
-      "title": "",
+      "title": "Transaction model: Payment and CheckSet",
       "bodyParagraphs": [],
-      "originalNotes": "Transaction model: Payment and CheckSet\nWhen a check is created, the TransactionSet object is subtyped as a CheckSet, the transaction object is subtyped as a Payment, and a third entity - the Check entity - becomes relevant. The Payment subtype tracks information unique to payment transactions. In the base application, this includes a foreign key to the Check object which the payment belongs to, the CloseExposure Boolean,  which indicates whether the payment should or did close the associated exposure, and the payment type (partial, final, or supplemental).\n\nThe CheckSet subtype tracks information unique to transaction sets which contain checks. In the base application, this includes a PaymentsAmount which totals all the checks, a Recurring Boolean indicating the check is single or recurring, and an array of Checks.\n\nThe Check entity includes information specific to the process of transferring money from the carrier to the payee. This includes the check number, the issue date, the payment method  (automated check, EFT, or manual check), and an array of payment transactions which are contained within the check.",
-      "notes": "Transaction model: Payment and CheckSet\nWhen a check is created, the TransactionSet object is subtyped as a CheckSet, the transaction object is subtyped as a Payment, and a third entity - the Check entity - becomes relevant. The Payment subtype tracks information unique to payment transactions. In the base application, this includes a foreign key to the Check object which the payment belongs to, the CloseExposure Boolean,  which indicates whether the payment should or did close the associated exposure, and the payment type (partial, final, or supplemental).\n\nThe CheckSet subtype tracks information unique to transaction sets which contain checks. In the base application, this includes a PaymentsAmount which totals all the checks, a Recurring Boolean indicating the check is single or recurring, and an array of Checks.\n\nThe Check entity includes information specific to the process of transferring money from the carrier to the payee. This includes the check number, the issue date, the payment method  (automated check, EFT, or manual check), and an array of payment transactions which are contained within the check.",
+      "originalNotes": "Transaction model: Payment and CheckSet\nWhen a check is created, the TransactionSet object is subtyped as a CheckSet, the transaction object is subtyped as a Payment, and a third entity - the Check entity - becomes relevant. The Payment subtype tracks information unique to payment transactions. In the base application, this includes a foreign key to the Check object which the payment belongs to, the CloseExposure Boolean, which indicates whether the payment should or did close the associated exposure, and the payment type (partial, final, or supplemental).\n\nThe CheckSet subtype tracks information unique to transaction sets which contain checks. In the base application, this includes a PaymentsAmount which totals all the checks, a Recurring Boolean indicating the check is single or recurring, and an array of Checks.\n\nThe Check entity includes information specific to the process of transferring money from the carrier to the payee. This includes the check number, the issue date, the payment method (automated check, EFT, or manual check), and an array of payment transactions which are contained within the check.",
+      "notes": "Transaction model: Payment and CheckSet\nWhen a check is created, the TransactionSet object is subtyped as a CheckSet, the transaction object is subtyped as a Payment, and a third entity - the Check entity - becomes relevant. The Payment subtype tracks information unique to payment transactions. In the base application, this includes a foreign key to the Check object which the payment belongs to, the CloseExposure Boolean, which indicates whether the payment should or did close the associated exposure, and the payment type (partial, final, or supplemental).\n\nThe CheckSet subtype tracks information unique to transaction sets which contain checks. In the base application, this includes a PaymentsAmount which totals all the checks, a Recurring Boolean indicating the check is single or recurring, and an array of Checks.\n\nThe Check entity includes information specific to the process of transferring money from the carrier to the payee. This includes the check number, the issue date, the payment method (automated check, EFT, or manual check), and an array of payment transactions which are contained within the check.",
       "narration": "",
       "ocrText": "| Transaction model: Payment and CheckSet Gi\n\nAre subtypes of Transaction and TransactionSet.\n\nTransaction\n\nReserveLine\n\nStatus\n\nSubtype\nTransactionAmount\nTransactionSet\n\nPayment\n\nCheck\nCloseExposure\nPaymentType\n\nCheckSet\nCheckNumber\nIssueDate\nPaymentMethod\nPayments (array)\n\nTransactionSet\n\nClaimAmount\nSubtype\nTransactions (array)\n\nCheckSet\n\nPaymentsAmount\nRecurring\nChecks (array)",
       "ocrWordCount": 39,
@@ -147,10 +147,10 @@
     },
     {
       "slideNumber": 9,
-      "title": "",
+      "title": "Eroding and non-eroding payments",
       "bodyParagraphs": [],
-      "originalNotes": "Eroding and non-eroding payments\nIf a payment is \"non-eroding“ then the payment does not cause the amount of money in the reserve line to decrease. In this case, the only transactions that are created are payments. Carriers use non-eroding payments when they want to use reserves as an estimate of money needed, but they do not track payments and remaining reserves at a granular level.  If a payment is \"eroding\", then the payment causes the amount of money in the reserve line to decrease. This means that each payment transaction requires a matching reserve transactiom (If the payment transaction is for $2500, then a reserve transaction must be created with an amount of -S2500 to reflect a $2500 decrease in the reserve line.) The payments are linked to the CheckSet through the Check entity as shown in the diagram on the previous slide. The reserves are linked to the CheckSet through an array in the CheckSet subtype called Reserves. This is an array of CheckSetReserves. A CheckSetReserve is an object which links an automatically generated reserve transaction to a CheckSet.",
-      "notes": "Eroding and non-eroding payments\nIf a payment is \"non-eroding“ then the payment does not cause the amount of money in the reserve line to decrease. In this case, the only transactions that are created are payments. Carriers use non-eroding payments when they want to use reserves as an estimate of money needed, but they do not track payments and remaining reserves at a granular level.  If a payment is \"eroding\", then the payment causes the amount of money in the reserve line to decrease. This means that each payment transaction requires a matching reserve transactiom (If the payment transaction is for $2500, then a reserve transaction must be created with an amount of -S2500 to reflect a $2500 decrease in the reserve line.) The payments are linked to the CheckSet through the Check entity as shown in the diagram on the previous slide. The reserves are linked to the CheckSet through an array in the CheckSet subtype called Reserves. This is an array of CheckSetReserves. A CheckSetReserve is an object which links an automatically generated reserve transaction to a CheckSet.",
+      "originalNotes": "Eroding and non-eroding payments\nIf a payment is \"non-eroding“ then the payment does not cause the amount of money in the reserve line to decrease. In this case, the only transactions that are created are payments. Carriers use non-eroding payments when they want to use reserves as an estimate of money needed, but they do not track payments and remaining reserves at a granular level. If a payment is \"eroding\", then the payment causes the amount of money in the reserve line to decrease. This means that each payment transaction requires a matching reserve transactiom (If the payment transaction is for $2500, then a reserve transaction must be created with an amount of -S2500 to reflect a $2500 decrease in the reserve line.) The payments are linked to the CheckSet through the Check entity as shown in the diagram on the previous slide. The reserves are linked to the CheckSet through an array in the CheckSet subtype called Reserves. This is an array of CheckSetReserves. A CheckSetReserve is an object which links an automatically generated reserve transaction to a CheckSet.",
+      "notes": "Eroding and non-eroding payments\nIf a payment is \"non-eroding“ then the payment does not cause the amount of money in the reserve line to decrease. In this case, the only transactions that are created are payments. Carriers use non-eroding payments when they want to use reserves as an estimate of money needed, but they do not track payments and remaining reserves at a granular level. If a payment is \"eroding\", then the payment causes the amount of money in the reserve line to decrease. This means that each payment transaction requires a matching reserve transactiom (If the payment transaction is for $2500, then a reserve transaction must be created with an amount of -S2500 to reflect a $2500 decrease in the reserve line.) The payments are linked to the CheckSet through the Check entity as shown in the diagram on the previous slide. The reserves are linked to the CheckSet through an array in the CheckSet subtype called Reserves. This is an array of CheckSetReserves. A CheckSetReserve is an object which links an automatically generated reserve transaction to a CheckSet.",
       "narration": "",
       "ocrText": "| Eroding and non-eroding payments\n\nEroding payment\n\n[el ——-9\n\n$2500\npeed\n\nNon-eroding payment\n$5000\n\n$2500",
       "ocrWordCount": 15,
@@ -164,7 +164,7 @@
     },
     {
       "slideNumber": 10,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -177,7 +177,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 11,
@@ -198,12 +199,12 @@
     },
     {
       "slideNumber": 12,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n,~ — Whatare the four basic types of a financial transaction in ClaimCenter?\n\n¢\n4\n¢\n\nSS oe ooo ee oe ooo ooOD",
+      "ocrText": "Question G\nWhat are the four basic types of a financial transaction in ClaimCenter?\n•\n•\nSS oe ooo ee oe ooo ooOD",
       "ocrWordCount": 25,
       "ocrConfidence": 71.3,
       "hasTable": false,
@@ -211,16 +212,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What are the four basic types of a financial transaction in ClaimCenter?",
+        "answer": "The correct answers are: Reserve transaction Payment transaction Recovery reserve transaction Recovery transaction"
+      }
     },
     {
       "slideNumber": 13,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n,~ — Whatare the four basic types of a financial transaction in ClaimCenter?\n\n¢\n4\n¢\n\nSS See eo ee oo ooo SoD\n\nThe correct answers are:\n\nReserve transaction\nPayment transaction\nRecovery reserve transaction\n\nRecovery transaction\n\nGi",
+      "ocrText": "Answer\nWhat are the four basic types of a financial transaction in ClaimCenter?\n•\n•\nSS See eo ee oo ooo SoD\nThe correct answers are:\nReserve transaction\nPayment transaction\nRecovery reserve transaction\nRecovery transaction\nGi",
       "ocrWordCount": 38,
       "ocrConfidence": 76.92,
       "hasTable": false,
@@ -232,12 +237,12 @@
     },
     {
       "slideNumber": 14,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,~ — ReserveSet and PaymentSet are subtypes of what parent type?\n\n¢\n4\n¢\n\nSS oe ooo ee oe ooo ooOD",
+      "ocrText": "Question\nReserveSet and PaymentSet are subtypes of what parent type?\n•\n•\nSS oe ooo ee oe ooo ooOD",
       "ocrWordCount": 22,
       "ocrConfidence": 70.25,
       "hasTable": false,
@@ -245,16 +250,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "ReserveSet and PaymentSet are subtypes of what parent type?",
+        "answer": "TransactionSet."
+      }
     },
     {
       "slideNumber": 15,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\nae ReserveSet and PaymentSet are subtypes of what parent type?\n4\n¢\n\nThe correct answer is TransactionSet.\n\nSS See eo ee oo ooo SoD",
+      "ocrText": "Answer\nReserveSet and PaymentSet are subtypes of what parent type?\n•\nThe correct answer is TransactionSet.\nSS See eo ee oo ooo SoD",
       "ocrWordCount": 25,
       "ocrConfidence": 71.62,
       "hasTable": false,
@@ -266,7 +275,7 @@
     },
     {
       "slideNumber": 16,
-      "title": "",
+      "title": "Life cycle of a transaction (general)",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -283,7 +292,7 @@
     },
     {
       "slideNumber": 17,
-      "title": "",
+      "title": "Life cycle of a transaction (check-specific)",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -300,7 +309,7 @@
     },
     {
       "slideNumber": 18,
-      "title": "",
+      "title": "Controlling financial behavior",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -317,7 +326,7 @@
     },
     {
       "slideNumber": 19,
-      "title": "",
+      "title": "Some financial behaviors controlled by config.xml [",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -334,12 +343,12 @@
     },
     {
       "slideNumber": 20,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,~ — Inthe base ClaimCenter configuration, making a final payment on an\noo exposure closes the exposure; and making a final payment on the last\n: exposure on a claim closes the claim.\n\nIf you want to change this behavior, what file should you edit?\n\nSS oe ooo ee oe ooo ooOD\n\nGi",
+      "ocrText": "Question\nIn the base ClaimCenter configuration, making a final payment on an\noo exposure closes the exposure; and making a final payment on the last\nexposure on a claim closes the claim.\nIf you want to change this behavior, what file should you edit?\nSS oe ooo ee oe ooo ooOD\nGi",
       "ocrWordCount": 54,
       "ocrConfidence": 84.69,
       "hasTable": false,
@@ -347,16 +356,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "In the base ClaimCenter configuration, making a final payment on an",
+        "answer": "Oo exposure closes the exposure; and making a final payment on the last : exposure on a claim closes the claim. If you want to change this behavior, what file should you edit? The correct answer is config.xml."
+      }
     },
     {
       "slideNumber": 21,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer a\n\n,~ — Inthe base ClaimCenter configuration, making a final payment on an\noo exposure closes the exposure; and making a final payment on the last\n: exposure on a claim closes the claim.\n\nIf you want to change this behavior, what file should you edit?\n\nThe correct answer is config.xml.\n\nSS See eo ee oo ooo SoD",
+      "ocrText": "Answer a\nIn the base ClaimCenter configuration, making a final payment on an\noo exposure closes the exposure; and making a final payment on the last\nexposure on a claim closes the claim.\nIf you want to change this behavior, what file should you edit?\nThe correct answer is config.xml.\nSS See eo ee oo ooo SoD",
       "ocrWordCount": 59,
       "ocrConfidence": 83.68,
       "hasTable": false,
@@ -385,12 +398,12 @@
     },
     {
       "slideNumber": 23,
-      "title": "",
+      "title": "Transaction rules",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "| Transaction rules\n\nEight rule set categories are triggered\nwhen a transaction is created\n(\"transaction event\").\n\n¢ Which rules get executed and order of\nexecution varies based on the type of\ntransaction and type of activity (creation,\nmodification, approval)\n\nPre-Setup\n\nTransaction Approval\n\nApproval Routing\n\nClaim Pre-update\n\nTransaction Post-setup\n\nTransaction Pre-update\n\nClaim Validation\n\nTransaction Validation\n\nol",
+      "ocrText": "| Transaction rules\n\nEight rule set categories are triggered\nwhen a transaction is created\n(\"transaction event\").\n\n• Which rules get executed and order of\nexecution varies based on the type of\ntransaction and type of activity (creation,\nmodification, approval)\n\nPre-Setup\n\nTransaction Approval\n\nApproval Routing\n\nClaim Pre-update\n\nTransaction Post-setup\n\nTransaction Pre-update\n\nClaim Validation\n\nTransaction Validation\n\nol",
       "ocrWordCount": 55,
       "ocrConfidence": 93.15,
       "hasTable": false,
@@ -402,7 +415,7 @@
     },
     {
       "slideNumber": 24,
-      "title": "",
+      "title": "Transaction pre-update rules",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -419,12 +432,12 @@
     },
     {
       "slideNumber": 25,
-      "title": "",
+      "title": "Claim financial measures",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "| Claim financial measures Gi\n\n« Various measures used by insurers to describe and act on a claim\n\n¢ The base application measures:\nTotal Reserves = all approved reserves\nOpen Reserves = Total Reserves - Past Payments\nRemaining Reserves = Open Reserves - Future Payments\nAvailable Reserves = Remaining Reserves - Pending Approval Payments\nTotal Incurred Gross = Open Reserves + Past Payments\nNet Total Incurred = Total Incurred Gross- Recoveries",
+      "ocrText": "| Claim financial measures Gi\n\n« Various measures used by insurers to describe and act on a claim\n\n• The base application measures:\nTotal Reserves = all approved reserves\nOpen Reserves = Total Reserves - Past Payments\nRemaining Reserves = Open Reserves - Future Payments\nAvailable Reserves = Remaining Reserves - Pending Approval Payments\nTotal Incurred Gross = Open Reserves + Past Payments\nNet Total Incurred = Total Incurred Gross- Recoveries",
       "ocrWordCount": 71,
       "ocrConfidence": 92.62,
       "hasTable": false,
@@ -436,12 +449,12 @@
     },
     {
       "slideNumber": 26,
-      "title": "",
+      "title": "Financial calculations",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "| Financial calculations Gi\n\ngetTotalPayments ()\nwithClaim(aClaim) .Amount\n\n$1500\n\n¢ Transaction rules need to reference financial measures\n¢ Accomplished through financial calculations library methods\n\n¢ Implemented using FinancialsCalculations methods\n\n* Each method returns an object which can be used to retrieve financial measures — essentially,\na specialized calculator",
+      "ocrText": "| Financial calculations Gi\n\ngetTotalPayments ()\nwithClaim(aClaim) .Amount\n\n$1500\n\n• Transaction rules need to reference financial measures\n• Accomplished through financial calculations library methods\n\n• Implemented using FinancialsCalculations methods\n\n* Each method returns an object which can be used to retrieve financial measures — essentially,\na specialized calculator",
       "ocrWordCount": 48,
       "ocrConfidence": 88.94,
       "hasTable": false,
@@ -453,7 +466,7 @@
     },
     {
       "slideNumber": 27,
-      "title": "",
+      "title": "FinancialCalculations methods",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -470,12 +483,12 @@
     },
     {
       "slideNumber": 28,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,~ — What kind of library methods does ClaimCenter provide for getting\noo financial measures in rules?\n\nSS oe ooo ee oe ooo ooOD",
+      "ocrText": "Question\nWhat kind of library methods does ClaimCenter provide for getting\noo financial measures in rules?\nSS oe ooo ee oe ooo ooOD",
       "ocrWordCount": 25,
       "ocrConfidence": 75.05,
       "hasTable": false,
@@ -483,16 +496,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What kind of library methods does ClaimCenter provide for getting",
+        "answer": "Oo financial measures in rules? The correct answer is FinancialsCalculations methods"
+      }
     },
     {
       "slideNumber": 29,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n7~ — What kind of library methods does ClaimCenter provide for getting\noo financial measures in rules?\n\nThe correct answer is FinancialsCalculations methods\n\nSS See eo ee oo ooo SoD",
+      "ocrText": "Answer\nWhat kind of library methods does ClaimCenter provide for getting\noo financial measures in rules?\nThe correct answer is FinancialsCalculations methods\nSS See eo ee oo ooo SoD",
       "ocrWordCount": 31,
       "ocrConfidence": 77.66,
       "hasTable": false,
@@ -504,7 +521,7 @@
     },
     {
       "slideNumber": 30,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -517,7 +534,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 31,
@@ -555,7 +573,7 @@
     },
     {
       "slideNumber": 33,
-      "title": "",
+      "title": "Transaction validation rules",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -572,12 +590,12 @@
     },
     {
       "slideNumber": 34,
-      "title": "",
+      "title": "Transaction set validation rule set",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "| Transaction set validation rule set\n\nPre-Setup\n\n¢ Similar to claim and exposure rules\n. . . Transaction Approval\n* Organized in a list\n\n¢ No use of actions.exit() Approval Routing\n\n¢ Contains base financial functionality 7a a\nfaim Pre-upaate\n\n¢ Transaction sets do not have maturity levels\noes Transaction Post-setup\n\nuses gv.api-locale.Displaykey\nuses gv.api.financials.CurrencyAnount\nuses gv.api-util.Currency0til\n\nuses typekey.Transacticnset Transaction Pre-update\nCONDITION (transactionSet : entity. TransactionSet)\n\nreturn transactionser. subtype == Transactionsec.1¢ AESERVESET . a\nand trensactionSer.Claimksount.ARount > 1900000 Claim Validation\n\nACTION (transactionSet : entity.TransactionSet, actions : gw.rules.Action) :\n\ntransactionSet.reject (Val idetionLevel 10 NEZLOSS, Transaction Validation\nDisplaykey.get \"MaxReservebatcn\",\nCurzencyUeil. renderAsCurrency (new Curzencyhaount (1000000,\nfransactionset.Clain.Currency))),\nult, mala)\n\nol",
+      "ocrText": "| Transaction set validation rule set\n\nPre-Setup\n\n• Similar to claim and exposure rules\n. . . Transaction Approval\n* Organized in a list\n\n• No use of actions.exit() Approval Routing\n\n• Contains base financial functionality 7a a\nfaim Pre-upaate\n\n• Transaction sets do not have maturity levels\noes Transaction Post-setup\n\nuses gv.api-locale.Displaykey\nuses gv.api.financials.CurrencyAnount\nuses gv.api-util.Currency0til\n\nuses typekey.Transacticnset Transaction Pre-update\nCONDITION (transactionSet : entity. TransactionSet)\n\nreturn transactionser. subtype == Transactionsec.1• AESERVESET . a\nand trensactionSer.Claimksount.ARount > 1900000 Claim Validation\n\nACTION (transactionSet : entity.TransactionSet, actions : gw.rules.Action) :\n\ntransactionSet.reject (Val idetionLevel 10 NEZLOSS, Transaction Validation\nDisplaykey.get \"MaxReservebatcn\",\nCurzencyUeil. renderAsCurrency (new Curzencyhaount (1000000,\nfransactionset.Clain.Currency))),\nult, mala)\n\nol",
       "ocrWordCount": 106,
       "ocrConfidence": 70.59,
       "hasTable": false,
@@ -589,12 +607,12 @@
     },
     {
       "slideNumber": 35,
-      "title": "",
+      "title": "The reject() method",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "| The reject() method G\n\n¢ Works as with claims and exposures\n\nApplicable only to TransactionSet objects (not to individual transactions or checks)\n\n¢ Because transaction sets do not have maturity levels, there is no practical purpose\nto having warning and error for the same validation condition\n\n* The method uses the maturity level of the claim or exposure with which the transaction set is\nassociated\n\nThe first two parameters are used for errors, while the second two are used for\n\nCurrencyUtil.renderAsCurrency (new CurrencyAmount (1000000, transactionSet.Claim.Currency))),\nnull, null)\n\nwarnings transactionset.reject (null, null, TC_EXTERNAL,\nDisplayKey.get (Rules. Validation. Transaction.AggregateLimit .ReplacementServices\", Warning\ngw-api util. CurrencyUtil. renderAsCurrency (coverage. ReplaceAggLimit),\nexposure.Coverage.Type, actions. ShortRuleName) )\ntransactionset. reject (1C_NEWLOSS,",
+      "ocrText": "| The reject() method G\n\n• Works as with claims and exposures\n\nApplicable only to TransactionSet objects (not to individual transactions or checks)\n\n• Because transaction sets do not have maturity levels, there is no practical purpose\nto having warning and error for the same validation condition\n\n* The method uses the maturity level of the claim or exposure with which the transaction set is\nassociated\n\nThe first two parameters are used for errors, while the second two are used for\n\nCurrencyUtil.renderAsCurrency (new CurrencyAmount (1000000, transactionSet.Claim.Currency))),\nnull, null)\n\nwarnings transactionset.reject (null, null, TC_EXTERNAL,\nDisplayKey.get (Rules. Validation. Transaction.AggregateLimit .ReplacementServices\", Warning\ngw-api util. CurrencyUtil. renderAsCurrency (coverage. ReplaceAggLimit),\nexposure.Coverage.Type, actions. ShortRuleName) )\ntransactionset. reject (1C_NEWLOSS,",
       "ocrWordCount": 112,
       "ocrConfidence": 84.08,
       "hasTable": false,
@@ -606,12 +624,12 @@
     },
     {
       "slideNumber": 36,
-      "title": "",
+      "title": "rejectField() and rejectSubField()",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "| rejectField() and rejectSubField() Gi\n\n¢ Can be used to highlight the single field which is the source of the issue\n\n« Are much the same as for claims and exposures\n\ntransactionSet.rejectSubField (\nQeransactionset as CheckSet).PrimaryCheck, \"MailingAddress\",\nTC_NEWLOSS, pisplaykey.get (\"Web. FNOLWizard.CheckReady . SendingErrorMessage\"), null, null)\n\nValidation Results\n\nValidation Results\n\nThere is a Message on another page\n© For checks being sent by mail, a mailing address must be specified.",
+      "ocrText": "| rejectField() and rejectSubField() Gi\n\n• Can be used to highlight the single field which is the source of the issue\n\n« Are much the same as for claims and exposures\n\ntransactionSet.rejectSubField (\nQeransactionset as CheckSet).PrimaryCheck, \"MailingAddress\",\nTC_NEWLOSS, pisplaykey.get (\"Web. FNOLWizard.CheckReady . SendingErrorMessage\"), null, null)\n\nValidation Results\n\nValidation Results\n\nThere is a Message on another page\n© For checks being sent by mail, a mailing address must be specified.",
       "ocrWordCount": 69,
       "ocrConfidence": 85.19,
       "hasTable": false,
@@ -623,7 +641,7 @@
     },
     {
       "slideNumber": 37,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -636,7 +654,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 2
     },
     {
       "slideNumber": 38,
@@ -657,12 +676,12 @@
     },
     {
       "slideNumber": 39,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,~ — How does ClaimCenter exit the validation rule set? Why?\n\n¢\n4\n¢\n\nSS oe ooo ee oe ooo ooOD",
+      "ocrText": "Question\nHow does ClaimCenter exit the validation rule set? Why?\n•\n•\nSS oe ooo ee oe ooo ooOD",
       "ocrWordCount": 22,
       "ocrConfidence": 68.4,
       "hasTable": false,
@@ -670,16 +689,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "How does ClaimCenter exit the validation rule set? Why?",
+        "answer": "The correct answers are: The actions.exit() method is not used; rather, the rule set exits when all transaction validation rules have been executed, in the order in which they appear in Studio. This is because success (or failure) of one validation condition does not necessarily mean that another will not fail (or succeed). By running all the rules, ClaimCenter provides a full list of any conditions that must be remedied before continuing."
+      }
     },
     {
       "slideNumber": 40,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer a\n\n,~ — How does ClaimCenter exit the validation rule set? Why?\n¢\n4\n¢\n\nThe correct answers are:\n\nThe actions.exit() method is not used; rather, the rule set exits when all transaction\nvalidation rules have been executed, in the order in which they appear in Studio.\n\nThis is because success (or failure) of one validation condition does not necessarily\nmean that another will not fail (or succeed). By running all the rules, ClaimCenter\nprovides a full list of any conditions that must be remedied before continuing.\n\nSS See eo ee oo ooo SoD",
+      "ocrText": "Answer a\nHow does ClaimCenter exit the validation rule set? Why?\n•\n•\nThe correct answers are:\nThe actions.exit() method is not used; rather, the rule set exits when all transaction\nvalidation rules have been executed, in the order in which they appear in Studio.\nThis is because success (or failure) of one validation condition does not necessarily\nmean that another will not fail (or succeed). By running all the rules, ClaimCenter\nprovides a full list of any conditions that must be remedied before continuing.\nSS See eo ee oo ooo SoD",
       "ocrWordCount": 95,
       "ocrConfidence": 88.27,
       "hasTable": false,
@@ -708,12 +731,12 @@
     },
     {
       "slideNumber": 42,
-      "title": "",
+      "title": "Key Takeaways",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives ¢ Describe the financial model in\nreview ClaimCenter\n\n¢ Write transaction validation rules",
+      "ocrText": "Lesson\nobjectives • Describe the financial model in\nreview ClaimCenter\n\n• Write transaction validation rules",
       "ocrWordCount": 15,
       "ocrConfidence": 87.6,
       "hasTable": false,
@@ -725,7 +748,7 @@
     },
     {
       "slideNumber": 43,
-      "title": "",
+      "title": "Student Exercise",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -742,7 +765,7 @@
     },
     {
       "slideNumber": 44,
-      "title": "",
+      "title": "Student Exercise",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -773,6 +796,11 @@
       "index": 3,
       "filename": "CC_09_03.mp4",
       "path": "/academy/guidewire/videos/ch09/CC_09_03.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "CC_09_04.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_09_04.mp4"
     }
   ],
   "hasNotes": true,

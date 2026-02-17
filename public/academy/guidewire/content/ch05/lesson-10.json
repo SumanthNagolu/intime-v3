@@ -11,7 +11,7 @@
   "slides": [
     {
       "slideNumber": 1,
-      "title": "",
+      "title": "Creating payments and reserves",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -28,12 +28,12 @@
     },
     {
       "slideNumber": 2,
-      "title": "",
+      "title": "Learning Objectives",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives\n\n* Create and modify reserves\n\n¢ Create payments\n\n* Create payments with multiple payees and\npayments",
+      "ocrText": "Lesson\nobjectives\n\n* Create and modify reserves\n\n• Create payments\n\n* Create payments with multiple payees and\npayments",
       "ocrWordCount": 18,
       "ocrConfidence": 84.83,
       "hasTable": false,
@@ -45,7 +45,7 @@
     },
     {
       "slideNumber": 3,
-      "title": "",
+      "title": "The business of adjudicating claims takes",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -79,7 +79,7 @@
     },
     {
       "slideNumber": 5,
-      "title": "",
+      "title": "Reserves review fa",
       "bodyParagraphs": [],
       "originalNotes": "Reserves review\nRemember that a reserve line can be thought of as an account set aside for one specific aspct of exposure processing. It contains both credits and debits, and its size is equal to the credits minus the debits. It is money set aside for payments that are expected related to a specific exposure.\n\nThere is no technical requirement for an exposure to have a reserve line. You can create and even close exposures without creating reserve lines. However, you cannot make payments to claimants without reserve lines attached to an exposure.\n\nReserve lines are defined by the exposure, cost type, and the cost category. An exposure may have multiple reserve lines.\n\nIn this example, the exposure on the Medical Details coverage for Jim Means has two separate reserve lines; one for the Claim Cost with a category of Medical, and the second for Claim Expense with a category of Case management.",
       "notes": "Reserves review\nRemember that a reserve line can be thought of as an account set aside for one specific aspct of exposure processing. It contains both credits and debits, and its size is equal to the credits minus the debits. It is money set aside for payments that are expected related to a specific exposure.\n\nThere is no technical requirement for an exposure to have a reserve line. You can create and even close exposures without creating reserve lines. However, you cannot make payments to claimants without reserve lines attached to an exposure.\n\nReserve lines are defined by the exposure, cost type, and the cost category. An exposure may have multiple reserve lines.\n\nIn this example, the exposure on the Medical Details coverage for Jim Means has two separate reserve lines; one for the Claim Cost with a category of Medical, and the second for Claim Expense with a category of Case management.",
@@ -96,7 +96,7 @@
     },
     {
       "slideNumber": 6,
-      "title": "",
+      "title": "Creating and changing reserves (1 of 4)",
       "bodyParagraphs": [],
       "originalNotes": "Creating and changing reserves (I of 4)\nWhen you create a reserve line, ClaimCenter creates a reserve transaction for that amount. The total of the reserve line will be equal to the reserve transaction.",
       "notes": "Creating and changing reserves (I of 4)\nWhen you create a reserve line, ClaimCenter creates a reserve transaction for that amount. The total of the reserve line will be equal to the reserve transaction.",
@@ -113,10 +113,10 @@
     },
     {
       "slideNumber": 7,
-      "title": "",
+      "title": "Creating and changing reserves (2 of 4)",
       "bodyParagraphs": [],
-      "originalNotes": "Creating and changing reserves (2 of 4)\nWhen creating a reserve line, a transaction with the amount ofthe new reserve is initiated. In this example a new reserve line of $2000 is created for the cost category: Medical.",
-      "notes": "Creating and changing reserves (2 of 4)\nWhen creating a reserve line, a transaction with the amount ofthe new reserve is initiated. In this example a new reserve line of $2000 is created for the cost category: Medical.",
+      "originalNotes": "Creating and changing reserves (2 of 4)\nWhen creating a reserve line, a transaction with the amount of the new reserve is initiated. In this example a new reserve line of $2000 is created for the cost category: Medical.",
+      "notes": "Creating and changing reserves (2 of 4)\nWhen creating a reserve line, a transaction with the amount of the new reserve is initiated. In this example a new reserve line of $2000 is created for the cost category: Medical.",
       "narration": "",
       "ocrText": "| Creating and changing reserves (2 of 4) G\n\nON Coverage: Medical Details\n\n(\\ Claimant: Jim Means\nNe\n$2000\nReserve Line 1 (Medical Details)\n[oX\\+) Cost type Claim Cost\n$2000 Cost category: Medical\n\n* Creating a reserve line initiates a transaction with the amount of the new reserve",
       "ocrWordCount": 48,
@@ -130,12 +130,12 @@
     },
     {
       "slideNumber": 8,
-      "title": "",
+      "title": "Creating and changing reserves (3 of 4)",
       "bodyParagraphs": [],
       "originalNotes": "Creating and changing reserves (3 of 4)\nWhen you modify an existing reserve line, ClaimCenter creates a reserve transaction for the value of the difference. For example, if the original reserve line is $2000 and you change it to $2500, there is a new S500 reserve transaction created. This is true for adding or subtracting from the reserve line. Remember that the total of the reserve line shown on ClaimCenter screens is a sum of all the transactions for that reserve line.",
       "notes": "Creating and changing reserves (3 of 4)\nWhen you modify an existing reserve line, ClaimCenter creates a reserve transaction for the value of the difference. For example, if the original reserve line is $2000 and you change it to $2500, there is a new S500 reserve transaction created. This is true for adding or subtracting from the reserve line. Remember that the total of the reserve line shown on ClaimCenter screens is a sum of all the transactions for that reserve line.",
       "narration": "",
-      "ocrText": "| Creating and changing reserves (3 of 4) Gi\n\nON Coverage: Medical Details\n12 Claimant: Jim Means\nes\n\nCox)\n\nReserve Line 1 (Medical Details)\nCost type: Claim Cost\nCost category: Medical\n\n* Creating a reserve line initiates a transaction with the amount of the new reserve\n\n¢ Changing a reserve line initiates a transaction with the amount of the change",
+      "ocrText": "| Creating and changing reserves (3 of 4) Gi\n\nON Coverage: Medical Details\n12 Claimant: Jim Means\nes\n\nCox)\n\nReserve Line 1 (Medical Details)\nCost type: Claim Cost\nCost category: Medical\n\n* Creating a reserve line initiates a transaction with the amount of the new reserve\n\n• Changing a reserve line initiates a transaction with the amount of the change",
       "ocrWordCount": 60,
       "ocrConfidence": 89.78,
       "hasTable": false,
@@ -147,12 +147,12 @@
     },
     {
       "slideNumber": 9,
-      "title": "",
+      "title": "Creating and changing reserves (4 of 4)",
       "bodyParagraphs": [],
       "originalNotes": "Creating and changing reserves (4 of 4)\nYou can also change a reserve line by adding or subtracting amounts. For example, if the original reserve line is S2000 and you change it to $2500, and then you decrease the reserve line by $200, there is a new -S200 reserve transaction created. This is true for adding or subtracting from the reserve line. Remember that the total of the reserve line shown on ClaimCenter screens is a sum of all the transactions for that reserve line.",
       "notes": "Creating and changing reserves (4 of 4)\nYou can also change a reserve line by adding or subtracting amounts. For example, if the original reserve line is S2000 and you change it to $2500, and then you decrease the reserve line by $200, there is a new -S200 reserve transaction created. This is true for adding or subtracting from the reserve line. Remember that the total of the reserve line shown on ClaimCenter screens is a sum of all the transactions for that reserve line.",
       "narration": "",
-      "ocrText": "| Creating and changing reserves (4 of 4) Gi\n\nON Coverage: Medical Details\n\n\\ Claimant: Jim Means $2300\n\ne $2500\n$2060\nry Reserve Line 1 (Medical Details)\nry Cost type: Claim Cost\nor Cost category: Medical\n\n* Creating a reserve line initiates a transaction with the amount of the new reserve\n\nOW\n\n-$200\n\n¢ Changing a reserve line initiates a transaction with the amount of the change\n\n* Changes can add or subtract amounts from the reserve line",
+      "ocrText": "| Creating and changing reserves (4 of 4) Gi\n\nON Coverage: Medical Details\n\n\\ Claimant: Jim Means $2300\n\ne $2500\n$2060\nry Reserve Line 1 (Medical Details)\nry Cost type: Claim Cost\nor Cost category: Medical\n\n* Creating a reserve line initiates a transaction with the amount of the new reserve\n\nOW\n\n-$200\n\n• Changing a reserve line initiates a transaction with the amount of the change\n\n* Changes can add or subtract amounts from the reserve line",
       "ocrWordCount": 78,
       "ocrConfidence": 87.7,
       "hasTable": false,
@@ -164,7 +164,7 @@
     },
     {
       "slideNumber": 10,
-      "title": "",
+      "title": "Eroding payments review (1 of 3)",
       "bodyParagraphs": [],
       "originalNotes": "Eroding payments review (I of 3)\nEroding payments reduce the amount of the reserve line total by the amount of the payment This gives the insurer an accurate accounting of theamount remaining on that reserve line that they may have to pay for the claim.\n\nWhen the reserve line total is displayed, the amount is the sum of all the reserve transactions, minus the eroding payment transactions. Remember that the\ntotal remaining is always calculated at runtime.",
       "notes": "Eroding payments review (I of 3)\nEroding payments reduce the amount of the reserve line total by the amount of the payment This gives the insurer an accurate accounting of theamount remaining on that reserve line that they may have to pay for the claim.\n\nWhen the reserve line total is displayed, the amount is the sum of all the reserve transactions, minus the eroding payment transactions. Remember that the\ntotal remaining is always calculated at runtime.",
@@ -181,7 +181,7 @@
     },
     {
       "slideNumber": 11,
-      "title": "",
+      "title": "Eroding payments review (2 of 3)",
       "bodyParagraphs": [],
       "originalNotes": "Eroding payments review (2 of 3)\nA partial payment simply creates a payment transaction that is included in the total reserve line calculation.",
       "notes": "Eroding payments review (2 of 3)\nA partial payment simply creates a payment transaction that is included in the total reserve line calculation.",
@@ -198,7 +198,7 @@
     },
     {
       "slideNumber": 12,
-      "title": "",
+      "title": "Eroding payments review (3 of 3)",
       "bodyParagraphs": [],
       "originalNotes": "Eroding payments review (3 of 3)\nA final payment creates a payment transaction and creates a transaction that reduces the total of the reserve line to zero. In this example, the final payment of $1465 leaves a balance of $335. Because it was flagged as a final payment, ClaimCenter creates areserve transaction of -S335which brings the reserve line total to zero.\n\nIf a payment is non-eroding, then the payment does not cause the amount of money in the reserve line to decrease. In this case, the only transactions that are created are payments.",
       "notes": "Eroding payments review (3 of 3)\nA final payment creates a payment transaction and creates a transaction that reduces the total of the reserve line to zero. In this example, the final payment of $1465 leaves a balance of $335. Because it was flagged as a final payment, ClaimCenter creates areserve transaction of -S335which brings the reserve line total to zero.\n\nIf a payment is non-eroding, then the payment does not cause the amount of money in the reserve line to decrease. In this case, the only transactions that are created are payments.",
@@ -215,7 +215,7 @@
     },
     {
       "slideNumber": 13,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -228,7 +228,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 14,
@@ -266,7 +267,7 @@
     },
     {
       "slideNumber": 16,
-      "title": "",
+      "title": "What is a check?",
       "bodyParagraphs": [],
       "originalNotes": "What is a check?\nIn ClaimCenter, checks are payments or transfers of funds from one or more reserve lines to a claimant or other third party. Checks may be actual checks or Electronic Funds Transfers. Checks, or payments, may be to one or more parties. For example, a payment for a Homeowners claim may made payable to the homeowner and the mortgage company. A single check may also be for multiple payments. For example, a payment may include reimbursement for medical bills as well as towing or car rental.\n\nEvery check, whether it is a single check or part of multiple checks, is always part of a checkset.",
       "notes": "What is a check?\nIn ClaimCenter, checks are payments or transfers of funds from one or more reserve lines to a claimant or other third party. Checks may be actual checks or Electronic Funds Transfers. Checks, or payments, may be to one or more parties. For example, a payment for a Homeowners claim may made payable to the homeowner and the mortgage company. A single check may also be for multiple payments. For example, a payment may include reimbursement for medical bills as well as towing or car rental.\n\nEvery check, whether it is a single check or part of multiple checks, is always part of a checkset.",
@@ -283,10 +284,10 @@
     },
     {
       "slideNumber": 17,
-      "title": "",
+      "title": "Payment wizard (1 of 3)",
       "bodyParagraphs": [],
-      "originalNotes": "Payment wizard (1 of 3)\nChecks, or payments, are created using the Payment Wizard. When you start thepayment wizard, you create a checkset. Initially, the checkset is empty, meaning that no checks are in the checkset.\n\nDuring this first step, you specify the number payees which determines the number of checks. For example, if the payment is split between theclaimant and their attomey, there will be two payees and two checks. If there are multiple payees, then you must specify the amount of money that will go to each of the secondary payees  This is specified either as a percentage or as a fixed amount.  When you specify the payees, you also may edit the payment method and delivery address if the payment is a check or the bank account and routing number if it is an Electronic Funds Transfer.\n\nYou can also specify joint payees which makes the single check payable to both parties. An example of joint payees would bea homeowners claim where the check is payable to the homeowner and the mortgage company.",
-      "notes": "Payment wizard (1 of 3)\nChecks, or payments, are created using the Payment Wizard. When you start thepayment wizard, you create a checkset. Initially, the checkset is empty, meaning that no checks are in the checkset.\n\nDuring this first step, you specify the number payees which determines the number of checks. For example, if the payment is split between theclaimant and their attomey, there will be two payees and two checks. If there are multiple payees, then you must specify the amount of money that will go to each of the secondary payees  This is specified either as a percentage or as a fixed amount.  When you specify the payees, you also may edit the payment method and delivery address if the payment is a check or the bank account and routing number if it is an Electronic Funds Transfer.\n\nYou can also specify joint payees which makes the single check payable to both parties. An example of joint payees would bea homeowners claim where the check is payable to the homeowner and the mortgage company.",
+      "originalNotes": "Payment wizard (1 of 3)\nChecks, or payments, are created using the Payment Wizard. When you start thepayment wizard, you create a checkset. Initially, the checkset is empty, meaning that no checks are in the checkset.\n\nDuring this first step, you specify the number payees which determines the number of checks. For example, if the payment is split between theclaimant and their attomey, there will be two payees and two checks. If there are multiple payees, then you must specify the amount of money that will go to each of the secondary payees This is specified either as a percentage or as a fixed amount. When you specify the payees, you also may edit the payment method and delivery address if the payment is a check or the bank account and routing number if it is an Electronic Funds Transfer.\n\nYou can also specify joint payees which makes the single check payable to both parties. An example of joint payees would bea homeowners claim where the check is payable to the homeowner and the mortgage company.",
+      "notes": "Payment wizard (1 of 3)\nChecks, or payments, are created using the Payment Wizard. When you start thepayment wizard, you create a checkset. Initially, the checkset is empty, meaning that no checks are in the checkset.\n\nDuring this first step, you specify the number payees which determines the number of checks. For example, if the payment is split between theclaimant and their attomey, there will be two payees and two checks. If there are multiple payees, then you must specify the amount of money that will go to each of the secondary payees This is specified either as a percentage or as a fixed amount. When you specify the payees, you also may edit the payment method and delivery address if the payment is a check or the bank account and routing number if it is an Electronic Funds Transfer.\n\nYou can also specify joint payees which makes the single check payable to both parties. An example of joint payees would bea homeowners claim where the check is payable to the homeowner and the mortgage company.",
       "narration": "",
       "ocrText": "| Payment wizard (1 of 3) i\n\nStep 1: Specify the payees.\n\nCheckset\n\npay to: Jim Means(injured worker)\n\nam, (1\n\nSas\n\npay to: Paula Gellar (lawyer)\nportion: 20%",
       "ocrWordCount": 28,
@@ -300,7 +301,7 @@
     },
     {
       "slideNumber": 18,
-      "title": "",
+      "title": "Payment wizard (2 of 3)",
       "bodyParagraphs": [],
       "originalNotes": "Payment wizard (2 of 3)\nDuring the second step of the wizard, you specify one or more payment transactions. For each payment transaction, you identifythe reserve line from which themoney will come and the amount. Remember that each payment always comes from a reserveline. The total amount of thecheckset is displayed on the payment information screen and is updated as you add paymentsto the checkset.",
       "notes": "Payment wizard (2 of 3)\nDuring the second step of the wizard, you specify one or more payment transactions. For each payment transaction, you identifythe reserve line from which themoney will come and the amount. Remember that each payment always comes from a reserveline. The total amount of thecheckset is displayed on the payment information screen and is updated as you add paymentsto the checkset.",
@@ -317,7 +318,7 @@
     },
     {
       "slideNumber": 19,
-      "title": "",
+      "title": "Payment wizard (3 of 3)",
       "bodyParagraphs": [],
       "originalNotes": "Payment wizard (3 of 3)\nThe third step is where you add check instructions. This could include information about the date of service, an invoice number or any check memos that need to be recorded- In addition, you can specify that the check is recurring or is a single payment and the date the payment should be issued.\n\nOnce that information is complete and you click Finish, the checkset is populated with the check or checks.",
       "notes": "Payment wizard (3 of 3)\nThe third step is where you add check instructions. This could include information about the date of service, an invoice number or any check memos that need to be recorded- In addition, you can specify that the check is recurring or is a single payment and the date the payment should be issued.\n\nOnce that information is complete and you click Finish, the checkset is populated with the check or checks.",
@@ -334,12 +335,12 @@
     },
     {
       "slideNumber": 20,
-      "title": "",
+      "title": "Automatic payments (recurring payments)",
       "bodyParagraphs": [],
       "originalNotes": "Automatic payments (recurring payments)\nIn the base application, there are a series of fields that appear in the \"Set check instructions\" step only if the check is automatic or EFT These fields let you specify additional information that the automatic or electronic system can take advantage of.\n\nFor Workers' Comp, you can specify the service period, which is the period of time over which a payment represented in a check is eamed.\n\nIdentifying service periods is useful when handling an IW who first receives TTD, then TPD and then potentially PPD. Each mayinvolve different payment amounts and periods of time.\n\nThe most common example of a check's service period is found in workers' compensation claims. A primary type of loss in this kind of claim is for the worker's lost wages. In this case, the insured is entitled to all or part of the wages they would have earned had they been physically able to work. For example, if that periodof time was from August 1 — 14, the check's service period would be August 1 — 14. The payment in the check identifies the time period over which the damage— in this case, lost wages— occurred.",
       "notes": "Automatic payments (recurring payments)\nIn the base application, there are a series of fields that appear in the \"Set check instructions\" step only if the check is automatic or EFT These fields let you specify additional information that the automatic or electronic system can take advantage of.\n\nFor Workers' Comp, you can specify the service period, which is the period of time over which a payment represented in a check is eamed.\n\nIdentifying service periods is useful when handling an IW who first receives TTD, then TPD and then potentially PPD. Each mayinvolve different payment amounts and periods of time.\n\nThe most common example of a check's service period is found in workers' compensation claims. A primary type of loss in this kind of claim is for the worker's lost wages. In this case, the insured is entitled to all or part of the wages they would have earned had they been physically able to work. For example, if that periodof time was from August 1 — 14, the check's service period would be August 1 — 14. The payment in the check identifies the time period over which the damage— in this case, lost wages— occurred.",
       "narration": "",
-      "ocrText": "| Automatic payments (recurring payments) Gi\n\n¢ The Check wizard allows creation of automatic future payments\n¢ Specify frequency and number of checks\n* Service period is the timeframe this set of checks covers\n\n« When the second-to-last check is submitted, an activity for two days before the last\ncheck is created\n\n¢ The activity is a reminder that the payment stream is ending\n\nCheck set 4@)\nJune ==> =\n\nAugust",
+      "ocrText": "| Automatic payments (recurring payments) Gi\n\n• The Check wizard allows creation of automatic future payments\n• Specify frequency and number of checks\n* Service period is the timeframe this set of checks covers\n\n« When the second-to-last check is submitted, an activity for two days before the last\ncheck is created\n\n• The activity is a reminder that the payment stream is ending\n\nCheck set 4@)\nJune ==> =\n\nAugust",
       "ocrWordCount": 71,
       "ocrConfidence": 87.18,
       "hasTable": false,
@@ -351,7 +352,7 @@
     },
     {
       "slideNumber": 21,
-      "title": "",
+      "title": "Check processing integration",
       "bodyParagraphs": [],
       "originalNotes": "Check processing Integration\nClaimCenter does not have a check writing or Electronic Funds Transfer issuing process. It uses a built-in integration point to connect to an external check processing system. These systems process checks andElectronic Funds Transfers based on the data received from ClaimCenter- The data exchange begins with ClaimCenter sending check or Electronic Funds Transfer information like the amount, line items, check memos, payees, and so on. It also receives back from the integrated system the check status like requesting, requested, issued, and so on.",
       "notes": "Check processing Integration\nClaimCenter does not have a check writing or Electronic Funds Transfer issuing process. It uses a built-in integration point to connect to an external check processing system. These systems process checks andElectronic Funds Transfers based on the data received from ClaimCenter- The data exchange begins with ClaimCenter sending check or Electronic Funds Transfer information like the amount, line items, check memos, payees, and so on. It also receives back from the integrated system the check status like requesting, requested, issued, and so on.",
@@ -368,10 +369,10 @@
     },
     {
       "slideNumber": 22,
-      "title": "",
+      "title": "The life cycle of a check",
       "bodyParagraphs": [],
-      "originalNotes": "The life cycle of a check\nCreating a check, or payment, results in a check or Electronic Funds Transfer which goes through a number of phases in its lifecycle. The lifecycle isimportant because different actions can be taken at different phases of a lifecycle. For example, you can't delete a check once it has been issued.  However, a check can be deleted if it is in the awaiting submission phase.",
-      "notes": "The life cycle of a check\nCreating a check, or payment, results in a check or Electronic Funds Transfer which goes through a number of phases in its lifecycle. The lifecycle isimportant because different actions can be taken at different phases of a lifecycle. For example, you can't delete a check once it has been issued.  However, a check can be deleted if it is in the awaiting submission phase.",
+      "originalNotes": "The life cycle of a check\nCreating a check, or payment, results in a check or Electronic Funds Transfer which goes through a number of phases in its lifecycle. The lifecycle isimportant because different actions can be taken at different phases of a lifecycle. For example, you can't delete a check once it has been issued. However, a check can be deleted if it is in the awaiting submission phase.",
+      "notes": "The life cycle of a check\nCreating a check, or payment, results in a check or Electronic Funds Transfer which goes through a number of phases in its lifecycle. The lifecycle isimportant because different actions can be taken at different phases of a lifecycle. For example, you can't delete a check once it has been issued. However, a check can be deleted if it is in the awaiting submission phase.",
       "narration": "",
       "ocrText": "| The life cycle of a check\n\nClaimCenter\n\nCO ]>\n\nExternal\nCheck\nProcessing",
       "ocrWordCount": 13,
@@ -385,7 +386,7 @@
     },
     {
       "slideNumber": 23,
-      "title": "",
+      "title": "The life cycle of a check - Step 1",
       "bodyParagraphs": [],
       "originalNotes": "The life cycle of a check — Step 1\nInitially, a check is in a draft state while it's being created within the payment wizard.",
       "notes": "The life cycle of a check — Step 1\nInitially, a check is in a draft state while it's being created within the payment wizard.",
@@ -402,7 +403,7 @@
     },
     {
       "slideNumber": 24,
-      "title": "",
+      "title": "The life cycle of a check - Step 2",
       "bodyParagraphs": [],
       "originalNotes": "The life cycle of a check — Step 2\nWhen a check is created, the checks' status is set to Pending Approval. This is the first phase, other than draft, in the lifecycle of a check.",
       "notes": "The life cycle of a check — Step 2\nWhen a check is created, the checks' status is set to Pending Approval. This is the first phase, other than draft, in the lifecycle of a check.",
@@ -419,7 +420,7 @@
     },
     {
       "slideNumber": 25,
-      "title": "",
+      "title": "The life cycle of a check - Step 3",
       "bodyParagraphs": [],
       "originalNotes": "The life cycle of a check — Step 3\nIf a check requires approval, it stays in the Pending Approval phase until it is either approved or rejected. Remember that the check transaction goes through the approval cycle like any other transactiom If the user has the authority to issue the check for the amount of the check, then it is approved. Othewise, it is flagged as requiring approval from a supervisor.",
       "notes": "The life cycle of a check — Step 3\nIf a check requires approval, it stays in the Pending Approval phase until it is either approved or rejected. Remember that the check transaction goes through the approval cycle like any other transactiom If the user has the authority to issue the check for the amount of the check, then it is approved. Othewise, it is flagged as requiring approval from a supervisor.",
@@ -436,7 +437,7 @@
     },
     {
       "slideNumber": 26,
-      "title": "",
+      "title": "] The life cycle of a check - Step 4",
       "bodyParagraphs": [],
       "originalNotes": "The life cycle of a check — Step 4\nIf it is approved, or if no approval is required, the check advances to Awaiting Submission status. This status or phase is where the check transaction waits until a batch process moves it along in the lifecycle.",
       "notes": "The life cycle of a check — Step 4\nIf it is approved, or if no approval is required, the check advances to Awaiting Submission status. This status or phase is where the check transaction waits until a batch process moves it along in the lifecycle.",
@@ -453,10 +454,10 @@
     },
     {
       "slideNumber": 27,
-      "title": "",
+      "title": "The life cycle of a check - Step 5",
       "bodyParagraphs": [],
-      "originalNotes": "The life cycle of a check — Step 5\nNext, a batch process sends all of the checks in awaiting submission status to the external check processing system. Oncesent, its status is changed to Requesting or Requested. The requesting status means that the issue date was reached and thecheck request has been sent tothe external system. When the external system acknowledges the check request, the status is changed from requesting to requested.",
-      "notes": "The life cycle of a check — Step 5\nNext, a batch process sends all of the checks in awaiting submission status to the external check processing system. Oncesent, its status is changed to Requesting or Requested. The requesting status means that the issue date was reached and thecheck request has been sent tothe external system. When the external system acknowledges the check request, the status is changed from requesting to requested.",
+      "originalNotes": "The life cycle of a check — Step 5\nNext, a batch process sends all of the checks in awaiting submission status to the external check processing system. Oncesent, its status is changed to Requesting or Requested. The requesting status means that the issue date was reached and thecheck request has been sent to the external system. When the external system acknowledges the check request, the status is changed from requesting to requested.",
+      "notes": "The life cycle of a check — Step 5\nNext, a batch process sends all of the checks in awaiting submission status to the external check processing system. Oncesent, its status is changed to Requesting or Requested. The requesting status means that the issue date was reached and thecheck request has been sent to the external system. When the external system acknowledges the check request, the status is changed from requesting to requested.",
       "narration": "",
       "ocrText": "| The life cycle of a check - Step 5\n\nClaimCenter\n\nbatch\nprocess\n\nRequesting / Requested\n>O)> q ieee,\n\nExternal\nCheck\nProcessing",
       "ocrWordCount": 22,
@@ -470,7 +471,7 @@
     },
     {
       "slideNumber": 28,
-      "title": "",
+      "title": "The life cycle of a check - Step 6",
       "bodyParagraphs": [],
       "originalNotes": "The life cycle of a check — Step 6\nWhen the check processing system reports that the check has been issued, the status changesto Issued.",
       "notes": "The life cycle of a check — Step 6\nWhen the check processing system reports that the check has been issued, the status changesto Issued.",
@@ -487,10 +488,10 @@
     },
     {
       "slideNumber": 29,
-      "title": "",
+      "title": "The life cycle of a check - Step 7",
       "bodyParagraphs": [],
-      "originalNotes": "The life cycle of a check — Step 7\nThe last phase or status is when the payee or payees have cashed the check, or the Electronic Funds Transfer is complete. When that happens, the external check processing system notifies ClaimCenter to set the status to Cleared.\n\nThe Pending Approval, Rejected, and Awaiting Submission statuses are managed by ClaimCenter- The external check processing system largely manages the latter three steps,  identifying that the check has been received, processed, and then cashed.",
-      "notes": "The life cycle of a check — Step 7\nThe last phase or status is when the payee or payees have cashed the check, or the Electronic Funds Transfer is complete. When that happens, the external check processing system notifies ClaimCenter to set the status to Cleared.\n\nThe Pending Approval, Rejected, and Awaiting Submission statuses are managed by ClaimCenter- The external check processing system largely manages the latter three steps,  identifying that the check has been received, processed, and then cashed.",
+      "originalNotes": "The life cycle of a check — Step 7\nThe last phase or status is when the payee or payees have cashed the check, or the Electronic Funds Transfer is complete. When that happens, the external check processing system notifies ClaimCenter to set the status to Cleared.\n\nThe Pending Approval, Rejected, and Awaiting Submission statuses are managed by ClaimCenter- The external check processing system largely manages the latter three steps, identifying that the check has been received, processed, and then cashed.",
+      "notes": "The life cycle of a check — Step 7\nThe last phase or status is when the payee or payees have cashed the check, or the Electronic Funds Transfer is complete. When that happens, the external check processing system notifies ClaimCenter to set the status to Cleared.\n\nThe Pending Approval, Rejected, and Awaiting Submission statuses are managed by ClaimCenter- The external check processing system largely manages the latter three steps, identifying that the check has been received, processed, and then cashed.",
       "narration": "",
       "ocrText": "| The life cycle of a check - Step 7 G\n\nClaimCenter\n\nbatch\nprocess\n\nRequesting / Requested\n>O)> q ies,\n\nExternal\nCheck Cleared\nProcessing",
       "ocrWordCount": 24,
@@ -504,10 +505,10 @@
     },
     {
       "slideNumber": 30,
-      "title": "",
+      "title": "The life cycle of a check - Step 8",
       "bodyParagraphs": [],
-      "originalNotes": "The life cycle of a check — Step 8\nThere are specific times in the lifecycle of a check when a user may take actions on a check.  While a check is in Awaiting Submission status, it may be edited or even deleted. Remember that in Awaiting Submission, it has not been sent to the external check processing system by the batch process. After it has been sent and the status is still Requesting or Requested, which means that it has not yet been issued, the payment may be voided.\n\nOnce the check has reached issued status, it may be stopped or voided. Generally, a check is voided if it is still in the possession of the issuer. Once it has left the issuer, then it may only be stopped.\n\nThe principal is based on a physical check, but the concepts apply to a check or an ElectronicFunds Transfer. If an ElectronicFunds Transfer has not be sent, then it can be voided. Once it has been sent, it should only be stopped.",
-      "notes": "The life cycle of a check — Step 8\nThere are specific times in the lifecycle of a check when a user may take actions on a check.  While a check is in Awaiting Submission status, it may be edited or even deleted. Remember that in Awaiting Submission, it has not been sent to the external check processing system by the batch process. After it has been sent and the status is still Requesting or Requested, which means that it has not yet been issued, the payment may be voided.\n\nOnce the check has reached issued status, it may be stopped or voided. Generally, a check is voided if it is still in the possession of the issuer. Once it has left the issuer, then it may only be stopped.\n\nThe principal is based on a physical check, but the concepts apply to a check or an ElectronicFunds Transfer. If an ElectronicFunds Transfer has not be sent, then it can be voided. Once it has been sent, it should only be stopped.",
+      "originalNotes": "The life cycle of a check — Step 8\nThere are specific times in the lifecycle of a check when a user may take actions on a check. While a check is in Awaiting Submission status, it may be edited or even deleted. Remember that in Awaiting Submission, it has not been sent to the external check processing system by the batch process. After it has been sent and the status is still Requesting or Requested, which means that it has not yet been issued, the payment may be voided.\n\nOnce the check has reached issued status, it may be stopped or voided. Generally, a check is voided if it is still in the possession of the issuer. Once it has left the issuer, then it may only be stopped.\n\nThe principal is based on a physical check, but the concepts apply to a check or an ElectronicFunds Transfer. If an ElectronicFunds Transfer has not be sent, then it can be voided. Once it has been sent, it should only be stopped.",
+      "notes": "The life cycle of a check — Step 8\nThere are specific times in the lifecycle of a check when a user may take actions on a check. While a check is in Awaiting Submission status, it may be edited or even deleted. Remember that in Awaiting Submission, it has not been sent to the external check processing system by the batch process. After it has been sent and the status is still Requesting or Requested, which means that it has not yet been issued, the payment may be voided.\n\nOnce the check has reached issued status, it may be stopped or voided. Generally, a check is voided if it is still in the possession of the issuer. Once it has left the issuer, then it may only be stopped.\n\nThe principal is based on a physical check, but the concepts apply to a check or an ElectronicFunds Transfer. If an ElectronicFunds Transfer has not be sent, then it can be voided. Once it has been sent, it should only be stopped.",
       "narration": "",
       "ocrText": "| The life cycle of a check - Step 8 G\n\nMay be deleted\nClaimCenter or edited\n\nbatch\nBP] process\n\nIV EWM e-miel(e(-temm Requesting / Requested\n=O => y q ie] q\n\nExternal\nCheck May be stopped Cleared\nProcessing",
       "ocrWordCount": 39,
@@ -521,7 +522,7 @@
     },
     {
       "slideNumber": 31,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -534,7 +535,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 32,
@@ -555,7 +557,7 @@
     },
     {
       "slideNumber": 33,
-      "title": "",
+      "title": "Student Exercise",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -589,12 +591,12 @@
     },
     {
       "slideNumber": 35,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n_~ — Betty Baker went through the payment wizard one time. She specified\noo three payees (and there were no joint payees or recurring payments).\n¢ Based on this information alone:\nA. Can you tell how many CheckSets there are?\nB. Can you tell how many checks there are?\n\nc. Can you tell how many payment transactions there are?\n\nSS oe ooo e eo oe ooooOoD",
+      "ocrText": "Question G\nBetty Baker went through the payment wizard one time. She specified\noo three payees (and there were no joint payees or recurring payments).\n• Based on this information alone:\nA. Can you tell how many CheckSets there are?\nB. Can you tell how many checks there are?\nc. Can you tell how many payment transactions there are?\nSS oe ooo e eo oe ooooOoD",
       "ocrWordCount": 68,
       "ocrConfidence": 87.36,
       "hasTable": false,
@@ -602,16 +604,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Betty Baker went through the payment wizard one time. She specified",
+        "answer": "O three payees (and there were no joint payees or recurring payments). • Based on this information alone: A. Can you tell how many CheckSets there are? Yes. There is one. (Each iteration of the payment wizard creates one checkset.) B. Can you tell how many checks there are? Yes. There are three. (Unless there are joint payees, each payee has a separate check. Unless there are recurring checks, then for three payees, there must be three checks.) c. Can you tell how many payment transactions there are? No. You can't tell. (The number of payment transactions is not tied to the number of payees.)"
+      }
     },
     {
       "slideNumber": 36,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer ia\n\n_~ — Betty Baker went through the payment wizard one time. She specified\no three payees (and there were no joint payees or recurring payments).\n¢ Based on this information alone:\n\nA. Can you tell how many CheckSets there are? Yes. There is one.\n(Each iteration of the payment wizard creates one checkset.)\n\nB. Can you tell how many checks there are? Yes. There are three.\n(Unless there are joint payees, each payee has a separate check.\nUnless there are recurring checks, then for three payees, there\nmust be three checks.)\n\nc. Can you tell how many payment transactions there are? No. You can't\ntell. (The number of payment transactions is not tied to the\nnumber of payees.)\n\nSSS eee oe eo ooo e SoD",
+      "ocrText": "Answer ia\nBetty Baker went through the payment wizard one time. She specified\no three payees (and there were no joint payees or recurring payments).\n• Based on this information alone:\nA. Can you tell how many CheckSets there are? Yes. There is one.\n(Each iteration of the payment wizard creates one checkset.)\nB. Can you tell how many checks there are? Yes. There are three.\n(Unless there are joint payees, each payee has a separate check.\nUnless there are recurring checks, then for three payees, there\nmust be three checks.)\nc. Can you tell how many payment transactions there are? No. You can't\ntell. (The number of payment transactions is not tied to the\nnumber of payees.)\nSSS eee oe eo ooo e SoD",
       "ocrWordCount": 127,
       "ocrConfidence": 90.38,
       "hasTable": false,
@@ -623,12 +629,12 @@
     },
     {
       "slideNumber": 37,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,- — Acheck includes a $200 final payment from a $500 reserve line. Why\n¢ does ClaimCenter create a second transaction? What is the dollar\n\n“ amount of this transaction?\n\nSS oe ooo e eo oe ooooOoD\n\nGi",
+      "ocrText": "Question\nA check includes a $200 final payment from a $500 reserve line. Why\n• does ClaimCenter create a second transaction? What is the dollar\n“ amount of this transaction?\nSS oe ooo e eo oe ooooOoD\nGi",
       "ocrWordCount": 39,
       "ocrConfidence": 81.97,
       "hasTable": false,
@@ -636,16 +642,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "A check includes a $200 final payment from a $500 reserve line. Why",
+        "answer": "O does ClaimCenter create a second transaction? What is the dollar : amount of this transaction? The second transaction is used to zero out the reserve line. The dollar amount of this transaction will be -$300, since there is $300 remaining after the $200 payment transaction."
+      }
     },
     {
       "slideNumber": 38,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer ia\n\n,- — Acheck includes a $200 final payment from a $500 reserve line. Why\no does ClaimCenter create a second transaction? What is the dollar\n: amount of this transaction?\n\nThe second transaction is used to zero out the reserve line. The dollar amount of this\ntransaction will be -$300, since there is $300 remaining after the $200 payment\ntransaction.\n\nSSS eee oe eo ooo e SoD",
+      "ocrText": "Answer ia\nA check includes a $200 final payment from a $500 reserve line. Why\no does ClaimCenter create a second transaction? What is the dollar\namount of this transaction?\nThe second transaction is used to zero out the reserve line. The dollar amount of this\ntransaction will be -$300, since there is $300 remaining after the $200 payment\ntransaction.\nSSS eee oe eo ooo e SoD",
       "ocrWordCount": 69,
       "ocrConfidence": 87.57,
       "hasTable": false,
@@ -657,12 +667,12 @@
     },
     {
       "slideNumber": 39,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,~ — Inwhat status must a check be for a user to delete the check?\n\n¢\n4\n¢\n\nSS oe ooo e eo oe ooooOoD",
+      "ocrText": "Question\nIn what status must a check be for a user to delete the check?\n•\n•\nSS oe ooo e eo oe ooooOoD",
       "ocrWordCount": 26,
       "ocrConfidence": 70.85,
       "hasTable": false,
@@ -670,16 +680,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "In what status must a check be for a user to delete the check?",
+        "answer": "Awaiting submission"
+      }
     },
     {
       "slideNumber": 40,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n,~ — Inwhat status must a check be for a user to delete the check?\n¢\n4\n4\n\nAwaiting submission\n\nSSS eee oe eo ooo e SoD",
+      "ocrText": "Answer\nIn what status must a check be for a user to delete the check?\n•\nAwaiting submission\nSSS eee oe eo ooo e SoD",
       "ocrWordCount": 28,
       "ocrConfidence": 70.79,
       "hasTable": false,
@@ -691,12 +705,12 @@
     },
     {
       "slideNumber": 41,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,7~ — Can you start the payment wizard when the claim is not at “ability to\n7 pay\"? Why?\n\n¢\n\nSS oe ooo e eo oe ooooOoD\n\nGi",
+      "ocrText": "Question\nCan you start the payment wizard when the claim is not at “ability to\npay\"? Why?\n•\nSS oe ooo e eo oe ooooOoD\nGi",
       "ocrWordCount": 29,
       "ocrConfidence": 70.08,
       "hasTable": false,
@@ -704,16 +718,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Can you start the payment wizard when the claim is not at “ability to",
+        "answer": "7 pay\"? Why? No. Validation rules prevent you from starting the payment wizard if the claim is not at “ability to pay\"."
+      }
     },
     {
       "slideNumber": 42,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer ia\n\n,7~ — Can you start the payment wizard when the claim is not at “ability to\n7 pay\"? Why?\n\n¢\n\nNo. Validation rules prevent you from starting the payment wizard if the claim is not at\n“ability to pay\".\n\nSSS eee oe eo ooo e SoD",
+      "ocrText": "Answer ia\nCan you start the payment wizard when the claim is not at “ability to\npay\"? Why?\n•\nNo. Validation rules prevent you from starting the payment wizard if the claim is not at\n“ability to pay\".\nSSS eee oe eo ooo e SoD",
       "ocrWordCount": 48,
       "ocrConfidence": 77.72,
       "hasTable": false,
@@ -725,7 +743,7 @@
     },
     {
       "slideNumber": 43,
-      "title": "",
+      "title": "Lesson",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -751,6 +769,11 @@
       "index": 2,
       "filename": "IS_Claim_10_02.mp4",
       "path": "/academy/guidewire/videos/ch05/IS_Claim_10_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "IS_Claim_10_03.mp4",
+      "path": "/academy/guidewire/videos/ch05/IS_Claim_10_03.mp4"
     }
   ],
   "hasNotes": true,

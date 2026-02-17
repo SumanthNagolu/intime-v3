@@ -241,14 +241,14 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "What is the difference between a policy and a PolicyType in\n¢ ClaimCenter?",
+      "question": "What is the difference between a policy and a PolicyType in\nClaimCenter?",
       "referenceAnswer": "A policy is a product that is sold to customers, that promises to pay money when a\nspecified LossType occurs. It is a contract between the insurer and the insured.\nA PolicyType identifies the line of business associated with a policy, and indicates the\ncoverages (Coverage Types) that can be associated with the policy.",
       "questionKey": "slide-20"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "e What is the purpose of a CoverageSubtype?",
+      "question": "What is the purpose of a CoverageSubtype?",
       "referenceAnswer": "It connects CoverageTypes to ExposureTypes.\nA CoverageSubtype is a pair of one CoverageType and one ExposureType. It\nmodels the complex relationship between CoverageTypes and ExposureTypes as a\nsimple parent-child relationship that is similar to the other levels in the Line of\nBusiness hierarchy.",
       "questionKey": "slide-22"
     },

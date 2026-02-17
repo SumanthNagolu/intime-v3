@@ -324,7 +324,7 @@
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "a wa a rule set category do exposure rules run before claim rules?",
+      "question": "A wa a rule set category do exposure rules run before claim rules?",
       "referenceAnswer": "The correct answer is Segmentation. Exposure rules are run first because claim\nsegmentation typically depends upon the outcome of exposure segmentation.",
       "questionKey": "slide-42"
     },
@@ -338,14 +338,14 @@
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "Which claim-evel rule set categories are also executed outside of claim\nsetup?\n\nFor each, give a non-claim setup example of when they might run.",
+      "question": "Which claim-evel rule set categories are also executed outside of claim\nsetup?\nFor each, give a non-claim setup example of when they might run.",
       "referenceAnswer": "The correct answers are:\nAssignment rules — Run whenever an object such as an activity is reassigned using\nautomated assignment.\nPreupdate rules — Run whenever an object such as an exposure is created or\nmodified.\nValidation rules — Run whenever an object such as an activity is created or modified.\nSS eeesee seen ee ese",
       "questionKey": "slide-46"
     },
     {
       "type": "knowledge_check",
       "id": "kc-5",
-      "question": "Inthe diagram, what rule sets are included\n: in “activity rules”? Segmentation\n\nInitial Reserve",
+      "question": "In the diagram, what rule sets are included\nin “activity rules”? Segmentation\nInitial Reserve",
       "referenceAnswer": "The correct answer is activity presetup,\nactivity assignment, activity postsetup,\nactivity preupdate, and activity validation.",
       "questionKey": "slide-48"
     },

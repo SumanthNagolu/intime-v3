@@ -11,7 +11,7 @@
   "slides": [
     {
       "slideNumber": 1,
-      "title": "",
+      "title": "Configuring Claim Contacts",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -28,12 +28,12 @@
     },
     {
       "slideNumber": 2,
-      "title": "",
+      "title": "Learning Objectives",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives\n\n¢ Configure contact roles\n¢ Configure claim contact widgets in the user\ninterface",
+      "ocrText": "Lesson\nobjectives\n\n• Configure contact roles\n• Configure claim contact widgets in the user\ninterface",
       "ocrWordCount": 15,
       "ocrConfidence": 88.33,
       "hasTable": false,
@@ -45,7 +45,7 @@
     },
     {
       "slideNumber": 3,
-      "title": "",
+      "title": "Contacts and roles",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -62,7 +62,7 @@
     },
     {
       "slideNumber": 4,
-      "title": "",
+      "title": "Contacts: review",
       "bodyParagraphs": [],
       "originalNotes": "Contacts: review\nA contact is anybody with whom you might want to communicate regarding the processing of a claim.\n\nA person is an actual human being who has some connection with the claim. Examples include claimants, reporters, doctors, and attorneys.\n\nA company is a corporate entity such as an auto repair shop, a hospital, or a law firm.\n\nA place, or venue, is a location for a scheduled event relevant to claims processing. Typically, venues are places where dispute resolution occurs, such as a courthouse or a conference room used for arbitration.",
       "notes": "Contacts: review\nA contact is anybody with whom you might want to communicate regarding the processing of a claim.\n\nA person is an actual human being who has some connection with the claim. Examples include claimants, reporters, doctors, and attorneys.\n\nA company is a corporate entity such as an auto repair shop, a hospital, or a law firm.\n\nA place, or venue, is a location for a scheduled event relevant to claims processing. Typically, venues are places where dispute resolution occurs, such as a courthouse or a conference room used for arbitration.",
@@ -79,10 +79,10 @@
     },
     {
       "slideNumber": 5,
-      "title": "",
+      "title": "Local versus linked contacts",
       "bodyParagraphs": [],
-      "originalNotes": "Local versus linked contacts\nLocal Contacts are associated with a single Claim and exist only in ClaimCenter.\n\nShared Contacts (usually Vendors) are Contacts which can be associated with multiple Claims. They are stored in ContactManager or some other address book application.\n\nWhen a shared Contact is associated with a Claim, a local copy of that Contact is created in ClaimCenter and added to the Claim. So if a change is made to the Dr. Matt Sawyer contact record on Claim 000-00-002003, it does not affect the Dr. Matt Sawyer record on Claim 000-00- 002006.\n\nWhen you change the local copy of a contact , you can (you don’t have to) synchronize the local copy with the address book. If you do this, then local copies of the contact created in the future will reflect this change. (This may require approval by an administrator of the address book application, as it does in ContactManager.)",
-      "notes": "Local versus linked contacts\nLocal Contacts are associated with a single Claim and exist only in ClaimCenter.\n\nShared Contacts (usually Vendors) are Contacts which can be associated with multiple Claims. They are stored in ContactManager or some other address book application.\n\nWhen a shared Contact is associated with a Claim, a local copy of that Contact is created in ClaimCenter and added to the Claim. So if a change is made to the Dr. Matt Sawyer contact record on Claim 000-00-002003, it does not affect the Dr. Matt Sawyer record on Claim 000-00- 002006.\n\nWhen you change the local copy of a contact , you can (you don’t have to) synchronize the local copy with the address book. If you do this, then local copies of the contact created in the future will reflect this change. (This may require approval by an administrator of the address book application, as it does in ContactManager.)",
+      "originalNotes": "Local versus linked contacts\nLocal Contacts are associated with a single Claim and exist only in ClaimCenter.\n\nShared Contacts (usually Vendors) are Contacts which can be associated with multiple Claims. They are stored in Contact Manager or some other address book application.\n\nWhen a shared Contact is associated with a Claim, a local copy of that Contact is created in ClaimCenter and added to the Claim. So if a change is made to the Dr. Matt Sawyer contact record on Claim 000-00-002003, it does not affect the Dr. Matt Sawyer record on Claim 000-00- 002006.\n\nWhen you change the local copy of a contact , you can (you don’t have to) synchronize the local copy with the address book. If you do this, then local copies of the contact created in the future will reflect this change. (This may require approval by an administrator of the address book application, as it does in Contact Manager.)",
+      "notes": "Local versus linked contacts\nLocal Contacts are associated with a single Claim and exist only in ClaimCenter.\n\nShared Contacts (usually Vendors) are Contacts which can be associated with multiple Claims. They are stored in Contact Manager or some other address book application.\n\nWhen a shared Contact is associated with a Claim, a local copy of that Contact is created in ClaimCenter and added to the Claim. So if a change is made to the Dr. Matt Sawyer contact record on Claim 000-00-002003, it does not affect the Dr. Matt Sawyer record on Claim 000-00- 002006.\n\nWhen you change the local copy of a contact , you can (you don’t have to) synchronize the local copy with the address book. If you do this, then local copies of the contact created in the future will reflect this change. (This may require approval by an administrator of the address book application, as it does in Contact Manager.)",
       "narration": "",
       "ocrText": "Local versus linked contacts G\n\nLocal Contacts - Linked Contacts\nClaim Oe po-no2ia1 = Claim 000-00-002003 * — Claim 000-00-002006\n\n: Xl, : sh\n. 2D, . eH,\na TZ es ded fo : Ges fare : Ges fare\nStanley Poole (Witness) = pr. Matt Sawyer (1) \" Dr.MattSawyer Express Auto\n\nClaimCenter\n\nObjects in & : & =z\nClaimCenter cas wecedecces : a\nObjects in\nContactManager w v try)\nlo entry) L\n7} o_o)\n© =\n\n: Express Auto\nContact Manager ' Dr. Matt Sawyer",
       "ocrWordCount": 85,
@@ -96,12 +96,12 @@
     },
     {
       "slideNumber": 6,
-      "title": "",
+      "title": "Roles",
       "bodyParagraphs": [],
       "originalNotes": "Roles\nA contact's role is defined by what the contact does on the claim.\n\nA contact may have different roles on different claims: for example, someone who is a doctor on one claim may be an injured party on another claim.\n\nIn addition, one contact may have multiple roles on the same claim. For example, a person who is a driver is often also the insured, an injured party, and the reporter on the same claim.",
       "notes": "Roles\nA contact's role is defined by what the contact does on the claim.\n\nA contact may have different roles on different claims: for example, someone who is a doctor on one claim may be an injured party on another claim.\n\nIn addition, one contact may have multiple roles on the same claim. For example, a person who is a driver is often also the insured, an injured party, and the reporter on the same claim.",
       "narration": "",
-      "ocrText": "| Roles Gi\n\n¢ Every contact associated with a claim has one or more roles that identify its\nrelationship to the claim\n\n« Examples: Doctor, Witness, Claimant, Adjuster, Judge, Hospital, Repair Shop...\n* Contacts on multiple claims may have different roles on each claim\n\n* The contact’s role is specific to the claim",
+      "ocrText": "| Roles Gi\n\n• Every contact associated with a claim has one or more roles that identify its\nrelationship to the claim\n\n« Examples: Doctor, Witness, Claimant, Adjuster, Judge, Hospital, Repair Shop...\n* Contacts on multiple claims may have different roles on each claim\n\n* The contact’s role is specific to the claim",
       "ocrWordCount": 53,
       "ocrConfidence": 90.11,
       "hasTable": false,
@@ -113,10 +113,10 @@
     },
     {
       "slideNumber": 7,
-      "title": "",
+      "title": "Subtypes of contact",
       "bodyParagraphs": [],
-      "originalNotes": "Subtypes of contact\nThe Contact entity is subtyped:\n\nFields are inherited in a hierarchical manner\nThis mirrors the way contacts are in the real world\n\nSubtype categories reflect data gathered about a contact at the subtype level and below. \nThis slide is an example of how data is organized by subtype, with lower levels of the hierarchy inheriting fields set at the higher levels. No 'Assembly Room’ subtype exists under the Legal Venue subtype — this is an example of adding a new subtype.",
-      "notes": "Subtypes of contact\nThe Contact entity is subtyped:\n\nFields are inherited in a hierarchical manner\nThis mirrors the way contacts are in the real world\n\nSubtype categories reflect data gathered about a contact at the subtype level and below. \nThis slide is an example of how data is organized by subtype, with lower levels of the hierarchy inheriting fields set at the higher levels. No 'Assembly Room’ subtype exists under the Legal Venue subtype — this is an example of adding a new subtype.",
+      "originalNotes": "Subtypes of contact\nThe Contact entity is subtyped:\n\nFields are inherited in a hierarchical manner\nThis mirrors the way contacts are in the real world\n\nSubtype categories reflect data gathered about a contact at the subtype level and below.\nThis slide is an example of how data is organized by subtype, with lower levels of the hierarchy inheriting fields set at the higher levels. No 'Assembly Room’ subtype exists under the Legal Venue subtype — this is an example of adding a new subtype.",
+      "notes": "Subtypes of contact\nThe Contact entity is subtyped:\n\nFields are inherited in a hierarchical manner\nThis mirrors the way contacts are in the real world\n\nSubtype categories reflect data gathered about a contact at the subtype level and below.\nThis slide is an example of how data is organized by subtype, with lower levels of the hierarchy inheriting fields set at the higher levels. No 'Assembly Room’ subtype exists under the Legal Venue subtype — this is an example of adding a new subtype.",
       "narration": "",
       "ocrText": "| Subtypes of contact\n\nContact\nPrimary Primary Address\nSubtypes Primary Phone\nFirst Name\n\nLast Name\n\nSecondary\nSubtypes\n\nPrimary Address\nPrimary Phone\nFirst Name\n\nLast Name\n\nLaw License #\nSpecialty\n\nAttorney\n\nGi\n\nPrimary Address\nPrimary Phone\n\nPrimary Address Primary Address\n\nPrimary Phone Primary Phone\nName Name\nEmployees\n\nPrimary Address\nPrimary Phone\nName\nVenueType\n\nPrimary Address Primary Address\n\nAssembly\n\nPrimary Phone Primary Phone\nName Room Name\nEmployees Venue Type\nTowing License # Room #\nCapacity",
       "ocrWordCount": 73,
@@ -130,7 +130,7 @@
     },
     {
       "slideNumber": 8,
-      "title": "",
+      "title": "Contact role data model",
       "bodyParagraphs": [],
       "originalNotes": "Contact role data model\nA role must be related to either the claim as a whole, or some aspect of the claim. The screenshot above shows roles held by Bo Simpson on an auto claim. Bo is claimant on two exposures, an injured party on an injury incident, and the driver on a property incident. In the base configuration, roles can be related to claims, exposures, incidents, matters, evaluations, negotiations, and policies.",
       "notes": "Contact role data model\nA role must be related to either the claim as a whole, or some aspect of the claim. The screenshot above shows roles held by Bo Simpson on an auto claim. Bo is claimant on two exposures, an injured party on an injury incident, and the driver on a property incident. In the base configuration, roles can be related to claims, exposures, incidents, matters, evaluations, negotiations, and policies.",
@@ -147,10 +147,10 @@
     },
     {
       "slideNumber": 9,
-      "title": "",
+      "title": "Contact role data model: Claim and Contact",
       "bodyParagraphs": [],
-      "originalNotes": "Contact role data model: Claim and Contact\nThe Contact entity contains Claim-independent information such as the name of the person, place or company, and the address and other contact\n\ninformation; it identifies the subtype of the Contact. Information about a Contact may be permanently stored elsewhere (typically in an Address Book application, such as ContactManager). This functionality is generally used for Contacts whom the insurer may interact with on many claims, such as a vendor or a legal venue.",
-      "notes": "Contact role data model: Claim and Contact\nThe Contact entity contains Claim-independent information such as the name of the person, place or company, and the address and other contact\n\ninformation; it identifies the subtype of the Contact. Information about a Contact may be permanently stored elsewhere (typically in an Address Book application, such as ContactManager). This functionality is generally used for Contacts whom the insurer may interact with on many claims, such as a vendor or a legal venue.",
+      "originalNotes": "Contact role data model: Claim and Contact\nThe Contact entity contains Claim-independent information such as the name of the person, place or company, and the address and other contact\n\ninformation; it identifies the subtype of the Contact. Information about a Contact may be permanently stored elsewhere (typically in an Address Book application, such as Contact Manager). This functionality is generally used for Contacts whom the insurer may interact with on many claims, such as a vendor or a legal venue.",
+      "notes": "Contact role data model: Claim and Contact\nThe Contact entity contains Claim-independent information such as the name of the person, place or company, and the address and other contact\n\ninformation; it identifies the subtype of the Contact. Information about a Contact may be permanently stored elsewhere (typically in an Address Book application, such as Contact Manager). This functionality is generally used for Contacts whom the insurer may interact with on many claims, such as a vendor or a legal venue.",
       "narration": "",
       "ocrText": "| Contact role data model: Claim and Contact Gi\n\nContact Role Data Model in the UI: Contact.\n\nRoles\n\nRelated To Role\n(3) 3rd Party Vehicle-Bo Simpson Claimant\n(4) 3rd Party Bodily Injury- 80 Simpson Claimant\n\nBo Simpson, Moderate Fracture Injured Party Stores fundamental\n1990 Mazda 626 (7FG745 /California) Driver information about a\n\nclaim\nPerson\n\nStores fundamental\ninformation about a\ncontact",
       "ocrWordCount": 60,
@@ -164,7 +164,7 @@
     },
     {
       "slideNumber": 10,
-      "title": "",
+      "title": "Contact role data model: ClaimContact",
       "bodyParagraphs": [],
       "originalNotes": "Contact role data model: ClaimContact\nA ClaimContact is an entity that mostly exists to pair two foreign keys: a key to a Claim, and a key to a Contact. Thus, it associates Claims and Contacts on a many- to-many basis.\n\nThe Contact referenced by a ClaimContact can be a local contact created for a single claim, such as a witness, or it can be a shared contact like an auto repair shop that is copied from the address book application and associated with many claims.\n\nA Contact may be associated with only one ClaimContact on any given Claim.",
       "notes": "Contact role data model: ClaimContact\nA ClaimContact is an entity that mostly exists to pair two foreign keys: a key to a Claim, and a key to a Contact. Thus, it associates Claims and Contacts on a many- to-many basis.\n\nThe Contact referenced by a ClaimContact can be a local contact created for a single claim, such as a witness, or it can be a shared contact like an auto repair shop that is copied from the address book application and associated with many claims.\n\nA Contact may be associated with only one ClaimContact on any given Claim.",
@@ -181,7 +181,7 @@
     },
     {
       "slideNumber": 11,
-      "title": "",
+      "title": "Contact role data model: ClaimContactRole",
       "bodyParagraphs": [],
       "originalNotes": "Contact role data model: ClaimContactRoIe\nA Contact must have at least one role, and may have many. ClaimContactRole is a join table that stores pairings of ClaimContact and Role on a many-to-many basis.",
       "notes": "Contact role data model: ClaimContactRoIe\nA Contact must have at least one role, and may have many. ClaimContactRole is a join table that stores pairings of ClaimContact and Role on a many-to-many basis.",
@@ -198,10 +198,10 @@
     },
     {
       "slideNumber": 12,
-      "title": "",
+      "title": "Contact role data model: ClaimContactRoleOWner [j",
       "bodyParagraphs": [],
-      "originalNotes": "Contact role data model: ClaimContactRoIeOwner\nClaim Contact Role Owner associates a role with the claim, exposure, incident, matter, evaluation, negotiation, or policy that owns it.\n\nMore precisely, ClaimContactRoleOwner is an interface which is implemented by claims, exposures, and so on.  Implementing the ClaimContactRoleOwner interface means that the implementing entity may own roles relative to a claim and a contact.",
-      "notes": "Contact role data model: ClaimContactRoIeOwner\nClaim Contact Role Owner associates a role with the claim, exposure, incident, matter, evaluation, negotiation, or policy that owns it.\n\nMore precisely, ClaimContactRoleOwner is an interface which is implemented by claims, exposures, and so on.  Implementing the ClaimContactRoleOwner interface means that the implementing entity may own roles relative to a claim and a contact.",
+      "originalNotes": "Contact role data model: ClaimContactRoIeOwner\nClaim Contact Role Owner associates a role with the claim, exposure, incident, matter, evaluation, negotiation, or policy that owns it.\n\nMore precisely, ClaimContactRoleOwner is an interface which is implemented by claims, exposures, and so on. Implementing the ClaimContactRoleOwner interface means that the implementing entity may own roles relative to a claim and a contact.",
+      "notes": "Contact role data model: ClaimContactRoIeOwner\nClaim Contact Role Owner associates a role with the claim, exposure, incident, matter, evaluation, negotiation, or policy that owns it.\n\nMore precisely, ClaimContactRoleOwner is an interface which is implemented by claims, exposures, and so on. Implementing the ClaimContactRoleOwner interface means that the implementing entity may own roles relative to a claim and a contact.",
       "narration": "",
       "ocrText": "| Contact role data model: ClaimContactRoleOWner [j\nContact Role Data Model in the UI: ClaimContactRoleOwner.\n\nRoles\nRelated To Role\n\n(3) 3rd Party Vehicle-B0 Simpson [Claimant\n(4) 3rd Party Bodily Injury - Bo Simpsonf§{ Claimant\nBo Simpson, Moderate Fracture Injured Party\n\n1990 Mazda 626 (7FDG745 / California) f[ Driver\n\nClaimContact\n\nPerson\n\nRole Owner\nName Bo Simpson at\n* Contact\nPerson — Company - Place\n*\nOwning ClaimContactRoleOwner\n\nClaimContactRole",
       "ocrWordCount": 67,
@@ -232,12 +232,12 @@
     },
     {
       "slideNumber": 14,
-      "title": "",
+      "title": "Configuring contact roles",
       "bodyParagraphs": [],
       "originalNotes": "Configuring contact roles\nTo create a new role, you add an entry to the ContactRole typelist. This is an extendible typelist.\n\nOf course, it isn't that simple. Make sure you note the code property you assign to the new role!",
       "notes": "Configuring contact roles\nTo create a new role, you add an entry to the ContactRole typelist. This is an extendible typelist.\n\nOf course, it isn't that simple. Make sure you note the code property you assign to the new role!",
       "narration": "",
-      "ocrText": "| Configuring contact roles\n\nThe ContactRole typelist lists all contact roles.\n\n‘YShowAlly)\n\nElement Code\n> typefilter specialhandli.\n¢ AU_EXT\ntypecode checkpayee\ntypecode negcontact\ntypecode claimant\n\ntypecode other\n\nCheck Payee\nNegotiation\nClaimant\nOther\n\nPriority\n\nlol\n\nName\n\nname\n\ndesc\nidentifierCode\npriority\nretired\n\nE) contactRoletti W) 32\n\nValue\nAU_EXT\nAdministrative Law Judge\nAdministrative Law Judge",
+      "ocrText": "| Configuring contact roles\n\nThe ContactRole typelist lists all contact roles.\n\n‘YShowAlly)\n\nElement Code\n> typefilter specialhandli.\n• AU_EXT\ntypecode checkpayee\ntypecode negcontact\ntypecode claimant\n\ntypecode other\n\nCheck Payee\nNegotiation\nClaimant\nOther\n\nPriority\n\nlol\n\nName\n\nname\n\ndesc\nidentifierCode\npriority\nretired\n\nE) contactRoletti W) 32\n\nValue\nAU_EXT\nAdministrative Law Judge\nAdministrative Law Judge",
       "ocrWordCount": 52,
       "ocrConfidence": 88.26,
       "hasTable": false,
@@ -249,7 +249,7 @@
     },
     {
       "slideNumber": 15,
-      "title": "",
+      "title": "Configuring contact role categories",
       "bodyParagraphs": [],
       "originalNotes": "Configuring contact role categories\nA contacts list has a filter with values that come from the ContactRoleCategory typelist. You usually won't need to add new typecodes to this typelist (though you can if you need to). Each typecode is associated with a list of •categories,\" each of which is associated with a role (identified by its code property). This is discussed in more detail in the next slide.",
       "notes": "Configuring contact role categories\nA contacts list has a filter with values that come from the ContactRoleCategory typelist. You usually won't need to add new typecodes to this typelist (though you can if you need to). Each typecode is associated with a list of •categories,\" each of which is associated with a role (identified by its code property). This is discussed in more detail in the next slide.",
@@ -266,7 +266,7 @@
     },
     {
       "slideNumber": 16,
-      "title": "",
+      "title": "Categorizing roles",
       "bodyParagraphs": [],
       "originalNotes": "Categorizing roles\nThe contacts list includes a filter that can be used to limit how many contacts display in the IJI based on role (useful when there are many contacts on a claim). By default, the filter shows ‘All Roles', but the user can select a different filter such as 'Vendors’ to display a subset of the contacts.\n\nYou usually won't need to add new typecodes to this typelist (though you can if you need to). Each typecode in the ContactRoleCategory typelist is associated with a list of •categories,\" each of which is associated with a value from the ContactRole typelist (identified by its code property).",
       "notes": "Categorizing roles\nThe contacts list includes a filter that can be used to limit how many contacts display in the IJI based on role (useful when there are many contacts on a claim). By default, the filter shows ‘All Roles', but the user can select a different filter such as 'Vendors’ to display a subset of the contacts.\n\nYou usually won't need to add new typecodes to this typelist (though you can if you need to). Each typecode in the ContactRoleCategory typelist is associated with a list of •categories,\" each of which is associated with a value from the ContactRole typelist (identified by its code property).",
@@ -283,7 +283,7 @@
     },
     {
       "slideNumber": 17,
-      "title": "",
+      "title": "Contact role type constraints [a",
       "bodyParagraphs": [],
       "originalNotes": "Contact role type constraints\nRole constraints create relationships between roles, contacts, and entities. Their primary purpose is to enable role assignment, but they are called constraints because they prevent users from assigning roles to contacts in ways that do not make sense.\n\nContact Role Type Constraints determine what contact types may own what roles. For example, the eprimary physicianrole can be held by a contact of subtype Doctor, but it makes no sense for a contact of subtype Attorney to hold that role.",
       "notes": "Contact role type constraints\nRole constraints create relationships between roles, contacts, and entities. Their primary purpose is to enable role assignment, but they are called constraints because they prevent users from assigning roles to contacts in ways that do not make sense.\n\nContact Role Type Constraints determine what contact types may own what roles. For example, the eprimary physicianrole can be held by a contact of subtype Doctor, but it makes no sense for a contact of subtype Attorney to hold that role.",
@@ -300,12 +300,12 @@
     },
     {
       "slideNumber": 18,
-      "title": "",
+      "title": "Entity role constraints",
       "bodyParagraphs": [],
       "originalNotes": "Entity role constraints\nEntity role constraints determine which entities can own roles, and how many of those roles the entity can have. It makes no sense to have two contacts with the role of •driver\" for vehicle incident which describes damage to a single car. Similarly, an auto repair shop cannot have the Edriver\" role. And the \"driver\" role makes no sense at all on a fixed property incident, which describes damage to a building.",
       "notes": "Entity role constraints\nEntity role constraints determine which entities can own roles, and how many of those roles the entity can have. It makes no sense to have two contacts with the role of •driver\" for vehicle incident which describes damage to a single car. Similarly, an auto repair shop cannot have the Edriver\" role. And the \"driver\" role makes no sense at all on a fixed property incident, which describes damage to a building.",
       "narration": "",
-      "ocrText": "| Entity role constraints\n\n¢« How many contacts can\nhave this role?\n\n¢ Which entities can own\nthis role?\n\n« Which loss types can be\nassociated with this role?\n\nPerson\n\non °: 2 Role: Driver\n\n» 2\n\nVehicle Incident\n\nVehicle Incident\n\nA O84 &\n\nVehicle Incident Auto © Shop\n\nQe Yow Driver\n\nFixed Property Incident\n\nRole: Driver",
+      "ocrText": "| Entity role constraints\n\n•« How many contacts can\nhave this role?\n\n• Which entities can own\nthis role?\n\n« Which loss types can be\nassociated with this role?\n\nPerson\n\non °: 2 Role: Driver\n\n» 2\n\nVehicle Incident\n\nVehicle Incident\n\nA O84 &\n\nVehicle Incident Auto © Shop\n\nQe Yow Driver\n\nFixed Property Incident\n\nRole: Driver",
       "ocrWordCount": 57,
       "ocrConfidence": 85.87,
       "hasTable": false,
@@ -317,7 +317,7 @@
     },
     {
       "slideNumber": 19,
-      "title": "",
+      "title": "Configuring contact role type constraints",
       "bodyParagraphs": [],
       "originalNotes": "Configuring contact role type constraints\nContact Role Type Constraints define what contactSubtypes can have what contactRoleCodes. Thus, only a Company can be a Case Management Company, while only a Person can be a Case Manager.\n\nExceptionConstraints allow exceptions to the constraint, in which another contactSubtype can have the role if the entity owning the role is a particular type (entityRef). So while Claimants are normally Persons, a Company can be the Claimant on an Exposure (but not on a Claim).",
       "notes": "Configuring contact role type constraints\nContact Role Type Constraints define what contactSubtypes can have what contactRoleCodes. Thus, only a Company can be a Case Management Company, while only a Person can be a Case Manager.\n\nExceptionConstraints allow exceptions to the constraint, in which another contactSubtype can have the role if the entity owning the role is a particular type (entityRef). So while Claimants are normally Persons, a Company can be the Claimant on an Exposure (but not on a Claim).",
@@ -334,7 +334,7 @@
     },
     {
       "slideNumber": 20,
-      "title": "",
+      "title": "Configuring entity role constraints",
       "bodyParagraphs": [],
       "originalNotes": "Configuring entity role constraints\nEntityRefs define what kind of entity the Role Constraint refers to.\n\nRoleRefs define a relationship between a Role and an Entity which can own that role.\n\nRoleConstraints provide additional information about the relationship:\n\nRoleConstraint — Exclusive means there can only be one contact assigned to this role.\n\nRoleConstraint — Required means that there must be at least one contact assigned to this role.\n\nRoleConstraint —Prohibited means that there cannot be any contacts assigned to this role.\n\nAdditionallnfo means that the RoleConstraint only applies when a particular property of the owning entity meets certain conditions.",
       "notes": "Configuring entity role constraints\nEntityRefs define what kind of entity the Role Constraint refers to.\n\nRoleRefs define a relationship between a Role and an Entity which can own that role.\n\nRoleConstraints provide additional information about the relationship:\n\nRoleConstraint — Exclusive means there can only be one contact assigned to this role.\n\nRoleConstraint — Required means that there must be at least one contact assigned to this role.\n\nRoleConstraint —Prohibited means that there cannot be any contacts assigned to this role.\n\nAdditionallnfo means that the RoleConstraint only applies when a particular property of the owning entity meets certain conditions.",
@@ -351,7 +351,7 @@
     },
     {
       "slideNumber": 21,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -364,7 +364,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 22,
@@ -402,10 +403,10 @@
     },
     {
       "slideNumber": 24,
-      "title": "",
+      "title": "Claim contact widgets",
       "bodyParagraphs": [],
-      "originalNotes": "Claim contact widgets\nClaim Contact Widgets are special input widgets used to meet the special requirements of ClaimContacts.\n\nThey are similar to picker inputs, in that they provide a dropdown arrow which offers a list of the contacts already associated with the claim-\n\nBut they also provide a second dropdown arrow, to the right, which provides a menu with three options:\n\n1. Add a new contact to the claim\n2. Search the address book for an existing contact\n3. If there is a contact already in the input, view the details of that contact.",
-      "notes": "Claim contact widgets\nClaim Contact Widgets are special input widgets used to meet the special requirements of ClaimContacts.\n\nThey are similar to picker inputs, in that they provide a dropdown arrow which offers a list of the contacts already associated with the claim-\n\nBut they also provide a second dropdown arrow, to the right, which provides a menu with three options:\n\n1. Add a new contact to the claim\n2. Search the address book for an existing contact\n3. If there is a contact already in the input, view the details of that contact.",
+      "originalNotes": "Claim contact widgets\nClaim Contact Widgets are special input widgets used to meet the special requirements of ClaimContacts.\n\nThey are similar to picker inputs, in that they provide a dropdown arrow which offers a list of the contacts already associated with the claim.\nBut they also provide a second dropdown arrow, to the right, which provides a menu with three options:\n\n1. Add a new contact to the claim\n2. Search the address book for an existing contact\n3. If there is a contact already in the input, view the details of that contact.",
+      "notes": "Claim contact widgets\nClaim Contact Widgets are special input widgets used to meet the special requirements of ClaimContacts.\n\nThey are similar to picker inputs, in that they provide a dropdown arrow which offers a list of the contacts already associated with the claim.\nBut they also provide a second dropdown arrow, to the right, which provides a menu with three options:\n\n1. Add a new contact to the claim\n2. Search the address book for an existing contact\n3. If there is a contact already in the input, view the details of that contact.",
       "narration": "",
       "ocrText": "| Claim contact widgets Gi\n\n1. Select contacts already associated with the claim\n2. Add a new contact\n4 3. Search the address book for an existing contact\n\nFred Cole\n\nKaren Egertson\nBill Henderson\nMark Henderson\n\n2 New Person\n\n3",
       "ocrWordCount": 40,
@@ -419,7 +420,7 @@
     },
     {
       "slideNumber": 25,
-      "title": "",
+      "title": "Types of claim contact widget",
       "bodyParagraphs": [],
       "originalNotes": "Types of claim contact widget\nThere are two types of claim contact widget: the Claim Contact Cell, for list views, and the Claim Contact Input, for detail views. Both of these widgets provide a dropdown list of contacts already associated with the claim and a menu of options for adding a contact or viewing contact information.",
       "notes": "Types of claim contact widget\nThere are two types of claim contact widget: the Claim Contact Cell, for list views, and the Claim Contact Input, for detail views. Both of these widgets provide a dropdown list of contacts already associated with the claim and a menu of options for adding a contact or viewing contact information.",
@@ -436,7 +437,7 @@
     },
     {
       "slideNumber": 26,
-      "title": "",
+      "title": "Claim contact widget basic properties",
       "bodyParagraphs": [],
       "originalNotes": "Claim contact widget basic properties\nThe screenshot in the upper left shows the Plaintiffs (primary) Attorney on a legal Matter, in the IJI- The screenshot in the upper right shows how this appears in the MatterDetailsDV in Studio.\n\nThe claim property associates the Claim Contact Input with a specific Claim, and is required. The value is the Plaintiffs Attorney (Matter.plaintiffatt).",
       "notes": "Claim contact widget basic properties\nThe screenshot in the upper left shows the Plaintiffs (primary) Attorney on a legal Matter, in the IJI- The screenshot in the upper right shows how this appears in the MatterDetailsDV in Studio.\n\nThe claim property associates the Claim Contact Input with a specific Claim, and is required. The value is the Plaintiffs Attorney (Matter.plaintiffatt).",
@@ -453,10 +454,10 @@
     },
     {
       "slideNumber": 27,
-      "title": "",
+      "title": "Claim contact widget properties:",
       "bodyParagraphs": [],
-      "originalNotes": "Claim contact widget properties: ValueRange and ValueType\nThe valueRange property specifies which contacts associated with the claim can be displayed in the widget. This property must be an array, one of a set of arrays of related contacts associated with the claim. In the example above, the value must be drawn from the Claim’s RelatedAttorneyArray, a derived array, meaning that it is not a physical array on the Claim entity The array is derived from entityroleconstraints-config.xml.\n\nThe valueType property of a claim contact widget specifies what type of entity can be displayed by the widget, and must match the contact role constraint of the claim contact being created. In the example above, it must be an Attorney. (If the contact role constraint is not specific enough for a given case,  you can use the forceContactSubtype property",
-      "notes": "Claim contact widget properties: ValueRange and ValueType\nThe valueRange property specifies which contacts associated with the claim can be displayed in the widget. This property must be an array, one of a set of arrays of related contacts associated with the claim. In the example above, the value must be drawn from the Claim’s RelatedAttorneyArray, a derived array, meaning that it is not a physical array on the Claim entity The array is derived from entityroleconstraints-config.xml.\n\nThe valueType property of a claim contact widget specifies what type of entity can be displayed by the widget, and must match the contact role constraint of the claim contact being created. In the example above, it must be an Attorney. (If the contact role constraint is not specific enough for a given case,  you can use the forceContactSubtype property",
+      "originalNotes": "Claim contact widget properties: ValueRange and ValueType\nThe valueRange property specifies which contacts associated with the claim can be displayed in the widget. This property must be an array, one of a set of arrays of related contacts associated with the claim. In the example above, the value must be drawn from the Claim’s RelatedAttorneyArray, a derived array, meaning that it is not a physical array on the Claim entity The array is derived from entityroleconstraints-config.xml.\n\nThe valueType property of a claim contact widget specifies what type of entity can be displayed by the widget, and must match the contact role constraint of the claim contact being created. In the example above, it must be an Attorney. (If the contact role constraint is not specific enough for a given case, you can use the forceContactSubtype property",
+      "notes": "Claim contact widget properties: ValueRange and ValueType\nThe valueRange property specifies which contacts associated with the claim can be displayed in the widget. This property must be an array, one of a set of arrays of related contacts associated with the claim. In the example above, the value must be drawn from the Claim’s RelatedAttorneyArray, a derived array, meaning that it is not a physical array on the Claim entity The array is derived from entityroleconstraints-config.xml.\n\nThe valueType property of a claim contact widget specifies what type of entity can be displayed by the widget, and must match the contact role constraint of the claim contact being created. In the example above, it must be an Attorney. (If the contact role constraint is not specific enough for a given case, you can use the forceContactSubtype property",
       "narration": "",
       "ocrText": "Claim contact widget properties: Gi\nValueRange and ValueType\n\nPrimary Counsel |\n\nsenses —— —_——]\n\nPlaintiff Law Firm\n\nvalue*\nvalueRange*\nv Advanced properties\n\nMatter.Claim.RelatedAttorneyArray\n\nvalueType entity. Attorney\n\nWhere the values for the What type of entity\nwidget can be drawn from the widget can hold\n\nRelatedAdjudicatorArray Derived array returning Adjudicator (virtual property)”\n\nRelatedAttorneyArrayj Derived array returning Attorney\n\nRelatedAutoRepairShopArray Derived array returning AutoRepairShop (virtual property)”",
       "ocrWordCount": 63,
@@ -470,12 +471,12 @@
     },
     {
       "slideNumber": 28,
-      "title": "",
+      "title": "Claim contact widget advanced properties:",
       "bodyParagraphs": [],
       "originalNotes": "Claim contact widget advanced properties: newContactMenu\nThe \"Search\" and \"View Contact Details\" menu items are automatically included by the existence of a claim contact widget. The item or items above it — in the screenshot, New Person — are determined by the newContactMenu property of the widget. This refers to a set of MenultemSet PCF files, each of which specifies one or more type of Contact that can be created. What the MenultemSet actually contains is menu items, each of which has a label and an action. The action is a \"push\" to the appropriate New Contact Popup PCF file.\n\nThe search in the menu can be suppressed to prevent users from searching the address book for contacts by setting the showSearchlnMenu property to false on either a claimcontactinput or a claimcontactcell. But you can not suppress the 'view contact details' menu item.",
       "notes": "Claim contact widget advanced properties: newContactMenu\nThe \"Search\" and \"View Contact Details\" menu items are automatically included by the existence of a claim contact widget. The item or items above it — in the screenshot, New Person — are determined by the newContactMenu property of the widget. This refers to a set of MenultemSet PCF files, each of which specifies one or more type of Contact that can be created. What the MenultemSet actually contains is menu items, each of which has a label and an action. The action is a \"push\" to the appropriate New Contact Popup PCF file.\n\nThe search in the menu can be suppressed to prevent users from searching the address book for contacts by setting the showSearchlnMenu property to false on either a claimcontactinput or a claimcontactcell. But you can not suppress the 'view contact details' menu item.",
       "narration": "",
-      "ocrText": "| Claim contact widget advanced properties: G\nnewContactMenu\n\n¢« The newContactMenu property determines\nwhat the widget’s menu displays\n\n{Term ReportedBy...\n(TermHowReported.... Claim.HowReported\n\n* ClaimNewPersonOnlyPickerMenultemSet only\nallows persons to be selected\n\n* ClaimNewContactPickerMenultemSet allows all newContociens Caren PesononyPekeenahenset\ncontact types to be selected —7\n* This is the default if nothing is entered maported By\nA ClaimNewCompanyOnlyPickerMenultemSet How Reported Phone\nFull list of A claimNewContactPickerMenultemSet Name + (mone\npicker menus El claimNewDoctorOnlyPickerMenultemSet a —\n\n(You can also —p i claimNewPersonOnlyPickerMenultemSet\nconfigure Ei claimNewRepairShopOnlyPickerMenultemSet\nnew menus) hl claimnewServiceRequestSpecialistPickerMenultemSet\nEi claimNewTowingOnlyPickerMenultemSet\nA ClaimNewVendorOnlyPickerMenultemSet\n\n‘Search\n\nView Contact Details",
+      "ocrText": "| Claim contact widget advanced properties: G\nnewContactMenu\n\n•« The newContactMenu property determines\nwhat the widget’s menu displays\n\n{Term ReportedBy...\n(TermHowReported.... Claim.HowReported\n\n* ClaimNewPersonOnlyPickerMenultemSet only\nallows persons to be selected\n\n* ClaimNewContactPickerMenultemSet allows all newContociens Caren PesononyPekeenahenset\ncontact types to be selected —7\n* This is the default if nothing is entered maported By\nA ClaimNewCompanyOnlyPickerMenultemSet How Reported Phone\nFull list of A claimNewContactPickerMenultemSet Name + (mone\npicker menus El claimNewDoctorOnlyPickerMenultemSet a —\n\n(You can also —p i claimNewPersonOnlyPickerMenultemSet\nconfigure Ei claimNewRepairShopOnlyPickerMenultemSet\nnew menus) hl claimnewServiceRequestSpecialistPickerMenultemSet\nEi claimNewTowingOnlyPickerMenultemSet\nA ClaimNewVendorOnlyPickerMenultemSet\n\n‘Search\n\nView Contact Details",
       "ocrWordCount": 94,
       "ocrConfidence": 79.34,
       "hasTable": false,
@@ -487,7 +488,7 @@
     },
     {
       "slideNumber": 29,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -500,7 +501,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 30,
@@ -538,12 +540,12 @@
     },
     {
       "slideNumber": 32,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n_— — What is the difference between a contact type and a contact role?\n\n¢\n¢\n4\n\nSS SS SSS Se SH SSS Se",
+      "ocrText": "Question G\nWhat is the difference between a contact type and a contact role?\n•\n•\nSS SS SSS Se SH SSS Se",
       "ocrWordCount": 26,
       "ocrConfidence": 66.54,
       "hasTable": false,
@@ -551,16 +553,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What is the difference between a contact type and a contact role?",
+        "answer": "Type and subtype are object types in the data model. Contact roles identify the contact’s relationship to the claim or exposure."
+      }
     },
     {
       "slideNumber": 33,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n_— — What is the difference between a contact type and a contact role?\n¢\n\n¢\n7\n\nThe correct answer is type and subtype are object types in the data model. Contact\nroles identify the contact’s relationship to the claim or exposure.\n\nSS SS Se SS SH SH Se",
+      "ocrText": "Answer\nWhat is the difference between a contact type and a contact role?\n•\n•\nThe correct answer is type and subtype are object types in the data model. Contact\nroles identify the contact’s relationship to the claim or exposure.\nSS SS Se SS SH SH Se",
       "ocrWordCount": 50,
       "ocrConfidence": 79.64,
       "hasTable": false,
@@ -572,12 +578,12 @@
     },
     {
       "slideNumber": 34,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n,— — What is the difference between a contact role type constraint and an\n¢ entity role constraint?\n\n¢\n4\n\nSS SS SSS Se SH SSS Se",
+      "ocrText": "Question G\nWhat is the difference between a contact role type constraint and an\n• entity role constraint?\n•\nSS SS SSS Se SH SSS Se",
       "ocrWordCount": 29,
       "ocrConfidence": 69.14,
       "hasTable": false,
@@ -585,16 +591,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What is the difference between a contact role type constraint and an",
+        "answer": "• entity role constraint? The correct answer is contract role type constraints determine which subtypes of the contact entity can have the role. Entity role constraints determines what entities can “own” the role, and how many contacts with the role are allowed on the entity."
+      }
     },
     {
       "slideNumber": 35,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer G\n\n_— — What is the difference between a contact role type constraint and an\n¢ entity role constraint?\n\n¢\n7\n\nThe correct answer is contract role type constraints determine which subtypes of the\ncontact entity can have the role. Entity role constraints determines what entities can\n“own” the role, and how many contacts with the role are allowed on the entity.\n\nSS SS Se SS SH SH Se",
+      "ocrText": "Answer G\nWhat is the difference between a contact role type constraint and an\n• entity role constraint?\n•\nThe correct answer is contract role type constraints determine which subtypes of the\ncontact entity can have the role. Entity role constraints determines what entities can\n“own” the role, and how many contacts with the role are allowed on the entity.\nSS SS Se SS SH SH Se",
       "ocrWordCount": 70,
       "ocrConfidence": 84.36,
       "hasTable": false,
@@ -606,12 +616,12 @@
     },
     {
       "slideNumber": 36,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n_— — !fyou need to add a claim contact to a detail view, which widget type\nY should you use?\n\nSS SS SSS Se SH SSS Se",
+      "ocrText": "Question G\n!fyou need to add a claim contact to a detail view, which widget type\nY should you use?\nSS SS SSS Se SH SSS Se",
       "ocrWordCount": 29,
       "ocrConfidence": 69.28,
       "hasTable": false,
@@ -619,16 +629,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "!fyou need to add a claim contact to a detail view, which widget type",
+        "answer": "If you need to add a claim contact to a detail view, which widget type Y should you use? The correct answer is a claim contact input."
+      }
     },
     {
       "slideNumber": 37,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer G\n\n_— — 'fyou need to add a claim contact to a detail view, which widget type\nY should you use?\n\nThe correct answer is a claim contact input.\n\nSS SS Se SS SH SH Se",
+      "ocrText": "Answer G\n'fyou need to add a claim contact to a detail view, which widget type\nY should you use?\nThe correct answer is a claim contact input.\nSS SS Se SS SH SH Se",
       "ocrWordCount": 37,
       "ocrConfidence": 74.19,
       "hasTable": false,
@@ -640,12 +654,12 @@
     },
     {
       "slideNumber": 38,
-      "title": "",
+      "title": "Key Takeaways",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobjectives ¢ Configure contact roles\n\nreview * Configure claim contact widgets in the user\ninterface",
+      "ocrText": "Lesson\nobjectives • Configure contact roles\n\nreview * Configure claim contact widgets in the user\ninterface",
       "ocrWordCount": 16,
       "ocrConfidence": 90.0,
       "hasTable": false,
@@ -657,7 +671,7 @@
     },
     {
       "slideNumber": 39,
-      "title": "",
+      "title": "Student Exercise",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -683,6 +697,16 @@
       "index": 2,
       "filename": "CC_08_02.mp4",
       "path": "/academy/guidewire/videos/ch09/CC_08_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "CC_08_03.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_08_03.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "CC_08_04.mp4",
+      "path": "/academy/guidewire/videos/ch09/CC_08_04.mp4"
     }
   ],
   "hasNotes": true,

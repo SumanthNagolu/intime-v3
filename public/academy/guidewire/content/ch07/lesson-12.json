@@ -11,7 +11,7 @@
   "slides": [
     {
       "slideNumber": 1,
-      "title": "",
+      "title": "Creating New Entities",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -28,12 +28,12 @@
     },
     {
       "slideNumber": 2,
-      "title": "",
+      "title": "Learning Objectives",
       "bodyParagraphs": [],
       "originalNotes": "Lesson Objectives\nThis lesson will teach you to:\n\nDescribe what a custom entity is and how to create a custom entity\n\nCreate entity elements and sub-elements that define fields, foreign keys, and arrays on entities\n\nIdentify entity related data elements associated with data model design",
       "notes": "Lesson Objectives\nThis lesson will teach you to:\n\nDescribe what a custom entity is and how to create a custom entity\n\nCreate entity elements and sub-elements that define fields, foreign keys, and arrays on entities\n\nIdentify entity related data elements associated with data model design",
       "narration": "",
-      "ocrText": "Lesson\nobjectives ¢ Describe what a custom entity is and how to\n\ncreate a custom entity\n\n* Create entity elements and sub-elements that\ndefine fields, foreign keys, and arrays on\nentities\n\n¢ Identify entity related data elements\nassociated with data model design",
+      "ocrText": "Lesson\nobjectives • Describe what a custom entity is and how to\n\ncreate a custom entity\n\n* Create entity elements and sub-elements that\ndefine fields, foreign keys, and arrays on\nentities\n\n• Identify entity related data elements\nassociated with data model design",
       "ocrWordCount": 42,
       "ocrConfidence": 91.36,
       "hasTable": false,
@@ -62,7 +62,7 @@
     },
     {
       "slideNumber": 4,
-      "title": "",
+      "title": "User Story — Policy Summaries",
       "bodyParagraphs": [],
       "originalNotes": "User Story — Policy Summaries\nAn insurance company wants to display the policy summaries of the contact. The policy details are stored in the policy administration system and the integration developers are currently implementing the integration point to retrieve the policy summaries. As configuration developers, we need to configure the Data Model and the User Interface to meet the requirement.\n\nAfter searching the data model, we have found that there is no appropriate OOTB (out-of-the- box) entity to implement this user story. So first, we are going to define a new entity in the Data Model to support this requirement and in later exercises we will make the necessary PCF changes to display the information in the User Interface.",
       "notes": "User Story — Policy Summaries\nAn insurance company wants to display the policy summaries of the contact. The policy details are stored in the policy administration system and the integration developers are currently implementing the integration point to retrieve the policy summaries. As configuration developers, we need to configure the Data Model and the User Interface to meet the requirement.\n\nAfter searching the data model, we have found that there is no appropriate OOTB (out-of-the- box) entity to implement this user story. So first, we are going to define a new entity in the Data Model to support this requirement and in later exercises we will make the necessary PCF changes to display the information in the User Interface.",
@@ -79,7 +79,7 @@
     },
     {
       "slideNumber": 5,
-      "title": "",
+      "title": "Defining New Entities",
       "bodyParagraphs": [],
       "originalNotes": "Defining New Entities\n\nLet us talk about how you define a new entity.",
       "notes": "Defining New Entities\n\nLet us talk about how you define a new entity.",
@@ -96,12 +96,12 @@
     },
     {
       "slideNumber": 6,
-      "title": "",
+      "title": "Review: Entities in the data model (1 of 2)",
       "bodyParagraphs": [],
       "originalNotes": "Review: Entities in the data model (I of 2)\n\nNote: All InsuranceSuite application objects exist as one of the base data objects or as a subtype of a base object.",
       "notes": "Review: Entities in the data model (I of 2)\n\nNote: All InsuranceSuite application objects exist as one of the base data objects or as a subtype of a base object.",
       "narration": "",
-      "ocrText": "Review: Entities in the data model (1 of 2)\n\nGi\n\n¢ Anentity is a business object used by the application, such as Policy, User,\n\nABContact, Producer, etc.\n\n¢ Entities are defined in ETI files\n\nconfiguration > [i config ) Eextensions ) entity )]BankAccounteti\n\n| Eleankaccounteti x\n§ tlamy) DY — (Vsouars)z = = BO\nG Element Primary Value | Secondary Value Name\nIContact bank occ. [a BankAccount\n\n§ events table bankaccount\n2] > column — BankName varchar type retireable\n| column —-RoutingNumber varchar desc Contact bank account\nV| > column —AccountNumber varchar abstract\n\ntypekey — AccountType BankAccountType | admin\n\ntypekey_ IsVerified VerificationStatus | autoSplit\n\nforeignkey ABContact ABContact cacheable\n\ncolumn —_OrginateDate datetime consistentchildren\n\nEeankAccounteti x\n\n[Eceuliversionse10=7>)\n<entity\nxmlns=\"http: //guidewire .com/datamodel\"\ndesc=\"Contact bank account\"\nentity=\"BankAccount\"\nexportable=\"true\"\ntable=\"bankaccount\"\ntype=\"retireable\">\n<events/>\n<column\ndeso=\"Bank name\"\nname=\"BankName\"\nnullok=\"true\"\ntype=\"varchar\">\n<columnParam\nname=\"size\"\nvalue=\"30\"/>\n</colunn>",
+      "ocrText": "Review: Entities in the data model (1 of 2)\n\nGi\n\n• Anentity is a business object used by the application, such as Policy, User,\n\nABContact, Producer, etc.\n\n• Entities are defined in ETI files\n\nconfiguration > [i config ) Eextensions ) entity )]BankAccounteti\n\n| Eleankaccounteti x\n§ tlamy) DY — (Vsouars)z = = BO\nG Element Primary Value | Secondary Value Name\nIContact bank occ. [a BankAccount\n\n§ events table bankaccount\n2] > column — BankName varchar type retireable\n| column —-RoutingNumber varchar desc Contact bank account\nV| > column —AccountNumber varchar abstract\n\ntypekey — AccountType BankAccountType | admin\n\ntypekey_ IsVerified VerificationStatus | autoSplit\n\nforeignkey ABContact ABContact cacheable\n\ncolumn —_OrginateDate datetime consistentchildren\n\nEeankAccounteti x\n\n[Eceuliversionse10=7>)\n<entity\nxmlns=\"http: //guidewire .com/datamodel\"\ndesc=\"Contact bank account\"\nentity=\"BankAccount\"\nexportable=\"true\"\ntable=\"bankaccount\"\ntype=\"retireable\">\n<events/>\n<column\ndeso=\"Bank name\"\nname=\"BankName\"\nnullok=\"true\"\ntype=\"varchar\">\n<columnParam\nname=\"size\"\nvalue=\"30\"/>\n</colunn>",
       "ocrWordCount": 137,
       "ocrConfidence": 73.32,
       "hasTable": false,
@@ -113,7 +113,7 @@
     },
     {
       "slideNumber": 7,
-      "title": "",
+      "title": "Review: Entities in the data model (2 of 2) a",
       "bodyParagraphs": [],
       "originalNotes": "Review: Entities in the data model (2 of 2)\nCustom entities are always found in the ...\n\\modules\\configuration\\config\\extensions\\folder.",
       "notes": "Review: Entities in the data model (2 of 2)\nCustom entities are always found in the ...\n\\modules\\configuration\\config\\extensions\\folder.",
@@ -130,7 +130,7 @@
     },
     {
       "slideNumber": 8,
-      "title": "",
+      "title": "Entities, Java classes and database tables",
       "bodyParagraphs": [],
       "originalNotes": "Entities, Java classes and database tables\nFor a customer data model entity, the ETI file defines the fields. Custom entities are a single ETI file that customers can edit as needed. A customer entity will consist of only an ETI file and it cannot have EIX or E TX files. All the fields in the custom entity’s ETI file become a part of the generated Java class and a database table.\n\nFor custom entities, Guidewire recommends that the entity name should end with Ext, for example, BankAccount_Ext. The names of the fields in the custom entity do not need to end with the Ext sufix.\n\nThe name of the database table is automatically generated to match the name of the ETI file and is all lowercase, for example, bankaccount ext. Guidewire creates a special prefix for custom entities by appending x to the two-letter product code for the table name, such as abx bankaccount ext. The table name is an attribuTe of the entity xml element and must have a length of 25 characters or less. When creating an entity, if the entity name has a length of more than 25 characters, you can modify the table name in the Entity dialog to reduce the length to 25 or less, including removing the ext sufix from the table name.",
       "notes": "Entities, Java classes and database tables\nFor a customer data model entity, the ETI file defines the fields. Custom entities are a single ETI file that customers can edit as needed. A customer entity will consist of only an ETI file and it cannot have EIX or E TX files. All the fields in the custom entity’s ETI file become a part of the generated Java class and a database table.\n\nFor custom entities, Guidewire recommends that the entity name should end with Ext, for example, BankAccount_Ext. The names of the fields in the custom entity do not need to end with the Ext sufix.\n\nThe name of the database table is automatically generated to match the name of the ETI file and is all lowercase, for example, bankaccount ext. Guidewire creates a special prefix for custom entities by appending x to the two-letter product code for the table name, such as abx bankaccount ext. The table name is an attribuTe of the entity xml element and must have a length of 25 characters or less. When creating an entity, if the entity name has a length of more than 25 characters, you can modify the table name in the Entity dialog to reduce the length to 25 or less, including removing the ext sufix from the table name.",
@@ -147,12 +147,12 @@
     },
     {
       "slideNumber": 9,
-      "title": "",
+      "title": "Entities in the database",
       "bodyParagraphs": [],
-      "originalNotes": "Entities in the database\nThere are two exceptions to the generalization above: virtual and subtype entities.\n\nVirtual. Non-persistent entities are entities constructed entirely with code. They exist during run- time, and when the Guidewire application shuts down, the data is not saved to the database. An example of a non-persistent entity is ABContactSearchCriteria in TrainingApp- Guidewire recommends that you do not create non-persistent entities as a general rule \n\nSubtype entities are entities that are children entities of a top level supertype (parent) entity. All fields in the parent entity are inherited by the child entity. A top level supertype entity and all of its child subtypes are stored in a single database table. In this manner, all the entities share the same database table",
-      "notes": "Entities in the database\nThere are two exceptions to the generalization above: virtual and subtype entities.\n\nVirtual. Non-persistent entities are entities constructed entirely with code. They exist during run- time, and when the Guidewire application shuts down, the data is not saved to the database. An example of a non-persistent entity is ABContactSearchCriteria in TrainingApp- Guidewire recommends that you do not create non-persistent entities as a general rule \n\nSubtype entities are entities that are children entities of a top level supertype (parent) entity. All fields in the parent entity are inherited by the child entity. A top level supertype entity and all of its child subtypes are stored in a single database table. In this manner, all the entities share the same database table",
+      "originalNotes": "Entities in the database\nThere are two exceptions to the generalization above: virtual and subtype entities.\n\nVirtual. Non-persistent entities are entities constructed entirely with code. They exist during run- time, and when the Guidewire application shuts down, the data is not saved to the database. An example of a non-persistent entity is ABContactSearchCriteria in TrainingApp- Guidewire recommends that you do not create non-persistent entities as a general rule\n\nSubtype entities are entities that are children entities of a top level supertype (parent) entity. All fields in the parent entity are inherited by the child entity. A top level supertype entity and all of its child subtypes are stored in a single database table. In this manner, all the entities share the same database table",
+      "notes": "Entities in the database\nThere are two exceptions to the generalization above: virtual and subtype entities.\n\nVirtual. Non-persistent entities are entities constructed entirely with code. They exist during run- time, and when the Guidewire application shuts down, the data is not saved to the database. An example of a non-persistent entity is ABContactSearchCriteria in TrainingApp- Guidewire recommends that you do not create non-persistent entities as a general rule\n\nSubtype entities are entities that are children entities of a top level supertype (parent) entity. All fields in the parent entity are inherited by the child entity. A top level supertype entity and all of its child subtypes are stored in a single database table. In this manner, all the entities share the same database table",
       "narration": "",
-      "ocrText": "Entities in the database Gi\n\nBankAccount_Ext\n\nselect bankname, routingnumber, accountnumber, accounttype from abx_bankaccount_ext;\n\nBANKNAME |ROUTINGNUMBER |ACCOUNTNUMBER |ACCOUNTTYPE |\n\nBankName\nACME Credit Union /123- 987 345678900 10001 ingNumb.\nNational Bank 745-222 | 232323566 {10001 A ie Non her\nACME Credit Union 123-987 112233445 10001 A nn umber\nACME Credit Union 123-987 554433221 10002 intlype\n(4 rows, 6 ms)\n\n¢ Often, an entity stores data in a database table named for the entity:\n* BankAccount_Ext entity in abx_bankaccount_ext table\n+ ABContact entity in ab_abcontact table\n\n¢ Exceptions are...\n\n* Entities that share the columns in an entity table such as a subtype entity\n\n« Virtual, non-persistent entities do not save data to the database. Guidewire recommends that\nyou do not create non-persistent entities as a general rule",
+      "ocrText": "Entities in the database Gi\n\nBankAccount_Ext\n\nselect bankname, routingnumber, accountnumber, accounttype from abx_bankaccount_ext;\n\nBANKNAME |ROUTINGNUMBER |ACCOUNTNUMBER |ACCOUNTTYPE |\n\nBankName\nACME Credit Union /123- 987 345678900 10001 ingNumb.\nNational Bank 745-222 | 232323566 {10001 A ie Non her\nACME Credit Union 123-987 112233445 10001 A nn umber\nACME Credit Union 123-987 554433221 10002 intlype\n(4 rows, 6 ms)\n\n• Often, an entity stores data in a database table named for the entity:\n* BankAccount_Ext entity in abx_bankaccount_ext table\n+ ABContact entity in ab_abcontact table\n\n• Exceptions are...\n\n* Entities that share the columns in an entity table such as a subtype entity\n\n« Virtual, non-persistent entities do not save data to the database. Guidewire recommends that\nyou do not create non-persistent entities as a general rule",
       "ocrWordCount": 125,
       "ocrConfidence": 85.19,
       "hasTable": false,
@@ -164,7 +164,7 @@
     },
     {
       "slideNumber": 10,
-      "title": "",
+      "title": "Entities in the object model",
       "bodyParagraphs": [],
       "originalNotes": "Entities in the object model\nEntity enhancements are covered in a separate lesson. Refer to that lesson for more details.",
       "notes": "Entities in the object model\nEntity enhancements are covered in a separate lesson. Refer to that lesson for more details.",
@@ -198,12 +198,12 @@
     },
     {
       "slideNumber": 12,
-      "title": "",
+      "title": "Foreign key",
       "bodyParagraphs": [],
       "originalNotes": "Foreign key\n\nIf a foreign key field is added to a base application entity, then the suffix should be Ext.\n\nFor a complete reference of the <foreignkey> syntax, refer to the application's Configuration Guide.",
       "notes": "Foreign key\n\nIf a foreign key field is added to a base application entity, then the suffix should be Ext.\n\nFor a complete reference of the <foreignkey> syntax, refer to the application's Configuration Guide.",
       "narration": "",
-      "ocrText": "Foreign key\n\n¢ Pointer to single instance of some other entity\n\n« Example: each Contact can have one assigned user\n\nABContact",
+      "ocrText": "Foreign key\n\n• Pointer to single instance of some other entity\n\n« Example: each Contact can have one assigned user\n\nABContact",
       "ocrWordCount": 21,
       "ocrConfidence": 92.05,
       "hasTable": false,
@@ -215,12 +215,12 @@
     },
     {
       "slideNumber": 13,
-      "title": "",
+      "title": "Aray",
       "bodyParagraphs": [],
       "originalNotes": "Array\nKeep in mind that arrays are maintained in code. The code assembles the array by executing queries against the database. In order to do this, the application must be able to query for all members of a given array. It can do this only if each member has a foreign key referencing its parent. Note that the value of the arrayentity attribute must match exactly the name of the entity it references.",
       "notes": "Array\nKeep in mind that arrays are maintained in code. The code assembles the array by executing queries against the database. In order to do this, the application must be able to query for all members of a given array. It can do this only if each member has a foreign key referencing its parent. Note that the value of the arrayentity attribute must match exactly the name of the entity it references.",
       "narration": "",
-      "ocrText": "| Aray Gi\n* Collection of pointers to instances of some other entity that is maintained by code\nduring runtime\n« Requires reverse foreign key\n¢ If entity A has array of entity B, then entity B must have foreign key pointing to entity A\n« Example: each ABContact can have zero to many contact notes\n\nABContact Contact Note\n\nTaxID\n\nEmailAddress1",
+      "ocrText": "| Aray Gi\n* Collection of pointers to instances of some other entity that is maintained by code\nduring runtime\n« Requires reverse foreign key\n• If entity A has array of entity B, then entity B must have foreign key pointing to entity A\n« Example: each ABContact can have zero to many contact notes\n\nABContact Contact Note\n\nTaxID\n\nEmailAddress1",
       "ocrWordCount": 61,
       "ocrConfidence": 88.58,
       "hasTable": false,
@@ -232,7 +232,7 @@
     },
     {
       "slideNumber": 14,
-      "title": "",
+      "title": "One-to-one relationships",
       "bodyParagraphs": [],
       "originalNotes": "One-to-one relationships\nA one-to-one relationship often splits a logical entity across multiple physical entities. For example, when an ABContact is a ABPolicyPerson or ABPolicyCompany, the data model must capture financial summary information.\n\nStoring the financial summary details into the ABContact table would result in a table with numerous rows with null columns. Instead, it is better to have a separate entity manage the financial summary details. In this manner, every ABContact has (at most) one FinancialSummary, and every financial summary applies to (at most) one ABContact.\n\nFor more information on one-to- one relationships, refer to documentation.",
       "notes": "One-to-one relationships\nA one-to-one relationship often splits a logical entity across multiple physical entities. For example, when an ABContact is a ABPolicyPerson or ABPolicyCompany, the data model must capture financial summary information.\n\nStoring the financial summary details into the ABContact table would result in a table with numerous rows with null columns. Instead, it is better to have a separate entity manage the financial summary details. In this manner, every ABContact has (at most) one FinancialSummary, and every financial summary applies to (at most) one ABContact.\n\nFor more information on one-to- one relationships, refer to documentation.",
@@ -249,12 +249,12 @@
     },
     {
       "slideNumber": 15,
-      "title": "",
+      "title": "Many-to-many relationships (1 of 2) a",
       "bodyParagraphs": [],
       "originalNotes": "Many-to-many relationships (I of 2)\nTo add a many-to-many relationship between entity types to the data model, first create a separate versionable entity that represents the many-to-many relationship. (Versionable entities have a version and ID field and can be deleted as opposed to retireable entities which can never be deleted). Next, create foreign keys to each entity in the many-to-many relationship. Then add a unique index consisting of the foreign keys in the relationship.\n\nMany-to-many relationships require a separate entity that contains the required foreign keys and a unique index for the foreign key values so that duplicate rows are not added to the table.",
       "notes": "Many-to-many relationships (I of 2)\nTo add a many-to-many relationship between entity types to the data model, first create a separate versionable entity that represents the many-to-many relationship. (Versionable entities have a version and ID field and can be deleted as opposed to retireable entities which can never be deleted). Next, create foreign keys to each entity in the many-to-many relationship. Then add a unique index consisting of the foreign keys in the relationship.\n\nMany-to-many relationships require a separate entity that contains the required foreign keys and a unique index for the foreign key values so that duplicate rows are not added to the table.",
       "narration": "",
-      "ocrText": "Many-to-many relationships (1 of 2) a\n\n¢ Requires an entity of type versionable that represents the many-to-many\nrelationship with the following:\n\n* Two or more non-nullable foreign keys\n« Unique index for all foreign keys\n\nUserRole",
+      "ocrText": "Many-to-many relationships (1 of 2) a\n\n• Requires an entity of type versionable that represents the many-to-many\nrelationship with the following:\n\n* Two or more non-nullable foreign keys\n« Unique index for all foreign keys\n\nUserRole",
       "ocrWordCount": 36,
       "ocrConfidence": 88.14,
       "hasTable": false,
@@ -266,7 +266,7 @@
     },
     {
       "slideNumber": 16,
-      "title": "",
+      "title": "Many-to-many relationships (2 of 2) a",
       "bodyParagraphs": [],
       "originalNotes": "Many-to-many relationships (2 of 2)\nIn order to access the many-to- many relationship values, one of the foreign key tables needs tospecify an array entity. To access the relationship, add an array to one or both entities in the relationship.\n\nIn the slide example, the diagram does not represent the defined relationship in TrainingApp. In TrainingApp, UserRole is of the type joinarray. The joinarray entity type is an internal type and Guidewire does not recommend using this entity type. In addition, only IJser has a backing Roles array to UserRole.\n\nFor more information on many-to- many relationships and entities of type joinarray, refer to the documentation.",
       "notes": "Many-to-many relationships (2 of 2)\nIn order to access the many-to- many relationship values, one of the foreign key tables needs tospecify an array entity. To access the relationship, add an array to one or both entities in the relationship.\n\nIn the slide example, the diagram does not represent the defined relationship in TrainingApp. In TrainingApp, UserRole is of the type joinarray. The joinarray entity type is an internal type and Guidewire does not recommend using this entity type. In addition, only IJser has a backing Roles array to UserRole.\n\nFor more information on many-to- many relationships and entities of type joinarray, refer to the documentation.",
@@ -283,12 +283,12 @@
     },
     {
       "slideNumber": 17,
-      "title": "",
+      "title": "Circular relationships",
       "bodyParagraphs": [],
-      "originalNotes": "Circular relationships\nIn some cases, an entity  needs to refer to itself- This could occur both for a non- subtyped entity (every Group has a parent group) or a subtyped entity when one subtype refers to another (every ABCompany—which is an ABContact—can have a finance manager who is an ABPerson, which is also an ABContact)- The Guidewire data model does not let an entity reference itself, or two or more entities reference one another in a cyclical manner, using only foreign keys. This is because Guidewire cannot easily determine the order in which rows can safely be written to the database when a data model cycle exists-\n\nTo solve this kind of circular dependency between foreign keys, Guidewire recommends that you use an edge foreign key (<edgeForeignKey>)- An edge foreign key from A to B introduces a new, hidden entity that has a foreign key to A and a foreign key to B. However, it does not create any direct foreign key from A to B. As such, ClaimCenter can safely commit the A objects first, then the B objects, and finally, the hidden AIB edge foreign key entities- This ensures that the relationship information does not reference non-existent rows- The same principal is true for two or more entitiesat re erence one ano er In a cyclical fashion. The cycle can be implemented using an edge foreign key, which allows all the individual rows to be written first, and the relationships among the rows to be written afterwards.\n\nFor more information on edge foreign keys and circular references, refer to the documentation.",
-      "notes": "Circular relationships\nIn some cases, an entity  needs to refer to itself- This could occur both for a non- subtyped entity (every Group has a parent group) or a subtyped entity when one subtype refers to another (every ABCompany—which is an ABContact—can have a finance manager who is an ABPerson, which is also an ABContact)- The Guidewire data model does not let an entity reference itself, or two or more entities reference one another in a cyclical manner, using only foreign keys. This is because Guidewire cannot easily determine the order in which rows can safely be written to the database when a data model cycle exists-\n\nTo solve this kind of circular dependency between foreign keys, Guidewire recommends that you use an edge foreign key (<edgeForeignKey>)- An edge foreign key from A to B introduces a new, hidden entity that has a foreign key to A and a foreign key to B. However, it does not create any direct foreign key from A to B. As such, ClaimCenter can safely commit the A objects first, then the B objects, and finally, the hidden AIB edge foreign key entities- This ensures that the relationship information does not reference non-existent rows- The same principal is true for two or more entitiesat re erence one ano er In a cyclical fashion. The cycle can be implemented using an edge foreign key, which allows all the individual rows to be written first, and the relationships among the rows to be written afterwards.\n\nFor more information on edge foreign keys and circular references, refer to the documentation.",
+      "originalNotes": "Circular relationships\nIn some cases, an entity needs to refer to itself- This could occur both for a non- subtyped entity (every Group has a parent group) or a subtyped entity when one subtype refers to another (every ABCompany—which is an ABContact—can have a finance manager who is an ABPerson, which is also an ABContact)- The Guidewire data model does not let an entity reference itself, or two or more entities reference one another in a cyclical manner, using only foreign keys. This is because Guidewire cannot easily determine the order in which rows can safely be written to the database when a data model cycle exists.\nTo solve this kind of circular dependency between foreign keys, Guidewire recommends that you use an edge foreign key (<edgeForeignKey>)- An edge foreign key from A to B introduces a new, hidden entity that has a foreign key to A and a foreign key to B. However, it does not create any direct foreign key from A to B. As such, ClaimCenter can safely commit the A objects first, then the B objects, and finally, the hidden AIB edge foreign key entities- This ensures that the relationship information does not reference non-existent rows- The same principal is true for two or more entitiesat re erence one ano er In a cyclical fashion. The cycle can be implemented using an edge foreign key, which allows all the individual rows to be written first, and the relationships among the rows to be written afterwards.\n\nFor more information on edge foreign keys and circular references, refer to the documentation.",
+      "notes": "Circular relationships\nIn some cases, an entity needs to refer to itself- This could occur both for a non- subtyped entity (every Group has a parent group) or a subtyped entity when one subtype refers to another (every ABCompany—which is an ABContact—can have a finance manager who is an ABPerson, which is also an ABContact)- The Guidewire data model does not let an entity reference itself, or two or more entities reference one another in a cyclical manner, using only foreign keys. This is because Guidewire cannot easily determine the order in which rows can safely be written to the database when a data model cycle exists.\nTo solve this kind of circular dependency between foreign keys, Guidewire recommends that you use an edge foreign key (<edgeForeignKey>)- An edge foreign key from A to B introduces a new, hidden entity that has a foreign key to A and a foreign key to B. However, it does not create any direct foreign key from A to B. As such, ClaimCenter can safely commit the A objects first, then the B objects, and finally, the hidden AIB edge foreign key entities- This ensures that the relationship information does not reference non-existent rows- The same principal is true for two or more entitiesat re erence one ano er In a cyclical fashion. The cycle can be implemented using an edge foreign key, which allows all the individual rows to be written first, and the relationships among the rows to be written afterwards.\n\nFor more information on edge foreign keys and circular references, refer to the documentation.",
       "narration": "",
-      "ocrText": "Circular relationships\n\n* <edgeForeignKey> creates an edge table\n« Links one entity to another or to self\n\n« Ensures the safe ordering of data insertion and deletion in cases where cyclic references\nprevent safe ordering\n\n¢ Examples:\n\nABContact\n\n* Child references parent\n« Reference between subtypes\n\nABPerson\n\nABCompany\n\nABCompanyVendor\n\nntGroup",
+      "ocrText": "Circular relationships\n\n* <edgeForeignKey> creates an edge table\n« Links one entity to another or to self\n\n« Ensures the safe ordering of data insertion and deletion in cases where cyclic references\nprevent safe ordering\n\n• Examples:\n\nABContact\n\n* Child references parent\n« Reference between subtypes\n\nABPerson\n\nABCompany\n\nABCompanyVendor\n\nntGroup",
       "ocrWordCount": 50,
       "ocrConfidence": 90.48,
       "hasTable": false,
@@ -300,7 +300,7 @@
     },
     {
       "slideNumber": 18,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -313,7 +313,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 19,
@@ -351,12 +352,12 @@
     },
     {
       "slideNumber": 21,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,— — What is the difference between an ETX file and an ETI file?\n\n¢\n¢\n4\n\nMS SS Se",
+      "ocrText": "Question\nWhat is the difference between an ETX file and an ETI file?\n•\n•\nMS SS Se",
       "ocrWordCount": 21,
       "ocrConfidence": 76.62,
       "hasTable": false,
@@ -364,16 +365,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What is the difference between an ETX file and an ETI file?",
+        "answer": "An ETX file extends a base application entity e.g. adding new columns. An ETI file defines a new custom entity from scratch."
+      }
     },
     {
       "slideNumber": 22,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n,— — What is the difference between an ETX file and an ETI file?\n4\n\n¢\n4\n\nAn ETX file extends a base application entity e.g. adding new columns. An ETI file\ndefines a new custom entity from scratch.\n\nSS Se",
+      "ocrText": "Answer\nWhat is the difference between an ETX file and an ETI file?\n•\nAn ETX file extends a base application entity e.g. adding new columns. An ETI file\ndefines a new custom entity from scratch.\nSS Se",
       "ocrWordCount": 42,
       "ocrConfidence": 84.51,
       "hasTable": false,
@@ -385,12 +390,12 @@
     },
     {
       "slideNumber": 23,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_— — Does the base application have ETI files? Can developers create new ETI\nFa files? Where and how?\n\nMS SS Se\n\nGi",
+      "ocrText": "Question\nDoes the base application have ETI files? Can developers create new ETI\nFa files? Where and how?\nMS SS Se\nGi",
       "ocrWordCount": 24,
       "ocrConfidence": 78.89,
       "hasTable": false,
@@ -398,16 +403,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Does the base application have ETI files? Can developers create new ETI",
+        "answer": "Oo files? Where and how? Yes, ETI files are in the base application. Developers can create new ETI files in the ...\\extensions\\entity\\ folder using Guidewire Studio and the Entity Editor."
+      }
     },
     {
       "slideNumber": 24,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n_— — Does the base application have ETI files? Can developers create new ETI\noo files? Where and how?\n\nYes, ETI files are in the base application. Developers can create new ETI files in the\n...\\extensions\\entity\\ folder using Guidewire Studio and the Entity Editor.\n\nSS Se\n\nGi",
+      "ocrText": "Answer\nDoes the base application have ETI files? Can developers create new ETI\noo files? Where and how?\nYes, ETI files are in the base application. Developers can create new ETI files in the\n...\\extensions\\entity\\ folder using Guidewire Studio and the Entity Editor.\nSS Se\nGi",
       "ocrWordCount": 48,
       "ocrConfidence": 87.29,
       "hasTable": false,
@@ -419,12 +428,12 @@
     },
     {
       "slideNumber": 25,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_— — 'f the ABLawyer entity has an array of Cases, what type of field is\n: required on the Case entity?\n\n¢\n4\n\nMS SS Se",
+      "ocrText": "Question\n'f the ABLawyer entity has an array of Cases, what type of field is\nrequired on the Case entity?\n•\nMS SS Se",
       "ocrWordCount": 28,
       "ocrConfidence": 79.97,
       "hasTable": false,
@@ -432,16 +441,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "If  the ABLawyer entity has an array of Cases, what type of field is",
+        "answer": ": required on the Case entity? The Case entity requires a foreign key field in the ETI definition that specifies the fkentity attribute as the ABLawyer entity."
+      }
     },
     {
       "slideNumber": 26,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n_— — 'f the ABLawyer entity has an array of Cases, what type of field is\n: required on the Case entity?\n\nThe Case entity requires a foreign key field in the ETI definition that specifies the\nfkentity attribute as the ABLawyer entity.\n\n¢\n4",
+      "ocrText": "Answer\n'f the ABLawyer entity has an array of Cases, what type of field is\nrequired on the Case entity?\nThe Case entity requires a foreign key field in the ETI definition that specifies the\nfkentity attribute as the ABLawyer entity.\n•",
       "ocrWordCount": 46,
       "ocrConfidence": 89.91,
       "hasTable": false,
@@ -453,12 +466,12 @@
     },
     {
       "slideNumber": 27,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,- — lodeploy data model changes, are you required to\n\n¢\nA) Regenerate the Data Dictionary?\n\nB) Restart the application server?\nC) Restart Studio?\n\nMS SS Se",
+      "ocrText": "Question\nlodeploy data model changes, are you required to\n•\nA) Regenerate the Data Dictionary?\nB) Restart the application server?\nC) Restart Studio?\nMS SS Se",
       "ocrWordCount": 28,
       "ocrConfidence": 83.4,
       "hasTable": false,
@@ -466,16 +479,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Lodeploy data model changes, are you required to",
+        "answer": "A To deploy data model changes, are you required to: x A) No, you are not required to regenerate the data dictionary. Regenerating the data dictionary will identify any errors in the data model. If successful, the process will add new and modified entities to the data dictionary. B) Yes, you must restart the application server to deploy the new and modified entities. The process creates new database tables and/or upgrades the database. C) No, Studio is immediately aware of the data model changes. It is not necessary to restart Guidewire Studio."
+      }
     },
     {
       "slideNumber": 28,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer Gi\n\na To deploy data model changes, are you required to:\nx A) No, you are not required to regenerate the data dictionary. Regenerating the data\ndictionary will identify any errors in the data model. If successful, the process will\n\nadd new and modified entities to the data dictionary.\n\nB) Yes, you must restart the application server to deploy the new and modified\nentities. The process creates new database tables and/or upgrades the database.\n\nC) No, Studio is immediately aware of the data model changes. It is not necessary to\nrestart Guidewire Studio.\n\nSS Se",
+      "ocrText": "Answer Gi\na To deploy data model changes, are you required to:\nx A) No, you are not required to regenerate the data dictionary. Regenerating the data\ndictionary will identify any errors in the data model. If successful, the process will\nadd new and modified entities to the data dictionary.\nB) Yes, you must restart the application server to deploy the new and modified\nentities. The process creates new database tables and/or upgrades the database.\nC) No, Studio is immediately aware of the data model changes. It is not necessary to\nrestart Guidewire Studio.\nSS Se",
       "ocrWordCount": 96,
       "ocrConfidence": 91.67,
       "hasTable": false,
@@ -487,12 +504,12 @@
     },
     {
       "slideNumber": 29,
-      "title": "",
+      "title": "Lesson",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Lesson\nobj ectives * Describe what is a custom entity and how to\nreview ; create a custom entity\n\nCreate entity elements and sub-elements that\ndefine fields, foreign keys, and arrays on\nentities\n\n¢ Identify entity related data elements\nassociated with data model design",
+      "ocrText": "Lesson\nobj ectives * Describe what is a custom entity and how to\nreview ; create a custom entity\n\nCreate entity elements and sub-elements that\ndefine fields, foreign keys, and arrays on\nentities\n\n• Identify entity related data elements\nassociated with data model design",
       "ocrWordCount": 44,
       "ocrConfidence": 91.7,
       "hasTable": false,
@@ -504,7 +521,7 @@
     },
     {
       "slideNumber": 30,
-      "title": "",
+      "title": "Student Exercise",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -661,6 +678,11 @@
       "index": 1,
       "filename": "IS_Fund_12.mp4",
       "path": "/academy/guidewire/videos/ch07/IS_Fund_12.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Fund_02.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_02.mp4"
     }
   ],
   "hasNotes": true,

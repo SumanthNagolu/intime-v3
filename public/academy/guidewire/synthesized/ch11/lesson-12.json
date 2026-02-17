@@ -244,21 +244,21 @@
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "n What is the primary purpose of the MessageContext entity?",
+      "question": "N What is the primary purpose of the MessageContext entity?",
       "referenceAnswer": "The primary purpose of the MessageContext entity is to create messages using information from the message event and the triggering entity.",
       "questionKey": "slide-21"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "_ _ AGuidewire application has seven destinations and an event-aware\n7’ entity called Escalation.\n\ny 4 A) When an Escalation is created, what is the maximum number of\n\nMessageContexts that might get created?\n\nB) What is the minimum?",
+      "question": "A Guidewire application has seven destinations and an event-aware\n7’ entity called Escalation.\ny 4 A) When an Escalation is created, what is the maximum number of\nMessageContexts that might get created?\nB) What is the minimum?",
       "referenceAnswer": "A) Seven, which would occur if all seven destinations listen to EscalationAdded.\nB) Zero, which would occur if none of the destinations listen to EscalationAdded.",
       "questionKey": "slide-23"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "an What plugin is required for every destination? What does this plugin do?",
+      "question": "An What plugin is required for every destination? What does this plugin do?",
       "referenceAnswer": "MessageTransport, which sends the message to the external system.",
       "questionKey": "slide-25"
     },

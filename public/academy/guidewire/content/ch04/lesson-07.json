@@ -92,7 +92,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 6,
@@ -115,10 +116,10 @@
       "slideNumber": 7,
       "title": "Editing Effective Dates",
       "bodyParagraphs": [],
-      "originalNotes": "Edit the effective date of an unbound policy change\nFrequently, a customer wants to make a policy change. All theinitial data for the change gets captured, but then the effective date of the policy change must be modified before the policy change is issued. A common use case is changing the date when a coverage starts for a newly acquired vehicle:\nA customer is buying a new vehicle and calls the insurance company to determine how much coverage for the new vehicle will cost. A policy change is started but not issued.\nThey expect to receive the vehicle on a certain date (e.g. October 1 on the slide), so the policy change is effective for that date. However, the vehicle is delayed and is not received until the following month (November 1). \nThe agent changes the effective date of the already in progress change to November 1 ( 11/01).\nHowever, if the initial policy change has been issued, youmust start a new policy change using the new effective date.",
-      "notes": "Edit the effective date of an unbound policy change\nFrequently, a customer wants to make a policy change. All theinitial data for the change gets captured, but then the effective date of the policy change must be modified before the policy change is issued. A common use case is changing the date when a coverage starts for a newly acquired vehicle:\nA customer is buying a new vehicle and calls the insurance company to determine how much coverage for the new vehicle will cost. A policy change is started but not issued.\nThey expect to receive the vehicle on a certain date (e.g. October 1 on the slide), so the policy change is effective for that date. However, the vehicle is delayed and is not received until the following month (November 1). \nThe agent changes the effective date of the already in progress change to November 1 ( 11/01).\nHowever, if the initial policy change has been issued, youmust start a new policy change using the new effective date.",
+      "originalNotes": "Edit the effective date of an unbound policy change\nFrequently, a customer wants to make a policy change. All theinitial data for the change gets captured, but then the effective date of the policy change must be modified before the policy change is issued. A common use case is changing the date when a coverage starts for a newly acquired vehicle:\nA customer is buying a new vehicle and calls the insurance company to determine how much coverage for the new vehicle will cost. A policy change is started but not issued.\nThey expect to receive the vehicle on a certain date (e.g. October 1 on the slide), so the policy change is effective for that date. However, the vehicle is delayed and is not received until the following month (November 1).\nThe agent changes the effective date of the already in progress change to November 1 ( 11/01).\nHowever, if the initial policy change has been issued, youmust start a new policy change using the new effective date.",
+      "notes": "Edit the effective date of an unbound policy change\nFrequently, a customer wants to make a policy change. All theinitial data for the change gets captured, but then the effective date of the policy change must be modified before the policy change is issued. A common use case is changing the date when a coverage starts for a newly acquired vehicle:\nA customer is buying a new vehicle and calls the insurance company to determine how much coverage for the new vehicle will cost. A policy change is started but not issued.\nThey expect to receive the vehicle on a certain date (e.g. October 1 on the slide), so the policy change is effective for that date. However, the vehicle is delayed and is not received until the following month (November 1).\nThe agent changes the effective date of the already in progress change to November 1 ( 11/01).\nHowever, if the initial policy change has been issued, youmust start a new policy change using the new effective date.",
       "narration": "A common scenario in policy changes is adjusting the effective date of an unbound change. For instance, when a customer expects to receive a new vehicle on a specific date, but delays occur, the effective date must be updated. This flexibility is crucial for ensuring that policies accurately reflect current circumstances, and it's facilitated by entities like PolicyPeriod and PolicyChange.",
-      "ocrText": "| Edit the effective date of an unbound policy change [5\n\n¢ An effective date can be edited after a\npolicy change has started, before it is\nissued\n\nCoton. 2 (Draft) > Personal Auto\n\nAccount File S\n\nr\nPolicy File -\n\n¢ After the policy change is issued, Create r =\nanother policy change transaction is\nrequired if the effective date of the\npolicy data needs to be changed\n\nagain.\n\nNew Note\nNew Document >\n\nNew Activity >\n\nEdit\nCopy Data\nArchiving\n\nEnable/Disable",
+      "ocrText": "| Edit the effective date of an unbound policy change [5\n\n• An effective date can be edited after a\npolicy change has started, before it is\nissued\n\nCoton. 2 (Draft) > Personal Auto\n\nAccount File S\n\nr\nPolicy File -\n\n• After the policy change is issued, Create r =\nanother policy change transaction is\nrequired if the effective date of the\npolicy data needs to be changed\n\nagain.\n\nNew Note\nNew Document >\n\nNew Activity >\n\nEdit\nCopy Data\nArchiving\n\nEnable/Disable",
       "ocrWordCount": 83,
       "ocrConfidence": 84.99,
       "hasTable": false,
@@ -245,7 +246,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 15,
@@ -319,8 +321,8 @@
       "slideNumber": 19,
       "title": "Comparing Preempted Changes",
       "bodyParagraphs": [],
-      "originalNotes": "Handling preemptions\nThe comparisons are shown in a tree format for the preemptedchanges. The \"Decide Later\"button makes no changes to the policy or the preempte transaction. It closes the screen. In the slide, the differences are shown in a tree format comparing the current Policy Change andthe Policy Change that was bound earlier.",
-      "notes": "Handling preemptions\nThe comparisons are shown in a tree format for the preemptedchanges. The \"Decide Later\"button makes no changes to the policy or the preempte transaction. It closes the screen. In the slide, the differences are shown in a tree format comparing the current Policy Change andthe Policy Change that was bound earlier.",
+      "originalNotes": "Handling preemptions\nThe comparisons are shown in a tree format for the preemptedchanges. The \"Decide Later\"button makes no changes to the policy or the preempte transaction. It closes the screen. In the slide, the differences are shown in a tree format comparing the current Policy Change and the Policy Change that was bound earlier.",
+      "notes": "Handling preemptions\nThe comparisons are shown in a tree format for the preemptedchanges. The \"Decide Later\"button makes no changes to the policy or the preempte transaction. It closes the screen. In the slide, the differences are shown in a tree format comparing the current Policy Change and the Policy Change that was bound earlier.",
       "narration": "PolicyCenter provides a comparison view for preempted changes, displayed in a tree format. This visualization helps users understand the differences between current and previous policy states. The 'Decide Later' button is a useful feature, allowing developers to close the screen without making immediate changes, providing time to assess and plan the next steps carefully.",
       "ocrText": "Handling preemptions G\n\nYou can either apply all\nchanges or withdraw the\nchange transaction\n\nTransaction\n\nOfferings\n\nYour Policy Change was preempted by Policy Change 0001606720. You will need to\nhandle these preemptions before continuing.\n\nHandle Preemptions\n\n‘Change was preempted by the transactions below. Please view these changes and decide\ncontinue your Policy Change with these changes applied or to withdraw your Policy Change.\n\nPolicy Change 0001606720\n\nComparing Existing Policy and Policy Change: 0001606720\n\nItem Existing Policy Policy Change: 0001606720\n\n= Vehicles\n\n= 2001 Acura RSXin California\n\nColor Red Yellow",
       "ocrWordCount": 89,
@@ -356,7 +358,7 @@
       "originalNotes": "",
       "notes": "Adhering to best practices ensures smooth policy change processes and minimizes errors.",
       "narration": "Adopting best practices when handling policy changes can significantly reduce errors and streamline the process. These practices include thorough reviews of all changes, careful management of effective dates, and proactive handling of preemptions to maintain data integrity and policy accuracy.",
-      "ocrText": "Question G\n\n_ _ For each of the following, identify whether the statement applies to\n,’ submission jobs, change jobs, or both.\n\ny A)\nB)\nC)\nD)\nE)\nF)\n\nSoS oD DD DDS De Say\n\nIt can be started manually.\n\nIt can only be executed from an existing policy.\nIt requires you to identify the producer of record.\nIt can be withdrawn.\n\nIt can be declined.\n\nIt requires a new quote to be generated.",
+      "ocrText": "Question G\nFor each of the following, identify whether the statement applies to\n,’ submission jobs, change jobs, or both.\ny A)\nB)\nC)\nD)\nE)\nF)\nSoS oD DD DDS De Say\nIt can be started manually.\nIt can only be executed from an existing policy.\nIt requires you to identify the producer of record.\nIt can be withdrawn.\nIt can be declined.\nIt requires a new quote to be generated.",
       "ocrWordCount": 74,
       "ocrConfidence": 86.8,
       "hasTable": false,
@@ -364,7 +366,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "For each of the following, identify whether the statement applies to",
+        "answer": ",’ submission jobs, change jobs, or both. D. Both E. Both F. Both 7 A) It can be started manually. I B) It can only be executed from an existing policy. I C) Itrequires you to identify the producer of record. I D)_ It can be withdrawn. | E) lIt can be declined. i F) lItrequires a new quote to be generated. ' A. Both B. Change C. Submission"
+      }
     },
     {
       "slideNumber": 22,
@@ -373,7 +379,7 @@
       "originalNotes": "",
       "notes": "Understanding common challenges helps developers anticipate and address potential issues.",
       "narration": "Developers often encounter challenges when managing policy changes, such as handling complex transaction interactions or resolving preemptions. By understanding these common issues, you can better anticipate potential problems and implement strategies to address them efficiently, ensuring seamless policy management.",
-      "ocrText": "Answer\n\nGi\n\n_ _ For each of the following, identify whether the statement applies to\n,’ submission jobs, change jobs, or both.\n\nD. Both E. Both F. Both\n\n7 A) Itcan be started manually.\n\nI B) Itcan only be executed from an existing policy.\n1\n\nI C) Itrequires you to identify the producer of record.\nI\n\nI D)_ Itcan be withdrawn.\n\n| E) lItcan be declined.\n\ni F) lItrequires a new quote to be generated.\n\n1\n\n1\n\n' A. Both B. Change C. Submission\n\n!\n\nI\n\n1",
+      "ocrText": "Answer\nGi\nFor each of the following, identify whether the statement applies to\n,’ submission jobs, change jobs, or both.\nD. Both E. Both F. Both\n7 A) It can be started manually.\nI B) It can only be executed from an existing policy.\nI C) Itrequires you to identify the producer of record.\nI\nI D)_ It can be withdrawn.\n| E) lIt can be declined.\ni F) lItrequires a new quote to be generated.\n' A. Both B. Change C. Submission\n!\nI",
       "ocrWordCount": 87,
       "ocrConfidence": 76.84,
       "hasTable": false,

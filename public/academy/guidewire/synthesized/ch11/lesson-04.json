@@ -448,14 +448,14 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "Whatis a bundle?",
+      "question": "What is a bundle?",
       "referenceAnswer": "A Guidewire bundle is a set of in-memory entities that are saved to the database as a\nunit. Each bundle corresponds to one database transaction.",
       "questionKey": "slide-47"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "For each of the following, identify if its an example of auto commit or\nmanual commit?\n\nA) Queried entities that must be modified\nB) Code executed from the UI in edit mode\nC) Code executed in business rules\nD) Code executed from the UI in read-only mode",
+      "question": "For each of the following, identify if its an example of auto commit or\nmanual commit?\nA) Queried entities that must be modified\nB) Code executed from the UI in edit mode\nC) Code executed in business rules\nD) Code executed from the UI in read-only mode",
       "referenceAnswer": "A) Queried entities that must be modified\nManual commit\nB) Code executed from the Ul in edit mode\nAuto commit\nC) Code executed in business rules\nAuto commit\nD) Code executed from the UI in read-only mode\nManual commit",
       "questionKey": "slide-49"
     },

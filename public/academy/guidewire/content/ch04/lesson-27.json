@@ -84,7 +84,7 @@
       "originalNotes": "Security in PolicyCenter\nPolicyCenter Security makes the application flexible, robust, and keeps information protected. The PolicyCenter default application contains a set of roles that perform the most organizations’ policy tasks. To perform these tasks, a user must be assigned a role with the appropriate permissions. In the base configuration, the Superuser role is granted all permissions and is responsible for granting permissions to other roles. Once the roles are configured, each PolicyCenter user is assigned aspecific role relating to their assigned tasks. Note: Although Superuser has all permissions in the base configuration, that ability could change if a customer adds custom permissions",
       "notes": "Security in PolicyCenter\nPolicyCenter Security makes the application flexible, robust, and keeps information protected. The PolicyCenter default application contains a set of roles that perform the most organizations’ policy tasks. To perform these tasks, a user must be assigned a role with the appropriate permissions. In the base configuration, the Superuser role is granted all permissions and is responsible for granting permissions to other roles. Once the roles are configured, each PolicyCenter user is assigned aspecific role relating to their assigned tasks. Note: Although Superuser has all permissions in the base configuration, that ability could change if a customer adds custom permissions",
       "narration": "Security in PolicyCenter is designed to be both flexible and robust, ensuring that sensitive policy information remains protected. Users are assigned roles that come with specific permissions necessary to perform their tasks. The Superuser role in the base configuration has all permissions, but this can be customized to suit specific security needs. Understanding how to manage these roles and permissions is crucial for maintaining an efficient and secure system.",
-      "ocrText": "| Security in PolicyCenter\n\n¢ Security is provided using:\nRole Permissions Producer codes\n\nAe &\n\n« Auser must be assigned a role with the appropriate permissions\n* Inthe base configuration, the Superuser role:\n* is granted all permissions\n\n* is responsible for granting permissions to other roles",
+      "ocrText": "| Security in PolicyCenter\n\n• Security is provided using:\nRole Permissions Producer codes\n\nAe &\n\n« Auser must be assigned a role with the appropriate permissions\n* Inthe base configuration, the Superuser role:\n* is granted all permissions\n\n* is responsible for granting permissions to other roles",
       "ocrWordCount": 47,
       "ocrConfidence": 83.72,
       "hasTable": false,
@@ -98,8 +98,8 @@
       "slideNumber": 6,
       "title": "System Permissions Breakdown",
       "bodyParagraphs": [],
-      "originalNotes": "System permissions\nIn the slide example, the system permissions have been arranged in columns based on the permission's abilities. The second column has two permissions,  since a group cannot be owned The third column has one permission since it relates to an aspect of the PolicyCenter user interface. The team tab cannot be edited or owned. System permissions are simply referred to as \"permissions\". The entire list of system permissions can be viewed in the Security Dictionary.",
-      "notes": "System permissions\nIn the slide example, the system permissions have been arranged in columns based on the permission's abilities. The second column has two permissions,  since a group cannot be owned The third column has one permission since it relates to an aspect of the PolicyCenter user interface. The team tab cannot be edited or owned. System permissions are simply referred to as \"permissions\". The entire list of system permissions can be viewed in the Security Dictionary.",
+      "originalNotes": "System permissions\nIn the slide example, the system permissions have been arranged in columns based on the permission's abilities. The second column has two permissions, since a group cannot be owned The third column has one permission since it relates to an aspect of the PolicyCenter user interface. The team tab cannot be edited or owned. System permissions are simply referred to as \"permissions\". The entire list of system permissions can be viewed in the Security Dictionary.",
+      "notes": "System permissions\nIn the slide example, the system permissions have been arranged in columns based on the permission's abilities. The second column has two permissions, since a group cannot be owned The third column has one permission since it relates to an aspect of the PolicyCenter user interface. The team tab cannot be edited or owned. System permissions are simply referred to as \"permissions\". The entire list of system permissions can be viewed in the Security Dictionary.",
       "narration": "System permissions in PolicyCenter are categorized based on their abilities, influencing how users interact with the application. For instance, some permissions directly impact what UI elements are visible to users. It's essential to understand the Security Dictionary, where all system permissions are listed, to effectively manage access control.",
       "ocrText": "| System permissions\n\nA system permission is a granular ability to see or do something within\n\nPolicyCenter\nView mS View ome View ean\nEdit sso S\n\nEdit groups\nOwn sctviiee",
       "ocrWordCount": 30,
@@ -115,8 +115,8 @@
       "slideNumber": 7,
       "title": "Permissions Influence Access",
       "bodyParagraphs": [],
-      "originalNotes": "Permissions can influence access\nThe list of abilities in the slide is a general way of viewing permissions, not an official categorization. Some permissions map directly to one of the listed functions. For example, there are \"view accounts\" and \"view audit“ permissions. Other permissionsmap indirectly to the listed functions. For example, there are\"bind policy change\" and\"bind submission\" permissions, both are\"act on\" permissions. All permissions change the user experience in one of two ways: \nA permission controls whether an aspect of the user interface is visible. For example, users without the View Team permission will not see the Team tab, whereas users with this permission see the tab.\nA permission controls whether a user succeeds (or fails) a given task. For example, if a user attempts to bind a submission or policy change,  the binding fails. The user can save a draft, and a user with the bind submission or bind policy change permission can successfully perform the task.",
-      "notes": "Permissions can influence access\nThe list of abilities in the slide is a general way of viewing permissions, not an official categorization. Some permissions map directly to one of the listed functions. For example, there are \"view accounts\" and \"view audit“ permissions. Other permissionsmap indirectly to the listed functions. For example, there are\"bind policy change\" and\"bind submission\" permissions, both are\"act on\" permissions. All permissions change the user experience in one of two ways: \nA permission controls whether an aspect of the user interface is visible. For example, users without the View Team permission will not see the Team tab, whereas users with this permission see the tab.\nA permission controls whether a user succeeds (or fails) a given task. For example, if a user attempts to bind a submission or policy change,  the binding fails. The user can save a draft, and a user with the bind submission or bind policy change permission can successfully perform the task.",
+      "originalNotes": "Permissions can influence access\nThe list of abilities in the slide is a general way of viewing permissions, not an official categorization. Some permissions map directly to one of the listed functions. For example, there are \"view accounts\" and \"view audit“ permissions. Other permissionsmap indirectly to the listed functions. For example, there are\"bind policy change\" and\"bind submission\" permissions, both are\"act on\" permissions. All permissions change the user experience in one of two ways:\nA permission controls whether an aspect of the user interface is visible. For example, users without the View Team permission will not see the Team tab, whereas users with this permission see the tab.\nA permission controls whether a user succeeds (or fails) a given task. For example, if a user attempts to bind a submission or policy change, the binding fails. The user can save a draft, and a user with the bind submission or bind policy change permission can successfully perform the task.",
+      "notes": "Permissions can influence access\nThe list of abilities in the slide is a general way of viewing permissions, not an official categorization. Some permissions map directly to one of the listed functions. For example, there are \"view accounts\" and \"view audit“ permissions. Other permissionsmap indirectly to the listed functions. For example, there are\"bind policy change\" and\"bind submission\" permissions, both are\"act on\" permissions. All permissions change the user experience in one of two ways:\nA permission controls whether an aspect of the user interface is visible. For example, users without the View Team permission will not see the Team tab, whereas users with this permission see the tab.\nA permission controls whether a user succeeds (or fails) a given task. For example, if a user attempts to bind a submission or policy change, the binding fails. The user can save a draft, and a user with the bind submission or bind policy change permission can successfully perform the task.",
       "narration": "Permissions in PolicyCenter influence user access in two main ways: controlling UI visibility and determining task success. For example, without the appropriate permissions, a user might not see certain tabs or might be unable to complete a specific task. This ensures that users only interact with elements relevant to their roles, maintaining workflow integrity and security.",
       "ocrText": "| Permissions can influence access\n\nWhether a user has a given permission can determine what they can:\n« View/navigate to\n* Create, edit, and/or delete\n* Own\n\n« Acton",
       "ocrWordCount": 29,
@@ -149,8 +149,8 @@
       "slideNumber": 9,
       "title": "Create Object Permissions",
       "bodyParagraphs": [],
-      "originalNotes": "Create object permissions\nPolicyCenter prevents users from a disallowed action by failing to display the particular button or menu item. There may be cases where a permission is not applied to a menu item or button, but to a back-end function call. In such cases, PolicyCenter may display a permission restriction error message. For example, some Ul components do not have permission restrictions. A user without an assigned role may see those IJI components but cannot proceed due to restrictions applied at the function call level.  In the slide example:\nAlice Applegate is an underwriter with Create documents and Create a New Submission permissions. When she wants to create a document, she clicks on the Actions menu and proceeds create using the New Document menu item. She gets additional submenu options to create a new document by Linking to an existing document or Create a new document from a template. She can create new submissions from the menu.  \nAdam Auditor is an auditor and does not have access to the Actions menu or the menu item New Submission. \n     Permission restriction behavior can be configured in PolicyCenter application. \n      Note: Some of the examples in this lesson have been created for training purposes only and may not be available in sample data.",
-      "notes": "Create object permissions\nPolicyCenter prevents users from a disallowed action by failing to display the particular button or menu item. There may be cases where a permission is not applied to a menu item or button, but to a back-end function call. In such cases, PolicyCenter may display a permission restriction error message. For example, some Ul components do not have permission restrictions. A user without an assigned role may see those IJI components but cannot proceed due to restrictions applied at the function call level.  In the slide example:\nAlice Applegate is an underwriter with Create documents and Create a New Submission permissions. When she wants to create a document, she clicks on the Actions menu and proceeds create using the New Document menu item. She gets additional submenu options to create a new document by Linking to an existing document or Create a new document from a template. She can create new submissions from the menu.  \nAdam Auditor is an auditor and does not have access to the Actions menu or the menu item New Submission. \n     Permission restriction behavior can be configured in PolicyCenter application. \n      Note: Some of the examples in this lesson have been created for training purposes only and may not be available in sample data.",
+      "originalNotes": "Create object permissions\nPolicyCenter prevents users from a disallowed action by failing to display the particular button or menu item. There may be cases where a permission is not applied to a menu item or button, but to a back-end function call. In such cases, PolicyCenter may display a permission restriction error message. For example, some Ul components do not have permission restrictions. A user without an assigned role may see those IJI components but cannot proceed due to restrictions applied at the function call level. In the slide example:\nAlice Applegate is an underwriter with Create documents and Create a New Submission permissions. When she wants to create a document, she clicks on the Actions menu and proceeds create using the New Document menu item. She gets additional submenu options to create a new document by Linking to an existing document or Create a new document from a template. She can create new submissions from the menu.\nAdam Auditor is an auditor and does not have access to the Actions menu or the menu item New Submission.\n Permission restriction behavior can be configured in PolicyCenter application.\n Note: Some of the examples in this lesson have been created for training purposes only and may not be available in sample data.",
+      "notes": "Create object permissions\nPolicyCenter prevents users from a disallowed action by failing to display the particular button or menu item. There may be cases where a permission is not applied to a menu item or button, but to a back-end function call. In such cases, PolicyCenter may display a permission restriction error message. For example, some Ul components do not have permission restrictions. A user without an assigned role may see those IJI components but cannot proceed due to restrictions applied at the function call level. In the slide example:\nAlice Applegate is an underwriter with Create documents and Create a New Submission permissions. When she wants to create a document, she clicks on the Actions menu and proceeds create using the New Document menu item. She gets additional submenu options to create a new document by Linking to an existing document or Create a new document from a template. She can create new submissions from the menu.\nAdam Auditor is an auditor and does not have access to the Actions menu or the menu item New Submission.\n Permission restriction behavior can be configured in PolicyCenter application.\n Note: Some of the examples in this lesson have been created for training purposes only and may not be available in sample data.",
       "narration": "Create object permissions determine a user's ability to perform actions like creating documents or submissions. Alice, with the necessary permissions, can generate documents and submissions seamlessly, whereas Adam, without these permissions, cannot even access the relevant menu items. This highlights how permissions can restrict or enable user actions, ensuring they align with their roles.",
       "ocrText": "| Create object permissions Gi\n\n[Gi PolicyCenter™ Desktop |~ Account |»,\n\nCreate\n\nNew Account.\n\nA Alice Applegate\n\n& summary\n\n@~- Create submission\n\n[Fi PolicyCenter™ Desktop\n\n0)\n\nAdam Auditor\n\nASS",
       "ocrWordCount": 29,
@@ -183,8 +183,8 @@
       "slideNumber": 11,
       "title": "Permissions Determined at Login",
       "bodyParagraphs": [],
-      "originalNotes": "A user's permissions are determined during login\nWhen an end user attempts to log in, the following occurs:\nThe user supplies a username and password to PolicyCenter via the login page.\nPolicyCenter queries its database to authenticate the user and determine which permissions are assigned to the user and the user's start page- In the base product, authentication is managed through the PolicyCenter database, which stores usernames and passwords in a database table. The system can also be configured to authenticate against an existing user domain structure. Permissions determine which screens the user can access and which actions the user can perform. The startup view is the first page rendered after log in.\n    Policy Center authenticates the user.\n    Policy Center renders the appropriate startup view with permissions appropriate for that user.\n\nNote: The Superuser log in (csu\") is exempt from permission checks. This user is set as a power user in config.xml,and can inherently do everything in the application. This login would not be given to a real user in a PolicyCenter production environment, but it is useful during development. \n\nA use(s permissions are determined during log in. If an administrator changes a user's permissions while that user is logged in, the new permissions are applied\nImmediately.",
-      "notes": "A user's permissions are determined during login\nWhen an end user attempts to log in, the following occurs:\nThe user supplies a username and password to PolicyCenter via the login page.\nPolicyCenter queries its database to authenticate the user and determine which permissions are assigned to the user and the user's start page- In the base product, authentication is managed through the PolicyCenter database, which stores usernames and passwords in a database table. The system can also be configured to authenticate against an existing user domain structure. Permissions determine which screens the user can access and which actions the user can perform. The startup view is the first page rendered after log in.\n    Policy Center authenticates the user.\n    Policy Center renders the appropriate startup view with permissions appropriate for that user.\n\nNote: The Superuser log in (csu\") is exempt from permission checks. This user is set as a power user in config.xml,and can inherently do everything in the application. This login would not be given to a real user in a PolicyCenter production environment, but it is useful during development. \n\nA use(s permissions are determined during log in. If an administrator changes a user's permissions while that user is logged in, the new permissions are applied\nImmediately.",
+      "originalNotes": "A user's permissions are determined during login\nWhen an end user attempts to log in, the following occurs:\nThe user supplies a username and password to PolicyCenter via the login page.\nPolicyCenter queries its database to authenticate the user and determine which permissions are assigned to the user and the user's start page- In the base product, authentication is managed through the PolicyCenter database, which stores usernames and passwords in a database table. The system can also be configured to authenticate against an existing user domain structure. Permissions determine which screens the user can access and which actions the user can perform. The startup view is the first page rendered after log in.\n PolicyCenter authenticates the user.\n PolicyCenter renders the appropriate startup view with permissions appropriate for that user.\n\nNote: The Superuser log in (csu\") is exempt from permission checks. This user is set as a power user in config.xml,and can inherently do everything in the application. This login would not be given to a real user in a PolicyCenter production environment, but it is useful during development.\n\nA use(s permissions are determined during log in. If an administrator changes a user's permissions while that user is logged in, the new permissions are applied\nImmediately.",
+      "notes": "A user's permissions are determined during login\nWhen an end user attempts to log in, the following occurs:\nThe user supplies a username and password to PolicyCenter via the login page.\nPolicyCenter queries its database to authenticate the user and determine which permissions are assigned to the user and the user's start page- In the base product, authentication is managed through the PolicyCenter database, which stores usernames and passwords in a database table. The system can also be configured to authenticate against an existing user domain structure. Permissions determine which screens the user can access and which actions the user can perform. The startup view is the first page rendered after log in.\n PolicyCenter authenticates the user.\n PolicyCenter renders the appropriate startup view with permissions appropriate for that user.\n\nNote: The Superuser log in (csu\") is exempt from permission checks. This user is set as a power user in config.xml,and can inherently do everything in the application. This login would not be given to a real user in a PolicyCenter production environment, but it is useful during development.\n\nA use(s permissions are determined during log in. If an administrator changes a user's permissions while that user is logged in, the new permissions are applied\nImmediately.",
       "narration": "When users log in to PolicyCenter, their permissions are determined and dictate what they can access and do. This process ensures that users are presented with a tailored startup view that aligns with their roles. While the Superuser bypasses these checks for development purposes, in a production environment, careful management of permissions is critical to maintaining security.",
       "ocrText": "| Auser’s permissions are determined during login Gi\n\nusername\nand password\n\nPolicyCenter\n\nauthenticated? Yes!\nwhat permissions? View Account, ...\n\nwhich start page? e—=s~y_ Desktop: Activities\npce\ndata",
       "ocrWordCount": 27,
@@ -200,8 +200,8 @@
       "slideNumber": 12,
       "title": "Role Configuration",
       "bodyParagraphs": [],
-      "originalNotes": "Roles\nThere are no absolute rules regarding how the permission/role structure must be built to accommodate users with varying access levels. For example, if underwriters are able to do everything an underwriter assistant can do, as well as some underwriter-only tasks, then: \nYou could create the Underwriter role with the permissions of the Underwriter Assistant role plus additional permissions. \nYou could create the Underwriter role with only the additional permissions that Underwriter Assistants do not have.\n\nRoles have permissions that map to a job function. For example, the producer role contains permissions appropriate for someone who is a producer. This role might create submissions or edit accounts permissions, but it would not have the create users or issue submissions permissions. Similarly, a producer clerical role might only create submissions and not edit accounts. You can have at least one or more roles and are granted all of the permissions contained in any roles that are assigned. Roles provide the basic security that governs which actions can be used within PolicyCenter.",
-      "notes": "Roles\nThere are no absolute rules regarding how the permission/role structure must be built to accommodate users with varying access levels. For example, if underwriters are able to do everything an underwriter assistant can do, as well as some underwriter-only tasks, then: \nYou could create the Underwriter role with the permissions of the Underwriter Assistant role plus additional permissions. \nYou could create the Underwriter role with only the additional permissions that Underwriter Assistants do not have.\n\nRoles have permissions that map to a job function. For example, the producer role contains permissions appropriate for someone who is a producer. This role might create submissions or edit accounts permissions, but it would not have the create users or issue submissions permissions. Similarly, a producer clerical role might only create submissions and not edit accounts. You can have at least one or more roles and are granted all of the permissions contained in any roles that are assigned. Roles provide the basic security that governs which actions can be used within PolicyCenter.",
+      "originalNotes": "Roles\nThere are no absolute rules regarding how the permission/role structure must be built to accommodate users with varying access levels. For example, if underwriters are able to do everything an underwriter assistant can do, as well as some underwriter-only tasks, then:\nYou could create the Underwriter role with the permissions of the Underwriter Assistant role plus additional permissions.\nYou could create the Underwriter role with only the additional permissions that Underwriter Assistants do not have.\n\nRoles have permissions that map to a job function. For example, the producer role contains permissions appropriate for someone who is a producer. This role might create submissions or edit accounts permissions, but it would not have the create users or issue submissions permissions. Similarly, a producer clerical role might only create submissions and not edit accounts. You can have at least one or more roles and are granted all of the permissions contained in any roles that are assigned. Roles provide the basic security that governs which actions can be used within PolicyCenter.",
+      "notes": "Roles\nThere are no absolute rules regarding how the permission/role structure must be built to accommodate users with varying access levels. For example, if underwriters are able to do everything an underwriter assistant can do, as well as some underwriter-only tasks, then:\nYou could create the Underwriter role with the permissions of the Underwriter Assistant role plus additional permissions.\nYou could create the Underwriter role with only the additional permissions that Underwriter Assistants do not have.\n\nRoles have permissions that map to a job function. For example, the producer role contains permissions appropriate for someone who is a producer. This role might create submissions or edit accounts permissions, but it would not have the create users or issue submissions permissions. Similarly, a producer clerical role might only create submissions and not edit accounts. You can have at least one or more roles and are granted all of the permissions contained in any roles that are assigned. Roles provide the basic security that governs which actions can be used within PolicyCenter.",
       "narration": "Roles in PolicyCenter are configured to align with job functions, allowing for different access levels. For instance, an Underwriter role might encompass permissions of an assistant role along with additional capabilities. This configuration flexibility ensures that as job functions evolve, roles can be adjusted to match, providing a scalable approach to managing access.",
       "ocrText": "| Roles\n\nGi\n\nArole is a named collection of permissions used to simplify the assignment of\n\npermissions to users\n\n* Typically, a role maps to a job title or a job function\n\nUnderwriter Assistant\n\nView account\n\n&\n\nCreate account\nCreate activities\n\nEdit submission\nEdit rewrite\n\nUnderwriter\n\nAe,\n\nView account\nView sensitive notes\nView sensitive docs\n\nCreate account\nCreate activities\nCreate audit\n\nEdit submission\nEdit rewrite\nEdit rates and premium overrides",
       "ocrWordCount": 70,
@@ -217,8 +217,8 @@
       "slideNumber": 13,
       "title": "Mapping Roles to Users",
       "bodyParagraphs": [],
-      "originalNotes": "Mapping roles to users\nIn the slide example:\nDennis Right is an underwriter assistant and has all the permissions of an underwriter assistant through the underwriter assistant role.  \nBruce Baker is an underwriter and has all the permissions of an undewriter through the underwriter role.\nRick Ralston is an underwriting supervisor and has all the permissions of a underwriting supervisor. He has both the Underwriter role and the Supervisor role. (Presumably, the Supervisor role does not contain all permissions normally associated to an underwriter.) \n\nPolicyCenter permissions grant access to perform an action. Unlike the permission structure of other systems, PolicyCenter does not have permissions that specifically deny a person’s actionable abilities. The only way to prevent someone from having a given permission is not to assign them any roles with that permission. Roles are cumulative; a user gets all of the permissions associated with one or more roles that they have been assigned.",
-      "notes": "Mapping roles to users\nIn the slide example:\nDennis Right is an underwriter assistant and has all the permissions of an underwriter assistant through the underwriter assistant role.  \nBruce Baker is an underwriter and has all the permissions of an undewriter through the underwriter role.\nRick Ralston is an underwriting supervisor and has all the permissions of a underwriting supervisor. He has both the Underwriter role and the Supervisor role. (Presumably, the Supervisor role does not contain all permissions normally associated to an underwriter.) \n\nPolicyCenter permissions grant access to perform an action. Unlike the permission structure of other systems, PolicyCenter does not have permissions that specifically deny a person’s actionable abilities. The only way to prevent someone from having a given permission is not to assign them any roles with that permission. Roles are cumulative; a user gets all of the permissions associated with one or more roles that they have been assigned.",
+      "originalNotes": "Mapping roles to users\nIn the slide example:\nDennis Right is an underwriter assistant and has all the permissions of an underwriter assistant through the underwriter assistant role.\nBruce Baker is an underwriter and has all the permissions of an undewriter through the underwriter role.\nRick Ralston is an underwriting supervisor and has all the permissions of a underwriting supervisor. He has both the Underwriter role and the Supervisor role. (Presumably, the Supervisor role does not contain all permissions normally associated to an underwriter.)\n\nPolicyCenter permissions grant access to perform an action. Unlike the permission structure of other systems, PolicyCenter does not have permissions that specifically deny a person’s actionable abilities. The only way to prevent someone from having a given permission is not to assign them any roles with that permission. Roles are cumulative; a user gets all of the permissions associated with one or more roles that they have been assigned.",
+      "notes": "Mapping roles to users\nIn the slide example:\nDennis Right is an underwriter assistant and has all the permissions of an underwriter assistant through the underwriter assistant role.\nBruce Baker is an underwriter and has all the permissions of an undewriter through the underwriter role.\nRick Ralston is an underwriting supervisor and has all the permissions of a underwriting supervisor. He has both the Underwriter role and the Supervisor role. (Presumably, the Supervisor role does not contain all permissions normally associated to an underwriter.)\n\nPolicyCenter permissions grant access to perform an action. Unlike the permission structure of other systems, PolicyCenter does not have permissions that specifically deny a person’s actionable abilities. The only way to prevent someone from having a given permission is not to assign them any roles with that permission. Roles are cumulative; a user gets all of the permissions associated with one or more roles that they have been assigned.",
       "narration": "Mapping roles to users involves assigning them the permissions required for their job functions. In our examples, Dennis, Bruce, and Rick each have roles that align with their responsibilities. In PolicyCenter, roles are cumulative, meaning users gain all permissions associated with each of their assigned roles, ensuring comprehensive access for their tasks.",
       "ocrText": "| Mapping roles to users Gi\n\nEach user is given one or more roles\n\n« Auser has all the permissions of the roles s/he is given\n\nDennis Right Bruce Baker Rick Ralston\n\n@ @\ney «©\n\n £&\n\nrs Ce\nUnderwriter Underwriter Underwriter\nAssistant Supervisor",
       "ocrWordCount": 44,
@@ -237,7 +237,7 @@
       "originalNotes": "",
       "notes": "Diving deeper into how role assignments affect user capabilities.",
       "narration": "In PolicyCenter, roles are not just about granting permissions; they define the scope of actions a user can perform. Understanding role assignments is crucial as it directly affects user capabilities and system security. As developers, we must carefully consider role configurations to ensure efficient and secure operations.",
-      "ocrText": "| Role Types Gi\n\n« Adding a type to a role indicates which entities that role can be assigned\n¢ Arole that can be assigned to a producer code is a producer code role\n\n« Auser producer code role can be assigned to either users or producer codes\n\nRole types in PolicyCenter\n\nProducer Code Role\nUser Producer Code Role\n\nUser Role",
+      "ocrText": "| Role Types Gi\n\n« Adding a type to a role indicates which entities that role can be assigned\n• Arole that can be assigned to a producer code is a producer code role\n\n« Auser producer code role can be assigned to either users or producer codes\n\nRole types in PolicyCenter\n\nProducer Code Role\nUser Producer Code Role\n\nUser Role",
       "ocrWordCount": 61,
       "ocrConfidence": 91.05,
       "hasTable": false,
@@ -254,7 +254,7 @@
       "originalNotes": "",
       "notes": "Examining how roles can be adjusted dynamically to meet business needs.",
       "narration": "PolicyCenter allows for dynamic role adjustments to meet evolving business needs. Whether it's adding new permissions to existing roles or creating entirely new roles, this flexibility ensures that the system can adapt to new requirements without compromising security or functionality.",
-      "ocrText": "| Creating producer code roles Gi\n\n¢ Create roles with role type as producer code role or user producer code role\n« Attach them to producer codes\n\n¢ Assign producer codes to users, policies, or accounts\n\nUser\n\nou\na\n\n= eee a Policy\nAccount\n\nProducer Code\n“¢ N",
+      "ocrText": "| Creating producer code roles Gi\n\n• Create roles with role type as producer code role or user producer code role\n« Attach them to producer codes\n\n• Assign producer codes to users, policies, or accounts\n\nUser\n\nou\na\n\n= eee a Policy\nAccount\n\nProducer Code\n“• N",
       "ocrWordCount": 48,
       "ocrConfidence": 83.88,
       "hasTable": false,
@@ -271,7 +271,7 @@
       "originalNotes": "Access for users with producer code security on\nUsers for whom Producer Code Security is set to Yes can only use their role permissions against policies that have a matching producer code. Only the producer\ncode permissions that match can be used against a policy, even if the user has a larger set of permissions available through their user roles. Both producer code and user role permissions must match for the user to gain access.\n\nIn this example, the user can access the policy because of matching producer code. The user has the Edit Policy Term permission in the user role, but the permission is not in the producer code's role. Therefore, the user cannot edit the policy term on the policy.",
       "notes": "Access for users with producer code security on\nUsers for whom Producer Code Security is set to Yes can only use their role permissions against policies that have a matching producer code. Only the producer\ncode permissions that match can be used against a policy, even if the user has a larger set of permissions available through their user roles. Both producer code and user role permissions must match for the user to gain access.\n\nIn this example, the user can access the policy because of matching producer code. The user has the Edit Policy Term permission in the user role, but the permission is not in the producer code's role. Therefore, the user cannot edit the policy term on the policy.",
       "narration": "Producer Code Security adds another layer of access control by restricting users to actions on policies with matching producer codes. This ensures that even if a user has broader permissions, they can only apply them to relevant policies, enhancing security and maintaining organizational boundaries.",
-      "ocrText": "| Access for users with producer code security on Gi\n\n* Can access accounts, policies, or jobs with matching producer codes\n\n¢ Authorization is controlled by the intersection of the permissions in the producer\ncode role and the user role\n\n@ o-\nr/ C\\ Edit Policy Term\n>\nop :\nPolicy\nok\n\nCannot edit the policy\nterm on the policy",
+      "ocrText": "| Access for users with producer code security on Gi\n\n* Can access accounts, policies, or jobs with matching producer codes\n\n• Authorization is controlled by the intersection of the permissions in the producer\ncode role and the user role\n\n@ o-\nr/ C\\ Edit Policy Term\n>\nop :\nPolicy\nok\n\nCannot edit the policy\nterm on the policy",
       "ocrWordCount": 60,
       "ocrConfidence": 86.72,
       "hasTable": false,
@@ -302,10 +302,10 @@
       "slideNumber": 18,
       "title": "Managing Roles",
       "bodyParagraphs": [],
-      "originalNotes": "Managing roles\nRoles displayed in this list view can be filtered based on role type using the filter drop-down at the top to display all roles, producer code roles or user roles. The Superuser can create new roles or delete roles through this menu. Alternatively, users with specific manageroles permission can edit or create new roles. The manageroles permission is not linked to superusers, however,  this can be configured using Guidewire Studio.",
-      "notes": "Managing roles\nRoles displayed in this list view can be filtered based on role type using the filter drop-down at the top to display all roles, producer code roles or user roles. The Superuser can create new roles or delete roles through this menu. Alternatively, users with specific manageroles permission can edit or create new roles. The manageroles permission is not linked to superusers, however,  this can be configured using Guidewire Studio.",
+      "originalNotes": "Managing roles\nRoles displayed in this list view can be filtered based on role type using the filter drop-down at the top to display all roles, producer code roles or user roles. The Superuser can create new roles or delete roles through this menu. Alternatively, users with specific manageroles permission can edit or create new roles. The manageroles permission is not linked to superusers, however, this can be configured using Guidewire Studio.",
+      "notes": "Managing roles\nRoles displayed in this list view can be filtered based on role type using the filter drop-down at the top to display all roles, producer code roles or user roles. The Superuser can create new roles or delete roles through this menu. Alternatively, users with specific manageroles permission can edit or create new roles. The manageroles permission is not linked to superusers, however, this can be configured using Guidewire Studio.",
       "narration": "In PolicyCenter, roles can be managed through a user-friendly interface that allows filtering, creation, and deletion. Users with the manageroles permission can perform these tasks, ensuring that role management is in the hands of those responsible for access control within the organization.",
-      "ocrText": "| Managing roles Gi\n¢ Administration> Users & Security > Roles\n\n¢ Accessing the Roles list view requires the \"Manage Roles\" permission that\ndetermines whether a user can edit/create roles\n\nRoles\n\n(1-15 0f29) 1 -BB *\n\nDescription\nUser Role Permissions for audit examiner\nAudit Supervisor User Role Permissions for audit supervisor\nClaims Adjuster User Producer Code Role Base permissions for a claims adjuster\n\nRoles can be filtered",
+      "ocrText": "| Managing roles Gi\n• Administration> Users & Security > Roles\n\n• Accessing the Roles list view requires the \"Manage Roles\" permission that\ndetermines whether a user can edit/create roles\n\nRoles\n\n(1-15 0f29) 1 -BB *\n\nDescription\nUser Role Permissions for audit examiner\nAudit Supervisor User Role Permissions for audit supervisor\nClaims Adjuster User Producer Code Role Base permissions for a claims adjuster\n\nRoles can be filtered",
       "ocrWordCount": 67,
       "ocrConfidence": 90.06,
       "hasTable": false,
@@ -353,8 +353,8 @@
       "slideNumber": 21,
       "title": "Modifying User Roles",
       "bodyParagraphs": [],
-      "originalNotes": "Modifying roles for a user\nTo grant a role to a user:\nNavigate to the user.\nClick the Edit button in the screen toolbar.\nClick the Add button in the roles list view toolbar.\nIn the new row, select the desired role from the drop- down (this drop-down lists roles that this user does not \nalready have only).\nClick Update.\n\nTo rescind a role from a user:\nNavigate to the user.\nClick the Edit button in the screen toolbar.\nSelect the role row to delete.\nClick the Remove button in the role list view toolbar.\nClick Update.\n\nModifying a users roles requires the \"Grant roles to users“ permission, typically given to managers.",
-      "notes": "Modifying roles for a user\nTo grant a role to a user:\nNavigate to the user.\nClick the Edit button in the screen toolbar.\nClick the Add button in the roles list view toolbar.\nIn the new row, select the desired role from the drop- down (this drop-down lists roles that this user does not \nalready have only).\nClick Update.\n\nTo rescind a role from a user:\nNavigate to the user.\nClick the Edit button in the screen toolbar.\nSelect the role row to delete.\nClick the Remove button in the role list view toolbar.\nClick Update.\n\nModifying a users roles requires the \"Grant roles to users“ permission, typically given to managers.",
+      "originalNotes": "Modifying roles for a user\nTo grant a role to a user:\nNavigate to the user.\nClick the Edit button in the screen toolbar.\nClick the Add button in the roles list view toolbar.\nIn the new row, select the desired role from the drop- down (this drop-down lists roles that this user does not\nalready have only).\nClick Update.\n\nTo rescind a role from a user:\nNavigate to the user.\nClick the Edit button in the screen toolbar.\nSelect the role row to delete.\nClick the Remove button in the role list view toolbar.\nClick Update.\n\nModifying a users roles requires the \"Grant roles to users“ permission, typically given to managers.",
+      "notes": "Modifying roles for a user\nTo grant a role to a user:\nNavigate to the user.\nClick the Edit button in the screen toolbar.\nClick the Add button in the roles list view toolbar.\nIn the new row, select the desired role from the drop- down (this drop-down lists roles that this user does not\nalready have only).\nClick Update.\n\nTo rescind a role from a user:\nNavigate to the user.\nClick the Edit button in the screen toolbar.\nSelect the role row to delete.\nClick the Remove button in the role list view toolbar.\nClick Update.\n\nModifying a users roles requires the \"Grant roles to users“ permission, typically given to managers.",
       "narration": "Assigning or removing roles for users in PolicyCenter is a straightforward process. Users with the appropriate permissions can modify roles, ensuring that each user has access to the functionalities necessary for their role, without overextending their access beyond what's required.",
       "ocrText": "| Modifying roles for a user Gi\n\n* Account| + Policy| Contact | Reinsurance | + — §\n\nAuser can be given one or many roles\n\n. . User: Dennis Right\nusing the Roles drop-down list TENE\n\nBasics | Attributes | Access | Roles | Profile | Region | UW Authority\n\n(a-10f7)\n\nName\" > Description =\n\nUnderwriter Assistant» | ‘Permissions forunderwriter assistant\n\n“none =\n‘Audit Examiner\n\n‘Audit Supervisor\n\nClaims Adjuster\n‘Community Admin\n\nData Protection Oficer\n\nPremium Auditor\nProcessor\nProducer\n\nProducer Clerical\nRating Analyst\nRating Supervisor\nReinsurance Admin\n\nReinsurance Manager\nReporting Admin\n\n4 Rule Admin\n‘Superuser 2",
       "ocrWordCount": 96,
@@ -381,7 +381,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 23,
@@ -449,7 +450,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 27,
@@ -475,7 +477,7 @@
       "originalNotes": "",
       "notes": "Review the key points of roles and permissions management.",
       "narration": "As we review roles and permissions, remember their importance in shaping user access and functionality in PolicyCenter. Correctly configured roles ensure that users have the right level of access to perform their tasks efficiently while maintaining system security.",
-      "ocrText": "Question\n\n,~ — Name some of the user roles in PolicyCenter.\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "ocrText": "Question\nName some of the user roles in PolicyCenter.\n•\n•",
       "ocrWordCount": 20,
       "ocrConfidence": 71.82,
       "hasTable": false,
@@ -483,7 +485,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Name some of the user roles in PolicyCenter.",
+        "answer": "Sooo ooo ooo Oooo oOoD Underwriter, Producer, Auditor, Underwriter assistant..."
+      }
     },
     {
       "slideNumber": 29,
@@ -492,7 +498,7 @@
       "originalNotes": "",
       "notes": "Exploring advanced configurations for complex organizational needs.",
       "narration": "Advanced role configurations allow you to address complex organizational needs by combining multiple roles and permissions. Understanding these configurations enables you to tailor access control to fit intricate business requirements, ensuring that all users operate within their designated capacities.",
-      "ocrText": "Answer\n\n¢\n¢\n¢\n¢\n\nSooo ooo ooo Oooo oOoD\n\nName some of the user roles in PolicyCenter.\n\nUnderwriter, Producer, Auditor, Underwriter assistant...",
+      "ocrText": "Answer\n•\n•\n•\n•\nSooo ooo ooo Oooo oOoD\nName some of the user roles in PolicyCenter.\nUnderwriter, Producer, Auditor, Underwriter assistant...",
       "ocrWordCount": 23,
       "ocrConfidence": 83.85,
       "hasTable": false,
@@ -509,7 +515,7 @@
       "originalNotes": "",
       "notes": "Explore a scenario involving role-based access control.",
       "narration": "In this scenario, we'll explore how role-based access control can be applied to a real-world situation. Observe how different roles and permissions interact to provide secure and efficient access to PolicyCenter features. This will help you visualize how these concepts apply in practical settings.",
-      "ocrText": "Question\n\n,~ — When does PolicyCenter determine which permissions a given user\n\n? 2\ny has?\n4\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi",
+      "ocrText": "Question\nWhen does PolicyCenter determine which permissions a given user\n? 2\nhas?\nGi",
       "ocrWordCount": 24,
       "ocrConfidence": 73.3,
       "hasTable": false,
@@ -517,7 +523,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "When does PolicyCenter determine which permissions a given user",
+        "answer": "Sooo ooo ooo Oooo oOoD PolicyCenter determines the permissions for a given user when that user logs in and every time when the user queries the server."
+      }
     },
     {
       "slideNumber": 31,
@@ -526,7 +536,7 @@
       "originalNotes": "",
       "notes": "Participate in a demo to configure roles.",
       "narration": "Join this interactive demo where we'll configure roles within PolicyCenter. Follow along to see how different configurations affect user access and permissions, and consider how these changes could be applied to your own organizational settings.",
-      "ocrText": "Answer\n\n¢\n¢\n¢\n¢\n\nSooo ooo ooo Oooo oOoD\n\nWhen does PolicyCenter determine which pennissions a given user\nhas?\n\nPolicyCenter determines the permissions for a given user when that user logs in and\nevery time when the user queries the server.\n\nGi",
+      "ocrText": "Answer\n•\n•\n•\n•\nSooo ooo ooo Oooo oOoD\nWhen does PolicyCenter determine which pennissions a given user\nhas?\nPolicyCenter determines the permissions for a given user when that user logs in and\nevery time when the user queries the server.\nGi",
       "ocrWordCount": 43,
       "ocrConfidence": 87.85,
       "hasTable": false,
@@ -543,7 +553,7 @@
       "originalNotes": "",
       "notes": "How to troubleshoot common issues related to roles and permissions.",
       "narration": "Troubleshooting role and permission issues often involves examining the Security Dictionary and user role configurations. By understanding the common pitfalls in role management, you can swiftly address access problems, ensuring that users can perform their tasks without unnecessary barriers.",
-      "ocrText": "Question\n\n_~ — How many permissions can a given role have?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "ocrText": "Question\nHow many permissions can a given role have?\n•\n•",
       "ocrWordCount": 20,
       "ocrConfidence": 65.47,
       "hasTable": false,
@@ -551,7 +561,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "How many permissions can a given role have?",
+        "answer": "Sooo ooo ooo Oooo oOoD How many pemnissions can a given role have? Arole can have any number of permissions. PolicyCenter has certain zero-permission roles in the base product to act as placeholders."
+      }
     },
     {
       "slideNumber": 33,
@@ -560,7 +574,7 @@
       "originalNotes": "",
       "notes": "Exploring common customizations in roles and permissions.",
       "narration": "Common customizations in roles and permissions often involve adjusting configurations to meet specific business needs. Whether it's creating new roles or modifying existing ones, these customizations ensure that PolicyCenter remains aligned with organizational goals and security policies.",
-      "ocrText": "Answer\n\n¢\n¢\n¢\n¢\n\nSooo ooo ooo Oooo oOoD\n\nHow many pemnissions can a given role have?\n\nArole can have any number of permissions. PolicyCenter has certain zero-permission\nroles in the base product to act as placeholders.",
+      "ocrText": "Answer\n•\n•\n•\n•\nSooo ooo ooo Oooo oOoD\nHow many pemnissions can a given role have?\nArole can have any number of permissions. PolicyCenter has certain zero-permission\nroles in the base product to act as placeholders.",
       "ocrWordCount": 38,
       "ocrConfidence": 87.09,
       "hasTable": false,
@@ -577,7 +591,7 @@
       "originalNotes": "",
       "notes": "Discuss security best practices in PolicyCenter.",
       "narration": "Implementing security best practices in PolicyCenter is crucial for maintaining a secure environment. Regularly reviewing roles, permissions, and configurations helps prevent unauthorized access and ensures that the system remains robust against potential security threats.",
-      "ocrText": "Question\n\n,~ — How many roles can a given user have?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "ocrText": "Question\nHow many roles can a given user have?\n•\n•",
       "ocrWordCount": 20,
       "ocrConfidence": 66.18,
       "hasTable": false,
@@ -585,7 +599,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "How many roles can a given user have?",
+        "answer": "Auser can have any number of roles. A user must have at least one role in order to be able to work in PolicyCenter. A user with broader responsibility can be given additional roles so that they are able to accomplish these responsibilities. Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 35,
@@ -594,7 +612,7 @@
       "originalNotes": "",
       "notes": "The importance of conducting regular audits.",
       "narration": "Conducting regular audits of roles and permissions is vital to maintaining system integrity. These audits help identify and rectify any misconfigurations or outdated permissions, ensuring that user access remains appropriate and secure over time.",
-      "ocrText": "Answer Gi\n\n,~ — How many roles can a given user have?\n\n¢\n¢\n¢\n\nAuser can have any number of roles. A user must have at least one role in order to be\nable to work in PolicyCenter. A user with broader responsibility can be given additional\nroles so that they are able to accomplish these responsibilities.\n\nSooo ooo ooo Oooo oOoD",
+      "ocrText": "Answer Gi\nHow many roles can a given user have?\n•\n•\n•\nAuser can have any number of roles. A user must have at least one role in order to be\nable to work in PolicyCenter. A user with broader responsibility can be given additional\nroles so that they are able to accomplish these responsibilities.\nSooo ooo ooo Oooo oOoD",
       "ocrWordCount": 63,
       "ocrConfidence": 88.18,
       "hasTable": false,
@@ -611,7 +629,7 @@
       "originalNotes": "",
       "notes": "Strategies for future-proofing role configurations.",
       "narration": "To future-proof your role configurations, ensure they are flexible and scalable. This involves anticipating changes in business processes and being prepared to adjust roles and permissions accordingly, maintaining a balance between security and operational efficiency.",
-      "ocrText": "Question\n\n,~ — How could you easily determine which roles enable users to create\n\nx accounts?\n7\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi",
+      "ocrText": "Question\nHow could you easily determine which roles enable users to create\naccounts?\nGi",
       "ocrWordCount": 24,
       "ocrConfidence": 73.52,
       "hasTable": false,
@@ -619,7 +637,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "How could you easily determine which roles enable users to create",
+        "answer": "• accounts? View the create accounts permissions in the security dictionary to see which roles the permission has been added to. Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 37,
@@ -628,7 +650,7 @@
       "originalNotes": "",
       "notes": "Engage in practice to adjust roles.",
       "narration": "Let's engage in hands-on practice to adjust roles and observe how these changes impact user access. This practical exercise will reinforce your understanding of role management, preparing you to implement these changes in your own environment effectively.",
-      "ocrText": "Answer Gi\n\n,~ — How could you easily determine which roles enable users to create\n¢ accounts?\n\n¢\n¢\n\nView the create accounts permissions in the security dictionary to see which roles the\npermission has been added to.\n\nSooo ooo ooo Oooo oOoD",
+      "ocrText": "Answer Gi\nHow could you easily determine which roles enable users to create\n• accounts?\n•\n•\nView the create accounts permissions in the security dictionary to see which roles the\npermission has been added to.\nSooo ooo ooo Oooo oOoD",
       "ocrWordCount": 43,
       "ocrConfidence": 83.23,
       "hasTable": false,

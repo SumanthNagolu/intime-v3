@@ -158,7 +158,7 @@
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": ",7~ — Cana submission be out-of-sequence? Why or why not?",
+      "question": "Can a submission be out-of-sequence? Why or why not?",
       "referenceAnswer": "therefore must be the first transaction that can be issued against a policy. You cannot\nhave transactions effective earlier than the policy's creation date.",
       "questionKey": "slide-16"
     },
@@ -172,21 +172,21 @@
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "_ _ What criteria does PolicyCenter use to determine if an out-of-sequence\n,’ __ transaction conflicts with a \"later effective\" transaction?",
+      "question": "What criteria does PolicyCenter use to determine if an out-of-sequence\n,’ __ transaction conflicts with a \"later effective\" transaction?",
       "referenceAnswer": "If each transaction changes a single given field to a different value, then the two\ntransactions are in conflict.",
       "questionKey": "slide-20"
     },
     {
       "type": "knowledge_check",
       "id": "kc-5",
-      "question": "'fthere are no conflicts, what additional work must the end user do?",
+      "question": "If there are no conflicts, what additional work must the end user do?",
       "referenceAnswer": "merges the data from the two transactions.",
       "questionKey": "slide-22"
     },
     {
       "type": "knowledge_check",
       "id": "kc-6",
-      "question": "_ _ If there is at least one conflict, what additional work must the end user\nra do?",
+      "question": "If there is at least one conflict, what additional work must the end user\ndo?",
       "referenceAnswer": "value overrides the future effective-dated value in the future slice of the policy.",
       "questionKey": "slide-24"
     },

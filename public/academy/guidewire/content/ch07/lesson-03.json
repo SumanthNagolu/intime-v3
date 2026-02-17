@@ -11,7 +11,7 @@
   "slides": [
     {
       "slideNumber": 1,
-      "title": "",
+      "title": "Extending the Data Model",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -28,7 +28,7 @@
     },
     {
       "slideNumber": 2,
-      "title": "",
+      "title": "Learning Objectives",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -62,12 +62,12 @@
     },
     {
       "slideNumber": 4,
-      "title": "",
+      "title": "Entity",
       "bodyParagraphs": [],
       "originalNotes": "Entity\nAt its simplest, the Guidewire data model is a set of XML- formatted metadata definitions of entities and typelists. An entity defines a set of fields for information",
       "notes": "Entity\nAt its simplest, the Guidewire data model is a set of XML- formatted metadata definitions of entities and typelists. An entity defines a set of fields for information",
       "narration": "",
-      "ocrText": "| Entity\n\nobject entity\n\n¢ An entity is a definition of a business object used by the application, such as\nPolicy, User, ABContact, Producer, etc.\n\n¢ Entities are defined in entity definition files (ETI) eti\n* The ETI file describes the entity in XML format |\n¢ There are two main types of entities:\n\n* Base application entities\n* Custom entities",
+      "ocrText": "| Entity\n\nobject entity\n\n• An entity is a definition of a business object used by the application, such as\nPolicy, User, ABContact, Producer, etc.\n\n• Entities are defined in entity definition files (ETI) eti\n* The ETI file describes the entity in XML format |\n• There are two main types of entities:\n\n* Base application entities\n* Custom entities",
       "ocrWordCount": 61,
       "ocrConfidence": 87.26,
       "hasTable": false,
@@ -79,12 +79,12 @@
     },
     {
       "slideNumber": 5,
-      "title": "",
+      "title": "Base application entities",
       "bodyParagraphs": [],
       "originalNotes": "Base application entities\nPlatform entities are always found in the folder. All ETI files in the are read- only. You cannot edit these files directly in Guidewire Studio and should not edit these files in any other application. Many platform entities have the attribute defined in the <entity /> element.\n\nSome application specific entities can also be found in the folder. Many application entities are extendable in the sense that they can be both subtyped and/or an entity extension can be created. Entities with the final=\"true“ attribute defined in the <entity /> element cannot be subtyped. Entities with the extendable=\"false\" attribute defined in the <entity /> element cannot be extended in the sense that new elements cannot be added to the entity.",
       "notes": "Base application entities\nPlatform entities are always found in the folder. All ETI files in the are read- only. You cannot edit these files directly in Guidewire Studio and should not edit these files in any other application. Many platform entities have the attribute defined in the <entity /> element.\n\nSome application specific entities can also be found in the folder. Many application entities are extendable in the sense that they can be both subtyped and/or an entity extension can be created. Entities with the final=\"true“ attribute defined in the <entity /> element cannot be subtyped. Entities with the extendable=\"false\" attribute defined in the <entity /> element cannot be extended in the sense that new elements cannot be added to the entity.",
       "narration": "",
-      "ocrText": "| Base application entities Gi\n\n¢ Abase application entity is an entity created by Guidewire and shipped as part of\nthe out-of-the-box configuration\n\n* Guidewire creates base application entities on the application or the platform level\n\n¢ Application entities are specific to\napplication\n\n¢ Platform entities are common to all\nGuidewire applications\n\nActivity",
+      "ocrText": "| Base application entities Gi\n\n• Abase application entity is an entity created by Guidewire and shipped as part of\nthe out-of-the-box configuration\n\n* Guidewire creates base application entities on the application or the platform level\n\n• Application entities are specific to\napplication\n\n• Platform entities are common to all\nGuidewire applications\n\nActivity",
       "ocrWordCount": 53,
       "ocrConfidence": 90.22,
       "hasTable": false,
@@ -96,12 +96,12 @@
     },
     {
       "slideNumber": 6,
-      "title": "",
+      "title": "Custom entities",
       "bodyParagraphs": [],
       "originalNotes": "Custom entities\nCustom entities are always found in the\nfolder.",
       "notes": "Custom entities\nCustom entities are always found in the\nfolder.",
       "narration": "",
-      "ocrText": "| Custom entities Gi\n\neti\n\n¢ Acustom entity is an entity\ncreated by the customer\n\neti\nEI\n\nMedCase Ext LE « Acustom entity can be created\n\nonly on the application level and\nit will be local inside that\napplication",
+      "ocrText": "| Custom entities Gi\n\neti\n\n• Acustom entity is an entity\ncreated by the customer\n\neti\nEI\n\nMedCase Ext LE « Acustom entity can be created\n\nonly on the application level and\nit will be local inside that\napplication",
       "ocrWordCount": 39,
       "ocrConfidence": 86.76,
       "hasTable": false,
@@ -113,7 +113,7 @@
     },
     {
       "slideNumber": 7,
-      "title": "",
+      "title": "Entity extension",
       "bodyParagraphs": [],
       "originalNotes": "Entity extension\nNote: To avoid future naming conflicts when Guidewire adds or changes base entities, Guidewire recommends that you add the suffix _ Ext to your entity names and new field names on base entities. Adding the _ Ext suffix to entity names results in Studio and the Data Dictionary listing these extensions next to any entities that they extend. For example, CreditHistory_Ext.\n\nIf you add a new entity, its field names do not need the Ext suffix in their names, because you have the _ Ext suffix in the name of the entity.",
       "notes": "Entity extension\nNote: To avoid future naming conflicts when Guidewire adds or changes base entities, Guidewire recommends that you add the suffix _ Ext to your entity names and new field names on base entities. Adding the _ Ext suffix to entity names results in Studio and the Data Dictionary listing these extensions next to any entities that they extend. For example, CreditHistory_Ext.\n\nIf you add a new entity, its field names do not need the Ext suffix in their names, because you have the _ Ext suffix in the name of the entity.",
@@ -130,7 +130,7 @@
     },
     {
       "slideNumber": 8,
-      "title": "",
+      "title": "Extending base application entities",
       "bodyParagraphs": [],
       "originalNotes": "Extending base application entities\nCustomers can create or edit entity extensions. Entity extensions are always found in the .. \\modules\\configuration\\config\\extensions\\entity\\folder.\n\nGuidewire provides certain entity extensions as part of the base application configuration. Many of the extension index definitions address performance issues. Other extensions provide the ability to configure the data model in ways that would not be possible if the extension was part of the base data model. Do not simply overwrite a Guidewire extension with your own extension without understanding the full implications of the change.",
       "notes": "Extending base application entities\nCustomers can create or edit entity extensions. Entity extensions are always found in the .. \\modules\\configuration\\config\\extensions\\entity\\folder.\n\nGuidewire provides certain entity extensions as part of the base application configuration. Many of the extension index definitions address performance issues. Other extensions provide the ability to configure the data model in ways that would not be possible if the extension was part of the base data model. Do not simply overwrite a Guidewire extension with your own extension without understanding the full implications of the change.",
@@ -147,12 +147,12 @@
     },
     {
       "slideNumber": 9,
-      "title": "",
+      "title": "Internal Entity Extension",
       "bodyParagraphs": [],
       "originalNotes": "Internal Entity Extension\nThe EIX file contains extensions to the platform-level entities that are required for the base application and cannot be modified. EIX files are extensions to platform-layer entities created by Guidewire development to meet the needs of a given application's base data model.\n\nEIX files are always found in the\n\\modules\\configuration\\config\\metadata\\entify\\ folder. All ETI andEIX files in the are read-only. You cannot edit these files directly in Guidewire Studio and should not edit these files in any other application.\n\nBecause files are neither created nor modified by configuration developers, this lesson does not discuss their structure. If you need to make multiple extensions to a single entity at different points in time, all extensions for that entity should be added to the same ETX file.",
       "notes": "Internal Entity Extension\nThe EIX file contains extensions to the platform-level entities that are required for the base application and cannot be modified. EIX files are extensions to platform-layer entities created by Guidewire development to meet the needs of a given application's base data model.\n\nEIX files are always found in the\n\\modules\\configuration\\config\\metadata\\entify\\ folder. All ETI andEIX files in the are read-only. You cannot edit these files directly in Guidewire Studio and should not edit these files in any other application.\n\nBecause files are neither created nor modified by configuration developers, this lesson does not discuss their structure. If you need to make multiple extensions to a single entity at different points in time, all extensions for that entity should be added to the same ETX file.",
       "narration": "",
-      "ocrText": "Internal Entity Extension\n\neti etx\n\nMedCase_Ext Activity\n\n¢ An Internal Entity\nExtension is created\nby Guidewire to add\napplication specific\nfunctionality to a\nplatform level entity\n\nti — ti\noe oti\n\nClaim Policy\n\n« An EIX file is local in\nthe application and\nread-only",
+      "ocrText": "Internal Entity Extension\n\neti etx\n\nMedCase_Ext Activity\n\n• An Internal Entity\nExtension is created\nby Guidewire to add\napplication specific\nfunctionality to a\nplatform level entity\n\nti — ti\noe oti\n\nClaim Policy\n\n« An EIX file is local in\nthe application and\nread-only",
       "ocrWordCount": 44,
       "ocrConfidence": 85.76,
       "hasTable": false,
@@ -164,10 +164,10 @@
     },
     {
       "slideNumber": 10,
-      "title": "",
+      "title": "Entity extensions and Java classes",
       "bodyParagraphs": [],
-      "originalNotes": "Entity extensions and Java classes\nFor a base application data model entity, the entity is defined by both its original ETI file and the ETX extending file, if one exists. In certain cases, there is an internal entity extension, EIX, file. Regardless of which file the field is declared in, all fields from all files become the generated Java class.\n\nFor fields that are added to a base application entity, Guidewire recommends that the field name should end with the suffix Ext. In the slide example, the\nABContact.etx entity extension  file contains the WebAddress Ext field.\n\nStudents coming from an Object- Oriented Programming (OOP)  background should be aware that the term \"extend\" gets used inOOP differently than it does in Guidewire. In OOP, the term \"extend\" is used to refer to creating a new subclass that extends some parent superclass.\n\nIn Guidewire data model configuration, the term \"extencf’ is sometimes used to refer to adding new fields to an existing base application entity. In this sense, no new subclass or subtype entity is getting created. One is simply adding additional fields to an existing base application entity",
-      "notes": "Entity extensions and Java classes\nFor a base application data model entity, the entity is defined by both its original ETI file and the ETX extending file, if one exists. In certain cases, there is an internal entity extension, EIX, file. Regardless of which file the field is declared in, all fields from all files become the generated Java class.\n\nFor fields that are added to a base application entity, Guidewire recommends that the field name should end with the suffix Ext. In the slide example, the\nABContact.etx entity extension  file contains the WebAddress Ext field.\n\nStudents coming from an Object- Oriented Programming (OOP)  background should be aware that the term \"extend\" gets used inOOP differently than it does in Guidewire. In OOP, the term \"extend\" is used to refer to creating a new subclass that extends some parent superclass.\n\nIn Guidewire data model configuration, the term \"extencf’ is sometimes used to refer to adding new fields to an existing base application entity. In this sense, no new subclass or subtype entity is getting created. One is simply adding additional fields to an existing base application entity",
+      "originalNotes": "Entity extensions and Java classes\nFor a base application data model entity, the entity is defined by both its original ETI file and the ETX extending file, if one exists. In certain cases, there is an internal entity extension, EIX, file. Regardless of which file the field is declared in, all fields from all files become the generated Java class.\n\nFor fields that are added to a base application entity, Guidewire recommends that the field name should end with the suffix Ext. In the slide example, the\nABContact.etx entity extension file contains the WebAddress Ext field.\n\nStudents coming from an Object- Oriented Programming (OOP) background should be aware that the term \"extend\" gets used inOOP differently than it does in Guidewire. In OOP, the term \"extend\" is used to refer to creating a new subclass that extends some parent superclass.\n\nIn Guidewire data model configuration, the term \"extencf’ is sometimes used to refer to adding new fields to an existing base application entity. In this sense, no new subclass or subtype entity is getting created. One is simply adding additional fields to an existing base application entity",
+      "notes": "Entity extensions and Java classes\nFor a base application data model entity, the entity is defined by both its original ETI file and the ETX extending file, if one exists. In certain cases, there is an internal entity extension, EIX, file. Regardless of which file the field is declared in, all fields from all files become the generated Java class.\n\nFor fields that are added to a base application entity, Guidewire recommends that the field name should end with the suffix Ext. In the slide example, the\nABContact.etx entity extension file contains the WebAddress Ext field.\n\nStudents coming from an Object- Oriented Programming (OOP) background should be aware that the term \"extend\" gets used inOOP differently than it does in Guidewire. In OOP, the term \"extend\" is used to refer to creating a new subclass that extends some parent superclass.\n\nIn Guidewire data model configuration, the term \"extencf’ is sometimes used to refer to adding new fields to an existing base application entity. In this sense, no new subclass or subtype entity is getting created. One is simply adding additional fields to an existing base application entity",
       "narration": "",
       "ocrText": "| Entity extensions and Java classes G\n\nDatabase\n\nApplication Server\ngenerated Java class\nABContact\n\nID\nName\n\nABContact\n\neti al TL.\nABContact.eti\nFaxPhone\n\n_f WebAddress_Ext\n~ EI\n\nFaxPhone\nWebAddress_Ext\n\n‘\n\nABContact.etx\n\nab_abcontact\n\nsave to database variable\n\nread from database B, instance of Java class\n——_ SZ in anABContact",
       "ocrWordCount": 47,
@@ -181,12 +181,12 @@
     },
     {
       "slideNumber": 11,
-      "title": "",
+      "title": "Typelist",
       "bodyParagraphs": [],
-      "originalNotes": "Typelist\nYou can programmatically get a list of typekeys in a typelist. You can choose whether to get all typekeys, including retired typekeys as well as non-retire typekeys, or just non-retired typekeys. You can retire a typekey in the data model  configuration files. To gettypekeys from a typelist, call the getTypeKeys method: eRetiredTypekeys)",
-      "notes": "Typelist\nYou can programmatically get a list of typekeys in a typelist. You can choose whether to get all typekeys, including retired typekeys as well as non-retire typekeys, or just non-retired typekeys. You can retire a typekey in the data model  configuration files. To gettypekeys from a typelist, call the getTypeKeys method: eRetiredTypekeys)",
+      "originalNotes": "Typelist\nYou can programmatically get a list of typekeys in a typelist. You can choose whether to get all typekeys, including retired typekeys as well as non-retire typekeys, or just non-retired typekeys. You can retire a typekey in the data model configuration files. To gettypekeys from a typelist, call the getTypeKeys method: eRetiredTypekeys)",
+      "notes": "Typelist\nYou can programmatically get a list of typekeys in a typelist. You can choose whether to get all typekeys, including retired typekeys as well as non-retire typekeys, or just non-retired typekeys. You can retire a typekey in the data model configuration files. To gettypekeys from a typelist, call the getTypeKeys method: eRetiredTypekeys)",
       "narration": "",
-      "ocrText": "| Typelist G\n\n¢ ATypelist is a fixed, Personinfo | Phone wAddresses | sank accounts\npredefined list of values rr\n(Typecodes) BankName”¢ RoutingNumber* > Account Number\" Account Type\" ¢\n+ Values cannot be dynamically ‘ACME Credit Union 123-987 345678900 Checking = ¥\nNational Bank 745-222 232323566\n\nadded or removed during\nruntime\n\nChecking\n\n[i BankAccountType.tti x |\n\n¢ Defined value often used\nto constrain user input\n\n« When rendered in Ul, Y_typelist BankAccountType\ntypically appears as a typecode checking\ndropdown list typecode savings\n\ntypecode other",
+      "ocrText": "| Typelist G\n\n• ATypelist is a fixed, Personinfo | Phone wAddresses | sank accounts\npredefined list of values rr\n(Typecodes) BankName”• RoutingNumber* > Account Number\" Account Type\" •\n+ Values cannot be dynamically ‘ACME Credit Union 123-987 345678900 Checking = ¥\nNational Bank 745-222 232323566\n\nadded or removed during\nruntime\n\nChecking\n\n[i BankAccountType.tti x |\n\n• Defined value often used\nto constrain user input\n\n« When rendered in Ul, Y_typelist BankAccountType\ntypically appears as a typecode checking\ndropdown list typecode savings\n\ntypecode other",
       "ocrWordCount": 84,
       "ocrConfidence": 81.8,
       "hasTable": false,
@@ -198,7 +198,7 @@
     },
     {
       "slideNumber": 12,
-      "title": "",
+      "title": "Typelist extension",
       "bodyParagraphs": [],
       "originalNotes": "Typelist extension\nFiletypes are defined as follows: .tti - Typelist Type Info, a single Guidewire or custom typelist declaration. The name of the file corresponds to the name of the typelist being declared. -tix - Typelist Internal extension, a single Guidewire typelist extension. The name of the file corresponds to the name of the Guidewire typelist being extended.\nttx - Typelist Type extension – a single Guidewire or custom typelist extension. The name of the file corresponds to the name",
       "notes": "Typelist extension\nFiletypes are defined as follows: .tti - Typelist Type Info, a single Guidewire or custom typelist declaration. The name of the file corresponds to the name of the typelist being declared. -tix - Typelist Internal extension, a single Guidewire typelist extension. The name of the file corresponds to the name of the Guidewire typelist being extended.\nttx - Typelist Type extension – a single Guidewire or custom typelist extension. The name of the file corresponds to the name",
@@ -215,12 +215,12 @@
     },
     {
       "slideNumber": 13,
-      "title": "",
+      "title": "Typelists in the data model (1 of 2)",
       "bodyParagraphs": [],
-      "originalNotes": "Typelists in the data model (1 of 2)\nInternal typelists are base application typelists marked as final and cannot beied or extended. Internal base application logic depends on these typelists. Extendable typelists are base application typelists that can be modified or extended by the customers. Custom typelists are created bythe customers.",
-      "notes": "Typelists in the data model (1 of 2)\nInternal typelists are base application typelists marked as final and cannot beied or extended. Internal base application logic depends on these typelists. Extendable typelists are base application typelists that can be modified or extended by the customers. Custom typelists are created bythe customers.",
+      "originalNotes": "Typelists in the data model (1 of 2)\nInternal typelists are base application typelists marked as final and cannot beied or extended. Internal base application logic depends on these typelists. Extendable typelists are base application typelists that can be modified or extended by the customers. Custom typelists are created by the customers.",
+      "notes": "Typelists in the data model (1 of 2)\nInternal typelists are base application typelists marked as final and cannot beied or extended. Internal base application logic depends on these typelists. Extendable typelists are base application typelists that can be modified or extended by the customers. Custom typelists are created by the customers.",
       "narration": "",
-      "ocrText": "| Typelists in the data model (1 of 2) Gi\n\nttx\n\n¢ Follow similar principles as\nentities\n¢ Defined as XML files\n¢ TTI, TIX and TTX files\n\n* ...\\Metadata\\Typelist folder\nread-only and contains\nplatform and base application\nTypelists\n\nD\n\nValidationLevel BuildingCode_Ext\n\nls te\n\nValidationLevel ValidationLevel\n\n¢ ...\\Extension\\Typelist folder\ncontains everything customer\nspecific\n\nActivityStatus",
+      "ocrText": "| Typelists in the data model (1 of 2) Gi\n\nttx\n\n• Follow similar principles as\nentities\n• Defined as XML files\n• TTI, TIX and TTX files\n\n* ...\\Metadata\\Typelist folder\nread-only and contains\nplatform and base application\nTypelists\n\nD\n\nValidationLevel BuildingCode_Ext\n\nls te\n\nValidationLevel ValidationLevel\n\n• ...\\Extension\\Typelist folder\ncontains everything customer\nspecific\n\nActivityStatus",
       "ocrWordCount": 54,
       "ocrConfidence": 88.66,
       "hasTable": false,
@@ -232,12 +232,12 @@
     },
     {
       "slideNumber": 14,
-      "title": "",
+      "title": "Typelists in the data model (2 of 2)",
       "bodyParagraphs": [],
       "originalNotes": "Typelists in the data model (2 of 2)\nIn some cases, an internal Typelist does not have a physical file that is exposed in Guidewire Studio. One type of virtual Typelist is a Typelist of subtypes for a given supertype. You will not find the virtual Typelists in Studio, but you can see the Java classes that get generated from them. For example, you can use the CTRL + SHIFT + N to search for ABContact.java and you will seethat one of the search results is in the\nconfiguration\\generated\\typekey folder but there is not matching physical Typelist.",
       "notes": "Typelists in the data model (2 of 2)\nIn some cases, an internal Typelist does not have a physical file that is exposed in Guidewire Studio. One type of virtual Typelist is a Typelist of subtypes for a given supertype. You will not find the virtual Typelists in Studio, but you can see the Java classes that get generated from them. For example, you can use the CTRL + SHIFT + N to search for ABContact.java and you will seethat one of the search results is in the\nconfiguration\\generated\\typekey folder but there is not matching physical Typelist.",
       "narration": "",
-      "ocrText": "| Typelists in the data model (2 of 2) Gi\nB & =\n\nttx\n\n¢ Kinds of Typelists:\n\ntti + ValidationLevel is extendable\n\ni) iw)\n\nValidationLevel BuildingCode_Ext * ActivityStatus is internal\n\n* BuildingCode_Ext is custom\n\n¢ Virtual Typelists don’t exist\nas .tti files in Studio\n\nls te\n\nValidationLevel ValidationLevel\n\n« Java code is generated\n\n« A table is populated on the\ndatabase\n\n¢ Virtual typelists behave like\nother typelists\n\nValidationLevel  ActivityStatus",
+      "ocrText": "| Typelists in the data model (2 of 2) Gi\nB & =\n\nttx\n\n• Kinds of Typelists:\n\ntti + ValidationLevel is extendable\n\ni) iw)\n\nValidationLevel BuildingCode_Ext * ActivityStatus is internal\n\n* BuildingCode_Ext is custom\n\n• Virtual Typelists don’t exist\nas .tti files in Studio\n\nls te\n\nValidationLevel ValidationLevel\n\n« Java code is generated\n\n« A table is populated on the\ndatabase\n\n• Virtual typelists behave like\nother typelists\n\nValidationLevel  ActivityStatus",
       "ocrWordCount": 71,
       "ocrConfidence": 81.98,
       "hasTable": false,
@@ -266,10 +266,10 @@
     },
     {
       "slideNumber": 16,
-      "title": "",
+      "title": "Scenario",
       "bodyParagraphs": [],
-      "originalNotes": "Scenario\nAn insurance company wants to implement a social media functionality to provide a more personalized experience to customers. Every customer has the option to accept or decline this service. The customer must either accept or decline, null values shouldn't be allowed — default value should be false. If  they accept the service then theinsurance company would like to store additional information about each customer. This information also needs to be displayed in the IJI and TrainingApp users have to be able to easily update it as needed. Please see the wireframe for more information. We are going to assume that the integration developers are currently implementing the integration points with the different external systems, so we need to configure only the Data Model and the User Interface. First, we are going to configure the Data Model to support this requirement and in later exercises we will make the\nnecessary PCF changes to display the information in the User Interface.",
-      "notes": "Scenario\nAn insurance company wants to implement a social media functionality to provide a more personalized experience to customers. Every customer has the option to accept or decline this service. The customer must either accept or decline, null values shouldn't be allowed — default value should be false. If  they accept the service then theinsurance company would like to store additional information about each customer. This information also needs to be displayed in the IJI and TrainingApp users have to be able to easily update it as needed. Please see the wireframe for more information. We are going to assume that the integration developers are currently implementing the integration points with the different external systems, so we need to configure only the Data Model and the User Interface. First, we are going to configure the Data Model to support this requirement and in later exercises we will make the\nnecessary PCF changes to display the information in the User Interface.",
+      "originalNotes": "Scenario\nAn insurance company wants to implement a social media functionality to provide a more personalized experience to customers. Every customer has the option to accept or decline this service. The customer must either accept or decline, null values shouldn't be allowed — default value should be false. If they accept the service then theinsurance company would like to store additional information about each customer. This information also needs to be displayed in the IJI and TrainingApp users have to be able to easily update it as needed. Please see the wireframe for more information. We are going to assume that the integration developers are currently implementing the integration points with the different external systems, so we need to configure only the Data Model and the User Interface. First, we are going to configure the Data Model to support this requirement and in later exercises we will make the\nnecessary PCF changes to display the information in the User Interface.",
+      "notes": "Scenario\nAn insurance company wants to implement a social media functionality to provide a more personalized experience to customers. Every customer has the option to accept or decline this service. The customer must either accept or decline, null values shouldn't be allowed — default value should be false. If they accept the service then theinsurance company would like to store additional information about each customer. This information also needs to be displayed in the IJI and TrainingApp users have to be able to easily update it as needed. Please see the wireframe for more information. We are going to assume that the integration developers are currently implementing the integration points with the different external systems, so we need to configure only the Data Model and the User Interface. First, we are going to configure the Data Model to support this requirement and in later exercises we will make the\nnecessary PCF changes to display the information in the User Interface.",
       "narration": "",
       "ocrText": "| Scenario G\nSocial media (part A)\n\nAn insurance company wants to implement a social media functionality to provide a\n\nmore personalized experience to customers.\nABContact\n\nTaxID : ssn\nEmailAddress1 : varchar(60)\nEnrolledinSocialMedia_Ext : bit\n\nFriendbook_Ext : varchar(100)\nChirp_E: rarchar(100)\nAverageActivi xt : decimal(4,1)\nLastSocialActi ;_Ext : datetime\n\nPexson: Wiliam Andy\n\nSummary\n\novens sna Configure the tab to collect more\ninformation about the contact\n\nJul 12,2021 1200 8",
       "ocrWordCount": 68,
@@ -283,7 +283,7 @@
     },
     {
       "slideNumber": 17,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -296,7 +296,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 18,
@@ -317,7 +318,7 @@
     },
     {
       "slideNumber": 19,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -330,7 +331,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 20,
@@ -351,7 +353,7 @@
     },
     {
       "slideNumber": 21,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "Demonstration\nAs configuration developers, we want to create a typelist extension so that we can add new typecodes to existing base application typelists.",
       "notes": "Demonstration\nAs configuration developers, we want to create a typelist extension so that we can add new typecodes to existing base application typelists.",
@@ -364,7 +366,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 2
     },
     {
       "slideNumber": 22,
@@ -402,12 +405,12 @@
     },
     {
       "slideNumber": 24,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n,— — How many ETX files can a given entity have?\n\n¢\n¢\n¢\n\nee",
+      "ocrText": "Question G\nHow many ETX files can a given entity have?\n•\n•\n•",
       "ocrWordCount": 17,
       "ocrConfidence": 73.61,
       "hasTable": false,
@@ -415,16 +418,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "How many ETX files can a given entity have?",
+        "answer": "One ETX file per entity in most cases."
+      }
     },
     {
       "slideNumber": 25,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer G&G\n\n,~ — How many ETX files can a given entity have?\n\n¢\n¢\n¢\n\nOne ETX file per entity in most cases.\n\na",
+      "ocrText": "Answer G&G\nHow many ETX files can a given entity have?\n•\n•\n•\nOne ETX file per entity in most cases.\na",
       "ocrWordCount": 25,
       "ocrConfidence": 80.04,
       "hasTable": false,
@@ -436,12 +443,12 @@
     },
     {
       "slideNumber": 26,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_~ — What datatype do you enter for fields that will store....\n\n¢\no A) String values?\n\nB) Boolean values?\n\nC) Numbers with decimal values?\n\nee",
+      "ocrText": "Question\nWhat datatype do you enter for fields that will store....\n•\nA) String values?\nB) Boolean values?\nC) Numbers with decimal values?",
       "ocrWordCount": 27,
       "ocrConfidence": 87.19,
       "hasTable": false,
@@ -449,16 +456,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What datatype do you enter for fields that will store....",
+        "answer": "A) String values? B) Boolean values? c) Numbers with decimal values? The correct responses are: A) varchar B) Bit c) decimal"
+      }
     },
     {
       "slideNumber": 27,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n¢\n¢\n¢\n\na\n\n_— — What datatype do you enter for fields that will store....\n\nA) String values?\nB) Boolean values?\n\nc) Numbers with decimal values?\n\nThe correct responses are:\nA) varchar\n\nB) Bit\n\nc) decimal",
+      "ocrText": "Answer\n•\n•\n•\na\nWhat datatype do you enter for fields that will store....\nA) String values?\nB) Boolean values?\nc) Numbers with decimal values?\nThe correct responses are:\nA) varchar\nB) Bit\nc) decimal",
       "ocrWordCount": 38,
       "ocrConfidence": 86.87,
       "hasTable": false,
@@ -470,12 +481,12 @@
     },
     {
       "slideNumber": 28,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n_— — Which datatypes require columnParam subelements?\n\n¢\n¢\n¢\n\nee",
+      "ocrText": "Question G\nWhich datatypes require columnParam subelements?\n•\n•\n•",
       "ocrWordCount": 13,
       "ocrConfidence": 76.07,
       "hasTable": false,
@@ -483,16 +494,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Which datatypes require columnParam subelements?",
+        "answer": "Varchar requires size and decimal which requires precision and scale"
+      }
     },
     {
       "slideNumber": 29,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer G&G\n\n_~ — Which datatypes require columnParam subelements?\n\n¢\n¢\n¢\n\nvarchar requires size and decimal which requires precision and scale\n\na",
+      "ocrText": "Answer G&G\nWhich datatypes require columnParam subelements?\n•\n•\n•\nvarchar requires size and decimal which requires precision and scale\na",
       "ocrWordCount": 23,
       "ocrConfidence": 81.12,
       "hasTable": false,
@@ -504,12 +519,12 @@
     },
     {
       "slideNumber": 30,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n,— — Under what circumstances would you want to regenerate the Data\nPa Dictionary?\n\nee",
+      "ocrText": "Question G\nUnder what circumstances would you want to regenerate the Data\nDictionary?",
       "ocrWordCount": 17,
       "ocrConfidence": 81.67,
       "hasTable": false,
@@ -517,16 +532,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Under what circumstances would you want to regenerate the Data",
+        "answer": "Dictionary? You would want to regenerate the Data Dictionary whenever you extend the data model and are concerned with data model validation beyond schema validation in the Entity Editor. Regenerating the Data Dictionary also updates the dictionary files to include the new fields (or entities) that you have created."
+      }
     },
     {
       "slideNumber": 31,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer G&G\n\n,~ — Under what circumstances would you want to regenerate the Data\nPa Dictionary?\n\nYou would want to regenerate the Data Dictionary whenever you extend the data\nmodel and are concerned with data model validation beyond schema validation in the\nEntity Editor. Regenerating the Data Dictionary also updates the dictionary files to\ninclude the new fields (or entities) that you have created.\n\na",
+      "ocrText": "Answer G&G\nUnder what circumstances would you want to regenerate the Data\nDictionary?\nYou would want to regenerate the Data Dictionary whenever you extend the data\nmodel and are concerned with data model validation beyond schema validation in the\nEntity Editor. Regenerating the Data Dictionary also updates the dictionary files to\ninclude the new fields (or entities) that you have created.\na",
       "ocrWordCount": 65,
       "ocrConfidence": 91.29,
       "hasTable": false,
@@ -538,12 +557,12 @@
     },
     {
       "slideNumber": 32,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n,~ — When does a Guidewire application actually modify the physical\nPa structure of the database?\n\nee",
+      "ocrText": "Question G\nWhen does a Guidewire application actually modify the physical\nstructure of the database?",
       "ocrWordCount": 19,
       "ocrConfidence": 81.35,
       "hasTable": false,
@@ -551,16 +570,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "When does a Guidewire application actually modify the physical",
+        "answer": "Structure of the database? The physical structure of the database is modified only during start-up."
+      }
     },
     {
       "slideNumber": 33,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer G&G\n\n,~ — When does a Guidewire application actually modify the physical\nPa structure of the database?\n\nThe physical structure of the database is modified only during start-up.\n\na",
+      "ocrText": "Answer G&G\nWhen does a Guidewire application actually modify the physical\nstructure of the database?\nThe physical structure of the database is modified only during start-up.\na",
       "ocrWordCount": 30,
       "ocrConfidence": 85.87,
       "hasTable": false,
@@ -572,12 +595,12 @@
     },
     {
       "slideNumber": 34,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n_- — Describe some of the differences between the files in the\n\nKA ..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders.\n7\n\nee",
+      "ocrText": "Question G\n_- — Describe some of the differences between the files in the\nKA ..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders.",
       "ocrWordCount": 20,
       "ocrConfidence": 78.76,
       "hasTable": false,
@@ -585,16 +608,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Describe some of the differences between the files in the",
+        "answer": "• ..\\Metadata\\Typelist\\ and ..\\Extensions\\Typelist\\ folders. Files under Metadata are read-only and are specific to the base configuration. You cannot create Typelist files in the Metadata directory but can create Typelist files in the Extensions directory. Only internal Typelist extension files (TIX) are in the Metadata directory. Only external Typelist extension files (TTX) are in the Extensions directory. Both directories contain Typelist (TT]) files."
+      }
     },
     {
       "slideNumber": 35,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer G&G\n\n_~ — Describe some of the differences between the files in the\n¢ ..\\Metadata\\Typelist\\ and ..\\Extensions\\Typelist\\ folders.\n\nFiles under Metadata are read-only and are specific to the base configuration. You\ncannot create Typelist files in the Metadata directory but can create Typelist files in the\nExtensions directory. Only internal Typelist extension files (TIX) are in the Metadata\ndirectory. Only external Typelist extension files (TTX) are in the Extensions directory.\nBoth directories contain Typelist (TT]) files.",
+      "ocrText": "Answer G&G\nDescribe some of the differences between the files in the\n• ..\\Metadata\\Typelist\\ and ..\\Extensions\\Typelist\\ folders.\nFiles under Metadata are read-only and are specific to the base configuration. You\ncannot create Typelist files in the Metadata directory but can create Typelist files in the\nExtensions directory. Only internal Typelist extension files (TIX) are in the Metadata\ndirectory. Only external Typelist extension files (TTX) are in the Extensions directory.\nBoth directories contain Typelist (TT]) files.",
       "ocrWordCount": 77,
       "ocrConfidence": 92.06,
       "hasTable": false,
@@ -606,7 +633,7 @@
     },
     {
       "slideNumber": 36,
-      "title": "",
+      "title": "Key Takeaways",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -623,7 +650,7 @@
     },
     {
       "slideNumber": 37,
-      "title": "",
+      "title": "Student Exercise",
       "bodyParagraphs": [],
       "originalNotes": ".",
       "notes": ".",
@@ -654,6 +681,11 @@
       "index": 3,
       "filename": "IS_Fund_03_03.mp4",
       "path": "/academy/guidewire/videos/ch07/IS_Fund_03_03.mp4"
+    },
+    {
+      "index": 4,
+      "filename": "IS_Fund_03_04.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_03_04.mp4"
     }
   ],
   "hasNotes": true,

@@ -384,14 +384,14 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "_ _ Which approach is used to record a more specific version of the SQL for\nOo” a query?\n“ 1\n\n. queryObj.toString\n2. queryObj.withLogSQL (true)",
+      "question": "Which approach is used to record a more specific version of the SQL for\nOo” a query?\n“ 1\n. queryObj.toString\n2. queryObj.withLogSQL (true)",
       "referenceAnswer": "The correct answer is B. queryObj.withLogSQL (true)",
       "questionKey": "slide-32"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "Whatis the difference between a query object and results object?",
+      "question": "What is the difference between a query object and results object?",
       "referenceAnswer": "A) Aquery object specifies the entity and the query criteria.\nB) Aresults object is a set of one or more entity instances fetched from the\nGuidewire application.\nC) This distinction is helpful for understanding the concept of a query and of set of\nresults. In practice, query results are fetched from the Guidewire application when\nthey are counted, iterated over, or when one object is retrieved.",
       "questionKey": "slide-34"
     },
@@ -405,7 +405,7 @@
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "_ _ What happens if you use the AtMostOneRow property in a query, and the\nOo” query returns more than one object?\n¢",
+      "question": "What happens if you use the AtMostOneRow property in a query, and the\nOo” query returns more than one object?",
       "referenceAnswer": "An exception is thrown when a query that uses the AtMostOneRow property, returns\nmore than one object.",
       "questionKey": "slide-38"
     },

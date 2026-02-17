@@ -67,7 +67,7 @@
       "originalNotes": "",
       "notes": "Explore common business cases for cancellations.",
       "narration": "Common scenarios for cancellations include non-payment of premiums or discovering a better deal. For each scenario, the system must handle different workflows and refund methods. In our configurations, we must ensure that the policy data model is flexible enough to accommodate these variations, such as pro-rata or short-rate refunds, depending on the cancellation reason.",
-      "ocrText": "| Cancellation transactions\nCancellations, reinstatements, and\nrewrites are related\n\n« You can only reinstate a cancelled policy\n¢ You must cancel a policy to rewrite it",
+      "ocrText": "| Cancellation transactions\nCancellations, reinstatements, and\nrewrites are related\n\n« You can only reinstate a cancelled policy\n• You must cancel a policy to rewrite it",
       "ocrWordCount": 26,
       "ocrConfidence": 95.56,
       "hasTable": false,
@@ -81,10 +81,10 @@
       "slideNumber": 5,
       "title": "Business Cases for Cancellations",
       "bodyParagraphs": [],
-      "originalNotes": "Cancellations\nIt is easier for the insured to cancel a policy than for an insurer to cancel a policy. The insured can choose to discontinue a policy without reason. However,  an insurer cannot discontinue a policy unless the insurer can demonstrate just cause, such as non-payment of premiums,  purposefully providing inaccurate information at the time of submission or fraud.\n\nCommon business cases:\nInsured finds a better price elsewhere.\nInsured has not paid premium; insurer cancels the policy.",
-      "notes": "Cancellations\nIt is easier for the insured to cancel a policy than for an insurer to cancel a policy. The insured can choose to discontinue a policy without reason. However,  an insurer cannot discontinue a policy unless the insurer can demonstrate just cause, such as non-payment of premiums,  purposefully providing inaccurate information at the time of submission or fraud.\n\nCommon business cases:\nInsured finds a better price elsewhere.\nInsured has not paid premium; insurer cancels the policy.",
+      "originalNotes": "Cancellations\nIt is easier for the insured to cancel a policy than for an insurer to cancel a policy. The insured can choose to discontinue a policy without reason. However, an insurer cannot discontinue a policy unless the insurer can demonstrate just cause, such as non-payment of premiums, purposefully providing inaccurate information at the time of submission or fraud.\n\nCommon business cases:\nInsured finds a better price elsewhere.\nInsured has not paid premium; insurer cancels the policy.",
+      "notes": "Cancellations\nIt is easier for the insured to cancel a policy than for an insurer to cancel a policy. The insured can choose to discontinue a policy without reason. However, an insurer cannot discontinue a policy unless the insurer can demonstrate just cause, such as non-payment of premiums, purposefully providing inaccurate information at the time of submission or fraud.\n\nCommon business cases:\nInsured finds a better price elsewhere.\nInsured has not paid premium; insurer cancels the policy.",
       "narration": "Cancellations often reflect a dynamic insurance landscape where policyholders seek better terms, or insurers enforce policy terms. For developers, understanding these business cases helps in crafting a system that can easily track and process cancellations. It’s crucial to design workflows that capture the necessary data points, such as cancellation reasons and effective dates, to automate and streamline these processes.",
-      "ocrText": "| Cancellations\n\nCancellation\n\n¢« Acancellation ends a policy before its expiration date\n\n¢« Acancellation can vary by insurer and is configurable",
+      "ocrText": "| Cancellations\n\nCancellation\n\n•« Acancellation ends a policy before its expiration date\n\n•« Acancellation can vary by insurer and is configurable",
       "ocrWordCount": 21,
       "ocrConfidence": 89.36,
       "hasTable": false,
@@ -109,7 +109,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 7,
@@ -132,8 +133,8 @@
       "slideNumber": 8,
       "title": "Demonstration: Canceling a Policy",
       "bodyParagraphs": [],
-      "originalNotes": "Demonstration\nDEMO\nThe \"Cancel Policy\" menu action is available only for policies that do not already have completed cancellation jobs. Cancellation jobs are not always initiated manually.  They could be initiated automatically by a billing system- To start a cancellation job, provide 1) the cancellation source (insured or insurer), 2) The cancellation reason (drop- down), 3) The refund method (describe), 4) The effectivedate for the cancellation.\n1.Locate a policy you created to cancel.\n2.Actions -> Cancel Policy Enter source and select a reason. Describe each\n3.Tell learners that the reason you select will determine the Refund Method, and show it change with different reasons (e.g., Criminal Conduct vs. Policy not- taken). The refund methods are outlined  the student workbook for review. \"Flat\" : refund all money - typically used if the policy has not yet become effective, \"pro rata\": prorate ,or \"short rate\": prorate the refund and subtract processing fee.\nAfter you enter the required information, select Start Cancellation- This is step 2 in a two-step wizard process-You can either Schedule Cancellation or Cancel Now. The \"Schedule Cancellation“ option will schedule the job to be completed on the cancellation effective date- The \"Cancel Now\" option completes the job immediately, but the policy is still in force until the Cancellation Effective date.",
-      "notes": "Demonstration\nDEMO\nThe \"Cancel Policy\" menu action is available only for policies that do not already have completed cancellation jobs. Cancellation jobs are not always initiated manually.  They could be initiated automatically by a billing system- To start a cancellation job, provide 1) the cancellation source (insured or insurer), 2) The cancellation reason (drop- down), 3) The refund method (describe), 4) The effectivedate for the cancellation.\n1.Locate a policy you created to cancel.\n2.Actions -> Cancel Policy Enter source and select a reason. Describe each\n3.Tell learners that the reason you select will determine the Refund Method, and show it change with different reasons (e.g., Criminal Conduct vs. Policy not- taken). The refund methods are outlined  the student workbook for review. \"Flat\" : refund all money - typically used if the policy has not yet become effective, \"pro rata\": prorate ,or \"short rate\": prorate the refund and subtract processing fee.\nAfter you enter the required information, select Start Cancellation- This is step 2 in a two-step wizard process-You can either Schedule Cancellation or Cancel Now. The \"Schedule Cancellation“ option will schedule the job to be completed on the cancellation effective date- The \"Cancel Now\" option completes the job immediately, but the policy is still in force until the Cancellation Effective date.",
+      "originalNotes": "Demonstration\nDEMO\nThe \"Cancel Policy\" menu action is available only for policies that do not already have completed cancellation jobs. Cancellation jobs are not always initiated manually. They could be initiated automatically by a billing system- To start a cancellation job, provide 1) the cancellation source (insured or insurer), 2) The cancellation reason (drop- down), 3) The refund method (describe), 4) The effectivedate for the cancellation.\n1. Locate a policy you created to cancel.\n2. Actions -> Cancel Policy Enter source and select a reason. Describe each\n3. Tell learners that the reason you select will determine the Refund Method, and show it change with different reasons (e.g., Criminal Conduct vs. Policy not- taken). The refund methods are outlined the student workbook for review. \"Flat\" : refund all money - typically used if the policy has not yet become effective, \"pro rata\": prorate ,or \"short rate\": prorate the refund and subtract processing fee.\nAfter you enter the required information, select Start Cancellation- This is step 2 in a two-step wizard process-You can either Schedule Cancellation or Cancel Now. The \"Schedule Cancellation“ option will schedule the job to be completed on the cancellation effective date- The \"Cancel Now\" option completes the job immediately, but the policy is still in force until the Cancellation Effective date.",
+      "notes": "Demonstration\nDEMO\nThe \"Cancel Policy\" menu action is available only for policies that do not already have completed cancellation jobs. Cancellation jobs are not always initiated manually. They could be initiated automatically by a billing system- To start a cancellation job, provide 1) the cancellation source (insured or insurer), 2) The cancellation reason (drop- down), 3) The refund method (describe), 4) The effectivedate for the cancellation.\n1. Locate a policy you created to cancel.\n2. Actions -> Cancel Policy Enter source and select a reason. Describe each\n3. Tell learners that the reason you select will determine the Refund Method, and show it change with different reasons (e.g., Criminal Conduct vs. Policy not- taken). The refund methods are outlined the student workbook for review. \"Flat\" : refund all money - typically used if the policy has not yet become effective, \"pro rata\": prorate ,or \"short rate\": prorate the refund and subtract processing fee.\nAfter you enter the required information, select Start Cancellation- This is step 2 in a two-step wizard process-You can either Schedule Cancellation or Cancel Now. The \"Schedule Cancellation“ option will schedule the job to be completed on the cancellation effective date- The \"Cancel Now\" option completes the job immediately, but the policy is still in force until the Cancellation Effective date.",
       "narration": "In this demonstration, we'll walk through canceling a policy in PolicyCenter. Start by locating a policy you wish to cancel, and navigate to the 'Actions' menu to select 'Cancel Policy'. Note how the choice of cancellation reason impacts the refund method, which the system dynamically adjusts based on your selection. Observe how the wizard guides you through scheduling or executing the cancellation, ensuring the policy status updates accurately within the system.",
       "ocrText": "Marcus\nBusiness\nAnalyst\n\n| have to write a requirement describing the\nreinstatement process of a policy. How does a\nreinstatement work?",
       "ocrWordCount": 21,
@@ -143,7 +144,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 9,
@@ -152,7 +154,7 @@
       "originalNotes": "Reinstatement\nCommon business case:\nIf the insured misses a premium payment, a cancellation may occur. After the insured makes a payment, the reinstatement occurs.",
       "notes": "Reinstatement\nCommon business case:\nIf the insured misses a premium payment, a cancellation may occur. After the insured makes a payment, the reinstatement occurs.",
       "narration": "Reinstatements are essential when a policyholder misses a payment but then rectifies it. They allow the policy to resume without needing to create a new one. For developers, it's important to configure the system to handle reinstatements smoothly, ensuring that the policy's status and billing records are updated correctly and that any gaps in coverage are documented as per business requirements.",
-      "ocrText": "| Reinstatement\n\nCancellation Reinstatement\n\nPac\n\nPolicy term !\n\n¢ Reinstates cancelled policy with original terms\n\n* Cancellation and reinstatement always have the same effective date\n* No lapse in coverage\n\n¢ Reinstatements are configurable",
+      "ocrText": "| Reinstatement\n\nCancellation Reinstatement\n\nPac\n\nPolicy term !\n\n• Reinstates cancelled policy with original terms\n\n* Cancellation and reinstatement always have the same effective date\n* No lapse in coverage\n\n• Reinstatements are configurable",
       "ocrWordCount": 34,
       "ocrConfidence": 85.14,
       "hasTable": false,
@@ -177,7 +179,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 2
     },
     {
       "slideNumber": 11,
@@ -237,7 +240,7 @@
       "originalNotes": "Full-term rewrite\nCancellations must be effective on the start date of the original policy term in a situation when the policy is flat canceled. In the case of a flat cancel followed by a full-term rewrite, the rewrite can start on a different effective date than the cancellation date. A full term rewrite results in the original policy term being completely wiped out. A mid-term rewrite behaves differently.\n\nThe Application Guide's *Rewrite Key Features\" section discusses the differences between the two in detail.",
       "notes": "Full-term rewrite\nCancellations must be effective on the start date of the original policy term in a situation when the policy is flat canceled. In the case of a flat cancel followed by a full-term rewrite, the rewrite can start on a different effective date than the cancellation date. A full term rewrite results in the original policy term being completely wiped out. A mid-term rewrite behaves differently.\n\nThe Application Guide's *Rewrite Key Features\" section discusses the differences between the two in detail.",
       "narration": "Full-term rewrites typically occur when a policy is flat canceled due to significant issues. The new policy term can start on a different date, providing a clean slate. Developers should ensure that the system can handle these transitions smoothly, updating all related entities like billing and claims to reflect the newly issued policy accurately.",
-      "ocrText": "| Full-term rewrite\n\nCancellation Rewrite\n\nator\n\nSee\n\nPolicy term\n\nNew policy term\n\n¢ A full-term rewrite is instigated by a need to rewrite an entire policy\n\n¢ Discards the original policy\n\n*« Removes the original policy term",
+      "ocrText": "| Full-term rewrite\n\nCancellation Rewrite\n\nator\n\nSee\n\nPolicy term\n\nNew policy term\n\n• A full-term rewrite is instigated by a need to rewrite an entire policy\n\n• Discards the original policy\n\n*« Removes the original policy term",
       "ocrWordCount": 37,
       "ocrConfidence": 83.11,
       "hasTable": false,
@@ -254,7 +257,7 @@
       "originalNotes": "Mid-term rewrites\nWhen performing a midterm rewrite, you would first cancel with the reason •policy rewritten (midterm)\". Only if there is a completed cancellation with an effective date not equal to start date of the policy, you can do a midterm rewrite.",
       "notes": "Mid-term rewrites\nWhen performing a midterm rewrite, you would first cancel with the reason •policy rewritten (midterm)\". Only if there is a completed cancellation with an effective date not equal to start date of the policy, you can do a midterm rewrite.",
       "narration": "Mid-term rewrites are performed when policy changes occur mid-way through the term but are substantial enough to require a new policy issuance. This process involves canceling the existing policy mid-term and starting a new term. For developers, it’s crucial to implement logic that identifies eligible policies and facilitates a smooth transition without disrupting coverage or billing cycles.",
-      "ocrText": "Mid-term rewrites fa\n\nCancellation Rewrite\n\nFa eS\n\nPerererererere\n\nPolicy term O\n\nNew policy term\n¢ Aportion of the original policy is retained\n¢« The common cancellation reason is “policy rewritten (mid-term)”\n« Rewrites have an effective date on or after cancellation\n\n¢ Rewritten terms can persist through the original term time (remainder), or\ncontinue through a newly defined term (new term)",
+      "ocrText": "Mid-term rewrites fa\n\nCancellation Rewrite\n\nFa eS\n\nPerererererere\n\nPolicy term O\n\nNew policy term\n• Aportion of the original policy is retained\n•« The common cancellation reason is “policy rewritten (mid-term)”\n« Rewrites have an effective date on or after cancellation\n\n• Rewritten terms can persist through the original term time (remainder), or\ncontinue through a newly defined term (new term)",
       "ocrWordCount": 61,
       "ocrConfidence": 88.57,
       "hasTable": false,
@@ -279,7 +282,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 3
     },
     {
       "slideNumber": 17,
@@ -305,7 +309,7 @@
       "originalNotes": "",
       "notes": "Impact of cancellations, reinstatements, and rewrites on the data model.",
       "narration": "Cancellations, reinstatements, and rewrites all have significant impacts on the PolicyCenter data model. Each transaction type affects policy and billing entities differently, and ensuring data consistency is paramount. Developers should pay close attention to how these processes interact with the broader data architecture, implementing robust validation and synchronization mechanisms to maintain system integrity.",
-      "ocrText": "Question G\n\n_ _ Cancellations and reinstatements always have the same effective date.\n“ ¢  TIF?\n7\n\nSoS oD DD DDS De Say",
+      "ocrText": "Question G\nCancellations and reinstatements always have the same effective date.\n“ •  True or False?\nSoS oD DD DDS De Say",
       "ocrWordCount": 23,
       "ocrConfidence": 65.08,
       "hasTable": false,
@@ -313,7 +317,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Cancellations and reinstatements always have the same effective date.",
+        "answer": "“ • True or False? Sop DD DD SDSS oe"
+      }
     },
     {
       "slideNumber": 19,
@@ -322,7 +330,7 @@
       "originalNotes": "",
       "notes": "Discuss integration points with billing systems.",
       "narration": "Integration with billing systems is crucial for handling financial transactions associated with cancellations, reinstatements, and rewrites. These integrations ensure that billing records accurately reflect policy changes, minimizing discrepancies and reducing manual reconciliation efforts. Developers should focus on leveraging Guidewire's integration frameworks to create seamless data flows between PolicyCenter and billing systems.",
-      "ocrText": "Answer a\n\n_ _ Cancellations and reinstatements always have the same effective date.\n“ ¢ TIF?\n7\n\nTrue\n\nSop DD DD SDSS oe",
+      "ocrText": "Answer a\nCancellations and reinstatements always have the same effective date.\n“ • True or False?\nTrue\nSop DD DD SDSS oe",
       "ocrWordCount": 23,
       "ocrConfidence": 69.58,
       "hasTable": false,
@@ -339,7 +347,7 @@
       "originalNotes": "",
       "notes": "Discuss customization opportunities for workflows.",
       "narration": "Customization of cancellation, reinstatement, and rewrite workflows allows organizations to tailor processes to their specific business needs. This involves configuring PCF files, defining new business rules in Gosu, and customizing UI elements to capture necessary data inputs efficiently. As developers, our role is to ensure these customizations enhance user experience while maintaining compliance with regulatory requirements.",
-      "ocrText": "Question\n\n_ _ Can you describe a situation where you might use a rewrite rather than a\n7 policy change?\n\nSoS oD DD DDS De Say\n\nGi",
+      "ocrText": "Question\nCan you describe a situation where you might use a rewrite rather than a\npolicy change?\nSoS oD DD DDS De Say\nGi",
       "ocrWordCount": 27,
       "ocrConfidence": 71.52,
       "hasTable": false,
@@ -347,7 +355,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Can you describe a situation where you might use a rewrite rather than a",
+        "answer": "7 policy change? not be covered by a simple policy change transaction. This may include a change to the policy effective date or to the producer of record. Sop DD DD SDSS oe"
+      }
     },
     {
       "slideNumber": 21,
@@ -356,7 +368,7 @@
       "originalNotes": "",
       "notes": "Impact of UI design on transaction processes.",
       "narration": "The design of the user interface plays a critical role in how effectively users can initiate and manage cancellations, reinstatements, and rewrites. UI elements must be intuitive, guiding users through complex processes with clear prompts and validation messages. Developers should focus on creating user-friendly interfaces that minimize errors and enhance productivity, leveraging Guidewire’s design patterns for consistency.",
-      "ocrText": "Answer a\n\n__ Can you describe a situation where you might use a rewrite rather than a\n7 policy change?\n¢\n\nAnswers vary with student knowledge. A rewrite includes an extreme change that can\nnot be covered by a simple policy change transaction. This may include a change to\nthe policy effective date or to the producer of record.\n\nSop DD DD SDSS oe",
+      "ocrText": "Answer a\nCan you describe a situation where you might use a rewrite rather than a\npolicy change?\n•\nAnswers vary with student knowledge. A rewrite includes an extreme change that can\nnot be covered by a simple policy change transaction. This may include a change to\nthe policy effective date or to the producer of record.\nSop DD DD SDSS oe",
       "ocrWordCount": 64,
       "ocrConfidence": 87.61,
       "hasTable": false,
@@ -373,7 +385,7 @@
       "originalNotes": "",
       "notes": "Share best practices for implementing these processes.",
       "narration": "Implementing cancellations, reinstatements, and rewrites effectively requires adhering to best practices. This includes thorough testing of workflows, ensuring accurate data transition across entities, and maintaining clear documentation of process logic. Developers should also focus on continuous improvement, regularly reviewing system performance and user feedback to refine these processes over time.",
-      "ocrText": "Question\n\n_~ — Describe the effective date for a rewrite.\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say",
+      "ocrText": "Question\nDescribe the effective date for a rewrite.\n•\n•\nSoS oD DD DDS De Say",
       "ocrWordCount": 19,
       "ocrConfidence": 61.52,
       "hasTable": false,
@@ -381,7 +393,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Describe the effective date for a rewrite.",
+        "answer": "The effective date for a rewrite may coincide with the cancellation date or it may be after the cancellation date. Sop DD DD SDSS oe"
+      }
     },
     {
       "slideNumber": 23,
@@ -390,7 +406,7 @@
       "originalNotes": "",
       "notes": "Discuss common pitfalls and how to avoid them.",
       "narration": "Avoiding common pitfalls in managing cancellations, reinstatements, and rewrites is crucial for maintaining system reliability. Pitfalls often include data mismatches, incomplete integrations, and user errors due to complex workflows. Developers should implement comprehensive validation checks and provide clear user guidance to mitigate these risks, ensuring that the system operates smoothly under various scenarios.",
-      "ocrText": "Answer\n\n,~ — Describe the effective date for a rewrite.\n\n¢\n¢\n¢\n\nThe effective date for a rewrite may coincide with the cancellation date or it may be\nafter the cancellation date.\n\nSop DD DD SDSS oe",
+      "ocrText": "Answer\nDescribe the effective date for a rewrite.\n•\n•\n•\nThe effective date for a rewrite may coincide with the cancellation date or it may be\nafter the cancellation date.\nSop DD DD SDSS oe",
       "ocrWordCount": 38,
       "ocrConfidence": 81.05,
       "hasTable": false,
@@ -407,7 +423,7 @@
       "originalNotes": "",
       "notes": "Explore a real-world example.",
       "narration": "Let's explore a real-world case study where a company successfully implemented custom cancellations and rewrites. This example demonstrates how thoughtful configuration and integration can streamline operations, reduce errors, and enhance user satisfaction. As developers, analyzing such case studies helps us understand practical applications and learn from real-world challenges and solutions.",
-      "ocrText": "Lesson\nobjectives * Describe how to cancel a policy\n\nreview ¢ Explain the consequences of cancelling a\npolicy\n¢ Describe policy reinstatement\n¢ Describe policy rewrites",
+      "ocrText": "Lesson\nobjectives * Describe how to cancel a policy\n\nreview • Explain the consequences of cancelling a\npolicy\n• Describe policy reinstatement\n• Describe policy rewrites",
       "ocrWordCount": 26,
       "ocrConfidence": 84.58,
       "hasTable": false,
@@ -445,6 +461,11 @@
       "index": 2,
       "filename": "In_Policy_10_02.mp4",
       "path": "/academy/guidewire/videos/ch04/In_Policy_10_02.mp4"
+    },
+    {
+      "index": 3,
+      "filename": "In_Policy_10_03.mp4",
+      "path": "/academy/guidewire/videos/ch04/In_Policy_10_03.mp4"
     }
   ],
   "hasNotes": true,

@@ -33,7 +33,7 @@
       "originalNotes": "",
       "notes": "Image depicting the structure of a policy and its major components in PolicyCenter.",
       "narration": "Here, we have a visual representation of a policy's structure in PolicyCenter. This will serve as a roadmap as we explore each component in detail. Understanding this hierarchy is key for effective data manipulation and UI configuration.",
-      "ocrText": "Lesson\nobjectives\n\n¢ Describe the primary information on the policy\nfile\n* Search for policies",
+      "ocrText": "Lesson\nobjectives\n\n• Describe the primary information on the policy\nfile\n* Search for policies",
       "ocrWordCount": 15,
       "ocrConfidence": 87.93,
       "hasTable": false,
@@ -132,8 +132,8 @@
       "slideNumber": 8,
       "title": "Exploring Policy Lines",
       "bodyParagraphs": [],
-      "originalNotes": "Policy lines\nThe majority of the \"contents\" of the policy (the coverables, the coverages, and coverage terms, and so on) are captured under the policy line.  \nSample lines of business are available in the PolicyCenter base configuration, such as personal auto, business owners, and so on.",
-      "notes": "Policy lines\nThe majority of the \"contents\" of the policy (the coverables, the coverages, and coverage terms, and so on) are captured under the policy line.  \nSample lines of business are available in the PolicyCenter base configuration, such as personal auto, business owners, and so on.",
+      "originalNotes": "Policy lines\nThe majority of the \"contents\" of the policy (the coverables, the coverages, and coverage terms, and so on) are captured under the policy line.\nSample lines of business are available in the PolicyCenter base configuration, such as personal auto, business owners, and so on.",
+      "notes": "Policy lines\nThe majority of the \"contents\" of the policy (the coverables, the coverages, and coverage terms, and so on) are captured under the policy line.\nSample lines of business are available in the PolicyCenter base configuration, such as personal auto, business owners, and so on.",
       "narration": "Policy lines are where the bulk of policy-specific data resides, including coverables and coverages. These lines represent different lines of business like personal auto or business owners. As developers, customizing these lines to match business requirements is a common task.",
       "ocrText": "| Policy lines\n\nPersonal auto\n\nBusiness owners\n\nCommercial property\n\nInland marine",
       "ocrWordCount": 11,
@@ -149,8 +149,8 @@
       "slideNumber": 9,
       "title": "Understanding Coverables",
       "bodyParagraphs": [],
-      "originalNotes": "Coverables\nA coverable is a risk exposure that can be protected by the policy, such as:\nThe policy line itself.\nTangible property item such as a building or vehicle.  Jurisdiction.",
-      "notes": "Coverables\nA coverable is a risk exposure that can be protected by the policy, such as:\nThe policy line itself.\nTangible property item such as a building or vehicle.  Jurisdiction.",
+      "originalNotes": "Coverables\nA coverable is a risk exposure that can be protected by the policy, such as:\nThe policy line itself.\nTangible property item such as a building or vehicle. Jurisdiction.",
+      "notes": "Coverables\nA coverable is a risk exposure that can be protected by the policy, such as:\nThe policy line itself.\nTangible property item such as a building or vehicle. Jurisdiction.",
       "narration": "Coverables are the entities within a policy that can be insured, ranging from tangible items like vehicles to intangibles like liability. These are defined within policy lines and are essential for determining what risks are covered and how policies are rated.",
       "ocrText": "| Coverables\n\nAcoverable is a risk exposure that can be protected by the policy\n\n=| A\n\nVehicle Building\n\nJurisdiction",
       "ocrWordCount": 19,
@@ -186,7 +186,7 @@
       "originalNotes": "Coverage terminology\nThere are two types of coverages: property and liability.",
       "notes": "Coverage terminology\nThere are two types of coverages: property and liability.",
       "narration": "In PolicyCenter, coverages are categorized mainly as property or liability. Understanding these distinctions is crucial when developing rules or UI components that need to handle these coverage types differently.",
-      "ocrText": "| Coverage terminology G\n\nProperty coverages\n\nor? collision * Property coverages cover tangible\nCa «<— CO }-@ comprehensive assets belonging to the insured, such\ne+ as a vehicle, home or the body of the\ni, > @ medical pay insured\n(First party)\n\nLiability coverages ¢ Liability coverages cover the liability\n\nore liability - vehicle of the insured when damage is\n@ SS- @ liability - injury inflicted on a third party\nThird party",
+      "ocrText": "| Coverage terminology G\n\nProperty coverages\n\nor? collision * Property coverages cover tangible\nCa «<— CO }-@ comprehensive assets belonging to the insured, such\ne+ as a vehicle, home or the body of the\ni, > @ medical pay insured\n(First party)\n\nLiability coverages • Liability coverages cover the liability\n\nore liability - vehicle of the insured when damage is\n@ SS- @ liability - injury inflicted on a third party\nThird party",
       "ocrWordCount": 73,
       "ocrConfidence": 86.7,
       "hasTable": false,
@@ -262,7 +262,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 16,
@@ -296,7 +297,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 1
     },
     {
       "slideNumber": 18,
@@ -322,7 +324,7 @@
       "originalNotes": "",
       "notes": "Exploring user interface patterns within PolicyCenter.",
       "narration": "UI patterns in PolicyCenter, such as tabbed views and summary screens, play a crucial role in user experience. As developers, understanding these patterns helps in creating intuitive and efficient interfaces.",
-      "ocrText": "Question\n\n,~ — How many policy files can be associated with an account?\n\n4\n¢\n¢\n\nSoS oD DD DDS De Say",
+      "ocrText": "Question\nHow many policy files can be associated with an account?\n•\n•\nSoS oD DD DDS De Say",
       "ocrWordCount": 22,
       "ocrConfidence": 63.38,
       "hasTable": false,
@@ -330,7 +332,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "How many policy files can be associated with an account?",
+        "answer": "Zero, one or many. Sop DD DD SDSS oe"
+      }
     },
     {
       "slideNumber": 20,
@@ -339,7 +345,7 @@
       "originalNotes": "",
       "notes": "Managing the lifecycle of a policy from creation to renewal.",
       "narration": "Policy lifecycle management encompasses the entire journey of a policy, from issuance to renewal or cancellation. Developers need to ensure that each phase is seamlessly integrated into PolicyCenter through workflow configurations and business rules.",
-      "ocrText": "Answer\n\n,~ — How many policy files can be associated with an account?\n\n¢\n¢\n¢\n\nZero, one or many.\n\nSop DD DD SDSS oe",
+      "ocrText": "Answer\nHow many policy files can be associated with an account?\n•\n•\n•\nZero, one or many.\nSop DD DD SDSS oe",
       "ocrWordCount": 25,
       "ocrConfidence": 70.15,
       "hasTable": false,
@@ -356,7 +362,7 @@
       "originalNotes": "",
       "notes": "Implementing security measures for policy data.",
       "narration": "Security in PolicyCenter involves controlling access to policy data through role-based permissions and data masking. Developers configure these settings to protect sensitive information while ensuring authorized access.",
-      "ocrText": "Question G\n\n,~ — Of the primary entities discussed in this lesson (other than policy), which entity:\n\n~ &\n\n¢\n\nSoS oD DD DDS De Say\n\nB.\nC.\nD. Can either be created on the policy or created on the account and reused on the\n\nm\n\nIs the money the insured (account) pays for the policy?\nIs a risk exposure that can be protected by the policy?\nIs a physical document detailing some policy aspect?\n\npolicy? (two possible answers)\nls a value that further limits or defines the coverage?",
+      "ocrText": "Question G\nOf the primary entities discussed in this lesson (other than policy), which entity:\n&\n•\nSoS oD DD DDS De Say\nB.\nC.\nD. Can either be created on the policy or created on the account and reused on the\nm\nIs the money the insured (account) pays for the policy?\nIs a risk exposure that can be protected by the policy?\nIs a physical document detailing some policy aspect?\npolicy? (two possible answers)\nls a value that further limits or defines the coverage?",
       "ocrWordCount": 89,
       "ocrConfidence": 86.69,
       "hasTable": false,
@@ -364,7 +370,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Of the primary entities discussed in this lesson (other than policy), which entity:",
+        "answer": ", A. |s the money the insured (account) pays for the policy? x B. ls arisk exposure that can be protected by the policy? c. Is aphysical document detailing some policy aspect? I D. Can either be created on the policy or created on the account and reused on ' the policy? (two possible answers) E. Isa value that further limits or defines the coverage? i A. Premium ' B. Coverable I c. Form ' D. Contact or Location i E. Coverage Term"
+      }
     },
     {
       "slideNumber": 22,
@@ -373,7 +383,7 @@
       "originalNotes": "",
       "notes": "Approaches to testing policy configurations in PolicyCenter.",
       "narration": "Testing in PolicyCenter requires a thorough approach, involving unit tests, integration tests, and user acceptance tests. Developers should ensure that all customizations are robust and meet business requirements before deployment.",
-      "ocrText": "Answer Gi\n\n— — Of the primary entities discussed in this lesson (other than policy), which entity:\n\n”\n\n, A. |s the money the insured (account) pays for the policy?\nx B. ls arisk exposure that can be protected by the policy?\nc. Is aphysical document detailing some policy aspect?\n\nI D. Can either be created on the policy or created on the account and reused on\n' the policy? (two possible answers)\n\nE. Isa value that further limits or defines the coverage?\n\ni A. Premium\n\n' B. Coverable\n\nI c. Form\n\n' D. Contact or Location\n\ni E. Coverage Term",
+      "ocrText": "Answer Gi\nOf the primary entities discussed in this lesson (other than policy), which entity:\n”\n, A. |s the money the insured (account) pays for the policy?\nx B. ls arisk exposure that can be protected by the policy?\nc. Is aphysical document detailing some policy aspect?\nI D. Can either be created on the policy or created on the account and reused on\n' the policy? (two possible answers)\nE. Isa value that further limits or defines the coverage?\ni A. Premium\n' B. Coverable\nI c. Form\n' D. Contact or Location\ni E. Coverage Term",
       "ocrWordCount": 101,
       "ocrConfidence": 85.4,
       "hasTable": false,

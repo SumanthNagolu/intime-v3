@@ -33,7 +33,7 @@
       "originalNotes": "",
       "notes": "Set context for contingencies as they relate to policy issuance.",
       "narration": "Contingencies play a vital role when policies are issued with conditions that need fulfillment post-issuance. Think of scenarios where a policy is issued with a good driver discount, but the actual discount hinges on receiving a student's report card. Contingencies help ensure that these requirements are tracked and fulfilled, reducing the risk of policy errors and ensuring compliance. We'll soon look into how PolicyCenter facilitates this through its robust contingency management tools.",
-      "ocrText": "Lesson\nobjectives\n\n¢ Define a contingency\n¢ Describe how PolicyCenter manages\ncontingent documents",
+      "ocrText": "Lesson\nobjectives\n\n• Define a contingency\n• Describe how PolicyCenter manages\ncontingent documents",
       "ocrWordCount": 13,
       "ocrConfidence": 84.46,
       "hasTable": false,
@@ -64,8 +64,8 @@
       "slideNumber": 4,
       "title": "Configuration and Methods for Contingencies",
       "bodyParagraphs": [],
-      "originalNotes": "Contingencies\nThere are times when a policy is issued, but the issuance is dependent on the delivery ofanother piece of information ordocument . For example, even if you issue a policy with a good driver discount, you still need to obtain a copy of the student’s report card. PolicyCenter has an option called \"Contingencies“ which gives the user a chance to attach documents related tocontingent issuance. Contingency-related documents can be added to policies that are either issued or not yet issued. Contingencies are part of the policy. They provide a specificplace where contingency-related information can be attached.\n\n Configuration developers needing to configure contingencies should refer to the main configuration class.\nContingencyEnhancementgsx, to find relevant methods. The batch processes associated with Contingencies are:\n1. Handle Unresolved Contingency, and\n2. Recalculate Contingency Action Start Date.\nAdditional details are available in the product documentation.",
-      "notes": "Contingencies\nThere are times when a policy is issued, but the issuance is dependent on the delivery ofanother piece of information ordocument . For example, even if you issue a policy with a good driver discount, you still need to obtain a copy of the student’s report card. PolicyCenter has an option called \"Contingencies“ which gives the user a chance to attach documents related tocontingent issuance. Contingency-related documents can be added to policies that are either issued or not yet issued. Contingencies are part of the policy. They provide a specificplace where contingency-related information can be attached.\n\n Configuration developers needing to configure contingencies should refer to the main configuration class.\nContingencyEnhancementgsx, to find relevant methods. The batch processes associated with Contingencies are:\n1. Handle Unresolved Contingency, and\n2. Recalculate Contingency Action Start Date.\nAdditional details are available in the product documentation.",
+      "originalNotes": "Contingencies\nThere are times when a policy is issued, but the issuance is dependent on the delivery of another piece of information ordocument . For example, even if you issue a policy with a good driver discount, you still need to obtain a copy of the student’s report card. PolicyCenter has an option called \"Contingencies“ which gives the user a chance to attach documents related tocontingent issuance. Contingency-related documents can be added to policies that are either issued or not yet issued. Contingencies are part of the policy. They provide a specificplace where contingency-related information can be attached.\n\n Configuration developers needing to configure contingencies should refer to the main configuration class.\nContingencyEnhancementgsx, to find relevant methods. The batch processes associated with Contingencies are:\n1. Handle Unresolved Contingency, and\n2. Recalculate Contingency Action Start Date.\nAdditional details are available in the product documentation.",
+      "notes": "Contingencies\nThere are times when a policy is issued, but the issuance is dependent on the delivery of another piece of information ordocument . For example, even if you issue a policy with a good driver discount, you still need to obtain a copy of the student’s report card. PolicyCenter has an option called \"Contingencies“ which gives the user a chance to attach documents related tocontingent issuance. Contingency-related documents can be added to policies that are either issued or not yet issued. Contingencies are part of the policy. They provide a specificplace where contingency-related information can be attached.\n\n Configuration developers needing to configure contingencies should refer to the main configuration class.\nContingencyEnhancementgsx, to find relevant methods. The batch processes associated with Contingencies are:\n1. Handle Unresolved Contingency, and\n2. Recalculate Contingency Action Start Date.\nAdditional details are available in the product documentation.",
       "narration": "Contingencies in PolicyCenter are configured using the ContingencyEnhancement.gs file, where you'll find methods to manage and manipulate contingency data. From handling unresolved contingencies to recalculating action start dates, these configurations enable precise control over how contingencies affect policy transactions. Understanding these batch processes is crucial, as they ensure contingencies are addressed timely, maintaining the integrity of policy data and compliance with business rules.",
       "ocrText": "| Contingencies",
       "ocrWordCount": 2,
@@ -81,8 +81,8 @@
       "slideNumber": 5,
       "title": "Demonstration: Adding a Contingency",
       "bodyParagraphs": [],
-      "originalNotes": "Demonstration\nDEMO: Add a contingency\n1.Go to a policy that is not yet issued (you may have to create one)-\n2.In the Risk Analysis section, add a contingency-related document under the tab Contingencies\n3.Select Add Contingency and add a contingency for the policy. The specific contingency depends on the LOB.\n\nOTHER.\nIn the New Contingency screen, give the Contingency a meaningful name and description. You can choose a specific action to take on the Due Date (which must be entered). The Actions starts a transaction that ranges from changing the policy, canceling the policy, or canceling and rewriting the policy. These actions are configurable.  For the base configuration, the Actions have pre- configured start and effective dates. After creating the contingency, you will be reminded of the contingency throughout each screen of the submission. To access the newly created contingency, select the contingency, and proceed to the contingency page.\n\nShow students the existing options for contingencies(notes,  document additions, and activities). In addition to resolving or waiving the contingency in this screen,  there are several options that give the ability to add details about the contingency to the submission. If configured in PolicyCenter, these notes, documents, and activities may be related to other entities:\n\n1.Notes: A note can be added to the contingency just as you would add a Note to a policy or account.\n2.Documents : Add a document to the contingency just as you would add a note to a policy or account.\n3.Activities : Add an activity to the contingency-\n\nDescribe the process of\nResolving a contingency.\nAfter resolving the\ncontingency, you can see the\nresolved status on the\ncontingency screen along\nwith the completion date, due\ndate, and potential action as\nwell as the user who first\nadded the contingency-",
-      "notes": "Demonstration\nDEMO: Add a contingency\n1.Go to a policy that is not yet issued (you may have to create one)-\n2.In the Risk Analysis section, add a contingency-related document under the tab Contingencies\n3.Select Add Contingency and add a contingency for the policy. The specific contingency depends on the LOB.\n\nOTHER.\nIn the New Contingency screen, give the Contingency a meaningful name and description. You can choose a specific action to take on the Due Date (which must be entered). The Actions starts a transaction that ranges from changing the policy, canceling the policy, or canceling and rewriting the policy. These actions are configurable.  For the base configuration, the Actions have pre- configured start and effective dates. After creating the contingency, you will be reminded of the contingency throughout each screen of the submission. To access the newly created contingency, select the contingency, and proceed to the contingency page.\n\nShow students the existing options for contingencies(notes,  document additions, and activities). In addition to resolving or waiving the contingency in this screen,  there are several options that give the ability to add details about the contingency to the submission. If configured in PolicyCenter, these notes, documents, and activities may be related to other entities:\n\n1.Notes: A note can be added to the contingency just as you would add a Note to a policy or account.\n2.Documents : Add a document to the contingency just as you would add a note to a policy or account.\n3.Activities : Add an activity to the contingency-\n\nDescribe the process of\nResolving a contingency.\nAfter resolving the\ncontingency, you can see the\nresolved status on the\ncontingency screen along\nwith the completion date, due\ndate, and potential action as\nwell as the user who first\nadded the contingency-",
+      "originalNotes": "Demonstration\nDEMO: Add a contingency\n1. Go to a policy that is not yet issued (you may have to create one)-\n2. In the Risk Analysis section, add a contingency-related document under the tab Contingencies\n3. Select Add Contingency and add a contingency for the policy. The specific contingency depends on the LOB.\n\nOTHER.\nIn the New Contingency screen, give the Contingency a meaningful name and description. You can choose a specific action to take on the Due Date (which must be entered). The Actions starts a transaction that ranges from changing the policy, canceling the policy, or canceling and rewriting the policy. These actions are configurable. For the base configuration, the Actions have pre- configured start and effective dates. After creating the contingency, you will be reminded of the contingency throughout each screen of the submission. To access the newly created contingency, select the contingency, and proceed to the contingency page.\n\nShow students the existing options for contingencies(notes, document additions, and activities). In addition to resolving or waiving the contingency in this screen, there are several options that give the ability to add details about the contingency to the submission. If configured in PolicyCenter, these notes, documents, and activities may be related to other entities:\n\n1. Notes: A note can be added to the contingency just as you would add a Note to a policy or account.\n2. Documents : Add a document to the contingency just as you would add a note to a policy or account.\n3. Activities : Add an activity to the contingency.\nDescribe the process of\nResolving a contingency.\nAfter resolving the\ncontingency, you can see the\nresolved status on the\ncontingency screen along\nwith the completion date, due\ndate, and potential action as\nwell as the user who first\nadded the contingency-",
+      "notes": "Demonstration\nDEMO: Add a contingency\n1. Go to a policy that is not yet issued (you may have to create one)-\n2. In the Risk Analysis section, add a contingency-related document under the tab Contingencies\n3. Select Add Contingency and add a contingency for the policy. The specific contingency depends on the LOB.\n\nOTHER.\nIn the New Contingency screen, give the Contingency a meaningful name and description. You can choose a specific action to take on the Due Date (which must be entered). The Actions starts a transaction that ranges from changing the policy, canceling the policy, or canceling and rewriting the policy. These actions are configurable. For the base configuration, the Actions have pre- configured start and effective dates. After creating the contingency, you will be reminded of the contingency throughout each screen of the submission. To access the newly created contingency, select the contingency, and proceed to the contingency page.\n\nShow students the existing options for contingencies(notes, document additions, and activities). In addition to resolving or waiving the contingency in this screen, there are several options that give the ability to add details about the contingency to the submission. If configured in PolicyCenter, these notes, documents, and activities may be related to other entities:\n\n1. Notes: A note can be added to the contingency just as you would add a Note to a policy or account.\n2. Documents : Add a document to the contingency just as you would add a note to a policy or account.\n3. Activities : Add an activity to the contingency.\nDescribe the process of\nResolving a contingency.\nAfter resolving the\ncontingency, you can see the\nresolved status on the\ncontingency screen along\nwith the completion date, due\ndate, and potential action as\nwell as the user who first\nadded the contingency-",
       "narration": "Now, let's walk through adding a contingency to a policy in PolicyCenter. Start by accessing a policy that is not yet issued. Navigate to the Risk Analysis section, where you'll find the option to add a contingency under the Contingencies tab. Here, you can specify the contingency details, including a name, description, due date, and the actions to be taken if the contingency is not resolved. Observe how the system allows adding notes, documents, and activities related to the contingency, providing a comprehensive view of any outstanding requirements tied to the policy.",
       "ocrText": "| Demonstration G\n\nContingencies\n\nclick here\n\nNote: The demonstration opens a new tab in your browser. When the demonstration ends, the\noriginal course launch window appears. Return to this window to continue this presentation.",
       "ocrWordCount": 34,
@@ -92,7 +92,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 6,
@@ -118,7 +119,7 @@
       "originalNotes": "",
       "notes": "Explain how to manage documents and activities related to contingencies.",
       "narration": "Contingencies in PolicyCenter aren't just about tracking requirements—they also involve managing associated documents and activities. Adding notes, documents, or activities to a contingency is similar to how you would manage these elements for a policy or account. This capability provides flexibility in managing documentation and communication, ensuring that all stakeholders have access to the necessary information throughout the policy lifecycle. Such integration enhances the visibility and traceability of contingent requirements.",
-      "ocrText": "Question\n\n_~ — Describe a business situation that calls for a contingency. Draw upon\n\nYo your industry experience as you come up with ideas.\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi",
+      "ocrText": "Question\nDescribe a business situation that calls for a contingency. Draw upon\nyour industry experience as you come up with ideas.\n•\nGi",
       "ocrWordCount": 32,
       "ocrConfidence": 84.71,
       "hasTable": false,
@@ -126,7 +127,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Describe a business situation that calls for a contingency. Draw upon",
+        "answer": "Your industry experience as you come up with ideas. card to offer a personal auto policy discount. Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 8,
@@ -135,7 +140,7 @@
       "originalNotes": "",
       "notes": "Process of resolving contingencies and updating their status in PolicyCenter.",
       "narration": "Resolving a contingency in PolicyCenter is a straightforward process that updates the policy's status based on the resolution outcome. Once a contingency is resolved, you'll see its status updated in the system, including the completion date and any actions taken. This resolution process ensures that contingencies are not only tracked but also addressed, preventing potential issues with policy compliance and underwriting requirements. It’s crucial for developers to understand how these resolutions are captured and reflected in the policy data.",
-      "ocrText": "Answer Gi\n\n_~ — Describe a business situation that calls for a contingency. Draw upon\nYo your industry experience as you come up with ideas.\n¢\n\nAnswers vary by audience, but the most common answer is getting a student report\ncard to offer a personal auto policy discount.\n\nSooo ooo ooo Oooo oOoD",
+      "ocrText": "Answer Gi\nDescribe a business situation that calls for a contingency. Draw upon\nyour industry experience as you come up with ideas.\n•\nAnswers vary by audience, but the most common answer is getting a student report\ncard to offer a personal auto policy discount.\nSooo ooo ooo Oooo oOoD",
       "ocrWordCount": 53,
       "ocrConfidence": 90.24,
       "hasTable": false,
@@ -152,7 +157,7 @@
       "originalNotes": "",
       "notes": "Discuss real-world scenarios where contingencies are applicable.",
       "narration": "Contingencies are particularly useful in scenarios that require additional documentation or approval post-policy issuance. For instance, a policy might be contingent upon receiving proof of a smoke alarm installation or a home appraisal. These real-world scenarios highlight the importance of contingencies in maintaining policy compliance and fulfilling underwriting conditions. By implementing contingencies, PolicyCenter ensures that all necessary criteria are met before a policy becomes fully effective.",
-      "ocrText": "Question\n\n,7~ — Can you add extra information to a Contingency? Give one or more\n\nYo examples.\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi",
+      "ocrText": "Question\nCan you add extra information to a Contingency? Give one or more\nexamples.\n•\nGi",
       "ocrWordCount": 25,
       "ocrConfidence": 74.25,
       "hasTable": false,
@@ -160,7 +165,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Can you add extra information to a Contingency? Give one or more",
+        "answer": "• examples. Yes. You can add Notes, Documents, and Activities to a Contingency. Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 10,
@@ -169,7 +178,7 @@
       "originalNotes": "",
       "notes": "Explore advanced configuration possibilities for contingencies in PolicyCenter.",
       "narration": "PolicyCenter offers advanced configuration options for contingencies, allowing developers to tailor the system to specific business needs. This might include customizing the actions associated with contingencies or adjusting the parameters for batch processes. By leveraging these advanced configurations, developers can create a more resilient and adaptable policy issuance process. This flexibility is vital for insurers looking to meet diverse regulatory and business requirements efficiently.",
-      "ocrText": "Answer\n\n,7~ — Can you add extra information to a Contingency? Give one or more\n¢ examples.\n\n¢\n¢\n\nYes. You can add Notes, Documents, and Activities to a Contingency.\n\nSooo ooo ooo Oooo oOoD\n\nGi",
+      "ocrText": "Answer\nCan you add extra information to a Contingency? Give one or more\n• examples.\n•\n•\nYes. You can add Notes, Documents, and Activities to a Contingency.\nSooo ooo ooo Oooo oOoD\nGi",
       "ocrWordCount": 36,
       "ocrConfidence": 80.34,
       "hasTable": false,
@@ -186,7 +195,7 @@
       "originalNotes": "",
       "notes": "Explain how contingencies help ensure compliance in policy management.",
       "narration": "Contingencies serve as a critical tool for ensuring compliance within policy management. By attaching and tracking required documents and actions, PolicyCenter helps insurers adhere to underwriting guidelines and regulatory standards. This compliance is crucial for mitigating risks and avoiding potential legal issues. As developers, understanding how to implement and manage contingencies can significantly impact the reliability and accuracy of policy data.",
-      "ocrText": "Question\n\n,~ — Give one or more examples of appropriate actions related to a\nYo contingency.\n\nSooo oooe sooo oOo oOo oAaDS",
+      "ocrText": "Question\nGive one or more examples of appropriate actions related to a\ncontingency.",
       "ocrWordCount": 22,
       "ocrConfidence": 79.06,
       "hasTable": false,
@@ -194,7 +203,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Give one or more examples of appropriate actions related to a",
+        "answer": "Contingency. Changing the policy, canceling the policy, or canceling and rewriting the policy. Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 12,
@@ -203,7 +216,7 @@
       "originalNotes": "",
       "notes": "Discuss common issues that might arise with contingencies and how to troubleshoot them.",
       "narration": "Despite their importance, contingencies can sometimes present challenges, such as unresolved statuses or incorrect document attachments. Troubleshooting these issues often involves checking the configuration in ContingencyEnhancement.gs and ensuring that batch processes are running correctly. Familiarity with the underlying data model and relationships can also assist in diagnosing and addressing these problems. By proactively identifying and resolving these issues, you can maintain the integrity of the contingency management process.",
-      "ocrText": "Answer\n\n,~ — Give one or more examples of appropriate actions related to a\nYo contingency.\n\nChanging the policy, canceling the policy, or canceling and rewriting the policy.\n\nSooo ooo ooo Oooo oOoD",
+      "ocrText": "Answer\nGive one or more examples of appropriate actions related to a\ncontingency.\nChanging the policy, canceling the policy, or canceling and rewriting the policy.\nSooo ooo ooo Oooo oOoD",
       "ocrWordCount": 33,
       "ocrConfidence": 88.76,
       "hasTable": false,
@@ -220,7 +233,7 @@
       "originalNotes": "",
       "notes": "Outline best practices for effective contingency management in PolicyCenter.",
       "narration": "To effectively manage contingencies, it’s essential to follow best practices such as maintaining clear documentation, regularly reviewing contingency statuses, and ensuring timely resolution. These practices help streamline the policy issuance process and enhance communication among stakeholders. Furthermore, leveraging PolicyCenter’s configuration options enables a more flexible and responsive approach to managing contingencies. By adhering to these best practices, you'll ensure that contingencies support rather than hinder policy management.",
-      "ocrText": "Lesson\nobjectives ¢ Define a contingency\n\nreview ¢ Describe how contingent documents are\nmanaged in PolicyCenter",
+      "ocrText": "Lesson\nobjectives • Define a contingency\n\nreview • Describe how contingent documents are\nmanaged in PolicyCenter",
       "ocrWordCount": 16,
       "ocrConfidence": 87.0,
       "hasTable": false,

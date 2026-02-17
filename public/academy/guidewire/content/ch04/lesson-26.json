@@ -33,7 +33,7 @@
       "originalNotes": "",
       "notes": "Activities are linked to accounts, transactions, and policies.",
       "narration": "Activities are versatile tools in PolicyCenter, linked to accounts, transactions, and policies. They help streamline processes by assigning work and alerting users to important events. Whether you're managing a policy job or dealing with transactions, activities ensure that nothing slips through the cracks.",
-      "ocrText": "Lesson\nobjectives\n\n¢ Define an Activity as the term is used in\nPolicyCenter\n\n¢ Explain the difference between a Manual and\nAutomatic Activity\n\n¢ Define an Activity Pattern\n\n¢ Describe the Activity life cycle\n\n¢ Discern an Underwriter Activity from a\nGeneral Activity",
+      "ocrText": "Lesson\nobjectives\n\n• Define an Activity as the term is used in\nPolicyCenter\n\n• Explain the difference between a Manual and\nAutomatic Activity\n\n• Define an Activity Pattern\n\n• Describe the Activity life cycle\n\n• Discern an Underwriter Activity from a\nGeneral Activity",
       "ocrWordCount": 43,
       "ocrConfidence": 87.21,
       "hasTable": false,
@@ -81,8 +81,8 @@
       "slideNumber": 5,
       "title": "Activity Assignment",
       "bodyParagraphs": [],
-      "originalNotes": "Activity assignment \nIn manual assignments, the user (or code) that creates activity explicitly chooses an owner. In automatic assignments, assignment logic evaluates activity and selects an owner.",
-      "notes": "Activity assignment \nIn manual assignments, the user (or code) that creates activity explicitly chooses an owner. In automatic assignments, assignment logic evaluates activity and selects an owner.",
+      "originalNotes": "Activity assignment\nIn manual assignments, the user (or code) that creates activity explicitly chooses an owner. In automatic assignments, assignment logic evaluates activity and selects an owner.",
+      "notes": "Activity assignment\nIn manual assignments, the user (or code) that creates activity explicitly chooses an owner. In automatic assignments, assignment logic evaluates activity and selects an owner.",
       "narration": "Assignment of activities can be manual or automatic. In manual assignments, the creator decides on the owner, while automatic assignments rely on logic to evaluate the activity and allocate it accordingly. Understanding both methods is crucial for effective task management in PolicyCenter.",
       "ocrText": "| Activity assignments Gi\n\nAutomatic\n\nManual\n\nPolicyCenter uses pre-defined business rules to create the activity.\n\nBusiness cases: PolicyCenter is configured to create an activity that alerts a\nsupervisor if a specific task is past due.\n\nBusiness case: PolicyCenter creates an activity when an external system fails\nto complete its experience task (for example, DMS failure)\n\nA PolicyCenter user can make requests to other users or can create self-\nreminders.\n\nBusiness case: Manually create an activity to request internal personnel to\nrate and quote a policy submission.\n\nBusiness case: Manually create an activity to request underwriter review.",
       "ocrWordCount": 96,
@@ -118,7 +118,7 @@
       "originalNotes": "Activity patterns\nAn activity pattern is a template that standardizes the way PolicyCenter creates activities. The activity pattern specifies details about an activity, whichinclude: subject, priority, number of days until due, etc. Activities follow the specified activity pattern. Managers have the ability to create and modify activity patterns on the PolicyCenter Administration tab user interface.\n\nConfiguration users can organize the data model to add fields to the activity pattern entity. When a field is added to the activity pattern entity, it is available on all activity patterns. For example, a carrier might want to add a \"Required Role\" field used to identify the role a person must have in order to have this type of activity assigned.",
       "notes": "Activity patterns\nAn activity pattern is a template that standardizes the way PolicyCenter creates activities. The activity pattern specifies details about an activity, whichinclude: subject, priority, number of days until due, etc. Activities follow the specified activity pattern. Managers have the ability to create and modify activity patterns on the PolicyCenter Administration tab user interface.\n\nConfiguration users can organize the data model to add fields to the activity pattern entity. When a field is added to the activity pattern entity, it is available on all activity patterns. For example, a carrier might want to add a \"Required Role\" field used to identify the role a person must have in order to have this type of activity assigned.",
       "narration": "Activity patterns in PolicyCenter serve as templates, standardizing how activities are created. They define crucial details such as subject, priority, and due dates. Administrators can customize these templates through the PolicyCenter Administration interface, tailoring them to specific business needs.",
-      "ocrText": "| Activity patterns\n\n¢ Activity patterns standardize the way\nPolicyCenter creates activities\n¢« Example\n* Manually Rate Policy\n* Priority: medium\n\n* Due in five days",
+      "ocrText": "| Activity patterns\n\n• Activity patterns standardize the way\nPolicyCenter creates activities\n•« Example\n* Manually Rate Policy\n* Priority: medium\n\n* Due in five days",
       "ocrWordCount": 26,
       "ocrConfidence": 84.62,
       "hasTable": false,
@@ -166,8 +166,8 @@
       "slideNumber": 10,
       "title": "Activity Lifecycle: Overdue",
       "bodyParagraphs": [],
-      "originalNotes": "Activity lifecycle (3 of 5)\nEvery activity has a due date and an escalation date. When the due date passes, the activity  overdue, and the due date turns red.",
-      "notes": "Activity lifecycle (3 of 5)\nEvery activity has a due date and an escalation date. When the due date passes, the activity  overdue, and the due date turns red.",
+      "originalNotes": "Activity lifecycle (3 of 5)\nEvery activity has a due date and an escalation date. When the due date passes, the activity overdue, and the due date turns red.",
+      "notes": "Activity lifecycle (3 of 5)\nEvery activity has a due date and an escalation date. When the due date passes, the activity overdue, and the due date turns red.",
       "narration": "Every activity has a due date, and once it passes, the activity is marked overdue with its due date turning red. This visual cue prompts urgent attention, ensuring critical tasks are addressed promptly.",
       "ocrText": "| Activity lifecycle (3 of 5)\n\nDueDate >\n06/07/2018\n\n[ | Normal Open The renewal quote req!\nStar disappears on view\n\nPriority > Status >\nHigh Open\n\nje date turns red when ovet",
       "ocrWordCount": 33,
@@ -183,8 +183,8 @@
       "slideNumber": 11,
       "title": "Activity Lifecycle: Escalation",
       "bodyParagraphs": [],
-      "originalNotes": "Activity lifecycle (4 of 5) \nWhen the escalation date passes, the activity is escalated. An escalated activity appears with the escalation icon (an activity with an exclamation symbol •l\" in the upper left corner) in the second column.",
-      "notes": "Activity lifecycle (4 of 5) \nWhen the escalation date passes, the activity is escalated. An escalated activity appears with the escalation icon (an activity with an exclamation symbol •l\" in the upper left corner) in the second column.",
+      "originalNotes": "Activity lifecycle (4 of 5)\nWhen the escalation date passes, the activity is escalated. An escalated activity appears with the escalation icon (an activity with an exclamation symbol •l\" in the upper left corner) in the second column.",
+      "notes": "Activity lifecycle (4 of 5)\nWhen the escalation date passes, the activity is escalated. An escalated activity appears with the escalation icon (an activity with an exclamation symbol •l\" in the upper left corner) in the second column.",
       "narration": "Activities escalate if not completed by the escalation date, marked by an exclamation icon. This signifies increased priority, demanding immediate action to resolve pending tasks.",
       "ocrText": "| Activity lifecycle (4 of 5) G\n\nDueDate Priority + Status 2 Subject *\nIn progress: new/updated 06/07/2018 High Open\nv Star indicates unviewed activity\n. Normal Open\nIn progress (viewed): normal\nStar —_— on view\n\ny\n\nw Priority > Status >\nOverdue High Open\nv Due date turns red when overdue\nDue Date > Priority > Status > Subject >\nEscalated 05/31/2018 Urgent Open\n\nExclamation appears when overdue date is passed",
       "ocrWordCount": 72,
@@ -234,10 +234,10 @@
       "slideNumber": 14,
       "title": "Types of Activities: General",
       "bodyParagraphs": [],
-      "originalNotes": "Types of activities in PolicyCenter (I of 2)\nPolicyCenter allows users to create new type General activity patterns. There are a few type Underwriter Review activities in the base configuratiom",
-      "notes": "Types of activities in PolicyCenter (I of 2)\nPolicyCenter allows users to create new type General activity patterns. There are a few type Underwriter Review activities in the base configuratiom",
+      "originalNotes": "Types of activities in PolicyCenter (I of 2)\nPolicyCenter allows users to create new type General activity patterns. There are a few type Underwriter Review activities in the base configuration",
+      "notes": "Types of activities in PolicyCenter (I of 2)\nPolicyCenter allows users to create new type General activity patterns. There are a few type Underwriter Review activities in the base configuration",
       "narration": "PolicyCenter supports various activity types, with general activity patterns being the most common. These serve as versatile templates for tasks across different processes, providing flexibility in task management.",
-      "ocrText": "| Types of activities in PolicyCenter (1 of 2)\n\n¢ General activity is a task to do; no authority is involved in completing task",
+      "ocrText": "| Types of activities in PolicyCenter (1 of 2)\n\n• General activity is a task to do; no authority is involved in completing task",
       "ocrWordCount": 24,
       "ocrConfidence": 93.5,
       "hasTable": false,
@@ -254,7 +254,7 @@
       "originalNotes": "Types of activities in PolicyCenter (2 of 2)\nUnderwriter Review type of activities can be created by clicking the Request Approval button when a CSR or person creating the policy feels that an underwriter should review this UW issue raised on the Risk Analysis page and the policy is locked. Once the issue is reviewed by an underwriter the activity is completed and another activity is sent back to the original requestor and the lock is released and the job can progress.",
       "notes": "Types of activities in PolicyCenter (2 of 2)\nUnderwriter Review type of activities can be created by clicking the Request Approval button when a CSR or person creating the policy feels that an underwriter should review this UW issue raised on the Risk Analysis page and the policy is locked. Once the issue is reviewed by an underwriter the activity is completed and another activity is sent back to the original requestor and the lock is released and the job can progress.",
       "narration": "Specific to underwriting, the Underwriter Review activity type is initiated when a CSR seeks an underwriter's input. This process is pivotal during risk analysis, ensuring that policies meet underwriting criteria before proceeding.",
-      "ocrText": "| Types of activities in PolicyCenter (2 of 2) Gi\n\n¢« AGeneral activity is task to do, but no authority involved in doing task\n\n¢« An Underwriter review activity requests underwriters to review underwriting\nissues",
+      "ocrText": "| Types of activities in PolicyCenter (2 of 2) Gi\n\n•« AGeneral activity is task to do, but no authority involved in doing task\n\n•« An Underwriter review activity requests underwriters to review underwriting\nissues",
       "ocrWordCount": 35,
       "ocrConfidence": 90.29,
       "hasTable": false,
@@ -268,8 +268,8 @@
       "slideNumber": 16,
       "title": "Activity Ownership",
       "bodyParagraphs": [],
-      "originalNotes": "Activity ownership: explicit and implicit\nAn activity can be assigned to a user explicitly or implicitly. When an activity is explicitly assigned to a user, that user is either chosen by the user creating the activity or by the routing rules. Changes to any job or account will not affect the ownership of the activity.\n\nWhen an activity is implicitly assigned to a user, it is actually assigned to a specific role on a job or account (i.e., the underwriter for Big Lake Bakery).  The activity is \"owned\" by the user who has that role (in the example, Alice Applegate). If that role is later reassigned to another user, then all activities assigned via roles will be reassigned to that user. In the slide example, if the undewriter role for Big Lake Bakery is later reassigned to Bob Baker, then the second activity will also be reassigned to Bob Baker. Alice owned the second activity be virtue of being the underwriter for the Big Lake Bakery account.",
-      "notes": "Activity ownership: explicit and implicit\nAn activity can be assigned to a user explicitly or implicitly. When an activity is explicitly assigned to a user, that user is either chosen by the user creating the activity or by the routing rules. Changes to any job or account will not affect the ownership of the activity.\n\nWhen an activity is implicitly assigned to a user, it is actually assigned to a specific role on a job or account (i.e., the underwriter for Big Lake Bakery).  The activity is \"owned\" by the user who has that role (in the example, Alice Applegate). If that role is later reassigned to another user, then all activities assigned via roles will be reassigned to that user. In the slide example, if the undewriter role for Big Lake Bakery is later reassigned to Bob Baker, then the second activity will also be reassigned to Bob Baker. Alice owned the second activity be virtue of being the underwriter for the Big Lake Bakery account.",
+      "originalNotes": "Activity ownership: explicit and implicit\nAn activity can be assigned to a user explicitly or implicitly. When an activity is explicitly assigned to a user, that user is either chosen by the user creating the activity or by the routing rules. Changes to any job or account will not affect the ownership of the activity.\n\nWhen an activity is implicitly assigned to a user, it is actually assigned to a specific role on a job or account (i.e., the underwriter for Big Lake Bakery). The activity is \"owned\" by the user who has that role (in the example, Alice Applegate). If that role is later reassigned to another user, then all activities assigned via roles will be reassigned to that user. In the slide example, if the undewriter role for Big Lake Bakery is later reassigned to Bob Baker, then the second activity will also be reassigned to Bob Baker. Alice owned the second activity be virtue of being the underwriter for the Big Lake Bakery account.",
+      "notes": "Activity ownership: explicit and implicit\nAn activity can be assigned to a user explicitly or implicitly. When an activity is explicitly assigned to a user, that user is either chosen by the user creating the activity or by the routing rules. Changes to any job or account will not affect the ownership of the activity.\n\nWhen an activity is implicitly assigned to a user, it is actually assigned to a specific role on a job or account (i.e., the underwriter for Big Lake Bakery). The activity is \"owned\" by the user who has that role (in the example, Alice Applegate). If that role is later reassigned to another user, then all activities assigned via roles will be reassigned to that user. In the slide example, if the undewriter role for Big Lake Bakery is later reassigned to Bob Baker, then the second activity will also be reassigned to Bob Baker. Alice owned the second activity be virtue of being the underwriter for the Big Lake Bakery account.",
       "narration": "Activities can be owned explicitly by a designated user or implicitly through roles. Implicit assignment is dynamic, adapting to role changes. This flexibility ensures that the right person always handles the task, even if team roles evolve.",
       "ocrText": "| Activity ownership: explicit and implicit Gi\n\nS&S,\n\nSy explicit\n\nAlice Applegate\n\nSe\n\nunderwriter for\nBig Lake\nBakery\n\n&,\nwo\n\nSe\n\nimplicit\nunderwriter —_______-_» Alice Applegate",
       "ocrWordCount": 26,
@@ -285,8 +285,8 @@
       "slideNumber": 17,
       "title": "Activity Queues",
       "bodyParagraphs": [],
-      "originalNotes": "Activity queues\nA queue is an activity repository and is associated with the group. Users in a group can take ownership of queued activities.  From the Desktop, navigate to My Queue. To self-assign an activity, click Assign Next to Me. The user must have the Get next activity from queue (actquenext)  permission to assign an activity from the queue. In the base configuration, the underwriter role has this permission.",
-      "notes": "Activity queues\nA queue is an activity repository and is associated with the group. Users in a group can take ownership of queued activities.  From the Desktop, navigate to My Queue. To self-assign an activity, click Assign Next to Me. The user must have the Get next activity from queue (actquenext)  permission to assign an activity from the queue. In the base configuration, the underwriter role has this permission.",
+      "originalNotes": "Activity queues\nA queue is an activity repository and is associated with the group. Users in a group can take ownership of queued activities. From the Desktop, navigate to My Queue. To self-assign an activity, click Assign Next to Me. The user must have the Get next activity from queue (actquenext) permission to assign an activity from the queue. In the base configuration, the underwriter role has this permission.",
+      "notes": "Activity queues\nA queue is an activity repository and is associated with the group. Users in a group can take ownership of queued activities. From the Desktop, navigate to My Queue. To self-assign an activity, click Assign Next to Me. The user must have the Get next activity from queue (actquenext) permission to assign an activity from the queue. In the base configuration, the underwriter role has this permission.",
       "narration": "Activity queues act as repositories, linked to groups where users can claim tasks. This setup promotes shared responsibility and balanced workload distribution, essential for team efficiency.",
       "ocrText": "| Activity queues\n\nNew Account Group\n\nor<0 |\nOn\nS\n\na\neo\nQUEUE\n\nActivity: Initial\ncontact needed\n\n(a —\n\nGi\n\n©\na)\n\ne-\n\nSend welcome\npacket\n\nUser in the\ngroup takes on\none activity in\nthe queue",
       "ocrWordCount": 37,
@@ -330,7 +330,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 20,
@@ -356,7 +357,7 @@
       "originalNotes": "",
       "notes": "Understand the process of creating a new activity.",
       "narration": "Watch as we walk through the process of creating an activity. Pay attention to the selection of activity patterns, assignment options, and how these choices impact task management.",
-      "ocrText": "Question\n\n/~ — Give one example of how an activity can help users manage their work.\n\n4\n4\n¢\n\nSooo o oe Sooo ooo oOoOeD\n\nGi",
+      "ocrText": "Question\n/~ — Give one example of how an activity can help users manage their work.\n•\nSooo o oe Sooo ooo oOoOeD\nGi",
       "ocrWordCount": 26,
       "ocrConfidence": 74.29,
       "hasTable": false,
@@ -364,7 +365,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Give one example of how an activity can help users manage their work.",
+        "answer": "Sooo oo ooo ooo oOo OOoS Assign work to a user, alert users to certain events, manage how policy jobs are completed."
+      }
     },
     {
       "slideNumber": 22,
@@ -373,7 +378,7 @@
       "originalNotes": "",
       "notes": "See how activities are assigned in PolicyCenter.",
       "narration": "This demo showcases the assignment process for activities. Notice the difference between manual and automatic assignments, and how routing rules can streamline task distribution.",
-      "ocrText": "Answer\n\n¢\n4\n7\n¢\n\nSooo oo ooo ooo oOo OOoS\n\nGive one example of how an activity can help users manage their work.\n\nAssign work to a user, alert users to certain events, manage how policy jobs are\ncompleted.\n\nGi",
+      "ocrText": "Answer\n•\n•\nSooo oo ooo ooo oOo OOoS\nGive one example of how an activity can help users manage their work.\nAssign work to a user, alert users to certain events, manage how policy jobs are\ncompleted.\nGi",
       "ocrWordCount": 41,
       "ocrConfidence": 87.68,
       "hasTable": false,
@@ -390,7 +395,7 @@
       "originalNotes": "",
       "notes": "Follow the steps to complete an activity.",
       "narration": "Observe the steps involved in completing an activity. This process involves verifying task completion and updating the activity status, ensuring that all tasks are accurately recorded and closed.",
-      "ocrText": "Question\n\n_~ — What business objects can have an associated activity?\n\n4\n4\n¢\n\nSooo o oe Sooo ooo oOoOeD",
+      "ocrText": "Question\nWhat business objects can have an associated activity?\n•\nSooo o oe Sooo ooo oOoOeD",
       "ocrWordCount": 20,
       "ocrConfidence": 69.61,
       "hasTable": false,
@@ -398,7 +403,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What business objects can have an associated activity?",
+        "answer": "Sooo oo ooo ooo oOo OOoS Accounts, policies and transactions (jobs)."
+      }
     },
     {
       "slideNumber": 24,
@@ -407,7 +416,7 @@
       "originalNotes": "",
       "notes": "Learn to configure activity patterns.",
       "narration": "Configuring activity patterns involves setting up templates that define task parameters. This customization ensures activities are aligned with business processes, improving task consistency and efficiency.",
-      "ocrText": "Answer\n\n_~ — What business objects can have an associated activity?\n\n4\n4\n¢\n\nSooo oo ooo ooo oOo OOoS\n\nAccounts, policies and transactions (jobs).",
+      "ocrText": "Answer\nWhat business objects can have an associated activity?\n•\nSooo oo ooo ooo oOo OOoS\nAccounts, policies and transactions (jobs).",
       "ocrWordCount": 25,
       "ocrConfidence": 79.86,
       "hasTable": false,
@@ -424,7 +433,7 @@
       "originalNotes": "",
       "notes": "Explore how to manage activity queues.",
       "narration": "In this demonstration, explore the management of activity queues. Watch how users can claim tasks and how permissions impact queue interaction, promoting effective group collaboration.",
-      "ocrText": "Question\n\nae What is an activity pattern?\n4\n¢\n\nSooo o oe Sooo ooo oOoOeD",
+      "ocrText": "Question\nWhat is an activity pattern?\n•\nSooo o oe Sooo ooo oOoOeD",
       "ocrWordCount": 15,
       "ocrConfidence": 66.77,
       "hasTable": false,
@@ -432,7 +441,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What is an activity pattern?",
+        "answer": "Sooo oo ooo ooo oOo OOoS What is an activity pattern? An activity pattern is a description of how to create a specific activity."
+      }
     },
     {
       "slideNumber": 26,
@@ -441,7 +454,7 @@
       "originalNotes": "",
       "notes": "Handling escalated activities.",
       "narration": "Managing escalated activities requires prompt action to address overdue tasks. Learning to prioritize and resolve these ensures that critical issues are dealt with swiftly, maintaining operational efficiency.",
-      "ocrText": "Answer\n\n77\n4\n7\n¢\n\nSooo oo ooo ooo oOo OOoS\n\nWhat is an activity pattern?\n\nAn activity pattern is a description of how to create a specific activity.",
+      "ocrText": "Answer\n77\n•\nSooo oo ooo ooo oOo OOoS\nWhat is an activity pattern?\nAn activity pattern is a description of how to create a specific activity.",
       "ocrWordCount": 29,
       "ocrConfidence": 82.84,
       "hasTable": false,
@@ -458,7 +471,7 @@
       "originalNotes": "",
       "notes": "Add new fields to activity patterns as needed.",
       "narration": "Customizing activity patterns by adding new fields can enhance task tracking. These customizations might include role specifications or additional task details, providing a more tailored approach to activity management.",
-      "ocrText": "Question\n\nae Is an activity always assigned to a group? A user?\n4\n¢\n\nSooo o oe Sooo ooo oOoOeD",
+      "ocrText": "Question\nIs an activity always assigned to a group? A user?\n•\nSooo o oe Sooo ooo oOoOeD",
       "ocrWordCount": 20,
       "ocrConfidence": 75.17,
       "hasTable": false,
@@ -466,7 +479,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Is an activity always assigned to a group? A user?",
+        "answer": "Sooo oo ooo ooo oOo OOoS Is an activity always assigned to a group? A user? Activities can be assigned to users, groups or queues. In addition, a user is assigned to a group; a queue contains activities assigned to a group."
+      }
     },
     {
       "slideNumber": 28,
@@ -475,7 +492,7 @@
       "originalNotes": "",
       "notes": "Generate reports to track activity performance.",
       "narration": "Generating activity reports provides insights into task performance and efficiency. These reports help identify bottlenecks and optimize workflow, ensuring that activities are managed effectively.",
-      "ocrText": "Answer\n\n77\n4\n7\n¢\n\nSooo oo ooo ooo oOo OOoS\n\nIs an activity always assigned to a group? A user?\n\nActivities can be assigned to users, groups or queues. In addition, a user is assigned\nto a group; a queue contains activities assigned to a group.",
+      "ocrText": "Answer\n77\n•\nSooo oo ooo ooo oOo OOoS\nIs an activity always assigned to a group? A user?\nActivities can be assigned to users, groups or queues. In addition, a user is assigned\nto a group; a queue contains activities assigned to a group.",
       "ocrWordCount": 47,
       "ocrConfidence": 88.4,
       "hasTable": false,
@@ -492,7 +509,7 @@
       "originalNotes": "",
       "notes": "How activities interact with other InsuranceSuite modules.",
       "narration": "Activities in PolicyCenter are not isolated. They integrate with other InsuranceSuite modules like ClaimCenter and BillingCenter, facilitating comprehensive task management across the insurance lifecycle.",
-      "ocrText": "Question\n\n,- — Who can modify an activity?\n\n4\n4\n¢\n\nSooo o oe Sooo ooo oOoOeD",
+      "ocrText": "Question\nWho can modify an activity?\n•\nSooo o oe Sooo ooo oOoOeD",
       "ocrWordCount": 17,
       "ocrConfidence": 55.0,
       "hasTable": false,
@@ -500,7 +517,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Who can modify an activity?",
+        "answer": "Sooo oo ooo ooo oOo OOoS The activity owner and anyone with manager permissions."
+      }
     },
     {
       "slideNumber": 30,
@@ -509,7 +530,7 @@
       "originalNotes": "",
       "notes": "Implementing best practices for activities.",
       "narration": "Implementing best practices in activity management ensures tasks are handled efficiently. This includes regular reviews, timely escalations, and leveraging activity patterns to maintain consistency across processes.",
-      "ocrText": "Answer\n\n77\n4\n4\n¢\n\nSooo oo ooo ooo oOo OOoS\n\nWho can modify an activity?\n\nThe activity owner and anyone with manager permissions.",
+      "ocrText": "Answer\n77\n•\nSooo oo ooo ooo oOo OOoS\nWho can modify an activity?\nThe activity owner and anyone with manager permissions.",
       "ocrWordCount": 24,
       "ocrConfidence": 79.75,
       "hasTable": false,
@@ -526,7 +547,7 @@
       "originalNotes": "",
       "notes": "Typical customizations for activities in PolicyCenter.",
       "narration": "Common customizations in PolicyCenter involve tweaking activity patterns, assignment logic, and notification settings. These adjustments cater to specific business needs, enhancing the user experience and task efficiency.",
-      "ocrText": "Lesson\nobj ectives * Define an Activity as the term is used in\nreview PolicyCenter\n\n¢ Explain the difference between a Manual and\nAutomatic Activity\n\n¢ Define an Activity Pattern\n\n¢ Describe the Activity life cycle\n\n¢ Discern an Underwriter Activity from a\nGeneral Activity",
+      "ocrText": "Lesson\nobj ectives * Define an Activity as the term is used in\nreview PolicyCenter\n\n• Explain the difference between a Manual and\nAutomatic Activity\n\n• Define an Activity Pattern\n\n• Describe the Activity life cycle\n\n• Discern an Underwriter Activity from a\nGeneral Activity",
       "ocrWordCount": 45,
       "ocrConfidence": 87.64,
       "hasTable": false,

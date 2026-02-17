@@ -33,7 +33,7 @@
       "originalNotes": "",
       "notes": "Modifiers are crucial in the rating process, affecting how premiums are calculated.",
       "narration": "Modifiers in PolicyCenter are integral to the rating process, allowing for nuanced control over premium calculations. They're designed to apply adjustments based on factors like risk or customer characteristics. Understanding how they fit into the data model and how they can be configured is essential for customizing insurance products effectively.",
-      "ocrText": "Lesson\nobjectives\n\n¢ Describe the role of modifiers in policy ratings\n\n¢ Describe the different types of modifiers\n\n« Work with different modifiers within\nPolicyCenter",
+      "ocrText": "Lesson\nobjectives\n\n• Describe the role of modifiers in policy ratings\n\n• Describe the different types of modifiers\n\n« Work with different modifiers within\nPolicyCenter",
       "ocrWordCount": 25,
       "ocrConfidence": 87.56,
       "hasTable": false,
@@ -67,7 +67,7 @@
       "originalNotes": "Rate modifier\nModifiers added to the product affect rating for all lines in that product. Modifiers added to a policy line affect only that line. They are called ProductModifier patterns.\n\nOne example in the base configuration of modifiers are those on the General Liability policy line within Commercial Package product.",
       "notes": "Rate modifier\nModifiers added to the product affect rating for all lines in that product. Modifiers added to a policy line affect only that line. They are called ProductModifier patterns.\n\nOne example in the base configuration of modifiers are those on the General Liability policy line within Commercial Package product.",
       "narration": "Let's delve deeper into rate modifiers. When added to a product, they influence all lines within that product. These are known as ProductModifier patterns. For instance, in the General Liability line within a Commercial Package product, such modifiers ensure consistent rating across all lines, maintaining coherence in premium calculations.",
-      "ocrText": "| Rate modifier Gi\n\n¢ Isa value that the rating engine uses\nPOY to justify the policy premium, or some\nQO portion of the policy premium\n* Captures information relevant to\n(4/7 = pricing that are not necessarily tied to\nspecific coverage or coverables",
+      "ocrText": "| Rate modifier Gi\n\n• Isa value that the rating engine uses\nPOY to justify the policy premium, or some\nQO portion of the policy premium\n* Captures information relevant to\n(4/7 = pricing that are not necessarily tied to\nspecific coverage or coverables",
       "ocrWordCount": 44,
       "ocrConfidence": 83.95,
       "hasTable": false,
@@ -81,10 +81,10 @@
       "slideNumber": 5,
       "title": "Modifier Pattern: ProductModifiers",
       "bodyParagraphs": [],
-      "originalNotes": "Modifier pattern\nProduct-level modifiers are called ProductModifiers. They are applied to product only for multi- line policies such as CPP  (Commercial Package). They apply to all policy lines on apolicy. An example is the •CPPIRPM\" (Commercial Package Policy Individual Risk Premium Modification) which affects rating of coverages for all lines within CPP.\n\nCPPIRPM: (CPP Individual Risk Premium Modification) This is a specific example of a scheduled rate modifier. It is used primarily in property and liability polices. The rating and quoting engine takes factors into account in determining the premium. These factors can include things like the size of premium, spread of risk, superior building construction, and the quality of management.",
-      "notes": "Modifier pattern\nProduct-level modifiers are called ProductModifiers. They are applied to product only for multi- line policies such as CPP  (Commercial Package). They apply to all policy lines on apolicy. An example is the •CPPIRPM\" (Commercial Package Policy Individual Risk Premium Modification) which affects rating of coverages for all lines within CPP.\n\nCPPIRPM: (CPP Individual Risk Premium Modification) This is a specific example of a scheduled rate modifier. It is used primarily in property and liability polices. The rating and quoting engine takes factors into account in determining the premium. These factors can include things like the size of premium, spread of risk, superior building construction, and the quality of management.",
+      "originalNotes": "Modifier pattern\nProduct-level modifiers are called ProductModifiers. They are applied to product only for multi- line policies such as CPP (Commercial Package). They apply to all policy lines on apolicy. An example is the •CPPIRPM\" (Commercial Package Policy Individual Risk Premium Modification) which affects rating of coverages for all lines within CPP.\n\nCPPIRPM: (CPP Individual Risk Premium Modification) This is a specific example of a scheduled rate modifier. It is used primarily in property and liability polices. The rating and quoting engine takes factors into account in determining the premium. These factors can include things like the size of premium, spread of risk, superior building construction, and the quality of management.",
+      "notes": "Modifier pattern\nProduct-level modifiers are called ProductModifiers. They are applied to product only for multi- line policies such as CPP (Commercial Package). They apply to all policy lines on apolicy. An example is the •CPPIRPM\" (Commercial Package Policy Individual Risk Premium Modification) which affects rating of coverages for all lines within CPP.\n\nCPPIRPM: (CPP Individual Risk Premium Modification) This is a specific example of a scheduled rate modifier. It is used primarily in property and liability polices. The rating and quoting engine takes factors into account in determining the premium. These factors can include things like the size of premium, spread of risk, superior building construction, and the quality of management.",
       "narration": "ProductModifiers are crucial for multi-line policies like the Commercial Package Policy. They apply to all policy lines, ensuring uniformity in rating. Take the CPPIRPM, for example. It's a scheduled rate modifier that considers factors like risk and management quality, impacting all coverages within a CPP. This holistic approach ensures comprehensive risk assessment.",
-      "ocrText": "Gi\n\n¢ Affects the rating of coverages\n\n* Creates an instance of a modifier\nthat affects the cost of a policy",
+      "ocrText": "Gi\n\n• Affects the rating of coverages\n\n* Creates an instance of a modifier\nthat affects the cost of a policy",
       "ocrWordCount": 21,
       "ocrConfidence": 88.23,
       "hasTable": false,
@@ -109,7 +109,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 7,
@@ -166,8 +167,8 @@
       "slideNumber": 10,
       "title": "RateFactor Typelist",
       "bodyParagraphs": [],
-      "originalNotes": "RateFactor typelist\nA rating input modifier consists of one or more rate factors. Rate factors must be listed in the RateFactorType typelist before they can be added to a schedule rate.\n\nThe first step in creating a schedule rate modifier is to create any needed rate factor in the RateFactorType.\n\nConfiguration tip: Studio automatically knows about new typecodes, so configuration users can create the schedule rate modifier without restarting the server- However, because changes to typelists are considered data model changes, configuration users must restart the server before they can test the schedule rate modifier in the user Interface.\n\nConfiguration tip: A rating input modifier consists of one or more rate factors- Rate factors must be listed in the RateFactorType typelist before they can be added to a schedule rate- Therefore, the first step in creating a schedule rate modifier is typically to create the necessary rate factors in RateFactorType. Studio automatically knows about new typecodes, so configuration users can create the schedule rate modifier without restarting the server- However, because changes to typelists are considered data model changes, configuration users must restart the server before they can test the schedule rate modifier.\n\nDuring modifier creation, Product Designer adds a Rate Factors link under Go to links when you set the data type to rate and you select the Schedule Rate check box. Go to Rate Factors page to add one or more rate factors that combine to give the value of the schedule credit.",
-      "notes": "RateFactor typelist\nA rating input modifier consists of one or more rate factors. Rate factors must be listed in the RateFactorType typelist before they can be added to a schedule rate.\n\nThe first step in creating a schedule rate modifier is to create any needed rate factor in the RateFactorType.\n\nConfiguration tip: Studio automatically knows about new typecodes, so configuration users can create the schedule rate modifier without restarting the server- However, because changes to typelists are considered data model changes, configuration users must restart the server before they can test the schedule rate modifier in the user Interface.\n\nConfiguration tip: A rating input modifier consists of one or more rate factors- Rate factors must be listed in the RateFactorType typelist before they can be added to a schedule rate- Therefore, the first step in creating a schedule rate modifier is typically to create the necessary rate factors in RateFactorType. Studio automatically knows about new typecodes, so configuration users can create the schedule rate modifier without restarting the server- However, because changes to typelists are considered data model changes, configuration users must restart the server before they can test the schedule rate modifier.\n\nDuring modifier creation, Product Designer adds a Rate Factors link under Go to links when you set the data type to rate and you select the Schedule Rate check box. Go to Rate Factors page to add one or more rate factors that combine to give the value of the schedule credit.",
+      "originalNotes": "RateFactor typelist\nA rating input modifier consists of one or more rate factors. Rate factors must be listed in the RateFactorType typelist before they can be added to a schedule rate.\n\nThe first step in creating a schedule rate modifier is to create any needed rate factor in the RateFactorType.\n\nConfiguration tip: Studio automatically knows about new typecodes, so configuration users can create the schedule rate modifier without restarting the server. However, because changes to typelists are considered data model changes, configuration users must restart the server before they can test the schedule rate modifier in the user Interface.\n\nConfiguration tip: A rating input modifier consists of one or more rate factors- Rate factors must be listed in the RateFactorType typelist before they can be added to a schedule rate- Therefore, the first step in creating a schedule rate modifier is typically to create the necessary rate factors in RateFactorType. Studio automatically knows about new typecodes, so configuration users can create the schedule rate modifier without restarting the server. However, because changes to typelists are considered data model changes, configuration users must restart the server before they can test the schedule rate modifier.\n\nDuring modifier creation, Product Designer adds a Rate Factors link under Go to links when you set the data type to rate and you select the Schedule Rate check box. Go to Rate Factors page to add one or more rate factors that combine to give the value of the schedule credit.",
+      "notes": "RateFactor typelist\nA rating input modifier consists of one or more rate factors. Rate factors must be listed in the RateFactorType typelist before they can be added to a schedule rate.\n\nThe first step in creating a schedule rate modifier is to create any needed rate factor in the RateFactorType.\n\nConfiguration tip: Studio automatically knows about new typecodes, so configuration users can create the schedule rate modifier without restarting the server. However, because changes to typelists are considered data model changes, configuration users must restart the server before they can test the schedule rate modifier in the user Interface.\n\nConfiguration tip: A rating input modifier consists of one or more rate factors- Rate factors must be listed in the RateFactorType typelist before they can be added to a schedule rate- Therefore, the first step in creating a schedule rate modifier is typically to create the necessary rate factors in RateFactorType. Studio automatically knows about new typecodes, so configuration users can create the schedule rate modifier without restarting the server. However, because changes to typelists are considered data model changes, configuration users must restart the server before they can test the schedule rate modifier.\n\nDuring modifier creation, Product Designer adds a Rate Factors link under Go to links when you set the data type to rate and you select the Schedule Rate check box. Go to Rate Factors page to add one or more rate factors that combine to give the value of the schedule credit.",
       "narration": "When creating a schedule rate modifier, defining rate factors is a crucial first step. These factors, stored in the RateFactorType typelist, form the basis of the modifier's calculations. Remember, any changes to the typelist require a server restart to take effect, a key step to ensure accurate functionality in the user interface.",
       "ocrText": "| RateFactor typelist Gi\n\nffi) RateFactorType.ttx x\nim typecode & | (SZshow al\n\nRate factors must be listed in the RateFactorType typelist before they can be added\nto a schedule rate in Product Designer",
       "ocrWordCount": 34,
@@ -186,7 +187,7 @@
       "originalNotes": "",
       "notes": "How modifiers influence the final premium calculation.",
       "narration": "The impact of modifiers on rating is profound, altering premiums by applying specific adjustments. Their configuration determines how various factors influence the final premium. By understanding this impact, developers can ensure that policies are priced accurately and reflect the underlying risk.",
-      "ocrText": "Question\n\n,- — For the Personal Auto policy line, why are there two possible values for a\n¢ modifier’s \"modifier type\"?\n\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS\n\nGi",
+      "ocrText": "Question\nFor the Personal Auto policy line, why are there two possible values for a\n• modifier’s \"modifier type\"?\n•\n•\nGi",
       "ocrWordCount": 30,
       "ocrConfidence": 80.96,
       "hasTable": false,
@@ -194,7 +195,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "For the Personal Auto policy line, why are there two possible values for a",
+        "answer": "X modifier’s \"modifier type\"? In Personal Auto, a modifier can be associated with the policy line or to a specific vehicle. When creating the modifier, you specify a modifier type to denote if it is policy line level (PAModifier) or vehicle level (PAVehicleModifier). Sooo ooo ooo Oooo oOoD"
+      }
     },
     {
       "slideNumber": 12,
@@ -203,7 +208,7 @@
       "originalNotes": "",
       "notes": "Customization options for modifiers to fit specific business needs.",
       "narration": "Customizing modifiers allows insurers to tailor their products to unique business requirements. By adjusting parameters and defining specific criteria, developers can create modifiers that align closely with market conditions and customer expectations, enhancing product competitiveness.",
-      "ocrText": "Answer Gi\n\n,- — For the Personal Auto policy line, why are there two possible values for a\nx modifier’s \"modifier type\"?\n¢\n\nIn Personal Auto, a modifier can be associated with the policy line or to a specific\nvehicle. When creating the modifier, you specify a modifier type to denote if it is policy\nline level (PAModifier) or vehicle level (PAVehicleModifier).\n\nSooo ooo ooo Oooo oOoD",
+      "ocrText": "Answer Gi\nFor the Personal Auto policy line, why are there two possible values for a\nmodifier’s \"modifier type\"?\n•\nIn Personal Auto, a modifier can be associated with the policy line or to a specific\nvehicle. When creating the modifier, you specify a modifier type to denote if it is policy\nline level (PAModifier) or vehicle level (PAVehicleModifier).\nSooo ooo ooo Oooo oOoD",
       "ocrWordCount": 67,
       "ocrConfidence": 88.81,
       "hasTable": false,
@@ -220,7 +225,7 @@
       "originalNotes": "",
       "notes": "How modifiers work with the rating engine to calculate premiums.",
       "narration": "Modifiers are intricately linked to the rating engine, which processes their inputs to calculate premiums. This integration ensures that all adjustments are accurately reflected in the final price. Understanding this interaction is key to developing robust rating solutions that meet client needs.",
-      "ocrText": "Question\n\n,~ — When do you need to add values to the RateFactorType typelist?\n\n4\n¢\n¢\n\nSooo oooe sooo oOo oOo oAaDS",
+      "ocrText": "Question\nWhen do you need to add values to the RateFactorType typelist?\n•\n•",
       "ocrWordCount": 23,
       "ocrConfidence": 74.05,
       "hasTable": false,
@@ -228,7 +233,11 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "When do you need to add values to the RateFactorType typelist?",
+        "answer": "Sooo ooo ooo Oooo oOoD You need to add typecodes to the RateFactorType typelist when you create a schedule rate modifier and the desired rate factors don't already exist."
+      }
     },
     {
       "slideNumber": 14,
@@ -237,7 +246,7 @@
       "originalNotes": "",
       "notes": "Guidelines for effectively implementing modifiers in PolicyCenter.",
       "narration": "Implementing modifiers effectively requires adherence to best practices. These include thorough testing, understanding entity relationships, and ensuring configurations align with business logic. Following these guidelines helps maintain system integrity and ensures accurate premium calculations.",
-      "ocrText": "Answer\n\n7\n¢\n¢\n¢\n\nSooo ooo ooo Oooo oOoD\n\nWhen do you need to add values to the RateFactorType typelist?\n\nYou need to add typecodes to the RateFactorType typelist when you create a\nschedule rate modifier and the desired rate factors don't already exist.",
+      "ocrText": "Answer\n•\n•\n•\nSooo ooo ooo Oooo oOoD\nWhen do you need to add values to the RateFactorType typelist?\nYou need to add typecodes to the RateFactorType typelist when you create a\nschedule rate modifier and the desired rate factors don't already exist.",
       "ocrWordCount": 45,
       "ocrConfidence": 88.12,
       "hasTable": false,
@@ -254,7 +263,7 @@
       "originalNotes": "",
       "notes": "Common issues and solutions when working with modifiers.",
       "narration": "Troubleshooting modifiers often involves identifying configuration errors or data model mismatches. Common issues include incorrect typecodes or misconfigured relationships. By systematically diagnosing these problems, developers can resolve issues swiftly, ensuring smooth policy operations.",
-      "ocrText": "Lesson\nobjectives ¢ Describe the role of modifiers in policy ratings\n\nI ¢ Describe the different types of modifiers\nreview ¢ Work with different modifiers within\n\nPolicyCenter",
+      "ocrText": "Lesson\nobjectives • Describe the role of modifiers in policy ratings\n\nI • Describe the different types of modifiers\nreview • Work with different modifiers within\n\nPolicyCenter",
       "ocrWordCount": 27,
       "ocrConfidence": 87.0,
       "hasTable": false,

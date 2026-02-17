@@ -11,7 +11,7 @@
   "slides": [
     {
       "slideNumber": 1,
-      "title": "",
+      "title": "Typelists",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -28,7 +28,7 @@
     },
     {
       "slideNumber": 2,
-      "title": "",
+      "title": "Learning Objectives",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -62,7 +62,7 @@
     },
     {
       "slideNumber": 4,
-      "title": "",
+      "title": "User Story: Invoicing Method",
       "bodyParagraphs": [],
       "originalNotes": "User Story: Invoicing Method\nShown here is an example user story requirement requested by a fictional business analyst.",
       "notes": "User Story: Invoicing Method\nShown here is an example user story requirement requested by a fictional business analyst.",
@@ -96,12 +96,12 @@
     },
     {
       "slideNumber": 6,
-      "title": "",
+      "title": "i Typelist",
       "bodyParagraphs": [],
       "originalNotes": "Typelist\n\nWhenever there is a drop-down list in an InsuranceSuite application interface, it is usually a Typelist. If Guidewire defines a typelist as final, it is not possible to add or delete typecodes from the typelist.",
       "notes": "Typelist\n\nWhenever there is a drop-down list in an InsuranceSuite application interface, it is usually a Typelist. If Guidewire defines a typelist as final, it is not possible to add or delete typecodes from the typelist.",
       "narration": "",
-      "ocrText": "i Typelist G\nDetails\n¢ ATypelist is a fixed, predefined list of\n\nvalues (Typecodes)\n\nPerson Info | Phone &Addresses | Bank Accounts\n\nAdd\n\n¢ Values cannot be dynamically added or\nremoved during runtime\n\nBankName” > RoutingNumber* > — [Jaccount Type” >\n\nNational Bank 745-222 ‘Checking ~\n¢ Defined value often used to constrain\nuser input oe\n« When rendered in Ul, [Ei] BankAccountType.tti x\n\ntypically appears\n\nas a dropdown list ldblomecode =) W — [Wshowax]\n\nElement Code Name\nBankAccountType __ The type...\ntypecode checking\ntypecode savings\ntypecode other",
+      "ocrText": "i Typelist G\nDetails\n• ATypelist is a fixed, predefined list of\n\nvalues (Typecodes)\n\nPerson Info | Phone &Addresses | Bank Accounts\n\nAdd\n\n• Values cannot be dynamically added or\nremoved during runtime\n\nBankName” > RoutingNumber* > — [Jaccount Type” >\n\nNational Bank 745-222 ‘Checking ~\n• Defined value often used to constrain\nuser input oe\n« When rendered in Ul, [Ei] BankAccountType.tti x\n\ntypically appears\n\nas a dropdown list ldblomecode =) W — [Wshowax]\n\nElement Code Name\nBankAccountType __ The type...\ntypecode checking\ntypecode savings\ntypecode other",
       "ocrWordCount": 88,
       "ocrConfidence": 83.21,
       "hasTable": false,
@@ -113,12 +113,12 @@
     },
     {
       "slideNumber": 7,
-      "title": "",
+      "title": "i Typelists and Typekey fields",
       "bodyParagraphs": [],
       "originalNotes": "Typelists and Typekey fields\n\nThe specified typelist limits the available field values to those defined in the typelist- If you filter the typelist, the field displays a subset of the typelist values.",
       "notes": "Typelists and Typekey fields\n\nThe specified typelist limits the available field values to those defined in the typelist- If you filter the typelist, the field displays a subset of the typelist values.",
       "narration": "",
-      "ocrText": "i Typelists and Typekey fields\n\n¢ ATypekey field is an entity field associated with a specific Typelist\n¢ Referenced Typelist contains the list of possible values for the Typekey field\n\n* The Typekey field can point to one of these Typecodes\n\nBankAccount\n\nBankName\nRoutingNumber\n\nAccountNumber\n\nTypekey field\n\nTypelist\n\nBankAccountType\n\nChecking\nSavings\nOther\n\nTypecodes",
+      "ocrText": "i Typelists and Typekey fields\n\n• ATypekey field is an entity field associated with a specific Typelist\n• Referenced Typelist contains the list of possible values for the Typekey field\n\n* The Typekey field can point to one of these Typecodes\n\nBankAccount\n\nBankName\nRoutingNumber\n\nAccountNumber\n\nTypekey field\n\nTypelist\n\nBankAccountType\n\nChecking\nSavings\nOther\n\nTypecodes",
       "ocrWordCount": 53,
       "ocrConfidence": 89.42,
       "hasTable": false,
@@ -130,12 +130,12 @@
     },
     {
       "slideNumber": 8,
-      "title": "",
+      "title": "i Kinds of Typelists",
       "bodyParagraphs": [],
       "originalNotes": "Kinds of Typelists\nIn some cases, an internal typelist does not have a physical file that is exposed in Guidewire Studio. One type of virtual typelist is a typelist of subtypes for a given supertype. You will not find the virtual typelists in Studio, but you can see the Java classes that get generated from them. For example, you can use the CTRL + SHIFT + N to search for ABContact.java and you will see that one of the search results is in the configuration\\generated\\typekey folder but there is not matching physical typelist\n\nTypelists with the final=\"true“ attribute defined in the <typelist element cannot be extended. An internal typelist extension (TIX) file can only be found in the folder.\n\nYou can always determine to base configuration for a Guidewire application by looking at the zip file.",
       "notes": "Kinds of Typelists\nIn some cases, an internal typelist does not have a physical file that is exposed in Guidewire Studio. One type of virtual typelist is a typelist of subtypes for a given supertype. You will not find the virtual typelists in Studio, but you can see the Java classes that get generated from them. For example, you can use the CTRL + SHIFT + N to search for ABContact.java and you will see that one of the search results is in the configuration\\generated\\typekey folder but there is not matching physical typelist\n\nTypelists with the final=\"true“ attribute defined in the <typelist element cannot be extended. An internal typelist extension (TIX) file can only be found in the folder.\n\nYou can always determine to base configuration for a Guidewire application by looking at the zip file.",
       "narration": "",
-      "ocrText": "i Kinds of Typelists G\n\n¢ Internal base application * Created by customers as ¢ Base application\nlogic part of custom * Customers can modify the\n* Cannot be modified 9 Typelist or create Typelist\nor extended extension\n\n« Read-only\n\n* Some virtual\n\nSee examples on next slide",
+      "ocrText": "i Kinds of Typelists G\n\n• Internal base application * Created by customers as • Base application\nlogic part of custom * Customers can modify the\n* Cannot be modified 9 Typelist or create Typelist\nor extended extension\n\n« Read-only\n\n* Some virtual\n\nSee examples on next slide",
       "ocrWordCount": 48,
       "ocrConfidence": 86.31,
       "hasTable": false,
@@ -147,12 +147,12 @@
     },
     {
       "slideNumber": 9,
-      "title": "",
+      "title": "i Typelists in the data model",
       "bodyParagraphs": [],
       "originalNotes": "Typelists in the data model\nFor an entity to be able to access and use a typelist, you need to define a <typekey> element on that entity. Use the <typekey> element to specify the typelist in the entity metadata.",
       "notes": "Typelists in the data model\nFor an entity to be able to access and use a typelist, you need to define a <typekey> element on that entity. Use the <typekey> element to specify the typelist in the entity metadata.",
       "narration": "",
-      "ocrText": "i Typelists in the data model G\n\n¢ Follow similar\nprinciples as entities\n\n* Defined as XML files\n* TTI, TIX and TTX files\n\n« ...\\Metadata\\Typelist\nfolder read-only and\ncontains platform and\nbase application\nTypelists\n\n« ...\\Extensions\\Typelist\nfolder contains\neverything customer\nspecific\n\nValidationLevel ActivityStatus",
+      "ocrText": "i Typelists in the data model G\n\n• Follow similar\nprinciples as entities\n\n* Defined as XML files\n* TTI, TIX and TTX files\n\n« ...\\Metadata\\Typelist\nfolder read-only and\ncontains platform and\nbase application\nTypelists\n\n« ...\\Extensions\\Typelist\nfolder contains\neverything customer\nspecific\n\nValidationLevel ActivityStatus",
       "ocrWordCount": 44,
       "ocrConfidence": 85.5,
       "hasTable": false,
@@ -164,12 +164,12 @@
     },
     {
       "slideNumber": 10,
-      "title": "",
+      "title": "i Typelists in the data model (continued)",
       "bodyParagraphs": [],
       "originalNotes": "Typelists in the data model (Continued)\nFor an entity to be able to access and use a typelist, you need to define a <typekey> element on that entity. Use the <typekey> element to specify the typelist in the entity metadata.",
       "notes": "Typelists in the data model (Continued)\nFor an entity to be able to access and use a typelist, you need to define a <typekey> element on that entity. Use the <typekey> element to specify the typelist in the entity metadata.",
       "narration": "",
-      "ocrText": "i Typelists in the data model (continued) Ga\n\ni) * Kinds of Typelists:\n\n* ValidationLevel is\nextendable\n\n¢ ActivityStatus is internal\n* BuildingCode_Ext is\ncustom\n¢ Virtual typelists don’t\nphysically exist in the\ndata model\n\nValidationLevel InvoiceStatus\n\nValidationLevel ActivityStatus",
+      "ocrText": "i Typelists in the data model (continued) Ga\n\ni) * Kinds of Typelists:\n\n* ValidationLevel is\nextendable\n\n• ActivityStatus is internal\n* BuildingCode_Ext is\ncustom\n• Virtual typelists don’t\nphysically exist in the\ndata model\n\nValidationLevel InvoiceStatus\n\nValidationLevel ActivityStatus",
       "ocrWordCount": 39,
       "ocrConfidence": 82.51,
       "hasTable": false,
@@ -181,7 +181,7 @@
     },
     {
       "slideNumber": 11,
-      "title": "",
+      "title": "i Typelists and Typekey fields in the database",
       "bodyParagraphs": [],
       "originalNotes": "Typelists and Typekey fields in the database\n\nMaking changes to Typelists, Typecodes, and Typekeys generate changes to the Data Model. Guidewire recommends that you regenerate the InsuranceSuite application's Data Dictionary if you make any updates to the Data Model. If you have made any mistakes in the previous steps, regenerating the data dictionary helps to identify those mistakes.",
       "notes": "Typelists and Typekey fields in the database\n\nMaking changes to Typelists, Typecodes, and Typekeys generate changes to the Data Model. Guidewire recommends that you regenerate the InsuranceSuite application's Data Dictionary if you make any updates to the Data Model. If you have made any mistakes in the previous steps, regenerating the data dictionary helps to identify those mistakes.",
@@ -198,12 +198,12 @@
     },
     {
       "slideNumber": 12,
-      "title": "",
+      "title": "i Typelists and Typekeys in the object model",
       "bodyParagraphs": [],
-      "originalNotes": "Typelists and Typekeys in the object model\nEnsure that you fully understand the dependencies between typelists and other application files before you modify a typelist. In general, Guidewire does not recommend that you make changes to existing typelists other than the following:\n\nExtending a non-final typelist to add additional typekeys-\n\nRetiring a typekey, which makes it invisible in the ClaimCenter interface, but leaves the typekey in the application database.",
-      "notes": "Typelists and Typekeys in the object model\nEnsure that you fully understand the dependencies between typelists and other application files before you modify a typelist. In general, Guidewire does not recommend that you make changes to existing typelists other than the following:\n\nExtending a non-final typelist to add additional typekeys-\n\nRetiring a typekey, which makes it invisible in the ClaimCenter interface, but leaves the typekey in the application database.",
+      "originalNotes": "Typelists and Typekeys in the object model\nEnsure that you fully understand the dependencies between typelists and other application files before you modify a typelist. In general, Guidewire does not recommend that you make changes to existing typelists other than the following:\n\nExtending a non-final typelist to add additional typekeys.\nRetiring a typekey, which makes it invisible in the ClaimCenter interface, but leaves the typekey in the application database.",
+      "notes": "Typelists and Typekeys in the object model\nEnsure that you fully understand the dependencies between typelists and other application files before you modify a typelist. In general, Guidewire does not recommend that you make changes to existing typelists other than the following:\n\nExtending a non-final typelist to add additional typekeys.\nRetiring a typekey, which makes it invisible in the ClaimCenter interface, but leaves the typekey in the application database.",
       "narration": "",
-      "ocrText": "i Typelists and Typekeys in the object model Gi\n\n* Code generators generate Java classes from Typelists\n* Typecodes become static final variables in the class\n\nCaconfiguration ) [7 generated) typekey ) © BankAccountType\n\ngz © BankAccountTypejava *\nE73 “ejavax.annotation. Generated (value = *oom.guidewire.pl.metadata.codegen.Codegen\", coments = \"BankAcod\nml 4 /deprecation thecked/\nbl s @gw.internal.gosu.parser.ExtendedType\ngE) pense clase paniaccounetype inplenents gy-encity.typerey (\ngo :\nEos\nas\nVi. _\n11 | public static finan cypekey.SRBEAGESISERS 1¢_cmrcxne = new typekey.SEREAEESUREEYES (“ohecking*)\n2\n3B\ni\n15\n16\n17 public static final typekey.BankAccountype NC OMUER = now typekey.BankAccountType (\"other\")\n\nCaconfiguration » [i generated » © entity » © BankAccount\n© BankAccountjava *\n\nFla Project\n\nQegw. internal. gosu.parser.ExtendedProperty\n\npublic typekey.BankAccountType yp\nreturn (typekey.BankAccountType)__getInternalinterface() .getFieldvalue (ACCOUNTTYPE_PROP.get ()) +\n\n>",
+      "ocrText": "i Typelists and Typekeys in the object model Gi\n\n* Code generators generate Java classes from Typelists\n* Typecodes become static final variables in the class\n\nCaconfiguration ) [7 generated) typekey ) © BankAccountType\n\ngz © BankAccountTypejava *\nE73 “ejavax.annotation. Generated (value = *oom.guidewire.pl.metadata.codegen.Codegen\", coments = \"BankAcod\nml 4 /deprecation thecked/\nbl s @gw.internal.gosu.parser.ExtendedType\ngE) pense clase paniaccounetype inplenents gy-encity.typerey (\ngo :\nEos\nas\nVi. _\n11 | public static finan cypekey.SRBEAGESISERS 1•_cmrcxne = new typekey.SEREAEESUREEYES (“ohecking*)\n2\n3B\ni\n15\n16\n17 public static final typekey.BankAccountype NC OMUER = now typekey.BankAccountType (\"other\")\n\nCaconfiguration » [i generated » © entity » © BankAccount\n© BankAccountjava *\n\nFla Project\n\nQegw. internal. gosu.parser.ExtendedProperty\n\npublic typekey.BankAccountType yp\nreturn (typekey.BankAccountType)__getInternalinterface() .getFieldvalue (ACCOUNTTYPE_PROP.get ()) +\n\n>",
       "ocrWordCount": 122,
       "ocrConfidence": 64.23,
       "hasTable": false,
@@ -232,12 +232,12 @@
     },
     {
       "slideNumber": 14,
-      "title": "",
+      "title": "i Typefilters",
       "bodyParagraphs": [],
       "originalNotes": "Typefilters\nA Typefilter defines a named subset of the Typecodes that could be used as value for the associated Typekey field that references this Typelist.",
       "notes": "Typefilters\nA Typefilter defines a named subset of the Typecodes that could be used as value for the associated Typekey field that references this Typelist.",
       "narration": "",
-      "ocrText": "i Typefilters G\n¢ ATypelist filter causes the Typelist to display only a subset of the Typecodes for\nthat Typelist\n¢ Multiple Typefilters can be defined in a Typelist\n\n¢ ATypekey field can reference at most one Typefilter from the associated Typelist\n\nti) YesNo.tti * Collateral Info\nib|categoy ~)[) &¥% — (Wshowaly] e = Collateral Required? “\nElement Code Name Priority Collateral Amount\nv typelist YesNo Yes, No, or Un... i | Verified?\ntypecode yes Yes 10 Collateral Verified? knone> bd\ntypecode no No °\ntypecode unknown Unknown Yes\n¥ typefilter| YesNoOnly | Only display Y. a N\ninclud yes ©\n\ninclud no",
+      "ocrText": "i Typefilters G\n• ATypelist filter causes the Typelist to display only a subset of the Typecodes for\nthat Typelist\n• Multiple Typefilters can be defined in a Typelist\n\n• ATypekey field can reference at most one Typefilter from the associated Typelist\n\nti) YesNo.tti * Collateral Info\nib|categoy ~)[) &¥% — (Wshowaly] e = Collateral Required? “\nElement Code Name Priority Collateral Amount\nv typelist YesNo Yes, No, or Un... i | Verified?\ntypecode yes Yes 10 Collateral Verified? knone> bd\ntypecode no No °\ntypecode unknown Unknown Yes\n¥ typefilter| YesNoOnly | Only display Y. a N\ninclud yes ©\n\ninclud no",
       "ocrWordCount": 103,
       "ocrConfidence": 84.53,
       "hasTable": false,
@@ -249,7 +249,7 @@
     },
     {
       "slideNumber": 15,
-      "title": "",
+      "title": "Demonstration",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -262,7 +262,8 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "demo_instruction"
+      "slideType": "demo_instruction",
+      "demoVideoIndex": 0
     },
     {
       "slideNumber": 16,
@@ -300,12 +301,12 @@
     },
     {
       "slideNumber": 18,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n_- — What are some of the differences between the files in the\n\n..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders?\n4\n\nSe Sess e ese ssc esaeK",
+      "ocrText": "Question\n_- — What are some of the differences between the files in the\n..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders?",
       "ocrWordCount": 24,
       "ocrConfidence": 76.27,
       "hasTable": false,
@@ -313,16 +314,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What are some of the differences between the files in the",
+        "answer": "SS Se SSeS sess e eases : ..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders? Files under Metadata are read-only and are specific to the base configuration. You cannot create Typelist files in the Metadata directory but can create Typelist files in the Extensions directory. Only internal Typelist extension files (TIX) are in the Metadata directory. Only external Typelist files (TTX) are in the Extensions directory. Both directories contain Typelist (TT1) files."
+      }
     },
     {
       "slideNumber": 19,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n_- — What are some of the differences between the files in the\n\n¢\n¢\n\nSS Se SSeS sess e eases\n\n: ..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders?\n\nFiles under Metadata are read-only and are specific to the base configuration.\n\nYou cannot create Typelist files in the Metadata directory but can create Typelist\nfiles in the Extensions directory.\n\nOnly internal Typelist extension files (TIX) are in the Metadata directory.\nOnly external Typelist files (TTX) are in the Extensions directory.\nBoth directories contain Typelist (TT1) files.",
+      "ocrText": "Answer\n_- — What are some of the differences between the files in the\n•\n•\nSS Se SSeS sess e eases\n: ..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders?\nFiles under Metadata are read-only and are specific to the base configuration.\nYou cannot create Typelist files in the Metadata directory but can create Typelist\nfiles in the Extensions directory.\nOnly internal Typelist extension files (TIX) are in the Metadata directory.\nOnly external Typelist files (TTX) are in the Extensions directory.\nBoth directories contain Typelist (TT1) files.",
       "ocrWordCount": 83,
       "ocrConfidence": 86.98,
       "hasTable": false,
@@ -334,12 +339,12 @@
     },
     {
       "slideNumber": 20,
-      "title": "",
+      "title": "Question",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question G\n\n_- — Which is a valid code value for a Typecode in a food coloring Typelist?\n\n4\no A) RedDye#1\n\nB) YellowDye40\nC) OrangeDye:10\n\nSe Sess e ese ssc esaeK",
+      "ocrText": "Question G\n_- — Which is a valid code value for a Typecode in a food coloring Typelist?\nA) RedDye#1\nB) YellowDye40\nC) OrangeDye:10",
       "ocrWordCount": 32,
       "ocrConfidence": 82.72,
       "hasTable": false,
@@ -347,16 +352,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Which is a valid code value for a Typecode in a food coloring Typelist?",
+        "answer": "SS Se SSeS sess e eases A) RedDye#1 B) YellowDye40 C) OrangeDye:10 A) Not valid B) Valid C) Not valid"
+      }
     },
     {
       "slideNumber": 21,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n7\n¢\n¢\n\nSS Se SSeS sess e eases\n\n_- — Which is a valid code value for a Typecode in a food coloring Typelist?\n\nA) RedDye#1\nB) YellowDye40\nC) OrangeDye:10\n\nA) Not valid\nB) Valid\nC) Not valid\n\nGi",
+      "ocrText": "Answer\n•\n•\nSS Se SSeS sess e eases\n_- — Which is a valid code value for a Typecode in a food coloring Typelist?\nA) RedDye#1\nB) YellowDye40\nC) OrangeDye:10\nA) Not valid\nB) Valid\nC) Not valid\nGi",
       "ocrWordCount": 41,
       "ocrConfidence": 78.57,
       "hasTable": false,
@@ -368,12 +377,12 @@
     },
     {
       "slideNumber": 22,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,- — Which Typecode attribute determines the order in which Typecodes are\nPa listed in the user interface?\n\nSe Sess e ese ssc esaeK\n\nGi",
+      "ocrText": "Question\nWhich Typecode attribute determines the order in which Typecodes are\nlisted in the user interface?\nGi",
       "ocrWordCount": 26,
       "ocrConfidence": 83.25,
       "hasTable": false,
@@ -381,16 +390,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "Which Typecode attribute determines the order in which Typecodes are",
+        "answer": "Listed in the user interface? “ The priority attribute determines the sort order in the User Interface for a Typelist. After priority, the name (not code) determines the sort order. Entries with priority -1 appear at the end of the list. SS Se SSeS sess e eases"
+      }
     },
     {
       "slideNumber": 23,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\n,- — Which Typecode attribute determines the order in which Typecodes are\nPa listed in the user interface?\n“ The priority attribute determines the sort order in the User Interface for a Typelist. After\n\npriority, the name (not code) determines the sort order. Entries with priority -1 appear\nat the end of the list.\n\nSS Se SSeS sess e eases\n\nGi",
+      "ocrText": "Answer\nWhich Typecode attribute determines the order in which Typecodes are\nlisted in the user interface?\n“ The priority attribute determines the sort order in the User Interface for a Typelist. After\npriority, the name (not code) determines the sort order. Entries with priority -1 appear\nat the end of the list.\nSS Se SSeS sess e eases\nGi",
       "ocrWordCount": 62,
       "ocrConfidence": 86.44,
       "hasTable": false,
@@ -402,12 +415,12 @@
     },
     {
       "slideNumber": 24,
-      "title": "",
+      "title": "Knowledge Check",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Question\n\n,— — What does a Typefilter do?\n\n¢\n¢\n4\n\nSe Sess e ese ssc esaeK",
+      "ocrText": "Question\nWhat does a Typefilter do?\n•\n•",
       "ocrWordCount": 17,
       "ocrConfidence": 73.4,
       "hasTable": false,
@@ -415,16 +428,20 @@
       "hasImage": true,
       "tableData": null,
       "mediaReferences": [],
-      "slideType": "question"
+      "slideType": "question",
+      "questionData": {
+        "question": "What does a Typefilter do?",
+        "answer": "Defines a named subset of the Typecodes that could be used as value for the associated Typekey field that references this Typelist. SS Se SSeS sess e eases"
+      }
     },
     {
       "slideNumber": 25,
-      "title": "",
+      "title": "Answer",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
       "narration": "",
-      "ocrText": "Answer\n\na What does a Typefilter do?\n\n¢\n¢\n\nDefines a named subset of the Typecodes that could be used as value for the\nassociated Typekey field that references this Typelist.\n\nSS Se SSeS sess e eases",
+      "ocrText": "Answer\na What does a Typefilter do?\n•\n•\nDefines a named subset of the Typecodes that could be used as value for the\nassociated Typekey field that references this Typelist.\nSS Se SSeS sess e eases",
       "ocrWordCount": 37,
       "ocrConfidence": 84.21,
       "hasTable": false,
@@ -436,7 +453,7 @@
     },
     {
       "slideNumber": 26,
-      "title": "",
+      "title": "Key Takeaways",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -453,7 +470,7 @@
     },
     {
       "slideNumber": 27,
-      "title": "",
+      "title": "Student Exercise",
       "bodyParagraphs": [],
       "originalNotes": "",
       "notes": "",
@@ -474,6 +491,11 @@
       "index": 1,
       "filename": "IS_Fund_15.mp4",
       "path": "/academy/guidewire/videos/ch07/IS_Fund_15.mp4"
+    },
+    {
+      "index": 2,
+      "filename": "IS_Fund_02.mp4",
+      "path": "/academy/guidewire/videos/ch07/IS_Fund_02.mp4"
     }
   ],
   "hasNotes": true,

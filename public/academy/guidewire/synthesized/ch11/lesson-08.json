@@ -403,14 +403,14 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "7~ — Match the HTTP verb with its description\n\n[verb answer Description\n\nif\n\n| PUT Delete from the database\n\n| RETRIEVE Update/Replace row in the database\nI GET Create a new record in the database\n| PATCH Read from the database\n\n| INSERT Update/Modify row in the database\n\n1 REMOVE Not an HTTP verb\n\n' POST Not an HTTP verb\n\n' REPLACE Not an HTTP verb\n\n|||\n\nDELETE Not an HTTP verb",
+      "question": "Match the HTTP verb with its description\n[verb answer Description\nif\n| PUT Delete from the database\n| RETRIEVE Update/Replace row in the database\nI GET Create a new record in the database\n| PATCH Read from the database\n| INSERT Update/Modify row in the database\n1 REMOVE Not an HTTP verb\n' POST Not an HTTP verb\n' REPLACE Not an HTTP verb\n|||\nDELETE Not an HTTP verb",
       "referenceAnswer": "Match the HTTP verb with its description\n\nSve [answer Description\n\nf\n\n| PUT Update/Replace row in the database Delete from the database\n\n| RETRIEVE Not an HTTP verb Update/Replace row in the database\nI GET Read from the database Create a new record in the database\n| PATCH Update/Modify row in the database Read from the database\n\n| INSERT Not an HTTP verb Update/Modify row in the database\n\n| REMOVE Not an HTTP verb Not an HTTP verb\n\ni] POST Create a new record in the database Not an HTTP verb\n\n| REPLACE Not an HTTP verb Not an HTTP verb\n\n! DELETE Delete from the database Not an HTTP verb",
       "questionKey": "slide-33"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "What file must be updated to publish an API schema?\n\now A) swagger.yaml\n\nB) published-schemas.yaml\nC) codegen-schemas.yaml\nD) published-apis.yaml\n\nE) json-apis.yaml\n\nSe Soe Se sees esse ese",
+      "question": "What file must be updated to publish an API schema?\nA) swagger.yaml\nB) published-schemas.yaml\nC) codegen-schemas.yaml\nD) published-apis.yaml\nE) json-apis.yaml\nSe Soe Se sees esse ese",
       "referenceAnswer": "What file must be updated to publish an API schema?\nook\nB\n\nc\n\nD\n\nE\n\nswagger.yaml\n\npublished-schemas.yaml\n\nw\n\ncodegen-schemas.yaml\n\npublished-apis.yaml\n\njson-apis.yaml\n\nThe correct answer is published-apis.yaml\n\nSoo eS oe ese Sse ese",
       "questionKey": "slide-35"
     },

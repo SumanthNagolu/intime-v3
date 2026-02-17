@@ -345,28 +345,28 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "Assume that there is an Order entity that has an OrderNumber field. The\nfield appears on two detail views: LegacyOrdersDV and NewOrdersDV.\n\nA) Name a situation where you would implement validation logic for the\nOrderNumber field at the data model level.\n\nB) Name a situation where you would implement validation logic for the\nOrderNumber field at the UI level.\n\nSe Sess e ese ssc esaeK",
+      "question": "Assume that there is an Order entity that has an OrderNumber field. The\nfield appears on two detail views: LegacyOrdersDV and NewOrdersDV.\nA) Name a situation where you would implement validation logic for the\nOrderNumber field at the data model level.\nB) Name a situation where you would implement validation logic for the\nOrderNumber field at the UI level.",
       "referenceAnswer": "A) Possible answer: The OrderNumber field has a pattern, such as two characters, a\nhyphen, and five characters, and \nSS Se SSeS sess e eases",
       "questionKey": "slide-26"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "What happens if a widget's validation expression retums null?\n\nSe Sess e ese ssc esaeK",
+      "question": "What happens if a widget's validation expression retums null?",
       "referenceAnswer": "The save is allowed—a return value of null signifies that the validation condition was\nmet.\nSS Se SSeS sess e eases",
       "questionKey": "slide-28"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "Incase of validation rules, if you have an existing reject statement which\nraises only a warning, how would you change it to instead raise an error?\n\nSe Sess e ese ssc esaeK",
+      "question": "Incase of validation rules, if you have an existing reject statement which\nraises only a warning, how would you change it to instead raise an error?",
       "referenceAnswer": "You would swap the order of the final two pairs of arguments. The first pair should be\nthe last pair and vice versa.\nSS Se SSeS sess e eases",
       "questionKey": "slide-30"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "the first argument of rejectField is a “relative path” to the object to\nhighlight. Why is it relevant to keep in mind that the path is relative?\n\nSe Sess e ese ssc esaeK",
+      "question": "The first argument of rejectField is a “relative path” to the object to\nhighlight. Why is it relevant to keep in mind that the path is relative?",
       "referenceAnswer": "Itis important to keep this in mind because the root object must be omitted from the\npath. If you include the root object, then TrainingApp will not be able to find the field to\nhighlight.\nSS Se SSeS sess e eases",
       "questionKey": "slide-32"
     },
