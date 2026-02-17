@@ -14,32 +14,23 @@ const ROLE_NAV: Record<Role, { title: string; icon: any; items: { label: string;
   // --- 1. ACADEMY (Student) ---
   student: [
     {
-      title: "The Path",
-      icon: Map,
+      title: "Learn",
+      icon: BookOpen,
       items: [
-        { label: "Dashboard", path: "/academy/dashboard", icon: Map },
-        { label: "Modules", path: "/academy/modules", icon: Layers },
+        { label: "Learn", path: "/academy/learn", icon: BookOpen },
       ]
     },
     {
-      title: "The AI",
-      icon: Sparkles,
-      items: [
-        { label: "Guidewire Guru", path: "/academy/assistant", icon: Sparkles },
-      ]
-    },
-    {
-      title: "Interview Prep",
+      title: "Practice",
       icon: Mic,
       items: [
-        { label: "Interview Assist", path: "/academy/dojo", icon: Mic },
+        { label: "Practice", path: "/academy/practice", icon: Mic },
       ]
     },
     {
-      title: "Portfolio",
-      icon: Award,
+      title: "Profile",
+      icon: User,
       items: [
-        { label: "Blueprint", path: "/academy/blueprint", icon: FileText },
         { label: "Profile", path: "/academy/profile", icon: User },
       ]
     }
@@ -301,7 +292,7 @@ export const Navbar: React.FC = () => {
       setActiveRole(role);
       setIsRoleSwitcherOpen(false);
       // Simple routing switch
-      if(role === 'student') router.push('/academy/dashboard');
+      if(role === 'student') router.push('/academy/learn');
       else if(role === 'client') router.push('/client/portal');
       else if(role === 'consultant') router.push('/talent/portal');
       else if(role === 'bench_manager') router.push('/employee/bench/dashboard');

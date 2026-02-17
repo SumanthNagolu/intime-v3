@@ -1,11 +1,5 @@
-export const dynamic = "force-dynamic";
-import { AcademyDashboard } from '@/components/academy/AcademyDashboard';
-import { AppLayout } from '@/components/AppLayout';
+import { redirect } from 'next/navigation'
 
 export default function Page() {
-  return (
-    <AppLayout showMentor>
-      <AcademyDashboard />
-    </AppLayout>
-  );
+  redirect('/academy/learn')
 }

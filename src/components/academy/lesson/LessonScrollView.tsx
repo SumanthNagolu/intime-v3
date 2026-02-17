@@ -254,7 +254,7 @@ export function LessonScrollView() {
             The requested lesson could not be found in the curriculum.
           </p>
           <button
-            onClick={() => router.push('/academy/dashboard')}
+            onClick={() => router.push('/academy/learn')}
             className="mt-4 px-5 py-2.5 rounded-lg bg-charcoal-900 text-white text-sm font-medium"
           >
             Back to Dashboard
@@ -349,7 +349,7 @@ export function LessonScrollView() {
       {/* Back nav */}
       <div className="mb-6">
         <button
-          onClick={() => router.push('/academy/dashboard')}
+          onClick={() => router.push('/academy/learn')}
           className="flex items-center gap-2 text-sm text-charcoal-500 hover:text-charcoal-800 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />

@@ -1,11 +1,11 @@
 export const dynamic = "force-dynamic"
-import { AcademyProfileView } from '@/components/academy/AcademyProfileView'
+import { AcademyLearnView } from '@/components/academy/AcademyLearnView'
 import { AppLayout } from '@/components/AppLayout'
 
 export default function Page() {
   return (
     <AppLayout showMentor>
-      <AcademyProfileView />
+      <AcademyLearnView />
     </AppLayout>
   )
 }

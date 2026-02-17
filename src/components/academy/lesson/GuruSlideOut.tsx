@@ -7,9 +7,10 @@ import { GuruChat } from '@/components/academy/GuruChat'
 interface GuruSlideOutProps {
   isOpen: boolean
   onClose: () => void
+  compact?: boolean
 }
 
-export function GuruSlideOut({ isOpen, onClose }: GuruSlideOutProps) {
+export function GuruSlideOut({ isOpen, onClose, compact = false }: GuruSlideOutProps) {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -53,7 +54,7 @@ export function GuruSlideOut({ isOpen, onClose }: GuruSlideOutProps) {
         {/* Guru chat - only render when open to avoid unnecessary state */}
         {isOpen && (
           <div className="h-full">
-            <GuruChat />
+            <GuruChat compact={compact} />
           </div>
         )}
       </div>

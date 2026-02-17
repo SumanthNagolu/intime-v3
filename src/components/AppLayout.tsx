@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import { SystemBar } from './SystemBar';
 import { Navbar } from './Navbar';
 import { GlobalCommand } from './GlobalCommand';
-import { AIMentor } from './AIMentor';
+import { FloatingGuruButton } from './academy/FloatingGuruButton';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -34,7 +34,7 @@ export const AppLayout = ({ children, showMentor = false, immersive = false }: A
       <main className="flex-1 container mx-auto px-6 py-12 mt-20 max-w-[1600px]">
         {children}
       </main>
-      {showMentor && <AIMentor />}
+      {showMentor && <FloatingGuruButton />}
     </div>
   );
 };

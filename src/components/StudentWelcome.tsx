@@ -26,7 +26,7 @@ export const StudentWelcome: React.FC = () => {
                 </p>
                 
                 <button 
-                    onClick={() => router.push('/academy/dashboard')}
+                    onClick={() => router.push('/academy/learn')}
                     className="group flex items-center gap-4 px-10 py-5 bg-charcoal text-white rounded-full text-sm font-bold uppercase tracking-widest hover:bg-rust transition-all shadow-2xl hover:shadow-rust/40 hover:-translate-y-1"
                 >
                     Enter Workspace

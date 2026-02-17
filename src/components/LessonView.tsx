@@ -135,7 +135,7 @@ export const LessonView: React.FC = () => {
                setLabFeedback(null);
                setUploadedFile(null);
             } else {
-               router.push('/academy/modules');
+               router.push('/academy/learn');
             }
         }, 2000);
     }

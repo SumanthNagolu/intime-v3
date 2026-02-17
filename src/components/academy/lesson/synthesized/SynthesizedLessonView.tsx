@@ -19,6 +19,7 @@ import {
 } from '@/lib/academy/curriculum'
 import { loadSynthesizedLesson, loadLessonContent } from '@/lib/academy/content-loader'
 import { useAcademyStore } from '@/lib/academy/progress-store'
+import { useGuruUI } from '@/lib/academy/guru-ui-store'
 import { useProgressSync } from '@/lib/academy/progress-sync'
 
 import { BlockRenderer } from './BlockRenderer'
@@ -57,6 +58,7 @@ export function SynthesizedLessonView() {
     setCurrentLesson,
     initializeProgress,
   } = useAcademyStore()
+  const guruUI = useGuruUI()
 
   useProgressSync()
 
@@ -280,7 +282,7 @@ export function SynthesizedLessonView() {
           <AlertCircle className="w-12 h-12 text-charcoal-300 mx-auto" />
           <h2 className="font-heading font-bold text-charcoal-900 text-lg">Lesson Not Found</h2>
           <button
-            onClick={() => router.push('/academy/dashboard')}
+            onClick={() => router.push('/academy/learn')}
             className="mt-3 px-5 py-2.5 rounded-lg bg-charcoal-900 text-white text-sm font-medium"
           >
             Back to Dashboard
@@ -568,7 +570,7 @@ export function SynthesizedLessonView() {
                 <span>Assignment PDF</span>
               </div>
             )}
-            <div className="m-resource-item" onClick={() => router.push('/academy/dashboard')}>
+            <div className="m-resource-item" onClick={() => router.push('/academy/learn')}>
               <div className="m-resource-icon">📚</div>
               <span>Back to Dashboard</span>
             </div>
@@ -585,7 +587,7 @@ export function SynthesizedLessonView() {
 
           {/* Ask Sensei */}
           <div className="m-aside-section">
-            <div className="m-ask-sensei" onClick={() => router.push('/academy/assistant')}>
+            <div className="m-ask-sensei" onClick={() => guruUI.open()}>
               <div className="m-ask-sensei-icon">💬</div>
               <div className="m-ask-sensei-text">
                 <strong>Stuck on something?</strong>

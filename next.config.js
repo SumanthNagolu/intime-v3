@@ -39,6 +39,17 @@ const nextConfig = {
 
   // Keep webpack config for fallback (Next.js 16 allows both)
   webpack: (config, { dev, isServer }) => {
+    // Stub Tauri desktop APIs for web builds (only used at runtime in Tauri shell)
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@tauri-apps/api/tauri': false,
+      '@tauri-apps/api/clipboard': false,
+      '@tauri-apps/api/window': false,
+      '@tauri-apps/api/event': false,
+      '@tauri-apps/api/globalShortcut': false,
+      '@tauri-apps/api/dialog': false,
+    };
+
     // Suppress warnings from OpenTelemetry and require-in-the-middle
     config.ignoreWarnings = [
       /Critical dependency: the request of a dependency is an expression/,

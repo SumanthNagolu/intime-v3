@@ -64,7 +64,11 @@ function deduplicateSources(
   })
 }
 
-export function GuruChat() {
+interface GuruChatProps {
+  compact?: boolean
+}
+
+export function GuruChat({ compact = false }: GuruChatProps) {
   const { currentLesson } = useAcademyStore()
 
   const [sessions, setSessions] = useState<GuruSession[]>(() => {
@@ -233,9 +237,9 @@ export function GuruChat() {
   }
 
   return (
-    <div className="flex h-[calc(100vh-220px)] rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden">
-      {/* Session sidebar */}
-      <div className="w-64 border-r border-charcoal-100 flex flex-col bg-charcoal-50/50">
+    <div className={`flex ${compact ? 'h-full' : 'h-[calc(100vh-220px)]'} rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden`}>
+      {/* Session sidebar - hidden in compact mode */}
+      {!compact && <div className="w-64 border-r border-charcoal-100 flex flex-col bg-charcoal-50/50">
         <div className="p-4 border-b border-charcoal-100">
           <button
             onClick={createSession}
@@ -285,7 +289,7 @@ export function GuruChat() {
             </button>
           ))}
         </div>
-      </div>
+      </div>}
 
       {/* Chat area */}
       <div className="flex-1 flex flex-col">
