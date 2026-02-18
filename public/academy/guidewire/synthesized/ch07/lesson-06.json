@@ -252,21 +252,21 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "A Detail View that displays data must have at least one root object. Why?",
-      "referenceAnswer": "The input widgets of a Detail View must reference some object in order to specify\nwhere the data they display comes from. This object must be the root object, or an\nobject related to the root object. Therefore, in order to display data, a root object is\nneeded.",
+      "referenceAnswer": "The input widgets of a Detail View must reference some object in order to specify where the data they display comes from. This object must be the root object, or an object related to the root object. Therefore, in order to display data, a root object is needed.",
       "questionKey": "slide-28"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
       "question": "A Detail View that displays data must have at least one input column.\nWhy?",
-      "referenceAnswer": "A Detail View that displays data must have at least one input column.\nWhy?\n\nInput columns are used to organize atomic widgets in a Detail View. Every input\nwidget must be in an input column. If a Detail View displays data, then it has at least\none input widget, which means it must have at least one input column.",
+      "referenceAnswer": "Input columns are used to organize atomic widgets in a Detail View. Every input\nwidget must be in an input column. If a Detail View displays data, then it has at least\none input widget, which means it must have at least one input column.",
       "questionKey": "slide-30"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
       "question": "What determines if a detail view panel is reusable or not?",
-      "referenceAnswer": "If a Detail View is declared as the parent object of a PCF file, then it is reusable. It can\nbe referenced by any number of other containers.",
+      "referenceAnswer": "If a Detail View is declared as the parent object of a PCF file, then it is reusable. It can be referenced by any number of other containers.",
       "questionKey": "slide-32"
     },
     {
@@ -279,22 +279,22 @@
     {
       "type": "knowledge_check",
       "id": "kc-5",
-      "question": "AScreen with Card references a Detail View. The Detail View contains a\nx Text Input widget. To allow the user to edit the text input value, what must\nbe set to editable?",
-      "referenceAnswer": "The Input Widget and all of the containers that directly or indirectly contain it must be\nset to editable. The editable hierarchy begins with a location PCF Element. Assuming\nthat the Screen declared in a Page location, then the Page location must be set to\neditable.",
+      "question": "A Screen with Card references a Detail View. The Detail View contains a Text Input widget. To allow the user to edit the text input value, what must be set to editable?",
+      "referenceAnswer": "The Input Widget and all of the containers that directly or indirectly contain it must be set to editable. The editable hierarchy begins with a location PCF Element. Assuming that the Screen declared in a Page location, then the Page location must be set to editable.",
       "questionKey": "slide-36"
     },
     {
       "type": "knowledge_check",
       "id": "kc-6",
-      "question": "In Studio, can you add Edit Buttons directly to:\nA) Aninline Detail View widget?\nB) A Detail View PCF file?",
-      "referenceAnswer": "In Studio, can you add Edit Buttons directly to:\n\n¢ A\n\nB\n\nA\n\nAn inline Detail View widget?\nA Detail View PCF file?\n\nCorrect responses are:\n\nNo, you cannot add Edit Buttons directly to a Detail View widget. Typically, you\nadd a Toolbar to a Screen. Then you add Edit Buttons to the Toolbar. A Detail\nView widget can be declared on a Screen.\n\nNo, you cannot add Edit Buttons directly to a Detail View PCF file. Typically, you\nadd a Toolbar to a Screen. Then you add Edit Buttons to the Toolbar. A Panel Ref\ncan reference the Detail View PCF file.",
+      "question": "In Studio, can you add Edit Buttons directly to:\nA) An inline Detail View widget?\nB) A Detail View PCF file?",
+      "referenceAnswer": "No, you cannot add Edit Buttons directly to a Detail View widget. Typically, you\nadd a Toolbar to a Screen. Then you add Edit Buttons to the Toolbar. A Detail\nView widget can be declared on a Screen.\nNo, you cannot add Edit Buttons directly to a Detail View PCF file. Typically, you\nadd a Toolbar to a Screen. Then you add Edit Buttons to the Toolbar. A Panel Ref\ncan reference the Detail View PCF file.",
       "questionKey": "slide-38"
     },
     {
       "type": "knowledge_check",
       "id": "kc-7",
       "question": "Where do you typically add a toolbar with edit buttons?",
-      "referenceAnswer": "Where do you typically add a toolbar with edit buttons?\n\nYou add a toolbar with edit buttons typically to the Screen container element.",
+      "referenceAnswer": "You add a toolbar with edit buttons typically to the Screen container element.",
       "questionKey": "slide-40"
     },
     {

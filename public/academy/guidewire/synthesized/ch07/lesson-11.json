@@ -209,28 +209,28 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "What does a code generator do?",
-      "referenceAnswer": "PCF file, entity, etc.) and produces a Gosu or Java class.",
+      "referenceAnswer": "A code generator processes a Guidewire resource defined in XML format (such as PCF file, entity, etc.) and produces a Gosu or Java class.",
       "questionKey": "slide-20"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "Name atleast one difference between incremental and bulk code\nY generation.",
-      "referenceAnswer": "' rebuild\nn",
+      "question": "Name at least one difference between incremental and bulk code generation.",
+      "referenceAnswer": "- incremental code generator can process a single file, while bulk code generator processes a set of files\n- incremental code generation is not supported for every resource type\n- bulk code generation can be started from the CodeGen menu or during project\n- incremental code generation can be started on save or during project make while rebuild",
       "questionKey": "slide-22"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
       "question": "What is a breakpoint?",
-      "referenceAnswer": "oO” A breakpoint indicates a place where you want to suspend the execution of Gosu or\nJava code\nSS",
+      "referenceAnswer": "A breakpoint indicates a place where you want to suspend the execution of Gosu or Java code",
       "questionKey": "slide-24"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
       "question": "What is a PCF method? How can you debug a PCF method?",
-      "referenceAnswer": "<PCFFileName>Expressions.gs file, find the function and click on the gutter area at\nthe desired line to set a breakpoint.\nSS",
+      "referenceAnswer": "A PCF method is a plain old Gosu function that is local in a PCF file and executes some logic tied to that particular PCF file. You can open the <PCFFileName>Expressions.gs file, find the function and click on the gutter area at the desired line to set a breakpoint.",
       "questionKey": "slide-26"
     },
     {

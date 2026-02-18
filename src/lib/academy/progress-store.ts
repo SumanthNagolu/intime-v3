@@ -4,6 +4,7 @@ import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import type { AcademyProgressState, LessonProgress, LessonStatus, ChapterProgress, KnowledgeCheckAnswer } from './types'
 import { CHAPTERS, CHAPTER_LESSONS, getAllLessons } from './curriculum'
+import { getPathLessons } from './learning-paths'
 
 // Default lesson progress
 const DEFAULT_LESSON_PROGRESS: LessonProgress = {
@@ -28,7 +29,7 @@ interface AcademyStore extends AcademyProgressState {
   submitAssignment: (lessonId: string, response: string) => void
   recordKnowledgeCheckAnswer: (lessonId: string, questionKey: string, answer: string, correct: boolean, feedback: string) => void
   getKnowledgeCheckScore: (lessonId: string) => { correct: number; total: number }
-  completeLesson: (lessonId: string, score?: number) => void
+  completeLesson: (lessonId: string, score?: number, pathSlug?: string) => void
   setCurrentLesson: (lessonId: string) => void
 
   // Navigation helpers
@@ -38,6 +39,7 @@ interface AcademyStore extends AcademyProgressState {
 
   // Initialization
   initializeProgress: () => void
+  initializePathProgress: (pathSlug: string) => void
   resetAllProgress: () => void
 }
 
@@ -204,7 +206,7 @@ export const useAcademyStore = create<AcademyStore>()(
         }
       },
 
-      completeLesson: (lessonId, score) => {
+      completeLesson: (lessonId, score, pathSlug) => {
         set((state) => {
           const current = state.lessons[lessonId] || DEFAULT_LESSON_PROGRESS
           const updated = {
@@ -218,11 +220,11 @@ export const useAcademyStore = create<AcademyStore>()(
             },
           }
 
-          // Unlock next lesson
-          const allLessons = getAllLessons()
-          const idx = allLessons.findIndex(l => l.lessonId === lessonId)
-          if (idx >= 0 && idx < allLessons.length - 1) {
-            const nextId = allLessons[idx + 1].lessonId
+          // Unlock next lesson (path-aware if enrolled)
+          const lessonList = pathSlug ? getPathLessons(pathSlug) : getAllLessons()
+          const idx = lessonList.findIndex(l => l.lessonId === lessonId)
+          if (idx >= 0 && idx < lessonList.length - 1) {
+            const nextId = lessonList[idx + 1].lessonId
             const nextProgress = updated[nextId] || DEFAULT_LESSON_PROGRESS
             if (nextProgress.status === 'locked') {
               updated[nextId] = { ...nextProgress, status: 'available' }
@@ -296,6 +298,25 @@ export const useAcademyStore = create<AcademyStore>()(
             },
             currentLesson: allLessons[0].lessonId,
           })
+        }
+      },
+
+      initializePathProgress: (pathSlug) => {
+        const state = get()
+        const pathLessonList = getPathLessons(pathSlug)
+        if (pathLessonList.length === 0) return
+
+        const firstLessonId = pathLessonList[0].lessonId
+        const existing = state.lessons[firstLessonId]
+        // Only unlock the first path lesson if it's not already started
+        if (!existing || existing.status === 'locked') {
+          set((s) => ({
+            lessons: {
+              ...s.lessons,
+              [firstLessonId]: { ...(s.lessons[firstLessonId] || DEFAULT_LESSON_PROGRESS), status: 'available' },
+            },
+            currentLesson: s.currentLesson || firstLessonId,
+          }))
         }
       },
 

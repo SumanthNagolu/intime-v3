@@ -212,22 +212,22 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "Does a transaction require approval when:\nA) tis not flagged by transaction approval rules but exceeds the user's authority\nlimits?\nB) Itdoes not exceed the user's authority limits but is flagged by transaction approval\nrules?\nC) It exceeds the user's authority limits and is flagged by transaction approval rules?",
-      "referenceAnswer": "The answer for all three is the same. The transaction requires approval in all three\ncases.",
+      "question": "Does a transaction require approval when:\nA) It is not flagged by transaction approval rules but exceeds the user's authority limits?\nB) It does not exceed the user's authority limits but is flagged by transaction approval rules?\nC) It exceeds the user's authority limits and is flagged by transaction approval rules?",
+      "referenceAnswer": "The answer for all three is the same. The transaction requires approval in all three cases.",
       "questionKey": "slide-28"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "An authority limit consists of criteria and an amount. What three values\ncan optionally be specified to create the condition?",
+      "question": "An authority limit consists of criteria and an amount. What three values can optionally be specified to create the condition?",
       "referenceAnswer": "Policy type, coverage type, and cost type.",
       "questionKey": "slide-30"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "What two things does ClaimCenter do when it determines that a\ntransaction requires approval?",
-      "referenceAnswer": "It sets the transaction status to pending approval and it creates an approval activity\n(which is typically routed to a supervisor).",
+      "question": "What two things does ClaimCenter do when it determines that a transaction requires approval?",
+      "referenceAnswer": "It sets the transaction status to pending approval and it creates an approval activity (which is typically routed to a supervisor).",
       "questionKey": "slide-32"
     },
     {

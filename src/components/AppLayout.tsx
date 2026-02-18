@@ -15,7 +15,7 @@ interface AppLayoutProps {
 export const AppLayout = ({ children, showMentor = false, immersive = false }: AppLayoutProps) => {
   if (immersive) {
     return (
-      <div className="h-dvh bg-ivory flex flex-col overflow-hidden">
+      <div className="h-dvh flex flex-col overflow-hidden" style={{ background: '#faf6f0' }}>
         <SystemBar />
         <Navbar />
         <GlobalCommand />

@@ -72,7 +72,7 @@ const PORTALS: Array<{
     color: 'text-sky-600',
     bgColor: 'hover:bg-sky-50',
     borderColor: 'hover:border-sky-500',
-    redirectPath: '/academy/portal',
+    redirectPath: '/academy/catalog',
   },
 ];
 
@@ -411,7 +411,7 @@ function LoginPageContent() {
                     New to the platform?
                   </p>
                   <Link
-                    href={`/auth/${selectedPortal}`}
+                    href={selectedPortal === 'academy' ? '/auth/academy/signup' : `/auth/${selectedPortal}`}
                     className="text-gold-600 hover:text-gold-700 text-xs font-bold uppercase tracking-widest transition-colors border-b border-gold-600/30 hover:border-gold-600"
                   >
                     Create Account

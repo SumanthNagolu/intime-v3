@@ -129,7 +129,7 @@ export function AssignmentBlock({
             {assignmentPdf ? (
               <iframe
                 key={currentPdfUrl}
-                src={`${currentPdfUrl}#toolbar=0&navpanes=0`}
+                src={`${currentPdfUrl}#toolbar=0&navpanes=0&view=FitH`}
                 className="w-full h-full border-0"
                 title={activeTab === 'solution' ? 'Solution Guide' : 'Assignment Document'}
               />
@@ -303,11 +303,11 @@ export function AssignmentBlock({
             {pdfExpanded && (
               <div
                 className="transition-all duration-300"
-                style={{ height: pdfFullHeight ? '80vh' : '480px' }}
+                style={{ height: pdfFullHeight ? '85vh' : '70vh' }}
               >
                 <iframe
                   key={currentPdfUrl}
-                  src={`${currentPdfUrl}#toolbar=0&navpanes=0`}
+                  src={`${currentPdfUrl}#toolbar=0&navpanes=0&view=FitH`}
                   className="w-full h-full border-0"
                   title={activeTab === 'solution' ? 'Solution Guide' : 'Assignment Document'}
                   />

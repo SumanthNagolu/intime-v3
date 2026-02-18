@@ -162,28 +162,28 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "What is a subtype entity?",
-      "referenceAnswer": "Asubtype is an entity that is a child to a parent entity and inherits all fields from the\nparent.",
+      "referenceAnswer": "A subtype is an entity that is a child to a parent entity and inherits all fields from the\nparent.",
       "questionKey": "slide-15"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
       "question": "What is a subtype entity extension?",
-      "referenceAnswer": "Asubtype extension is an entity extension of a base application subtype entity.",
+      "referenceAnswer": "A subtype extension is an entity extension of a base application subtype entity.",
       "questionKey": "slide-17"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
       "question": "Describe at least one limitation of relying heavily on subtype hierarchies.",
-      "referenceAnswer": "One major limitation of a subtype hierarchy is that a subtype entity can only have one\nparent entity and multiple inheritance (two or more direct parents) is not supported. In\naddition, the subtype always inherits the parents elements, meaning the subtype\ncontains the parent fields.\n\nFor a deep hierarchy (many levels), this means the lowest child will inherit all the fields\nof the parents. Deep su",
+      "referenceAnswer": "One major limitation of a subtype hierarchy is that a subtype entity can only have one parent entity and multiple inheritance (two or more direct parents) is not supported. In addition, the subtype always inherits the parents elements, meaning the subtype contains the parent fields.\nFor a deep hierarchy (many levels), this means the lowest child will inherit all the fields of the parents. Deep subtype hierarchies can result in very wide tables that are highly denormalized resulting in poor application performance.",
       "questionKey": "slide-19"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "When you create a new subtype, why are you NOT able specify a table\nname?",
-      "referenceAnswer": "You cannot specify a table name because the new subtype data is stored in the same\ntable as the supertype.",
+      "question": "When you create a new subtype, why are you NOT able specify a table name?",
+      "referenceAnswer": "You cannot specify a table name because the new subtype data is stored in the same table as the supertype.",
       "questionKey": "slide-21"
     },
     {

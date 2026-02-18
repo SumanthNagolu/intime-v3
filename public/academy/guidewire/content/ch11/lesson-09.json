@@ -573,7 +573,7 @@
       "slideType": "question",
       "questionData": {
         "question": "What is a WSDL? What does it describe?",
-        "answer": "AWSDL is an XML document that describes how an external system can interact with a web service."
+        "answer": "A WSDL is an XML document that describes how an external system can interact with\na web service."
       }
     },
     {
@@ -610,8 +610,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "What type of files can be included as resources in a SOAP web service",
-        "answer": "Collection? WSDLs and XSDs"
+        "question": "What type of files can be included as resources in a SOAP web service\ncollection?",
+        "answer": "WSDLs and XSDs"
       }
     },
     {
@@ -648,8 +648,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "You have an API instance named “conversionAPI\". Under what",
-        "answer": "Circumstances would you set properties on conversionAPI .Config? You would set values there if you needed to provide authentication information, timeouts, or custom SOAP headers."
+        "question": "You have an API instance named “conversionAPI”. Under what circumstances would you set properties on conversionAPI.Config?",
+        "answer": "You would set values there if you needed to provide authentication information,\ntimeouts, or custom SOAP headers."
       }
     },
     {
@@ -686,8 +686,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "What must be added to a Gosu class in order to make it:",
-        "answer": "A Guidewire SOAP web service? A valid return type for Guidewire SOAP web service methods? A) The @WsiWebService annotation is the only thing required to make a Gosu class a Guidewire SOAP web service. B) The @WsiExportable annotation and the keyword \"final\"."
+        "question": "What must be added to a Gosu class in order to make it:\nA) A Guidewire SOAP web service?\nB) A valid return type for Guidewire SOAP web service methods?",
+        "answer": "A) The @WsiWebService annotation is the only thing required to make a Gosu class\na Guidewire SOAP web service.\nB) The @WsiExportable annotation and the keyword \"final\"."
       }
     },
     {
@@ -724,8 +724,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Identify if the following are true or false about a Guidewire WS web",
-        "answer": "Service API: A) It can return a simple value, such as a boolean or string. True B) It can return an instance of any Guidewire data model entity. False — Instances of Guidewire data model entities cannot be returned from WS-I web service methods C) The WSDL gets generated when you save the class. False - The WSDL is generated when an external system requests it. D) It can list a set of permissions required to use the API. True E) It can modify Guidewire data model. False"
+        "question": "Identify if the following are true or false about a Guidewire WS-I web service API:\nA) It can return a simple value, such as a boolean or string.\nB) It can return an instance of any Guidewire data model entity.\nC) The WSDL gets generated when you save the class.\nD) It can list a set of permissions required to use the API.\nE) It can modify Guidewire data.",
+        "answer": "A) It can return a simple value, such as a boolean or string. True\nB) It can return an instance of any Guidewire data model entity. False — Instances\nof Guidewire data model entities cannot be returned from WS-I web service\nmethods\nC) The WSDL gets generated when you save the class. False - The WSDL is\ngenerated when an external system requests it.\nD) It can list a set of permissions required to use the API. True\nE) It can modify Guidewire data. False"
       }
     },
     {

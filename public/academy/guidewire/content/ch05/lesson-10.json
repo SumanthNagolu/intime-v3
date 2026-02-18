@@ -606,8 +606,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Betty Baker went through the payment wizard one time. She specified",
-        "answer": "O three payees (and there were no joint payees or recurring payments). • Based on this information alone: A. Can you tell how many CheckSets there are? Yes. There is one. (Each iteration of the payment wizard creates one checkset.) B. Can you tell how many checks there are? Yes. There are three. (Unless there are joint payees, each payee has a separate check. Unless there are recurring checks, then for three payees, there must be three checks.) c. Can you tell how many payment transactions there are? No. You can't tell. (The number of payment transactions is not tied to the number of payees.)"
+        "question": "Betty Baker went through the payment wizard one time. She specified\nthree payees (and there were no joint payees or recurring payments).\nBased on this information alone:\nA. Can you tell how many CheckSets there are?\nB. Can you tell how many checks there are?\nC. Can you tell how many payment transactions there are?",
+        "answer": "A. Yes. There is one. (Each iteration of the payment wizard creates one checkset.)\nB. Yes. There are three. (Unless there are joint payees, each payee has a separate check. Unless there are recurring checks, then for three payees, there must be three checks.)\nC. No. You can't tell. (The number of payment transactions is not tied to the number of payees.)"
       }
     },
     {
@@ -644,8 +644,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "A check includes a $200 final payment from a $500 reserve line. Why",
-        "answer": "O does ClaimCenter create a second transaction? What is the dollar : amount of this transaction? The second transaction is used to zero out the reserve line. The dollar amount of this transaction will be -$300, since there is $300 remaining after the $200 payment transaction."
+        "question": "A check includes a $200 final payment from a $500 reserve line. Why does ClaimCenter create a second transaction? What is the dollar amount of this transaction?",
+        "answer": "The second transaction is used to zero out the reserve line. The dollar amount of this transaction will be -$300, since there is $300 remaining after the $200 payment transaction."
       }
     },
     {
@@ -720,8 +720,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Can you start the payment wizard when the claim is not at “ability to",
-        "answer": "7 pay\"? Why? No. Validation rules prevent you from starting the payment wizard if the claim is not at “ability to pay\"."
+        "question": "Can you start the payment wizard when the claim is not at “ability to pay\"? Why?",
+        "answer": "No. Validation rules prevent you from starting the payment wizard if the claim is not at “ability to pay”."
       }
     },
     {

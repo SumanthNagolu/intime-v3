@@ -453,8 +453,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Assume that there is an Order entity that has an OrderNumber field. The",
-        "answer": "Field appears on two detail views: LegacyOrdersDV and NewOrdersDV. A) Name a situation where you would implement validation logic for the OrderNumber field at the data model level. B) Name a situation where you would implement validation logic for the OrderNumber field at the UI level. A) Possible answer: The OrderNumber field has a pattern, such as two characters, a hyphen, and five characters, and this pattern must be followed everywhere the field is used. Also, you want to localize the error message. B) Possible answer: On the detail view for orders imported from a legacy system, the order number could take any format. On the detail view for orders created in the Guidewire application, the order number must start with the characters \"GW-*. SS Se SSeS sess e eases"
+        "question": "Assume that there is an Order entity that has an OrderNumber field. The field appears on two detail views: LegacyOrdersDV and NewOrdersDV.\nA) Name a situation where you would implement validation logic for the OrderNumber field at the data model level.\nB) Name a situation where you would implement validation logic for the OrderNumber field at the UI level.",
+        "answer": "A) Possible answer: The OrderNumber field has a pattern, such as two characters, a hyphen, and five characters, and this pattern must be followed everywhere the field is used. Also, you want to localize the error message.\nB) Possible answer: On the detail view for orders imported from a legacy system, the order number could take any format. On the detail view for orders created in the Guidewire application, the order number must start with the characters \"GW-*."
       }
     },
     {
@@ -491,8 +491,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "What happens if a widget's validation expression retums null?",
-        "answer": "The save is allowed—a return value of null signifies that the validation condition was SS Se SSeS sess e eases"
+        "question": "What happens if a widget's validation expression returns null?",
+        "answer": "The save is allowed—a return value of null signifies that the validation condition was\nmet."
       }
     },
     {
@@ -529,8 +529,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Incase of validation rules, if you have an existing reject statement which",
-        "answer": "Raises only a warning, how would you change it to instead raise an error? You would swap the order of the final two pairs of arguments. The first pair should be the last pair and vice versa. SS Se SSeS sess e eases"
+        "question": "In case of validation rules, if you have an existing reject statement which\nraises only a warning, how would you change it to instead raise an error?",
+        "answer": "You would swap the order of the final two pairs of arguments. The first pair should be\nthe last pair and vice versa."
       }
     },
     {
@@ -567,8 +567,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "The first argument of rejectField is a “relative path” to the object to",
-        "answer": "Highlight. Why is it relevant to keep in mind that the path is relative? Itis important to keep this in mind because the root object must be omitted from the path. If you include the root object, then TrainingApp will not be able to find the field to highlight. SS Se SSeS sess e eases"
+        "question": "The first argument of rejectField is a “relative path” to the object to\nhighlight. Why is it relevant to keep in mind that the path is relative?",
+        "answer": "It is important to keep this in mind because the root object must be omitted from the\npath. If you include the root object, then TrainingApp will not be able to find the field to\nhighlight."
       }
     },
     {

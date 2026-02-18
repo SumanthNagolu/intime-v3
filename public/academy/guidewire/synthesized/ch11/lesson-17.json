@@ -291,8 +291,8 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "The user, API, and database authentication mechanisms reference which\n7’ plugin(s)?\nA) AuthenticationSourceCreatorPlugin\nB) AuthenticationServicePlugin\nC) WebservicesAuthenticationPlugin\nD) DBAuthenticationPlugin",
-      "referenceAnswer": "A) User\nB) User and API\nC) API\nD) Database",
+      "question": "The user, API, and database authentication mechanisms reference which plugin(s)?\nA) AuthenticationSourceCreatorPlugin\nB) AuthenticationServicePlugin\nC) WebservicesAuthenticationPlugin\nD) DBAuthenticationPlugin",
+      "referenceAnswer": "User authentication mechanism references: A) AuthenticationSourceCreatorPlugin\nAPI authentication mechanism references: C) WebservicesAuthenticationPlugin\nDatabase authentication mechanism references: D) DBAuthenticationPlugin",
       "questionKey": "slide-24"
     },
     {

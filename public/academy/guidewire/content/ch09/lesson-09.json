@@ -215,7 +215,7 @@
       "slideType": "question",
       "questionData": {
         "question": "What are the four basic types of a financial transaction in ClaimCenter?",
-        "answer": "The correct answers are: Reserve transaction Payment transaction Recovery reserve transaction Recovery transaction"
+        "answer": "The correct answers are:\nReserve transaction\nPayment transaction\nRecovery reserve transaction\nRecovery transaction"
       }
     },
     {
@@ -253,7 +253,7 @@
       "slideType": "question",
       "questionData": {
         "question": "ReserveSet and PaymentSet are subtypes of what parent type?",
-        "answer": "TransactionSet."
+        "answer": "The correct answer is TransactionSet."
       }
     },
     {
@@ -358,8 +358,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "In the base ClaimCenter configuration, making a final payment on an",
-        "answer": "Oo exposure closes the exposure; and making a final payment on the last : exposure on a claim closes the claim. If you want to change this behavior, what file should you edit? The correct answer is config.xml."
+        "question": "In the base ClaimCenter configuration, making a final payment on an\nexposure closes the exposure; and making a final payment on the last\nexposure on a claim closes the claim.\n\nIf you want to change this behavior, what file should you edit?",
+        "answer": "The correct answer is config.xml."
       }
     },
     {
@@ -498,8 +498,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "What kind of library methods does ClaimCenter provide for getting",
-        "answer": "Oo financial measures in rules? The correct answer is FinancialsCalculations methods"
+        "question": "What kind of library methods does ClaimCenter provide for getting\nfinancial measures in rules?",
+        "answer": "The correct answer is FinancialsCalculations methods"
       }
     },
     {
@@ -692,7 +692,7 @@
       "slideType": "question",
       "questionData": {
         "question": "How does ClaimCenter exit the validation rule set? Why?",
-        "answer": "The correct answers are: The actions.exit() method is not used; rather, the rule set exits when all transaction validation rules have been executed, in the order in which they appear in Studio. This is because success (or failure) of one validation condition does not necessarily mean that another will not fail (or succeed). By running all the rules, ClaimCenter provides a full list of any conditions that must be remedied before continuing."
+        "answer": "The actions.exit() method is not used; rather, the rule set exits when all transaction\nvalidation rules have been executed, in the order in which they appear in Studio.\nThis is because success (or failure) of one validation condition does not necessarily\nmean that another will not fail (or succeed). By running all the rules, ClaimCenter\nprovides a full list of any conditions that must be remedied before continuing."
       }
     },
     {

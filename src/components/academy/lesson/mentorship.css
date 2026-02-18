@@ -70,7 +70,7 @@
 /* --- 3-Column Layout --- */
 .mentorship-view .m-layout {
   display: grid;
-  grid-template-columns: 256px 1fr 272px;
+  grid-template-columns: clamp(240px, 16vw, 300px) 1fr clamp(260px, 17vw, 320px);
   height: 100%;
   overflow: hidden;
 }
@@ -86,70 +86,13 @@
   border-right: 1px solid var(--m-border);
   background: var(--m-bg-card);
   overflow-y: auto;
-  padding: 28px 0;
+  padding: 28px 8px 28px 12px;
 }
 
 @media (max-width: 1024px) {
   .mentorship-view .m-sidebar-left {
     display: none;
   }
-}
-
-/* Sensei card */
-.mentorship-view .m-sensei-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 20px;
-  margin: 0 16px 24px;
-  background: var(--m-bg-cream);
-  border-radius: var(--m-radius-md);
-}
-
-.mentorship-view .m-sensei-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--m-accent-warm), var(--m-accent-gold));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-family: 'Fraunces', serif;
-  font-size: 18px;
-  font-weight: 600;
-  flex-shrink: 0;
-  box-shadow: 0 3px 10px rgba(192,104,48,0.2);
-}
-
-.mentorship-view .m-sensei-name {
-  font-family: 'Fraunces', serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--m-text-primary);
-}
-
-.mentorship-view .m-sensei-role {
-  font-size: 11px;
-  color: var(--m-text-muted);
-  margin-top: 1px;
-}
-
-.mentorship-view .m-sensei-status {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 10px;
-  color: var(--m-accent-sage);
-  margin-top: 3px;
-}
-
-.mentorship-view .m-sensei-status::before {
-  content: '';
-  width: 5px;
-  height: 5px;
-  background: var(--m-accent-sage);
-  border-radius: 50%;
 }
 
 /* Journey nav */
@@ -196,7 +139,7 @@
 }
 
 .mentorship-view .m-nav-item.active {
-  background: var(--m-accent-warm-soft);
+  background: rgba(192,104,48,0.12);
 }
 
 .mentorship-view .m-nav-item.active::before {
@@ -246,10 +189,60 @@
 }
 
 .mentorship-view .m-nav-title {
-  font-size: 13px;
+  font-size: clamp(12px, 0.9vw, 14px);
   color: var(--m-text-secondary);
   line-height: 1.4;
   transition: color 0.2s;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+}
+
+/* Nav dot icon for unvisited blocks */
+.mentorship-view .m-nav-dot-icon {
+  width: 11px;
+  height: 11px;
+  color: var(--m-text-light);
+}
+
+/* Back link */
+.mentorship-view .m-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Lora', serif;
+  font-size: 13px;
+  color: var(--m-text-muted);
+  cursor: pointer;
+  transition: color 0.2s;
+  margin-bottom: 8px;
+}
+
+.mentorship-view .m-back-link:hover {
+  color: var(--m-accent-warm);
+}
+
+/* Compact progress (replaces ring) */
+.mentorship-view .m-progress-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mentorship-view .m-progress-compact-text {
+  font-size: 13px;
+  color: var(--m-text-secondary);
+}
+
+.mentorship-view .m-progress-compact-text strong {
+  color: var(--m-text-primary);
+  font-weight: 600;
+}
+
+.mentorship-view .m-progress-compact .m-progress-bar {
+  height: 4px;
 }
 
 .mentorship-view .m-nav-item.active .m-nav-title {
@@ -268,45 +261,39 @@
   max-width: 100%;
 }
 
+/* Constrain content width for readability on wide screens */
+.mentorship-view .m-main > * {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Assignment/PDF blocks should use full width */
+.mentorship-view .m-main > :has(#assignment),
+.mentorship-view .m-main > :has(#assignment-section) {
+  max-width: 100%;
+}
+
+@media (min-width: 1600px) {
+  .mentorship-view .m-main {
+    padding: 48px 80px 80px;
+  }
+  .mentorship-view .m-main > * {
+    max-width: 860px;
+  }
+  .mentorship-view .m-main > :has(#assignment),
+  .mentorship-view .m-main > :has(#assignment-section) {
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 1024px) {
   .mentorship-view .m-main {
     padding: 24px 20px 60px;
   }
-}
-
-/* Welcome banner */
-.mentorship-view .m-welcome {
-  padding: 24px 28px;
-  background: linear-gradient(135deg, #fef3e8 0%, #f5efe5 50%, #eef5ee 100%);
-  border-radius: var(--m-radius-lg);
-  margin-bottom: 40px;
-  border: 1px solid var(--m-border);
-  position: relative;
-  overflow: hidden;
-}
-
-.mentorship-view .m-welcome::before {
-  content: '\1F64F'; /* 🙏 */
-  position: absolute;
-  top: -8px;
-  right: 20px;
-  font-size: 56px;
-  opacity: 0.1;
-}
-
-.mentorship-view .m-welcome-greeting {
-  font-family: 'Fraunces', serif;
-  font-size: 13px;
-  color: var(--m-accent-warm);
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.mentorship-view .m-welcome-message {
-  font-size: 14px;
-  color: var(--m-text-secondary);
-  line-height: 1.7;
-  max-width: 520px;
+  .mentorship-view .m-main > * {
+    max-width: 100%;
+  }
 }
 
 /* Lesson header */
@@ -337,7 +324,7 @@
 
 .mentorship-view .m-lesson-title {
   font-family: 'Fraunces', serif;
-  font-size: 38px;
+  font-size: clamp(30px, 2.8vw, 42px);
   font-weight: 600;
   line-height: 1.2;
   color: var(--m-text-primary);
@@ -346,10 +333,10 @@
 }
 
 .mentorship-view .m-lesson-intro {
-  font-size: 16px;
+  font-size: clamp(15px, 1.15vw, 17px);
   color: var(--m-text-secondary);
   line-height: 1.85;
-  max-width: 580px;
+  max-width: 640px;
 }
 
 .mentorship-view .m-time-row {
@@ -366,48 +353,6 @@
   height: 4px;
   border-radius: 50%;
   background: var(--m-text-light);
-}
-
-/* Wisdom card */
-.mentorship-view .m-wisdom {
-  padding: 26px 30px;
-  background: var(--m-bg-card);
-  border: 1px solid var(--m-border);
-  border-radius: var(--m-radius-lg);
-  margin-bottom: 44px;
-  box-shadow: var(--m-shadow-soft);
-  position: relative;
-  animation: m-gentle-in 0.7s ease both;
-  animation-delay: 0.08s;
-}
-
-.mentorship-view .m-wisdom::before {
-  content: '\201C';
-  position: absolute;
-  top: 6px;
-  left: 18px;
-  font-family: 'Fraunces', serif;
-  font-size: 68px;
-  color: var(--m-accent-warm);
-  opacity: 0.12;
-  line-height: 1;
-}
-
-.mentorship-view .m-wisdom-text {
-  font-family: 'Fraunces', serif;
-  font-size: 19px;
-  font-style: italic;
-  font-weight: 300;
-  line-height: 1.7;
-  color: var(--m-text-primary);
-  padding-left: 6px;
-  margin-bottom: 10px;
-}
-
-.mentorship-view .m-wisdom-attr {
-  font-size: 12px;
-  color: var(--m-text-muted);
-  padding-left: 6px;
 }
 
 /* --- Learning Objectives Card --- */
@@ -457,7 +402,7 @@
 .mentorship-view .m-objectives-list li {
   position: relative;
   padding-left: 24px;
-  font-size: 14px;
+  font-size: clamp(14px, 1vw, 16px);
   line-height: 1.7;
   color: var(--m-text-primary);
 }
@@ -508,7 +453,7 @@
 .mentorship-view .m-takeaways-list li {
   position: relative;
   padding-left: 24px;
-  font-size: 14px;
+  font-size: clamp(14px, 1vw, 16px);
   line-height: 1.7;
   color: var(--m-text-primary);
 }
@@ -536,18 +481,18 @@
 
 .mentorship-view .m-block-heading {
   font-family: 'Fraunces', serif;
-  font-size: 24px;
+  font-size: clamp(22px, 1.8vw, 28px);
   font-weight: 600;
   color: var(--m-text-primary);
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   line-height: 1.3;
 }
 
 .mentorship-view .m-block-text {
-  font-size: 15px;
+  font-size: clamp(15px, 1.1vw, 17px);
   color: var(--m-text-secondary);
   line-height: 1.85;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   white-space: pre-line;
 }
 
@@ -621,7 +566,7 @@
   align-items: flex-start;
   gap: 8px;
   margin-bottom: 6px;
-  font-size: 15px;
+  font-size: clamp(15px, 1.1vw, 17px);
   color: var(--m-text-secondary);
   line-height: 1.75;
 }
@@ -735,51 +680,6 @@
   margin-bottom: 14px;
 }
 
-/* Progress ring */
-.mentorship-view .m-progress-block {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.mentorship-view .m-ring-bg {
-  fill: none;
-  stroke: var(--m-bg-cream);
-  stroke-width: 4;
-}
-
-.mentorship-view .m-ring-fill {
-  fill: none;
-  stroke: var(--m-accent-warm);
-  stroke-width: 4;
-  stroke-linecap: round;
-  transition: stroke-dashoffset 1.2s ease;
-}
-
-.mentorship-view .m-ring-text {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Fraunces', serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--m-accent-warm);
-}
-
-.mentorship-view .m-progress-detail {
-  font-size: 13px;
-  color: var(--m-text-secondary);
-  line-height: 1.5;
-}
-
-.mentorship-view .m-progress-detail strong {
-  color: var(--m-text-primary);
-  font-weight: 600;
-  display: block;
-}
-
 /* Duration card */
 .mentorship-view .m-duration-card {
   display: flex;
@@ -793,7 +693,7 @@
 
 .mentorship-view .m-duration-value {
   font-family: 'Fraunces', serif;
-  font-size: 28px;
+  font-size: clamp(26px, 2vw, 32px);
   font-weight: 600;
   color: var(--m-text-primary);
   line-height: 1;
@@ -836,106 +736,6 @@
   background: var(--m-accent-warm-soft);
 }
 
-/* Instructor mini */
-.mentorship-view .m-instructor-mini {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px;
-  background: var(--m-bg-cream);
-  border-radius: var(--m-radius-md);
-}
-
-.mentorship-view .m-instructor-mini-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--m-accent-warm), var(--m-accent-gold));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Fraunces', serif;
-  font-size: 15px;
-  color: white;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
-/* Resources */
-.mentorship-view .m-resource-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--m-border);
-  cursor: pointer;
-  transition: color 0.2s;
-  font-size: 13px;
-  color: var(--m-text-secondary);
-}
-
-.mentorship-view .m-resource-item:last-child {
-  border-bottom: none;
-}
-
-.mentorship-view .m-resource-item:hover {
-  color: var(--m-accent-warm);
-}
-
-.mentorship-view .m-resource-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 7px;
-  background: var(--m-bg-cream);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  flex-shrink: 0;
-}
-
-/* Ask Sensei CTA */
-.mentorship-view .m-ask-sensei {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 16px;
-  background: linear-gradient(135deg, #fef3e8, #fef9f4);
-  border: 1px solid var(--m-border-warm);
-  border-radius: var(--m-radius-md);
-  cursor: pointer;
-  transition: all 0.25s;
-}
-
-.mentorship-view .m-ask-sensei:hover {
-  box-shadow: 0 2px 12px rgba(192,104,48,0.1);
-}
-
-.mentorship-view .m-ask-sensei-icon {
-  width: 32px;
-  height: 32px;
-  background: var(--m-accent-warm);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  flex-shrink: 0;
-}
-
-.mentorship-view .m-ask-sensei-text {
-  font-size: 13px;
-  color: var(--m-text-secondary);
-  line-height: 1.4;
-}
-
-.mentorship-view .m-ask-sensei-text strong {
-  color: var(--m-accent-warm);
-  font-weight: 600;
-  display: block;
-  font-size: 12px;
-}
-
 /* Up next card */
 .mentorship-view .m-up-next {
   padding: 18px;
@@ -962,7 +762,7 @@
 
 .mentorship-view .m-up-next-title {
   font-family: 'Fraunces', serif;
-  font-size: 15px;
+  font-size: clamp(14px, 1.05vw, 17px);
   font-weight: 600;
   color: var(--m-text-primary);
   margin-bottom: 4px;
@@ -1007,14 +807,14 @@
 
 .mentorship-view .m-practice-title {
   font-family: 'Fraunces', serif;
-  font-size: 19px;
+  font-size: clamp(18px, 1.35vw, 22px);
   font-weight: 600;
   color: var(--m-text-primary);
   margin-bottom: 8px;
 }
 
 .mentorship-view .m-practice-text {
-  font-size: 14px;
+  font-size: clamp(14px, 1vw, 16px);
   color: var(--m-text-secondary);
   line-height: 1.7;
   margin-bottom: 16px;

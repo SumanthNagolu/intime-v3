@@ -384,8 +384,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "In the screenshot shown here, what is the array method to return the",
-        "answer": "Number of objects in the ContactNotes array? What is the value? Ei TriningApp Search ¥ summary Details ‘Addresses (3) Notes (5) Social Media Contact | ¥ Contact Note Contact Note Type > Subject FI 2018-06 William Andy has many general qu. in his new lic... covered ase... var count = array.length or array.Count. The total number of elements in the ContactNotes array is 5."
+        "question": "In the screenshot shown here, what is the array method to return the number of objects in the ContactNotes array? What is the value?",
+        "answer": "var count = array.length or array.Count.\nThe total number of elements in the ContactNotes array is 5."
       }
     },
     {
@@ -422,8 +422,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "In the screenshot shown here, what is the expression to return the count",
-        "answer": "• of notes that are regarding a problem? What is the count value? “ Gi TriningApp Search |¥ Contact | ‘Actions Per summary Notes Details Contact Note Contact Note Type > Subject Fe] 1s many general QU... phone number Notes (5) questions... Social Media 2018-06-19: William Andy has discovered ase... var countNotes = notes.countWhere( \\ note -> note.ContactNoteType == typekey.ContactNoteType.TC_ PROBLEM) 1 Addresses (3) ' The total number of elements in the ContactNotes array is 1."
+        "question": "In the screenshot shown here, what is the expression to return the count of notes that are regarding a problem? What is the count value?",
+        "answer": "var countNotes = notes.countWhere( \\ note ->\nnote.ContactNoteType == typekey.ContactNoteType.TC_ PROBLEM)\nThe total number of elements in the ContactNotes array is 1."
       }
     },
     {
@@ -460,8 +460,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "In the screenshot shown here, what is an expression to return an array of",
-        "answer": "• ContactNotes where the note was created after January 31, 2014? Gi TrainingApp Search |¥ Contact | Person: William Andy summary Notes Details Contact Note Type ‘Subject a ny general qu... ‘Addresses (3) ‘ew phone number Notes (5) Fe questions .. his new lc... ‘Social Media s discovered a se... var filteredNotes = notes.where( \\ note -> note.CreateTime >= \"02/01/2014™.toDate() )"
+        "question": "In the screenshot shown here, what is an expression to return an array of ContactNotes where the note was created after January 31, 2014?",
+        "answer": "var filteredNotes = notes.where( \\ note -> note.CreateTime >= \"02/01/2014\".toDate() )"
       }
     },
     {

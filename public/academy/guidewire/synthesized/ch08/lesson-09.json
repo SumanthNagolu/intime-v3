@@ -229,20 +229,20 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "Why do you need revisioned fields on contacts or locations?",
-      "referenceAnswer": "considered part of the policy contract and thus cannot be changed once the policy is\nbound and the contract written. If the field is revisioned, it can be changed on the\naccount level even after the policy is bound. The information is updated on the\naccount and can be obtained by policies for future jobs.",
+      "referenceAnswer": "Revisioned fields are required on contacts or locations when some information is\nconsidered part of the policy contract and thus cannot be changed once the policy is\nbound and the contract written. If the field is revisioned, it can be changed on the\naccount level even after the policy is bound. The information is updated on the\naccount and can be obtained by policies for future jobs.",
       "questionKey": "slide-25"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "Lrue or false: Contact data is always synced to account during\nsubmission and issuance.",
+      "question": "True or false: Contact data is always synced to account during\nsubmission and issuance.",
       "referenceAnswer": "True.",
       "questionKey": "slide-27"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "Lrueor false: During a back dated policy change, contact data is copied\nfrom policy to account.",
+      "question": "True or false: During a back dated policy change, contact data is copied\nfrom policy to account.",
       "referenceAnswer": "False. Contact data is not copied from policy to account for a back dated policy\nchange.",
       "questionKey": "slide-29"
     },
@@ -250,7 +250,7 @@
       "type": "knowledge_check",
       "id": "kc-4",
       "question": "How does PolicyCenter handle back dated changes on contact data?",
-      "referenceAnswer": "to the policy. A user can decide whether to apply the changes or not at the account\nlevel. The changes must be applied manually.",
+      "referenceAnswer": "PolicyCenter creates activities and notes on the account specifying the changes made\nto the policy. A user can decide whether to apply the changes or not at the account\nlevel. The changes must be applied manually.",
       "questionKey": "slide-31"
     },
     {

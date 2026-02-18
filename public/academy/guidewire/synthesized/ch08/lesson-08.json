@@ -99,8 +99,8 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "Name three policy-related objects in PolicyCenter on which class-based\no validation is performed.",
-      "referenceAnswer": "Class-based validation can be performed on PolicyContactRole, PolicyLocation,\nPolicyPeriod, or any LOB entities, or any other policy-specific entities.",
+      "question": "Name three policy-related objects in PolicyCenter on which class-based validation is performed.",
+      "referenceAnswer": "Class-based validation can be performed on PolicyContactRole, PolicyLocation, PolicyPeriod, or any LOB entities, or any other policy-specific entities.",
       "questionKey": "slide-11"
     },
     {
@@ -196,14 +196,14 @@
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "State true or false:\noo a) All entities in PolicyCenter can be validated.\nb) All validation classes must have a validatelmpl or doValidate method.\nc) The doValidate method should be last method in a class.",
+      "question": "State true or false:\na) All entities in PolicyCenter can be validated.\nb) All validation classes must have a validatelmpl or doValidate method.\nc) The doValidate method should be last method in a class.",
       "referenceAnswer": "a) True\nb) True\nc) False",
       "questionKey": "slide-32"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "Name the validation context method that produces a string of methods\no that were visited as validation was performed.",
+      "question": "Name the validation context method that produces a string of methods\nthat were visited as validation was performed.",
       "referenceAnswer": "The showVisited() method shows a list of methods as a string that were visited as\nvalidation was performed.",
       "questionKey": "slide-34"
     },

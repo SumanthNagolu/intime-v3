@@ -168,35 +168,35 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "What type of logic does a getter implement? A setter? A method?",
-      "referenceAnswer": "The correct responses are:\n\nGetter: Logic that returns a derived value and does not take parameters or change\nother data.\n\nSetter: Logic that takes a single input value and uses that to modify some other field or\nset of fields on the given object.\n\nMethod: Logic that requires parameters, changes data, or otherwise does more than\nsimply deriving or setting a value.",
+      "referenceAnswer": "Getter: Logic that returns a derived value and does not take parameters or change other data.\nSetter: Logic that takes a single input value and uses that to modify some other field or set of fields on the given object.\nMethod: Logic that requires parameters, changes data, or otherwise does more than simply deriving or setting a value.",
       "questionKey": "slide-18"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "When you create a new enhancement, what code does Studio add for\nyou automatically?",
-      "referenceAnswer": "The correct response is:\nStudio automatically creates the package statement and the enhancement declaration\nstatement and the type reference.",
+      "question": "When you create a new enhancement, what code does Studio add for you automatically?",
+      "referenceAnswer": "Studio automatically creates the package statement and the enhancement declaration statement and the type reference.",
       "questionKey": "slide-20"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "For an enhancement on the ABContact entity, what code would you write\nto reference the given ABContact's AssignedUser field?",
-      "referenceAnswer": "Foran enhancement on the ABContact entity, what code would you write\nx to reference the given ABContact's AssignedUser field?\n\nThe correct response is: this.AssignedUser",
+      "question": "For an enhancement on the ABContact entity, what code would you write to reference the given ABContact's AssignedUser field?",
+      "referenceAnswer": "this.AssignedUser",
       "questionKey": "slide-22"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
       "question": "How do you create an enhancement method that returns no value?",
-      "referenceAnswer": "Howdo you create an enhancement method that returns no value?\n\nThe correct response is:\nYou would create the method and optionally specify a return type of void.",
+      "referenceAnswer": "You would create the method and optionally specify a return type of void.",
       "questionKey": "slide-24"
     },
     {
       "type": "knowledge_check",
       "id": "kc-5",
       "question": "How do you reference enhancement properties and methods?",
-      "referenceAnswer": "Howdo you reference enhancement properties and methods?\n¢\n¢\n¢\nThe correct response is:\nYou reference enhancement properties and methods using the same syntax as base\napplication entity properties and methods: object.propertyOrMethodName",
+      "referenceAnswer": "You reference enhancement properties and methods using the same syntax as base application entity properties and methods: object.propertyOrMethodName",
       "questionKey": "slide-26"
     },
     {

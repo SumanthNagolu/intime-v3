@@ -1,6 +1,7 @@
 import { z } from 'zod'
+import { TRPCError } from '@trpc/server'
 import { publicProcedure, router } from '../trpc/init'
-import { orgProtectedProcedure } from '../trpc/middleware'
+import { orgProtectedProcedure, protectedProcedure } from '../trpc/middleware'
 import { getAdminClient } from '@/lib/supabase/admin'
 
 export const academyRouter = router({
@@ -568,5 +569,258 @@ export const academyRouter = router({
 
         return data
       }),
+
+    // --- Enrollment Management ---
+
+    getEnrollmentRequests: orgProtectedProcedure
+      .input(z.object({
+        status: z.enum(['pending', 'approved', 'rejected', 'cancelled']).optional(),
+        limit: z.number().default(50),
+        offset: z.number().default(0),
+      }).optional())
+      .query(async ({ input }) => {
+        const adminClient = getAdminClient()
+
+        let query = adminClient
+          .from('enrollment_requests')
+          .select('*', { count: 'exact' })
+          .order('created_at', { ascending: false })
+
+        if (input?.status) {
+          query = query.eq('status', input.status)
+        }
+
+        const { data, count } = await query
+          .range(input?.offset || 0, (input?.offset || 0) + (input?.limit || 50) - 1)
+
+        return { requests: data || [], total: count || 0 }
+      }),
+
+    approveEnrollmentRequest: orgProtectedProcedure
+      .input(z.object({ requestId: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const adminClient = getAdminClient()
+
+        // Get the request
+        const { data: request, error: reqError } = await adminClient
+          .from('enrollment_requests')
+          .select('*')
+          .eq('id', input.requestId)
+          .single()
+
+        if (reqError || !request) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Enrollment request not found' })
+        }
+
+        if (request.status !== 'pending') {
+          throw new TRPCError({ code: 'BAD_REQUEST', message: `Request is already ${request.status}` })
+        }
+
+        // Update request status
+        const { error: updateError } = await adminClient
+          .from('enrollment_requests')
+          .update({
+            status: 'approved',
+            reviewed_by: ctx.profileId,
+            reviewed_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', input.requestId)
+
+        if (updateError) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Failed to approve request' })
+        }
+
+        // Create path enrollment if user exists
+        if (request.user_id && request.path_id) {
+          await adminClient
+            .from('path_enrollments')
+            .upsert({
+              user_id: request.user_id,
+              path_id: request.path_id,
+              status: 'active',
+              progress_percent: 0,
+              enrolled_at: new Date().toISOString(),
+            }, {
+              onConflict: 'user_id,path_id',
+            })
+        }
+
+        return { success: true }
+      }),
+
+    rejectEnrollmentRequest: orgProtectedProcedure
+      .input(z.object({
+        requestId: z.string().uuid(),
+        reason: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const adminClient = getAdminClient()
+
+        const { error } = await adminClient
+          .from('enrollment_requests')
+          .update({
+            status: 'rejected',
+            rejection_reason: input.reason || null,
+            reviewed_by: ctx.profileId,
+            reviewed_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', input.requestId)
+          .eq('status', 'pending')
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Failed to reject request' })
+        }
+
+        return { success: true }
+      }),
+
+    createInvitation: orgProtectedProcedure
+      .input(z.object({
+        email: z.string().email(),
+        firstName: z.string().optional(),
+        lastName: z.string().optional(),
+        pathId: z.string().uuid(),
+      }))
+      .mutation(async ({ input }) => {
+        const adminClient = getAdminClient()
+        const token = crypto.randomUUID()
+
+        const { data, error } = await adminClient
+          .from('enrollment_requests')
+          .insert({
+            applicant_email: input.email,
+            applicant_first_name: input.firstName,
+            applicant_last_name: input.lastName,
+            path_id: input.pathId,
+            source: 'invitation',
+            invitation_token: token,
+            status: 'pending',
+          })
+          .select('id')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Failed to create invitation' })
+        }
+
+        return { success: true, requestId: data.id, token }
+      }),
+  }),
+
+  // ============================================
+  // ENROLLMENT REQUEST (PUBLIC)
+  // ============================================
+
+  submitEnrollmentRequest: publicProcedure
+    .input(z.object({
+      pathSlug: z.string(),
+      firstName: z.string().min(1),
+      lastName: z.string().min(1),
+      email: z.string().email(),
+      phone: z.string().optional(),
+      priorExperience: z.string().optional(),
+      message: z.string().optional(),
+    }))
+    .mutation(async ({ input }) => {
+      const adminClient = getAdminClient()
+
+      // Lookup path by slug
+      const { data: path } = await adminClient
+        .from('learning_paths')
+        .select('id')
+        .eq('slug', input.pathSlug)
+        .single()
+
+      const { error } = await adminClient
+        .from('enrollment_requests')
+        .insert({
+          path_id: path?.id || null,
+          applicant_email: input.email,
+          applicant_first_name: input.firstName,
+          applicant_last_name: input.lastName,
+          applicant_phone: input.phone || null,
+          source: 'self_signup',
+          status: 'pending',
+          admin_notes: [
+            input.priorExperience ? `Experience: ${input.priorExperience}` : null,
+            input.message ? `Message: ${input.message}` : null,
+          ].filter(Boolean).join('\n') || null,
+        })
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Failed to submit enrollment request' })
+      }
+
+      return { success: true }
+    }),
+
+  // ============================================
+  // PUBLIC LEARNING PATHS
+  // ============================================
+
+  getPublicPaths: publicProcedure.query(async () => {
+    const adminClient = getAdminClient()
+
+    const { data } = await adminClient
+      .from('learning_paths')
+      .select('id, slug, title, description, difficulty, status')
+      .eq('status', 'published')
+      .order('created_at', { ascending: true })
+
+    return data || []
+  }),
+
+  // ============================================
+  // STUDENT ENROLLMENT STATUS
+  // ============================================
+
+  getMyEnrollments: protectedProcedure.query(async ({ ctx }) => {
+    const adminClient = getAdminClient()
+    const profileId = ctx.profileId || ctx.user?.id
+
+    if (!profileId) {
+      return []
+    }
+
+    const { data } = await adminClient
+      .from('path_enrollments')
+      .select(`
+        id,
+        status,
+        progress_percent,
+        enrolled_at,
+        completed_at,
+        learning_paths (
+          id,
+          slug,
+          title,
+          description,
+          difficulty
+        )
+      `)
+      .eq('user_id', profileId)
+      .in('status', ['active', 'completed'])
+      .order('enrolled_at', { ascending: false })
+
+    return data || []
+  }),
+
+  getMyEnrollmentRequests: protectedProcedure.query(async ({ ctx }) => {
+    const adminClient = getAdminClient()
+    const email = ctx.user?.email
+
+    if (!email) {
+      return []
+    }
+
+    const { data } = await adminClient
+      .from('enrollment_requests')
+      .select('id, status, path_id, created_at, reviewed_at, rejection_reason, learning_paths(slug, title)')
+      .eq('applicant_email', email)
+      .order('created_at', { ascending: false })
+
+    return data || []
   }),
 })

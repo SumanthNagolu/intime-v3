@@ -60,10 +60,10 @@ export function SynthesizedSidebar({
               onClick={() => onBlockClick(block.id)}
             >
               <div className="m-nav-dot">
-                {isVisited ? '✓' : ''}
+                {isVisited ? '✓' : !isActive ? <Icon className="m-nav-dot-icon" /> : ''}
               </div>
               <div className="m-nav-title">
-                {label.length > 35 ? label.slice(0, 35) + '...' : label}
+                {label}
               </div>
             </div>
           </div>

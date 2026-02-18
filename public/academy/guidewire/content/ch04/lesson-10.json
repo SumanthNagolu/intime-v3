@@ -249,7 +249,7 @@
       "slideType": "question",
       "questionData": {
         "question": "What makes a transaction out-of-sequence?",
-        "answer": "A transaction is out-of-sequence if it is entered after some other bound transaction but has an effective date earlier than the effective date of the first bound transaction. Sooo ooo ooo Oooo oOoD"
+        "answer": "A transaction is out-of-sequence if it is entered after some other bound transaction but\nhas an effective date earlier than the effective date of the first bound transaction."
       }
     },
     {
@@ -287,7 +287,7 @@
       "slideType": "question",
       "questionData": {
         "question": "Can a submission be out-of-sequence? Why or why not?",
-        "answer": "Can a submission be out-of-sequence? Why or why not? No, a submission can never be out-of-sequence. A submission creates a policy and therefore must be the first transaction that can be issued against a policy. You cannot have transactions effective earlier than the policy's creation date. Sooo ooo ooo Oooo oOoD"
+        "answer": "No, a submission can never be out-of-sequence. A submission creates a policy and\ntherefore must be the first transaction that can be issued against a policy. You cannot\nhave transactions effective earlier than the policy's creation date."
       }
     },
     {
@@ -324,8 +324,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Can a change be out-of-sequence? When you start an out-of-sequence",
-        "answer": ",’ _ transaction, how do you know that it is an out-of-sequence transaction? Yes, a change can be out-of-sequence. PolicyCenter displays an \"out-of-sequence\" dialog box before starting the wizard and displays a warning label at the top of the wizard screens. Sooo ooo ooo Oooo oOoD"
+        "question": "Can a change be out-of-sequence? When you start an out-of-sequence\ntransaction, how do you know that it is an out-of-sequence transaction?",
+        "answer": "Yes, a change can be out-of-sequence. PolicyCenter displays an \"out-of-sequence\"\ndialog box before starting the wizard and displays a warning label at the top of the\nwizard screens."
       }
     },
     {
@@ -362,8 +362,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "What criteria does PolicyCenter use to determine if an out-of-sequence",
-        "answer": ",’ _ transaction conflicts with a \"later effective\" transaction? If each transaction changes a single given field to a different value, then the two transactions are in conflict. Sooo ooo ooo Oooo oOoD"
+        "question": "What criteria does PolicyCenter use to determine if an out-of-sequence\ntransaction conflicts with a \"later effective\" transaction?",
+        "answer": "If each transaction changes a single given field to a different value, then the two\ntransactions are in conflict."
       }
     },
     {
@@ -401,7 +401,7 @@
       "slideType": "question",
       "questionData": {
         "question": "If there are no conflicts, what additional work must the end user do?",
-        "answer": "When there are no conflicts, there is no additional work. PolicyCenter automatically merges the data from the two transactions. Sooo ooo ooo Oooo oOoD"
+        "answer": "When there are no conflicts, there is no additional work. PolicyCenter automatically merges the data from the two transactions."
       }
     },
     {
@@ -438,8 +438,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "If there is at least one conflict, what additional work must the end user",
-        "answer": "For each conflict, the end user must identify whether or not the earlier effective-dated value overrides the future effective-dated value in the future slice of the policy. Sooo ooo ooo Oooo oOoD"
+        "question": "If there is at least one conflict, what additional work must the end user do?",
+        "answer": "For each conflict, the end user must identify whether or not the earlier effective-dated value overrides the future effective-dated value in the future slice of the policy."
       }
     },
     {

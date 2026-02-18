@@ -564,3 +564,27 @@ export const PHASES: Record<ChapterPhase, { label: string; description: string; 
 
 export const TOTAL_LESSONS = CHAPTERS.reduce((sum, ch) => sum + ch.totalLessons, 0)
 export const TOTAL_CHAPTERS = CHAPTERS.length
+
+// --- Path-based helpers ---
+
+export function getChaptersForPath(chapterSlugs: string[]): Chapter[] {
+  return chapterSlugs
+    .map(slug => CHAPTERS.find(ch => ch.slug === slug))
+    .filter((ch): ch is Chapter => ch !== undefined)
+}
+
+export function getLessonsForPath(chapterSlugs: string[]): LessonMeta[] {
+  return chapterSlugs.flatMap(slug => CHAPTER_LESSONS[slug] || [])
+}
+
+export function getNextLessonInPath(currentLessonId: string, chapterSlugs: string[]): LessonMeta | undefined {
+  const pathLessons = getLessonsForPath(chapterSlugs)
+  const idx = pathLessons.findIndex(l => l.lessonId === currentLessonId)
+  return idx >= 0 && idx < pathLessons.length - 1 ? pathLessons[idx + 1] : undefined
+}
+
+export function getPrevLessonInPath(currentLessonId: string, chapterSlugs: string[]): LessonMeta | undefined {
+  const pathLessons = getLessonsForPath(chapterSlugs)
+  const idx = pathLessons.findIndex(l => l.lessonId === currentLessonId)
+  return idx > 0 ? pathLessons[idx - 1] : undefined
+}

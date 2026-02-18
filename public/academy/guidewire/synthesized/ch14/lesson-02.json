@@ -178,28 +178,28 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "What are CostData objects? How are they named?",
-      "referenceAnswer": "CostData subclass has the same name as the cost entity followed by the suffix “Data”.",
+      "referenceAnswer": "CostData objects are Gosu objects that mirror every cost on a policy graph. Each CostData subclass has the same name as the cost entity followed by the suffix “Data”.",
       "questionKey": "slide-16"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
       "question": "Describe briefly the two CostData constructors.",
-      "referenceAnswer": "- Date-based constructor is created based on effective and expiration dates,\nusually for a new cost object.\n+ Cost-based constructor is created based on a pre-existing cost object that is\npassed-in as a parameter.",
+      "referenceAnswer": "The two CostData constructors are:\n- Date-based constructor is created based on effective and expiration dates, usually for a new cost object.\n+ Cost-based constructor is created based on a pre-existing cost object that is passed-in as a parameter.",
       "questionKey": "slide-18"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
       "question": "Why are KeyValues needed?",
-      "referenceAnswer": "KeyValues property creates a list of the Key Values. The rating engine uses it as it\nmerges CostData objects.",
+      "referenceAnswer": "KeyValues are needed to determine if two CostData objects are the same. The KeyValues property creates a list of the Key Values. The rating engine uses it as it merges CostData objects.",
       "questionKey": "slide-20"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
       "question": "Why can you not set properties directly on cost entities for both FKs?",
-      "referenceAnswer": "ae Why can you not set properties directly on cost entities for both FKs?\nor For non-FK properties, you can set the properties directly on the cost entity instance.\nFor FK properties, this approach does not work, because CostData objects store the\nentity's fixed ID encapsulated in a key object. So the methods\nsetSpecificFieldsOnCost and setFieldValue provided by the CostData class must be\nused to set the foreign key properties.",
+      "referenceAnswer": "For non-FK properties, you can set the properties directly on the cost entity instance.\nFor FK properties, this approach does not work, because CostData objects store the\nentity's fixed ID encapsulated in a key object. So the methods\nsetSpecificFieldsOnCost and setFieldValue provided by the CostData class must be\nused to set the foreign key properties.",
       "questionKey": "slide-22"
     },
     {

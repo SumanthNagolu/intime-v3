@@ -452,8 +452,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "For each of the following, identify if it is stored as a database table, as a",
-        "answer": "• table column, or not stored in the database at all: The correct responses are: A) Atable B) Acolumn C) Not stored in the database (Technically, the source values are probably stored in the database. But the value of a virtual field itself is not stored as a separate value.) Boo OO oo oo ooo Acolumn (specifically a foreign key column to the relevant entity's table)"
+        "question": "For each of the following, identify if it is stored as a database table, as a table column, or not stored in the database at all:\nA) An entity (such as ABContact)\nB) A physical data field (such as ABContact.CreateTime)\nC) A virtual data field (such as ABContact.FullName)\nD) A foreign key field (such as ABContact.AssignedUser)",
+        "answer": "The correct responses are:\nA) A table\nB) A column\nC) Not stored in the database (Technically, the source values are probably stored in the database. But the value of a virtual field itself is not stored as a separate value.)\nD) A column (specifically a foreign key column to the relevant entity's table)"
       }
     },
     {
@@ -490,8 +490,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "For each of the following, identify if it is stored as a database table, as a",
-        "answer": "• table column, or not stored in the database at all: A) Anarray key field (such as ABContact.ContactNotes) B) Atypelist (such as VendorType) C) Atypekey field (such as ABContact.VendorType) The correct answers are: A) Not stored in the database, B) Atable, C) Acolumn (specifically a foreign key column to the typelist's table) Boo OO oo oo ooo"
+        "question": "For each of the following, identify if it is stored as a database table, as a table column, or not stored in the database at all:\nA) An array key field (such as ABContact.ContactNotes)\nB) A typelist (such as VendorType)\nC) A typekey field (such as ABContact.VendorType)",
+        "answer": "The correct answers are:\nA) Not stored in the database,\nB) A table,\nC) A column (specifically a foreign key column to the typelist's table)"
       }
     },
     {
@@ -528,8 +528,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Name two circumstances in which you would execute the gwb",
-        "answer": "• genDataDictionary command. Possible answers: You would execute genDataDictionary when you install the application and whenever you extend the Data Model. You could also execute the command when you modify system permissions or some other aspect of access and therefore need to regenerate the Security Dictionary. Boo OO oo oo ooo"
+        "question": "Name two circumstances in which you would execute the gwb genDataDictionary command.",
+        "answer": "Possible answers:\nYou would execute genDataDictionary when you install the application and whenever you extend the Data Model.\nYou could also execute the command when you modify system permissions or some other aspect of access and therefore need to regenerate the Security Dictionary."
       }
     },
     {

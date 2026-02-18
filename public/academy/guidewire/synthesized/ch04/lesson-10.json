@@ -152,27 +152,27 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "What makes a transaction out-of-sequence?",
-      "referenceAnswer": "has an effective date earlier than the effective date of the first bound transaction.",
+      "referenceAnswer": "A transaction is out-of-sequence if it is entered after some other bound transaction but\nhas an effective date earlier than the effective date of the first bound transaction.",
       "questionKey": "slide-14"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
       "question": "Can a submission be out-of-sequence? Why or why not?",
-      "referenceAnswer": "therefore must be the first transaction that can be issued against a policy. You cannot\nhave transactions effective earlier than the policy's creation date.",
+      "referenceAnswer": "No, a submission can never be out-of-sequence. A submission creates a policy and\ntherefore must be the first transaction that can be issued against a policy. You cannot\nhave transactions effective earlier than the policy's creation date.",
       "questionKey": "slide-16"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "Can a change be out-of-sequence? When you start an out-of-sequence\n,’ transaction, how do you know that it is an out-of-sequence transaction?",
-      "referenceAnswer": "dialog box before starting the wizard and displays a warning label at the top of the\nwizard screens.",
+      "question": "Can a change be out-of-sequence? When you start an out-of-sequence\ntransaction, how do you know that it is an out-of-sequence transaction?",
+      "referenceAnswer": "Yes, a change can be out-of-sequence. PolicyCenter displays an \"out-of-sequence\"\ndialog box before starting the wizard and displays a warning label at the top of the\nwizard screens.",
       "questionKey": "slide-18"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "What criteria does PolicyCenter use to determine if an out-of-sequence\n,’ __ transaction conflicts with a \"later effective\" transaction?",
+      "question": "What criteria does PolicyCenter use to determine if an out-of-sequence\ntransaction conflicts with a \"later effective\" transaction?",
       "referenceAnswer": "If each transaction changes a single given field to a different value, then the two\ntransactions are in conflict.",
       "questionKey": "slide-20"
     },
@@ -180,14 +180,14 @@
       "type": "knowledge_check",
       "id": "kc-5",
       "question": "If there are no conflicts, what additional work must the end user do?",
-      "referenceAnswer": "merges the data from the two transactions.",
+      "referenceAnswer": "When there are no conflicts, there is no additional work. PolicyCenter automatically merges the data from the two transactions.",
       "questionKey": "slide-22"
     },
     {
       "type": "knowledge_check",
       "id": "kc-6",
-      "question": "If there is at least one conflict, what additional work must the end user\ndo?",
-      "referenceAnswer": "value overrides the future effective-dated value in the future slice of the policy.",
+      "question": "If there is at least one conflict, what additional work must the end user do?",
+      "referenceAnswer": "For each conflict, the end user must identify whether or not the earlier effective-dated value overrides the future effective-dated value in the future slice of the policy.",
       "questionKey": "slide-24"
     },
     {

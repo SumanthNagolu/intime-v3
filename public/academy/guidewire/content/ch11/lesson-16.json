@@ -555,7 +555,7 @@
       "slideType": "question",
       "questionData": {
         "question": "What is a messaging acknowledgement from an external system?",
-        "answer": "Amessaging acknowledgement is Guidewire's process for interpreting a messaging response from an external system."
+        "answer": "A messaging acknowledgement is Guidewire's process for interpreting a messaging response from an external system."
       }
     },
     {
@@ -592,8 +592,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "What are the possible ways Guidewire can interpret an external system's",
-        "answer": "Y response to a message? Guidewire can interpret an external system's response, if one exists, as a positive acknowledgement (ACK), negative acknowledgment (NACK), or duplicate."
+        "question": "What are the possible ways Guidewire can interpret an external system's response to a message?",
+        "answer": "Guidewire can interpret an external system's response, if one exists, as a positive acknowledgement (ACK), negative acknowledgment (NACK), or duplicate."
       }
     },
     {
@@ -630,8 +630,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Under what three circumstances is an entry added to the",
-        "answer": "MessageHistory table? Amessage is added to the message history table when a message is positively acknowledged, skipped, or retried. For the first two, the message is removed entirely from the Message table. For the third, a copy of the original message remains in the Message table."
+        "question": "Under what three circumstances is an entry added to the MessageHistory table?",
+        "answer": "A message is added to the message history table when a message is positively acknowledged, skipped, or retried. For the first two, the message is removed entirely from the Message table. For the third, a copy of the original message remains in the Message table."
       }
     },
     {
@@ -668,8 +668,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Under what circumstances are acknowledgements processed:",
-        "answer": "By the transport plugin? By the reply plugin? Without involvement from any plugin? A) When the reply is received synchronously. B) When the reply is received asynchronously through a listener or polling mechanism. When the reply is received asynchronously by an external system call to an API."
+        "question": "Under what circumstances are acknowledgements processed:\nA) By the transport plugin?\nB) By the reply plugin?\nC) Without involvement from any plugin?",
+        "answer": "A) When the reply is received synchronously.\nB) When the reply is received asynchronously through a listener or polling mechanism.\nC) When the reply is received asynchronously by an external system call to an API."
       }
     },
     {
@@ -706,8 +706,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "When should you use each of the following methods?",
-        "answer": "AMessage.reportError(retryTime)? aMessage.reportError(errorCategory)? A) When the message needs to be retried and the message has not reached its maximum number of retries. B) When the message needs to be retried, but the message has reached its maximum number of retries."
+        "question": "When should you use each of the following methods?\nA) aMessage.reportError(retryTime)?\nB) aMessage.reportError(errorCategory)?",
+        "answer": "A) When the message needs to be retried and the message has not reached its maximum number of retries.\nB) When the message needs to be retried, but the message has reached its maximum number of retries."
       }
     },
     {

@@ -226,22 +226,22 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "Identify if each statements true or false.\nA) Plugins implement methods that are called by internal code.\nB) Plugins must be written in Gosu.\nC) Aplugin class must contain a predetermined set of methods based on the\nbusiness need it serves.\nD) Plugins are used exclusively for external application integration.",
-      "referenceAnswer": "Identify if each statements true or false.\n\nY\n, A\nB\nCc\n\nwere\n\nD\n\nz=\n\ng\n\nCc)\nD\n\nz=\n\n&\n\nPlugins implement methods that are called by internal code.\nPlugins must be written in Gosu.\n\nA plugin class must contain a predetermined set of methods based on the\nbusiness need it serves.\n\nPlugins are used exclusively for external application integration.\nTrue\n\nFalse — Guidewire recommends that they be written in Gosu, but they can be\nwritten in OSGi or Java.\n\nTrue\n\nFalse — They are also used to",
+      "question": "Identify if each statement is true or false.\nA) Plugins implement methods that are called by internal code.\nB) Plugins must be written in Gosu.\nC) A plugin class must contain a predetermined set of methods based on the\nbusiness need it serves.\nD) Plugins are used exclusively for external application integration.",
+      "referenceAnswer": "A) True\nB) False — Guidewire recommends that they be written in Gosu, but they can be\nwritten in OSGi or Java.\nC) True\nD) False — They are also used to execute tasks exclusively within the Guidewire\napplication.",
       "questionKey": "slide-20"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "N What is the purpose of a plugin registry entry?",
-      "referenceAnswer": "ae What is the purpose of a plugin registry entry?\n\n¢\n4\n\nThe plugin registry entry identifies the plugin class to use for a given set of internally\ncalled methods and initialization parameters that may be used to affect the plugin's\nbehavior.\n\nSoo eS oe ese Sse ese",
+      "question": "What is the purpose of a plugin registry entry?",
+      "referenceAnswer": "The plugin registry entry identifies the plugin class to use for a given set of internally\ncalled methods and initialization parameters that may be used to affect the plugin's\nbehavior.",
       "questionKey": "slide-22"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
       "question": "Do you need to restart the server when you:\nA) Modify code in an existing Gosu plugin?\nB) Modify a plugin registry entry?",
-      "referenceAnswer": "_- — Doyou need to restart the server when you:\n\n¢\n“ A\nB\n\nModify code in an existing Gosu plugin?\n\nModify a plugin registry entry?\n\nA) No, you do not to restart the server when you make changes to a Gosu plugin\nclass. However, you need to execute Reload Changed Classes.\n\nB) Yes, you need to restart the server when modifying a plugin registry entry because\nplugin registry entries are initialized only during the server application start-up.\n\nSoo eS oe ese Sse ese",
+      "referenceAnswer": "A) No, you do not need to restart the server when you make changes to a Gosu plugin\nclass. However, you need to execute Reload Changed Classes.\nB) Yes, you need to restart the server when modifying a plugin registry entry because\nplugin registry entries are initialized only during the server application start-up.",
       "questionKey": "slide-24"
     },
     {

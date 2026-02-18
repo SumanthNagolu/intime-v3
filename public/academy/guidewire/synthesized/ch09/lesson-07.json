@@ -317,36 +317,36 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "Which rule set category does not provide rules for both claims and\nexposures?",
-      "referenceAnswer": "The correct answer is Initial Reserve rules, which provides rules only at the exposure\nlevel.",
+      "question": "Which rule set category does not provide rules for both claims and exposures?",
+      "referenceAnswer": "Initial Reserve rules, which provides rules only at the exposure level.",
       "questionKey": "slide-40"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "A wa a rule set category do exposure rules run before claim rules?",
-      "referenceAnswer": "The correct answer is Segmentation. Exposure rules are run first because claim\nsegmentation typically depends upon the outcome of exposure segmentation.",
+      "question": "For which rule set category do exposure rules run before claim rules? Why?",
+      "referenceAnswer": "Segmentation. Exposure rules are run first because claim segmentation typically depends upon the outcome of exposure segmentation.",
       "questionKey": "slide-42"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "What type of objects are most likely to be created in\n(a) Presetup rules?\n: (b) Workplan rules?",
-      "referenceAnswer": "The correct answer is for (a) Presetup rules, is exposures.\nThe correct answer is for (b) Workplan rules is activities.",
+      "question": "What type of objects are most likely to be created in\n(a) Presetup rules?\n(b) Workplan rules?",
+      "referenceAnswer": "For (a) Presetup rules, is exposures.\nFor (b) Workplan rules is activities.",
       "questionKey": "slide-44"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "Which claim-evel rule set categories are also executed outside of claim\nsetup?\nFor each, give a non-claim setup example of when they might run.",
-      "referenceAnswer": "The correct answers are:\nAssignment rules — Run whenever an object such as an activity is reassigned using\nautomated assignment.\nPreupdate rules — Run whenever an object such as an exposure is created or\nmodified.\nValidation rules — Run whenever an object such as an activity is created or modified.\nSS eeesee seen ee ese",
+      "question": "Which claim-level rule set categories are also executed outside of claim setup?\n\nFor each, give a non-claim setup example of when they might run.",
+      "referenceAnswer": "Assignment rules — Run whenever an object such as an activity is reassigned using automated assignment.\nPreupdate rules — Run whenever an object such as an exposure is created or modified.\nValidation rules — Run whenever an object such as an activity is created or modified.",
       "questionKey": "slide-46"
     },
     {
       "type": "knowledge_check",
       "id": "kc-5",
-      "question": "In the diagram, what rule sets are included\nin “activity rules”? Segmentation\nInitial Reserve",
-      "referenceAnswer": "The correct answer is activity presetup,\nactivity assignment, activity postsetup,\nactivity preupdate, and activity validation.",
+      "question": "In the diagram, what rule sets are included in “activity rules”?",
+      "referenceAnswer": "activity presetup, activity assignment, activity postsetup, activity preupdate, and activity validation.",
       "questionKey": "slide-48"
     },
     {

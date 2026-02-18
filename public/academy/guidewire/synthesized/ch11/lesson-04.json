@@ -455,14 +455,14 @@
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "For each of the following, identify if its an example of auto commit or\nmanual commit?\nA) Queried entities that must be modified\nB) Code executed from the UI in edit mode\nC) Code executed in business rules\nD) Code executed from the UI in read-only mode",
-      "referenceAnswer": "A) Queried entities that must be modified\nManual commit\nB) Code executed from the Ul in edit mode\nAuto commit\nC) Code executed in business rules\nAuto commit\nD) Code executed from the UI in read-only mode\nManual commit",
+      "question": "For each of the following, identify if it's an example of auto commit or manual commit?\n\nA) Queried entities that must be modified\nB) Code executed from the UI in edit mode\nC) Code executed in business rules\nD) Code executed from the UI in read-only mode",
+      "referenceAnswer": "A) Queried entities that must be modified: Manual commit\nB) Code executed from the UI in edit mode: Auto commit\nC) Code executed in business rules: Auto commit\nD) Code executed from the UI in read-only mode: Manual commit",
       "questionKey": "slide-49"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "What kind of entities are initially put into read-only bundles?\nUnder what circumstance would you need to copy one of those entities\nto a writable bundle and how is this done?",
+      "question": "What kind of entities are initially put into read-only bundles?\nUnder what circumstance would you need to copy one of those entities to a writable bundle and how is this done?",
       "referenceAnswer": "Entities that are the result of a query are put into read-only bundles, and entities\nreferenced by foreign key are put into a read-only bundle if the referencing entity is\nalso in a read-only bundle.\n\nYou need to copy these entities to a writable bundle if you need to modify them, which\nis done via the bundle's add method.",
       "questionKey": "slide-51"
     },

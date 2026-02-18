@@ -265,42 +265,42 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "What must you specify in a widget's \"value\" property?",
-      "referenceAnswer": "SS SSS SHS se FH",
+      "referenceAnswer": "You must specify the field in the data model that the widget is bound to.",
       "questionKey": "slide-27"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
       "question": "When would you see the keyword \"as\" in the value property?",
-      "referenceAnswer": "which the widget must be bound is at one of the subtype levels.\nSS SSS SHS se FH",
+      "referenceAnswer": "You would see the \"as\" when the container's base object is subtyped, and the field to which the widget must be bound is at one of the subtype levels.",
       "questionKey": "slide-29"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "N What is a display key?",
-      "referenceAnswer": "It can have one or more language-specific values, and when the UI is rendered, the\nvalue matching the user’s language is used.\nSS SSS SHS se FH",
+      "question": "What is a display key?",
+      "referenceAnswer": "A display key is an abstract display value referenced by a widget's label property. It can have one or more language-specific values, and when the UI is rendered, the value matching the user’s language is used.",
       "questionKey": "slide-31"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "—— Ifyou create a widget and specify only the ID, name, and label, is the\nA widget visible? Editable? Required?",
-      "referenceAnswer": "SS SSS SHS se FH",
+      "question": "If you create a widget and specify only the ID, name, and label, is the widget visible? Editable? Required?",
+      "referenceAnswer": "The widget will be visible, not editable, and not required.",
       "questionKey": "slide-33"
     },
     {
       "type": "knowledge_check",
       "id": "kc-5",
-      "question": "The screenshot shows a standard input widget. The customer requires\nA a\"long\" date format. How could you implement this requirement?",
-      "referenceAnswer": "SS SSS SHS se FH",
+      "question": "The screenshot shows a standard input widget. The customer requires a \"long\" date format. How could you implement this requirement?",
+      "referenceAnswer": "You would need to configure the date input widget’s date format property. Setting this property to “long” will provide the desired behavior.",
       "questionKey": "slide-35"
     },
     {
       "type": "knowledge_check",
       "id": "kc-6",
-      "question": "For the object \"myContact\" of type ABContact,\nA)\nB)\nCc)\nD)\nPreferred currency?\nNotes?\n2 what is the dot notation for the object's:\nLevel of experience of myContact's assigned user?\nMobile phone (if it is a person)\nUser (ab_user)\n> Description\nFields\nBackupUser\nRetums the backup user for this user\nExperienceLevel\nExperience level of the user.\nJobTitle 255) cexpenabi\nUsers job title.\nGi\nABContact (ab_abcontact) (delegates to}\n> Description\nFields\nAssignedUser foreign ke (eoonabie” (oasabe\nAssigned user\nFaxPhone (exponable)” (loadabie)’ — (wrtabie)\nFax number associated with the contact\nPreferredCurrency typ (ese\nThe contact’ preferred currency\nArrays\nContactNotes array key (exsonabe)”\nNotes\nABPerson (subtype of ABContact)\n> Description\nCellPhone ) _(exoorabiey” oadabie)” (writable)\nMobile phone number associated with the contact\nDateOfBirth Me (experabe)” Goadabie)” (wrtabie\nDate of birth",
-      "referenceAnswer": "For the object \"myContact\" of type ABContact,\n2 what is the dot notation for the object's:\nA) Preferred currency?\nB) Notes?\nC) Level of experience of myContact's assigned user?\nD) Mobile phone (if it is a person)\nThe correct responses are:\nA) myContact.PreferredCurrency\nB) myContact.ContactNotes\nc) myContact.AssignedUser.ExperienceLevel\nSS SSS SHS se FH\nD) (myContact as ABPerson).CellPhone",
+      "question": "For the object \"myContact\" of type ABContact, what is the dot notation for the object's:\nA) Preferred currency?\nB) Notes?\nC) Level of experience of myContact's assigned user?\nD) Mobile phone (if it is a person)",
+      "referenceAnswer": "The correct responses are:\nA) myContact.PreferredCurrency\nB) myContact.ContactNotes\nC) myContact.AssignedUser.ExperienceLevel\nD) (myContact as ABPerson).CellPhone",
       "questionKey": "slide-37"
     },
     {

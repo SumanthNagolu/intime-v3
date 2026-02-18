@@ -458,8 +458,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "What datatype do you enter for fields that will store....",
-        "answer": "A) String values? B) Boolean values? c) Numbers with decimal values? The correct responses are: A) varchar B) Bit c) decimal"
+        "question": "What datatype do you enter for fields that will store....\nA) String values?\nB) Boolean values?\nC) Numbers with decimal values?",
+        "answer": "The correct responses are:\nA) varchar\nB) Bit\nC) decimal"
       }
     },
     {
@@ -497,7 +497,7 @@
       "slideType": "question",
       "questionData": {
         "question": "Which datatypes require columnParam subelements?",
-        "answer": "Varchar requires size and decimal which requires precision and scale"
+        "answer": "varchar requires size and decimal which requires precision and scale"
       }
     },
     {
@@ -534,8 +534,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Under what circumstances would you want to regenerate the Data",
-        "answer": "Dictionary? You would want to regenerate the Data Dictionary whenever you extend the data model and are concerned with data model validation beyond schema validation in the Entity Editor. Regenerating the Data Dictionary also updates the dictionary files to include the new fields (or entities) that you have created."
+        "question": "Under what circumstances would you want to regenerate the Data\nDictionary?",
+        "answer": "You would want to regenerate the Data Dictionary whenever you extend the data\nmodel and are concerned with data model validation beyond schema validation in the\nEntity Editor. Regenerating the Data Dictionary also updates the dictionary files to\ninclude the new fields (or entities) that you have created."
       }
     },
     {
@@ -572,8 +572,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "When does a Guidewire application actually modify the physical",
-        "answer": "Structure of the database? The physical structure of the database is modified only during start-up."
+        "question": "When does a Guidewire application actually modify the physical\nstructure of the database?",
+        "answer": "The physical structure of the database is modified only during start-up."
       }
     },
     {
@@ -610,8 +610,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Describe some of the differences between the files in the",
-        "answer": "• ..\\Metadata\\Typelist\\ and ..\\Extensions\\Typelist\\ folders. Files under Metadata are read-only and are specific to the base configuration. You cannot create Typelist files in the Metadata directory but can create Typelist files in the Extensions directory. Only internal Typelist extension files (TIX) are in the Metadata directory. Only external Typelist extension files (TTX) are in the Extensions directory. Both directories contain Typelist (TT]) files."
+        "question": "Describe some of the differences between the files in the\n..\\Metadata\\Typelist\\ and ...\\Extensions\\Typelist\\ folders.",
+        "answer": "Files under Metadata are read-only and are specific to the base configuration. You\ncannot create Typelist files in the Metadata directory but can create Typelist files in the\nExtensions directory. Only internal Typelist extension files (TIX) are in the Metadata\ndirectory. Only external Typelist extension files (TTX) are in the Extensions directory.\nBoth directories contain Typelist (TT]) files."
       }
     },
     {

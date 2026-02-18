@@ -520,8 +520,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "In order to generate JSON wrapper classes, you must: (Select three)",
-        "answer": "_- — In order to generate JSON wrapper classes, you must: (Select three) v7 “ A) Add anew Run/Debug configuration whose main class is defined as: com.guidewire. tools. json. JsonSchemaWrapperCodegenTool B) Run the server in Debug ‘Server’ mode. F) Add the schema fully qualified name to the codegen-schemas.txt. Add a package called src.jsonschema. Run the JSONSchemaWrapperCodegenTool. Restart the server after wrapper classes are created. The correct answers are A, D, and F."
+        "question": "In order to generate JSON wrapper classes, you must: (Select three)\n\nA) Add a new Run/Debug configuration whose main class is defined as: com.guidewire.tools.json.JsonSchemaWrapperCodegenTool\nB) Run the server in Debug ‘Server’ mode.\nC) Add a package called src.jsonschema.\nD) Run the JSONSchemaWrapperCodegen Tool.\nE) Restart the server after wrapper classes are created.\nF) Add the schema fully qualified name to the codegen-schemas.txt.",
+        "answer": "The correct answers are A, D, and F."
       }
     },
     {
@@ -558,8 +558,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "*-gw-type Is added in a JSON schema to map Guidewire internal types",
-        "answer": "/- — X-gw-type Is added in a JSON schema to map Guidewire internal types Pa in cases where a format would be ambiguous, such as: typekeys, MonetaryAmount and CurrencyAmount. (True or False)"
+        "question": "X-gw-type is added in a JSON schema to map Guidewire internal types in cases where a format would be ambiguous, such as: typekeys, MonetaryAmount and CurrencyAmount. (True or False)",
+        "answer": "True"
       }
     },
     {

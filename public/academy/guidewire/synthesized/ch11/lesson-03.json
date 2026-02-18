@@ -384,28 +384,28 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "Which approach is used to record a more specific version of the SQL for\nOo” a query?\n“ 1\n. queryObj.toString\n2. queryObj.withLogSQL (true)",
-      "referenceAnswer": "The correct answer is B. queryObj.withLogSQL (true)",
+      "question": "Which approach is used to record a more specific version of the SQL for\na query?\n1. queryObj.toString\n2. queryObj.withLogSQL (true)",
+      "referenceAnswer": "A. queryObj.toString\nB. queryObj.withLogSQL\nThe correct answer is B. queryObj.withLogSQL (true)",
       "questionKey": "slide-32"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
       "question": "What is the difference between a query object and results object?",
-      "referenceAnswer": "A) Aquery object specifies the entity and the query criteria.\nB) Aresults object is a set of one or more entity instances fetched from the\nGuidewire application.\nC) This distinction is helpful for understanding the concept of a query and of set of\nresults. In practice, query results are fetched from the Guidewire application when\nthey are counted, iterated over, or when one object is retrieved.",
+      "referenceAnswer": "A) A query object specifies the entity and the query criteria.\nB) A results object is a set of one or more entity instances fetched from the\nGuidewire application.\nC) This distinction is helpful for understanding the concept of a query and of set of\nresults. In practice, query results are fetched from the Guidewire application when\nthey are counted, iterated over, or when one object is retrieved.",
       "questionKey": "slide-34"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
       "question": "Which query restriction uses a block of compare methods?",
-      "referenceAnswer": "The OR restriction uses the or method with a block of compare methods such as:\nvar queryObj = Query.make(ABCompany).withLogSQL (true)\nqueryObj.or(\\ criteria -> {\ncriteria.compare(ABCompany#Score, Relop.LessThan, 50 )\ncriteria.compare(ABCompany#InspectionRequired, Relop.Equals, true)\n7)",
+      "referenceAnswer": "The OR restriction uses the or method with a block of compare methods such as:\nvar queryObj = Query.make(ABCompany).withLogSQL (true)\nqueryObj.or(\\ criteria -> {\ncriteria.compare(ABCompany#Score, Relop.LessThan, 50 )\ncriteria.compare(ABCompany#InspectionRequired, Relop.Equals, true)\n})",
       "questionKey": "slide-36"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "What happens if you use the AtMostOneRow property in a query, and the\nOo” query returns more than one object?",
+      "question": "What happens if you use the AtMostOneRow property in a query, and the query returns more than one object?",
       "referenceAnswer": "An exception is thrown when a query that uses the AtMostOneRow property, returns\nmore than one object.",
       "questionKey": "slide-38"
     },

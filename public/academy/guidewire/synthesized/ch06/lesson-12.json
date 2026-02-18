@@ -148,35 +148,35 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "What purpose does the Workflow Writer batch process serve?",
-      "referenceAnswer": "until a date has been reached or an amount of time has elapsed.",
+      "referenceAnswer": "The Workflow Writer batch process checks for active workflows that are suspended until a date has been reached or an amount of time has elapsed.",
       "questionKey": "slide-14"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "How does BillingCenter know which workflow to use to process a given\ndelinquency?",
-      "referenceAnswer": "delinquency?\nThe delinquency plan associates each delinquency reason with the appropriate\nworkflow.",
+      "question": "How does BillingCenter know which workflow to use to process a given delinquency?",
+      "referenceAnswer": "The delinquency plan associates each delinquency reason with the appropriate workflow.",
       "questionKey": "slide-16"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
       "question": "How does a Billing Clerk know that a policy is in delinquency?",
-      "referenceAnswer": "Te Alert bars on the Account Summary and Policy Summary screens inform users of\nan active delinquency. Also, delinquencies are listed on the My Delinquencies screen\non the Desktop.",
+      "referenceAnswer": "Alert bars on the Account Summary and Policy Summary screens inform users of an active delinquency. Also, delinquencies are listed on the My Delinquencies screen on the Desktop.",
       "questionKey": "slide-18"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "Given the delinquency shown below, what needs to happen to move the\ndelinquency forward?\nT] Q) Name ‘Account#\nDelinquencies\nEvents ‘Complete Target Date\nYes 09/25/2019\nYes 09/25/2019\n——— 10/02/2019\n10/09/2019\n11/09/2019\n01/23/2020\nOct 2, 2019\nCompletion Date\n09/25/2019\n09/25/2019\nDescription\nDunning Letter 1\nLate Fee\nDunning Letter 2\nSend Notice of Intent To Cancel\nCollections\nWriteoff\nTrigger\nInception Date\nInception Date\nInception Date +7 days\nInception Date + 14 days\nInception Date + 45 days\nInception Date + 120 days",
-      "referenceAnswer": "is waiting on a date.",
+      "question": "Given the delinquency shown below, what needs to happen to move the delinquency forward?\nName: Account# (Oct 2, 2019)\nDelinquencies\nEvents | Complete | Target Date | Completion Date | Description | Trigger\nYes | 09/25/2019 | 09/25/2019 | Dunning Letter 1 | Inception Date\nYes | 09/25/2019 | 09/25/2019 | Late Fee | Inception Date\n— | 10/02/2019 | | Dunning Letter 2 | Inception Date +7 days\n| 10/09/2019 | | Send Notice of Intent To Cancel | Inception Date + 14 days\n| 11/09/2019 | | Collections | Inception Date + 45 days\n| 01/23/2020 | | Writeoff | Inception Date + 120 days",
+      "referenceAnswer": "The Workflow Writer batch process needs to be run to “wake up” the workflow, which is waiting on a date.",
       "questionKey": "slide-20"
     },
     {
       "type": "knowledge_check",
       "id": "kc-5",
       "question": "How does an approval activity influence workflow?",
-      "referenceAnswer": "How does an approval activity influence workflow?\no An approval activity blocks workflow processing until it is either approved or rejected.\nTypically, the workflow performs different processing depending on the outcome of an\napproval activity.",
+      "referenceAnswer": "An approval activity blocks workflow processing until it is either approved or rejected. Typically, the workflow performs different processing depending on the outcome of an approval activity.",
       "questionKey": "slide-22"
     },
     {

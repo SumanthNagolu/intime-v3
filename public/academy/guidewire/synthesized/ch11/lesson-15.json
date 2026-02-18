@@ -358,21 +358,21 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "Every destination can optionally have a request plugin, but it must have a\ntransport plugin. Why is the transport plugin required?",
-      "referenceAnswer": "Every destination can optionally have a request plugin, but it must have a\nY transport plugin. Why is the transport plugin required?\n¢\nThe transport plugin is required because it is used to send the message when it is\nprocessed from the Message table. Without a transport plugin, messages for a given\ndestination would have no way of being sent to the corresponding external system.",
+      "referenceAnswer": "The transport plugin is required because it is used to send the message when it is\nprocessed from the Message table. Without a transport plugin, messages for a given\ndestination would have no way of being sent to the corresponding external system.",
       "questionKey": "slide-30"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
       "question": "Can one destination have two transport plugins? Can one transport\nplugin be used by two destinations?",
-      "referenceAnswer": "Can one destination have two transport plugins? Can one transport\nY plugin be used by two destinations?\n¢\nA destination can’t have two transport plugins, but a transport plugin class can be used\nby two (or more) similar destinations.",
+      "referenceAnswer": "A destination can’t have two transport plugins, but a transport plugin class can be used\nby two (or more) similar destinations.",
       "questionKey": "slide-32"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "Why should the send method never send a message to multiple external\nY systems?",
-      "referenceAnswer": "Why should the send method never send a message to multiple external\nY systems?\n¢\nThe message acknowledgement architecture assumes that each message is sent to\nonly one destination. If a given send method sent a message to multiple destinations,\nthen there could be multiple acknowledgements, errors, or unprocessed messages,\nand the messaging architecture would not be able to identify the state of the message.",
+      "question": "Why should the send method never send a message to multiple external systems?",
+      "referenceAnswer": "The message acknowledgement architecture assumes that each message is sent to only one destination. If a given send method sent a message to multiple destinations, then there could be multiple acknowledgements, errors, or unprocessed messages, and the messaging architecture would not be able to identify the state of the message.",
       "questionKey": "slide-34"
     },
     {

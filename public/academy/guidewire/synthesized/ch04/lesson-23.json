@@ -179,7 +179,7 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "Distinguish underwriting (UW) referral reasons from an UW issue.",
-      "referenceAnswer": "The underwriting referral reason is specific to a policy. When it generates an underwriting issue, the transaction will not progress further. UW referral reasons are often manually created, cannot be approved, and are manually deleted (or through an API). UW referral reasons persist with the policy. Underwriting issues are related to the transaction. When something is notable about this transaction requiring the attention of underwriting. They are often automatically generated, and are usually automatically removed when the cause no longer exists.",
+      "referenceAnswer": "The underwriting referral reason is specific to a policy. When it generates an underwriting issue, the transaction will not progress further. UW referral reasons are often manually created, cannot be approved, and are manually deleted (or through an API). UW referral reasons persist with the policy.\nUnderwriting issues are related to the transaction. When something is notable about this transaction requiring the attention of underwriting. They are often automatically generated, and are usually automatically removed when the cause no longer exists.",
       "questionKey": "slide-15"
     },
     {

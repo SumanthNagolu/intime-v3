@@ -216,7 +216,7 @@
       "type": "knowledge_check",
       "id": "kc-2",
       "question": "What datatype do you enter for fields that will store....\nA) String values?\nB) Boolean values?\nC) Numbers with decimal values?",
-      "referenceAnswer": "The correct responses are:\nA) varchar\nB) Bit\nc) decimal",
+      "referenceAnswer": "The correct responses are:\nA) varchar\nB) Bit\nC) decimal",
       "questionKey": "slide-26"
     },
     {
@@ -243,8 +243,8 @@
     {
       "type": "knowledge_check",
       "id": "kc-6",
-      "question": "Describe some of the differences between the files in the\nKA ..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders.",
-      "referenceAnswer": "Files under Metadata are read-only and are specific to the base configuration. You\ncannot create Typelist files in the Metadata directory but can create Typelist files in the\nExtensions directory. Only internal Typelist extension files (TIX) are in the Metadata\ndirectory. Only external Typelist extension files (TTX) are in the Extensions directory.\nBoth directo",
+      "question": "Describe some of the differences between the files in the\n..\\Metadata\\Typelist\\ and ...\\Extensions\\Typelist\\ folders.",
+      "referenceAnswer": "Files under Metadata are read-only and are specific to the base configuration. You\ncannot create Typelist files in the Metadata directory but can create Typelist files in the\nExtensions directory. Only internal Typelist extension files (TIX) are in the Metadata\ndirectory. Only external Typelist extension files (TTX) are in the Extensions directory.\nBoth directories contain Typelist (TT]) files.",
       "questionKey": "slide-34"
     },
     {

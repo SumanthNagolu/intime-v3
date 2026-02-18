@@ -4,6 +4,15 @@ import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { CHAPTERS, CHAPTER_LESSONS } from './curriculum'
 import { useAcademyStore } from './progress-store'
+import type { ContentBlock } from './implementation-blocks'
+import {
+  createBlock,
+  moveBlock,
+  removeBlock,
+  updateBlock,
+  getMaxSortOrder,
+  type BlockType,
+} from './implementation-blocks'
 
 // --- Types ---
 
@@ -35,6 +44,7 @@ export interface Implementation {
   impact: string
   technologies: string[]
   sortOrder: number
+  contentBlocks?: ContentBlock[]
 }
 
 export interface Project {
@@ -91,6 +101,12 @@ interface ProfileActions {
   addImplementation: (projectId: string, impl: Omit<Implementation, 'id' | 'sortOrder'>) => void
   updateImplementation: (projectId: string, implId: string, updates: Partial<Implementation>) => void
   removeImplementation: (projectId: string, implId: string) => void
+
+  // Content blocks (nested under implementations)
+  addContentBlock: (projectId: string, implId: string, blockType: BlockType) => void
+  updateContentBlock: (projectId: string, implId: string, blockId: string, updates: Partial<ContentBlock>) => void
+  removeContentBlock: (projectId: string, implId: string, blockId: string) => void
+  moveContentBlock: (projectId: string, implId: string, blockId: string, direction: 'up' | 'down') => void
 }
 
 type ProfileStore = ProfileState & ProfileActions
@@ -236,6 +252,74 @@ export const useProfileStore = create<ProfileStore>()(
           projects: s.projects.map((p) =>
             p.id === projectId
               ? { ...p, implementations: p.implementations.filter((i) => i.id !== implId) }
+              : p
+          ),
+        })),
+
+      // Content blocks
+      addContentBlock: (projectId, implId, blockType) =>
+        set((s) => ({
+          projects: s.projects.map((p) =>
+            p.id === projectId
+              ? {
+                  ...p,
+                  implementations: p.implementations.map((i) =>
+                    i.id === implId
+                      ? {
+                          ...i,
+                          contentBlocks: [
+                            ...(i.contentBlocks ?? []),
+                            createBlock(blockType, getMaxSortOrder(i.contentBlocks ?? [])),
+                          ],
+                        }
+                      : i
+                  ),
+                }
+              : p
+          ),
+        })),
+      updateContentBlock: (projectId, implId, blockId, updates) =>
+        set((s) => ({
+          projects: s.projects.map((p) =>
+            p.id === projectId
+              ? {
+                  ...p,
+                  implementations: p.implementations.map((i) =>
+                    i.id === implId
+                      ? { ...i, contentBlocks: updateBlock(i.contentBlocks ?? [], blockId, updates) }
+                      : i
+                  ),
+                }
+              : p
+          ),
+        })),
+      removeContentBlock: (projectId, implId, blockId) =>
+        set((s) => ({
+          projects: s.projects.map((p) =>
+            p.id === projectId
+              ? {
+                  ...p,
+                  implementations: p.implementations.map((i) =>
+                    i.id === implId
+                      ? { ...i, contentBlocks: removeBlock(i.contentBlocks ?? [], blockId) }
+                      : i
+                  ),
+                }
+              : p
+          ),
+        })),
+      moveContentBlock: (projectId, implId, blockId, direction) =>
+        set((s) => ({
+          projects: s.projects.map((p) =>
+            p.id === projectId
+              ? {
+                  ...p,
+                  implementations: p.implementations.map((i) =>
+                    i.id === implId
+                      ? { ...i, contentBlocks: moveBlock(i.contentBlocks ?? [], blockId, direction) }
+                      : i
+                  ),
+                }
               : p
           ),
         })),

@@ -334,7 +334,7 @@
       "slideType": "question",
       "questionData": {
         "question": "When does a message event get triggered?",
-        "answer": "Typically, a message event gets triggered when an event-aware entity is created, changed, or removed."
+        "answer": "Typically, a message event gets triggered when an event-aware entity is created,\nchanged, or removed."
       }
     },
     {
@@ -371,8 +371,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "An What is the primary purpose of the MessageContext entity?",
-        "answer": "What is the primary purpose of the MessageContext entity? The primary purpose of the MessageContext entity is to create messages using information from the message event and the triggering entity."
+        "question": "What is the primary purpose of the MessageContext entity?",
+        "answer": "The primary purpose of the MessageContext entity is to create messages using\ninformation from the message event and the triggering entity."
       }
     },
     {
@@ -409,8 +409,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "A Guidewire application has seven destinations and an event-aware",
-        "answer": "7 entity called Escalation. y A) When an Escalation is created, what is the maximum number of MessageContexts that might get created? B) What is the minimum? A) Seven, which would occur if all seven destinations listen to EscalationAdded. B) Zero, which would occur if none of the destinations listen to EscalationAdded."
+        "question": "A Guidewire application has seven destinations and an event-aware\nentity called Escalation.\n\nA) When an Escalation is created, what is the maximum number of\nMessageContexts that might get created?\n\nB) What is the minimum?",
+        "answer": "A) Seven, which would occur if all seven destinations listen to EscalationAdded.\nB) Zero, which would occur if none of the destinations listen to EscalationAdded."
       }
     },
     {
@@ -447,8 +447,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "An What plugin is required for every destination? What does this plugin do?",
-        "answer": "What plugin is required for every destination? What does this plugin do? MessageTransport, which sends the message to the external system."
+        "question": "What plugin is required for every destination? What does this plugin do?",
+        "answer": "MessageTransport, which sends the message to the external system."
       }
     },
     {

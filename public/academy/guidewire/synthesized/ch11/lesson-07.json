@@ -331,15 +331,15 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "In order to generate JSON wrapper classes, you must: (Select three)\nA) Add anew Run/Debug configuration whose main class is defined as:\ncom. guidewire. tools. json. JsonSchemaWrapperCodegenTool\nB) Run the server in Debug ‘Server’ mode.\nCc\nD\nE\nF) Add the schema fully qualified name to the codegen-schemas.txt.\nwv\nAdd a package called src.jsonschema.\nRun the JSONSchemaWrapperCodegen Tool.\nRestart the server after wrapper classes are created.\na=",
-      "referenceAnswer": "Inorder to generate JSON wrapper classes, you must: (Select three)\n\nv7 “ A) Add anew Run/Debug configuration whose main class is defined as:\ncom.guidewire. tools. json. JsonSchemaWrapperCodegenTool\nB) Run the server in Debug ‘Server’ mode.\nCc\nD\nE\n\nF) Add the schema fully qualified name to the codegen-schemas.txt.\n\nwv\n\nAdd a package called src.jsonschema.\nRun the JSONSchemaWrapperCodegenTool.\n\nRestart the server after wrapper classes are created.\n\nThe correct answers are A, D, and F.",
+      "question": "In order to generate JSON wrapper classes, you must: (Select three)\n\nA) Add a new Run/Debug configuration whose main class is defined as: com.guidewire.tools.json.JsonSchemaWrapperCodegenTool\nB) Run the server in Debug ‘Server’ mode.\nC) Add a package called src.jsonschema.\nD) Run the JSONSchemaWrapperCodegen Tool.\nE) Restart the server after wrapper classes are created.\nF) Add the schema fully qualified name to the codegen-schemas.txt.",
+      "referenceAnswer": "The correct answers are A, D, and F.",
       "questionKey": "slide-30"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "/- — *-gw-type Is added in a JSON schema to map Guidewire internal types\nin cases where a format would be ambiguous, such as: typekeys,\nMonetaryAmount and CurrencyAmount. (True or False)\nSeo e Soe esses see see",
-      "referenceAnswer": "/- — X-gw-type Is added in a JSON schema to map Guidewire internal types\nPa in cases where a format would be ambiguous, such as: typekeys,\nMonetaryAmount and CurrencyAmount. (True or False)\n\nTrue\n\nSoo eS eee soe ese ese",
+      "question": "X-gw-type is added in a JSON schema to map Guidewire internal types in cases where a format would be ambiguous, such as: typekeys, MonetaryAmount and CurrencyAmount. (True or False)",
+      "referenceAnswer": "True",
       "questionKey": "slide-32"
     },
     {

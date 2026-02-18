@@ -204,21 +204,21 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "What is the structure of a wizard?",
-      "referenceAnswer": "¢ The correct answer is it is a list of sequential (and optionally non-sequential) steps,\nthat together perform some complex task in a logical order, as a logical unit of work.\nSe see aS SSeS\nnl",
+      "referenceAnswer": "The correct answer is it is a list of sequential (and optionally non-sequential) steps,\nthat together perform some complex task in a logical order, as a logical unit of work.",
       "questionKey": "slide-25"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "How does a wizard reference a screen, and howis this different from\nKs how a location group references a screen?",
-      "referenceAnswer": "Se see aS SSeS",
+      "question": "How does a wizard reference a screen, and how is this different from\nhow a location group references a screen?",
+      "referenceAnswer": "The correct answer is a wizard directly references a screen via a wizard step, as\nopposed to a location group which references a screen via a page.",
       "questionKey": "slide-27"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "What happens when a screen’s mode property does not match any of\nKs the defined modes?",
-      "referenceAnswer": "displayed; otherwise, a runtime error occurs.\nSe see aS SSeS",
+      "question": "What happens when a screen’s mode property does not match any of\nthe defined modes?",
+      "referenceAnswer": "The correct answer is if there is a default mode defined, that mode of the screen is\ndisplayed; otherwise, a runtime error occurs.",
       "questionKey": "slide-29"
     },
     {

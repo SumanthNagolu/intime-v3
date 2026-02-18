@@ -120,21 +120,21 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "What is the difference between a static permission and an object-based\npermission?",
-      "referenceAnswer": "The correct answer is:\nAstatic permission is granted or revoked for the entire application.\nAn object-based permission is granted on a claim by claim (or exposure by exposure)\nbasis.\nSoe ee eon eee Soe e ese Ss",
+      "referenceAnswer": "The correct answer is:\nA static permission is granted or revoked for the entire application.\nAn object-based permission is granted on a claim by claim (or exposure by exposure)\nbasis.",
       "questionKey": "slide-13"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
       "question": "What is the difference between a permission and an application\npermission key (APK) containing only one permission?",
-      "referenceAnswer": "Possible answers:\n* Apermission can be created by a Guidewire configurator, while an APK cannot.\n* Apermission can be added to a role, while an APK cannot.\n* Apermissions check using an APK will execute faster than a permissions check\nwhich directly references a permission.\nSoe ee eon eee Soe e ese Ss",
+      "referenceAnswer": "Possible answers:\n* A permission can be created by a Guidewire configurator, while an APK cannot.\n* A permission can be added to a role, while an APK cannot.\n* A permissions check using an APK will execute faster than a permissions check\nwhich directly references a permission.",
       "questionKey": "slide-15"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "What is the difference between an APK with two permissions (such as\n“create note” and “edit note”) and a role with the same two pennissions?",
-      "referenceAnswer": "Possible answers:\n\nAn APK is created to optimize permissions checks. A role is created to assign\npermissions to users.\n\nDevelopers can create and modify roles. Developers cannot create or modify APKs.\n\nSoe ee eon eee Soe e ese Ss",
+      "question": "What is the difference between an APK with two permissions (such as\n“create note” and “edit note”) and a role with the same two permissions?",
+      "referenceAnswer": "Possible answers:\nAn APK is created to optimize permissions checks. A role is created to assign\npermissions to users.\nDevelopers can create and modify roles. Developers cannot create or modify APKs.",
       "questionKey": "slide-17"
     },
     {
@@ -222,15 +222,15 @@
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "Ifyou need to know which roles include the claimown system\npermission, how would you go about this?",
-      "referenceAnswer": "The correct answer is on the System Permissions page of the security dictionary, look\nat the roles section of the claimown system permission.\nSoe ee eon eee Soe e ese Ss",
+      "question": "If you need to know which roles include the claimown system permission, how would you go about this?",
+      "referenceAnswer": "On the System Permissions page of the security dictionary, look at the roles section of the claimown system permission.",
       "questionKey": "slide-29"
     },
     {
       "type": "knowledge_check",
       "id": "kc-5",
-      "question": "Howcan you generate or update the security dictionary?",
-      "referenceAnswer": "The correct answers are using one of these two ways:\n1. Atthe command line, navigate to the ClaimCenter root directory and enter gwb\ngenDataDictionary. The security dictionary is generated along with the data\ndictionary.\n\n2. On the Export Data page of the Administration tab, you may choose to generate\nthe security dictionary either as HTML or as XML. In either case, the file is then\ndownloaded as a .ZIP.\n\nSoe ee eon ee",
+      "question": "How can you generate or update the security dictionary?",
+      "referenceAnswer": "1. At the command line, navigate to the ClaimCenter root directory and enter gwb genDataDictionary. The security dictionary is generated along with the data dictionary.\n2. On the Export Data page of the Administration tab, you may choose to generate the security dictionary either as HTML or as XML. In either case, the file is then downloaded as a .ZIP.",
       "questionKey": "slide-31"
     },
     {
@@ -289,15 +289,15 @@
     {
       "type": "knowledge_check",
       "id": "kc-6",
-      "question": "Given the perm condition perm. System. applyCheck, is applycheck a\nsystem permission or an APK?",
-      "referenceAnswer": "The correct answer is it is a system permission. If it were an APK, it would have the\nentity listed at the beginning of its name.\nSoe ee eon eee Soe e ese Ss",
+      "question": "Given the perm condition perm. System. applyCheck, is applycheck a system permission or an APK?",
+      "referenceAnswer": "It is a system permission. If it were an APK, it would have the entity listed at the beginning of its name.",
       "questionKey": "slide-41"
     },
     {
       "type": "knowledge_check",
       "id": "kc-7",
-      "question": "Given the perm condition perm. System. applyCheck, is applycheck\nstatic or object-based?",
-      "referenceAnswer": "The correct answer is Static. If it were object-based, it would have an (object)\nargument.\nSoe ee eon eee Soe e ese Ss",
+      "question": "Given the perm condition perm. System. applyCheck, is applycheck static or object-based?",
+      "referenceAnswer": "Static. If it were object-based, it would have an (object) argument.",
       "questionKey": "slide-43"
     },
     {

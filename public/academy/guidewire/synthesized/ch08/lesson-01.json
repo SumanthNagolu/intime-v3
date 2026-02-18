@@ -245,22 +245,22 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "Which entities below answer the business question of what is covered\no on the policy?",
+      "question": "Which entities below answer the business question of what is covered\non the policy?\nA) PolicyLine\nB) Coverable\nC) CoverableCov\nD) Cost\nE) Form\nF) Job",
       "referenceAnswer": "Correct answers: A, B, C, D, E",
       "questionKey": "slide-18"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "Assume a given instance of PolicyCenter\n77 — has 2 policy lines, each with 3 coverables.\nAccount\nPe How many entities are there that store... kL.\n1. Coverables? Policy\n2. Coverages?\n3. Costs?\nPolicy Period",
-      "referenceAnswer": "Answer:\n1. 6 Coverables\n2. 6 Coverages\n3. 2Costs",
+      "question": "Assume a given instance of PolicyCenter\nhas 2 policy lines, each with 3 coverables.\nHow many entities are there that store...\n1. Coverables?\n2. Coverages?\n3. Costs?",
+      "referenceAnswer": "Answer:\n1. 6 Coverables\n2. 6 Coverages\n3. 2 Costs",
       "questionKey": "slide-20"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
       "question": "What is the purpose of the\nUserRoleAssignment entity?",
-      "referenceAnswer": "UserRoleAssignment is used to pair a\nuser/group combination with an ownable\nobject and a specific role on that object (such\nas underwriter\"). An individual user can have\nmultiple roles.",
+      "referenceAnswer": "UserRoleAssignment is used to pair a\nuser/group combination with an ownable\nobject and a specific role on that object (such\nas underwriter). An individual user can have\nmultiple roles.",
       "questionKey": "slide-22"
     },
     {

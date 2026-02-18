@@ -198,7 +198,7 @@
       "slideType": "question",
       "questionData": {
         "question": "Whats the status of every invoice initially after it is created?",
-        "answer": "Ox A new invoice has a status of Planned. ~ SSS SS HH"
+        "answer": "A new invoice has a status of Planned."
       }
     },
     {
@@ -236,7 +236,7 @@
       "slideType": "question",
       "questionData": {
         "question": "When and how does BillingCenter make an invoice billed?",
-        "answer": "O” On the invoice bill date, the Invoice batch process changes the invoice status to Billed. ~ SSS SS HH"
+        "answer": "On the invoice bill date, the Invoice batch process changes the invoice status to\nBilled."
       }
     },
     {
@@ -274,7 +274,7 @@
       "slideType": "question",
       "questionData": {
         "question": "When and how does BillingCenter make an invoice due?",
-        "answer": "O” One day after the invoice due date, the Invoice Due batch process changes the invoice status to Due. ~ SSS SS HH"
+        "answer": "One day after the invoice due date, the Invoice Due batch process changes the\ninvoice status to Due."
       }
     },
     {
@@ -381,7 +381,7 @@
       "slideType": "question",
       "questionData": {
         "question": "When does BillingCenter add an invoice fee to an invoice?",
-        "answer": "Ox The invoice fee is added when an invoice is billed. ~ SSS SS HH"
+        "answer": "The invoice fee is added when an invoice is billed."
       }
     },
     {
@@ -419,7 +419,7 @@
       "slideType": "question",
       "questionData": {
         "question": "Where do you specify the amount of an invoice fee?",
-        "answer": "O” The billing plan ~ SSS SS HH"
+        "answer": "The billing plan"
       }
     },
     {
@@ -609,8 +609,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Consider the following invoice details and billing plan settings. What is",
-        "answer": "Y the deadline for changing the payment request? 3/07/2018 because the Draft Date is three days before the Due Date and the payment request is fixed one day before the Draft Date. ~ SSS SS HH"
+        "question": "Consider the following invoice details and billing plan settings. What is the deadline for changing the payment request?\n\n| 02/0/2020 02/11/2020 1000000345 No Planned $1,232.40",
+        "answer": "3/07/2018 because the Draft Date is three days before the Due Date and the\npayment request is fixed one day before the Draft Date."
       }
     },
     {

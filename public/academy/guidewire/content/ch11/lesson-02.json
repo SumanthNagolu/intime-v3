@@ -401,8 +401,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "An What is a package?",
-        "answer": "What is a package? A package is a group of classes gathered together either because they execute a common business task, or because access to the classes must be limited only to the classes in the package, or both. SS eee ene ee soe Sse"
+        "question": "What is a package?",
+        "answer": "A package is a group of classes gathered together either because they execute a\ncommon business task, or because access to the classes must be limited only to the\nclasses in the package, or both."
       }
     },
     {
@@ -439,8 +439,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "AGosu class is named Circle. Each instance must have a property for",
-        "answer": "The circle's radius. This value can be accessed and conditionally modified by methods in the Circle class and by methods in other classes. How many elements must you create to implement this? Three. 1. Aprivate variable named _ radius. 2. Aget method that retrieves the value of _radius. 3. A set method that sets the value of _radius. SS eee ene ee soe Sse"
+        "question": "A Gosu class is named Circle. Each instance must have a property for\nthe circle's radius. This value can be accessed and conditionally\nmodified by methods in the Circle class and by methods in other classes.\nHow many elements must you create to implement this?",
+        "answer": "Three.\n1. A private variable named _radius.\n2. A get method that retrieves the value of _radius.\n3. A set method that sets the value of _radius."
       }
     },
     {
@@ -477,8 +477,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "The Circle class extends the Oval class and implements the ICurveLine",
-        "answer": "7 interface. ? 1. Can Circle override methods from Oval? 2. Can Circle override methods from ICurveLine? 1. Yes From a keyword standpoint, yes. If Circle implements the ICurveLine interface, then Circle must implement all the methods of the ICurveLine interface using the keyword \"override\". However, because |CurveLine is an interface, the Circle class is actually just declaring the implementations of the methods. There are no method implementations in an interface, so there is nothing to \"override\" from an OOP standpoint."
+        "question": "The Circle class extends the Oval class and implements the ICurveLine\ninterface.\n1. Can Circle override methods from Oval?\n2. Can Circle override methods from ICurveLine?",
+        "answer": "1. Yes\nFrom a keyword standpoint, yes. If Circle implements the ICurveLine interface,\nthen Circle must implement all the methods of the ICurveLine interface using the\nkeyword \"override\". However, because ICurveLine is an interface, the Circle class\nis actually just declaring the implementations of the methods. There are no\nmethod implementations in an interface, so there is nothing to \"override\" from an\nOOP standpoint."
       }
     },
     {
@@ -516,7 +516,7 @@
       "slideType": "question",
       "questionData": {
         "question": "What is the purpose of an annotation?",
-        "answer": "An annotation provides metadata about the element being annotated. SS eee ene ee soe Sse"
+        "answer": "An annotation provides metadata about the element being annotated."
       }
     },
     {
@@ -553,8 +553,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "How do you calla static method from a class?",
-        "answer": "You call a static method by referencing the method name from the class. You must either reference the fully qualified name of the class or import the class using the uses keyword followed by the reference to the package path. SS eee ene ee soe Sse"
+        "question": "How do you call a static method from a class?",
+        "answer": "You call a static method by referencing the method name from the class. You must\neither reference the fully qualified name of the class or import the class using the uses\nkeyword followed by the reference to the package path."
       }
     },
     {
@@ -592,7 +592,7 @@
       "slideType": "question",
       "questionData": {
         "question": "Why put logic in a Gosu class as opposed to an entity enhancement?",
-        "answer": "Logic that is reusable and generic must be in a Gosu class. Logic that is intrinsically connected with an entity must be inserted into an Enhancement. SS eee ene ee soe Sse"
+        "answer": "Logic that is reusable and generic must be in a Gosu class.\nLogic that is intrinsically connected with an entity must be inserted into an\nEnhancement."
       }
     },
     {

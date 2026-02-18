@@ -1,0 +1,366 @@
+{
+  "title": "Introduction to Validation",
+  "subtitle": "Learn to enforce data integrity using pattern matching, validation expressions, and rules.",
+  "estimatedMinutes": 60,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine you're developing an insurance application. The business analysts have a critical requirement: policy numbers must follow a very specific format, like 'AB-1234567'. If a user or an API tries to save a policy with an incorrect format, it could lead to data inconsistencies and operational errors.",
+      "question": "How can we ensure that all policy numbers adhere to this strict format, regardless of how they are entered into the system?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Describe the purpose and components of pattern matching for data validation.",
+        "Differentiate between regular expressions and input masks.",
+        "Compare pattern matching implementation strategies in the data model versus the UI.",
+        "Explain the function and configuration of validation expressions in the UI.",
+        "Describe the purpose and implementation of validation rules for complex business logic.",
+        "Understand the role of delegates, specifically the Validatable delegate, in rules-based validation.",
+        "Explain how the validation graph works during database commit and the impact of the triggersValidation attribute."
+      ],
+      "estimatedMinutes": 3
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "Before diving into validation, recall your understanding of data fields, user interface components, and basic data model concepts. Think about how data is typically stored and displayed in an application.",
+      "warmupQuestion": "What are some common ways you've seen applications prevent users from entering incorrect data?",
+      "hint": "Consider both immediate feedback in the UI and checks that happen when data is saved."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Pattern Matching for Data Validation",
+      "narrative": "Data validation is a fundamental application behavior designed to prevent users from saving invalid business data. It's crucial for maintaining data integrity and ensuring that your application operates with reliable information. One common technique for validation is **pattern matching**, which focuses on ensuring that data entered into a field conforms to a specific format.\n\nAs illustrated by the user story in Figure 1, an insurance company might have a very specific policy number format, such as 'two letters, a hyphen, and seven digits'. This format needs to be enforced consistently, whether the policy is saved through the user interface (UI) or via API calls. Furthermore, the UI should provide guidance to users, perhaps through a watermark, and display a clear error message if the format is incorrect.\n\n**Field-level validation** is a specific type of validation tied to one or more data fields. Pattern matching is a field-level validation technique that verifies the data entered by the user matches a predefined pattern. This prevents the saving of invalid business data and can be implemented either in the data model or the UI tier. The main components involved in pattern matching are **regular expressions** and, optionally, **input masks**.",
+      "keyPoints": [
+        "Validation prevents saving invalid business data.",
+        "Pattern matching is a field-level validation technique to enforce data format.",
+        "Regular expressions define the required pattern.",
+        "Input masks provide visual guidance to the user."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "Figure 1: An example user story highlighting the need for policy number format validation."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "Figure 2: Introduction to the concept of pattern matching."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Figure 3: Definition and key characteristics of pattern matching in validation."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Field-Level Validation",
+          "content": "A validation behavior tied to one or more specific data fields, ensuring data entered into those fields meets certain criteria."
+        },
+        {
+          "type": "definition",
+          "title": "Regular Expression",
+          "content": "A sequence of characters that defines a search pattern, used here to define the required format for data. If the data doesn't match, saving is not allowed."
+        },
+        {
+          "type": "definition",
+          "title": "Input Mask",
+          "content": "A visual guide that displays a watermark in a field and helps the user input data in the correct format. It guides but does not restrict data commit on its own."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Implementing Pattern Matching with Regular Expressions and Input Masks",
+      "narrative": "At the heart of pattern matching are **regular expressions**, which define an abstract pattern that the data must conform to. For instance, an email address can be defined by the pattern `.+@.+\..+`, meaning any non-empty string, followed by an 'at' symbol, another non-empty string, a period, and a final non-empty string. Similarly, a routing number might follow a pattern like `[0-9a-zA-Z]{3}-[0-9]{3}`, which specifies three alphanumeric characters, a hyphen, and three digits.\n\nIt's important to note that certain characters, such as `[ ] ( ) { }`, are not treated as literals in regular expressions and must be escaped if you intend to use them as part of the literal pattern. For a comprehensive list of syntax for validator patterns, always consult your product's Configuration Guide.\n\nWhile regular expressions define the strict pattern, **input masks** serve as a user-friendly guide. They appear as a watermark in the field and can also show as a tooltip on mouse-over, indicating the expected format. As the user types, the mask changes color. Unlike regular expressions, an input mask alone does not restrict data commit; its primary role is to guide the user towards the correct format. If an input mask contains placeholders (e.g., `#`) but lacks an explicit `regex` property or associated entity field validator, the framework can generate an implicit regular expression based on the `inputMask` definition. This implicit regex triggers client-side validation, providing immediate feedback without preventing the save operation. Input masks can also enforce specific characters, such as requiring 'AB' as the first two characters.",
+      "keyPoints": [
+        "Regular expressions define abstract patterns for data validation.",
+        "Input masks provide visual guidance and watermarks in fields.",
+        "Input masks do not restrict data commit on their own but guide user input.",
+        "Implicit regular expressions can be generated from input masks for client-side validation."
+      ],
+      "figures": [
+        {
+          "slideNumber": 6,
+          "caption": "Figure 4: Examples of regular expressions for email addresses and routing numbers, along with UI feedback."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Figure 5: Explanation of input masks, their appearance, and behavior in guiding user input."
+        }
+      ],
+      "codeExamples": [
+        {
+          "language": "text",
+          "title": "Email Address Regular Expression",
+          "code": ".+@.+\\..+",
+          "explanation": "This pattern matches any non-empty string, an '@' symbol, another non-empty string, a period (escaped), and a final non-empty string."
+        },
+        {
+          "language": "text",
+          "title": "Routing Number Regular Expression",
+          "code": "[0-9a-zA-Z]{3}-[0-9]{3}",
+          "explanation": "This pattern matches three alphanumeric characters, followed by a hyphen, and then three digits."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "warning",
+          "title": "Escaping Characters",
+          "content": "Characters like `[ ] ( ) { }` have special meaning in regular expressions and must be escaped with a backslash (`\\`) if you intend to use them as literal characters in your pattern."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Choosing the Right Implementation for Pattern Matching",
+      "narrative": "When implementing pattern matching, you have the option to configure it either in the **data model** or directly in the **user interface (UI)**. Each approach comes with its own set of advantages and disadvantages.\n\nImplementing pattern matching in the **data model** offers several benefits. It ensures that compliance is enforced consistently across both the UI and any API calls, providing a single source of truth for validation logic. This approach also supports full localization, meaning your validation messages can be easily adapted for different languages and regions. Furthermore, the data model provides robust extensibility for complex scenarios. However, a key limitation is that values for regular expressions and input masks are typically static; they cannot dynamically change based on evolving business logic.\n\nConversely, implementing pattern matching in the **UI** allows for more dynamic values, where regular expressions and input masks can be altered based on specific business logic or user interactions. It also provides the capability to restrict data commit directly from the UI, offering immediate feedback and preventing invalid data from even reaching the server. The downside is that only a limited number of UI widgets support these properties, and the configuration must be done per widget, which can lead to duplication. Additionally, UI-level pattern matching often lacks options for custom error messages, and it's essential to refer to the PCF Format Reference for supported properties.\n\nTo improve the design when using UI-level validation, especially for dynamic requirements, a function call can be used instead of hard-coding the strings. This allows for more flexible and maintainable validation logic.",
+      "keyPoints": [
+        "Data model validation enforces compliance universally (UI and API) and supports localization.",
+        "UI validation allows dynamic regex/input mask values and can restrict data commit.",
+        "Data model validation is static, while UI validation can be configured per widget and may lack custom error messages.",
+        "Using function calls in UI validation improves design for dynamic requirements."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Figure 6: A comparison of the pros and cons of implementing pattern matching in the data model versus the user interface."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Figure 7: An example demonstrating UI-level pattern matching, highlighting its properties and limitations."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Dynamic UI Validation",
+          "content": "When implementing pattern matching in the UI with dynamic requirements, consider using a function call to define the regex and input mask strings instead of hard-coding them. This enhances flexibility and maintainability."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will show how pattern matching is applied in the user interface to enforce a specific policy number format. Pay close attention to how the input mask guides the user and how validation errors are displayed when an incorrect format is entered.",
+      "transcriptSummary": "The demo illustrates entering a policy number field with an input mask. It shows how the watermark guides the user and how the system provides immediate feedback and prevents saving when the policy number does not conform to the required pattern, such as 'XX-#######'."
+    },
+    {
+      "type": "concept",
+      "id": "concept-4",
+      "heading": "Implementing Field-Level Validation with Validation Expressions",
+      "narrative": "Beyond simple pattern matching, applications often require more complex field-level validation based on business logic. This is where **validation expressions** come into play. A validation expression is a logical Gosu expression associated with a single atomic widget in the UI tier. Its purpose is to implement field-level validation that goes beyond basic format checks.\n\nConsider a user story where the application needs to warn users when saving a 'high-value California policy' (e.g., premium greater than $5000). The first time such a policy is saved, a warning message should appear, but the save should be allowed on the second attempt after the user acknowledges the warning. This scenario requires more than just a pattern match; it needs conditional logic.\n\nWhen a validation expression is evaluated, if it returns `null`, the save operation is allowed. However, if the expression returns a `string` (which is interpreted as an error message), the save is prevented, the field is flagged with a red box warning, and the error message is displayed at the top of the screen. Users can typically mouse over the field to see the specific error message, and these messages are localizable.\n\nA related property is `requestValidationExpression`. This is similar to `validationExpression` but triggers validation not only on update but also on every other server request, such as navigating to a different page. This ensures that the user input is consistently validated across various interactions within the application.",
+      "keyPoints": [
+        "Validation expressions are Gosu expressions for field-level validation in the UI.",
+        "They return `null` to allow save, or a `string` (error message) to prevent save.",
+        "Invalid fields are flagged with a red box and display error messages.",
+        "`requestValidationExpression` validates on update and all other server requests."
+      ],
+      "figures": [
+        {
+          "slideNumber": 13,
+          "caption": "Figure 8: A user story outlining the requirement for high-value policy validation."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Figure 9: Explanation of validation expressions as logical Gosu expressions for field-level validation."
+        },
+        {
+          "slideNumber": 15,
+          "caption": "Figure 10: Further details on how validation expressions work, including UI feedback and the `requestValidationExpression` property."
+        },
+        {
+          "slideNumber": 16,
+          "caption": "Figure 11: An example showing where a `validationExpression` property is configured within the UI."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Validation Expression",
+          "content": "A logical Gosu expression associated with a UI widget that performs field-level validation. It returns `null` for valid input or an error message string for invalid input."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-5",
+      "heading": "Advanced Validation with Business Rules and Delegates",
+      "narrative": "For more complex logical conditions and relationships between multiple entity fields, **validation rules** are the preferred approach. These rules are written as Gosu rules and can manage intricate scenarios, such as ensuring a primary phone number is selected if a user has multiple phone numbers, or verifying that all necessary data has been entered. Validation rules are powerful because they can show either warnings (non-blocking, informational) or errors (blocking, requiring user correction).\n\nValidation rules are primarily checked during the save process, specifically when a `Validatable` entity is committed to the database. For an entity to be subject to these rules, it must implement the `Validatable` delegate. This is achieved by including the `<implementsEntity name=\"Validatable\"/>` tag in the entity's ETI/ETX file. It's critical to remember that PolicyCenter does not permit you to modify objects during validation rule execution that require changes to the database, as this would make it impossible to completely validate data.\n\nA **delegate** in the data model is a virtual object that models a capability, allowing functionality to be shared across multiple entities. For example, the `Validatable` delegate provides reusable functions to show warning or error messages. Another example is the `Assignable` delegate, which contains functions for automatic assignment to users or groups and stores assignment details like `AssignedUser` and `AssignedTime`. Delegates consist of database fields and/or methods that can be reused, promoting modularity and consistency in your data model.",
+      "keyPoints": [
+        "Validation rules handle complex logical conditions and relationships between fields.",
+        "Rules can issue warnings (non-blocking) or errors (blocking).",
+        "Entities must implement the `Validatable` delegate to use validation rules.",
+        "Delegates allow sharing functionality (fields and methods) across the data model."
+      ],
+      "figures": [
+        {
+          "slideNumber": 17,
+          "caption": "Figure 12: Introduction to business logic validation rules and their capabilities."
+        },
+        {
+          "slideNumber": 18,
+          "caption": "Figure 13: Further details on validation rules, including their execution during save and the requirement for the `Validatable` delegate."
+        },
+        {
+          "slideNumber": 19,
+          "caption": "Figure 14: Explanation of delegates as a mechanism for sharing functionality across the data model."
+        },
+        {
+          "slideNumber": 20,
+          "caption": "Figure 15: Examples of delegates, including `Validatable` and `Assignable`, and their respective functions."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Delegate",
+          "content": "A virtual object defined in the data model that models a capability, allowing entities to reuse database fields and methods by implementing the delegate."
+        },
+        {
+          "type": "warning",
+          "title": "No Object Modification During Validation",
+          "content": "During validation rule execution, PolicyCenter does not permit modifications to objects that would require database changes. This ensures that the data being validated remains stable throughout the process."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-6",
+      "heading": "Understanding the Validation Graph and Commit-Cycle Validation",
+      "narrative": "The rules engine performs validation during database commit, a process often referred to as **commit-cycle validation**. This validation is triggered when a `Validatable` object is created or changed, or when a `Validatable` sub-object is created, changed, or removed. The key mechanism controlling this behavior is the `triggersValidation` attribute on foreign keys and arrays within the data model. When this attribute is set to `true`, any change to the linked entity or array element will cause the parent `Validatable` entity to be re-validated.\n\nPolicyCenter constructs a **validation graph** by traversing the set of foreign keys and arrays that have `triggersValidation` set to `true`. For example, if a `ProducerCodeRoles` array on `ProducerCode` is marked as triggering validation, any changes to a producer code role will also trigger validation of the `ProducerCode` itself. This graph maps all paths from changed entities up to top-level `Validatable` entities like `Account` or `ProducerCode`. The system then queries these paths to determine which `Validatable` entities need to be validated.\n\nIt's crucial that each link in the chain (e.g., `Address` -> `ContactAddress` -> `PolicyContact` -> `Policy`) is explicitly set as `triggersValidation` and the top-level entity (`Policy`) is `Validatable` for validation to propagate correctly. PolicyCenter stores this path in reverse in the validation graph, so if an address changes, it traverses from address to contact address, then to policy contact, and finally to policy. This ensures that all relevant `Validatable` entities are checked when a related object is modified.",
+      "keyPoints": [
+        "Validation occurs during database commit (commit-cycle validation).",
+        "Changes to `Validatable` objects or sub-objects trigger validation.",
+        "The `triggersValidation` attribute on foreign keys and arrays controls validation propagation.",
+        "PolicyCenter traverses a validation graph to identify all `Validatable` entities affected by a change."
+      ],
+      "figures": [
+        {
+          "slideNumber": 21,
+          "caption": "Figure 16: Explanation of the validation graph and triggers during database commit."
+        },
+        {
+          "slideNumber": 22,
+          "caption": "Figure 17: A duplicate slide reinforcing the concept of the validation graph and its triggers."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Configuring `triggersValidation`",
+          "content": "Set the `triggersValidation` attribute to `true` on foreign keys and arrays if you want changes to their linked entities or array elements to trigger validation on the parent `Validatable` entity. This ensures comprehensive data integrity checks."
+        },
+        {
+          "type": "warning",
+          "title": "Validation Performance Issues",
+          "content": "Avoid marking foreign keys and arrays that point to administration objects (like User or Group) as triggering validation, especially if they are referenced by many other objects. This can lead to significant performance degradation as PolicyCenter attempts to validate a vast number of objects on a single change."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-7",
+      "heading": "Choosing Between Validation Expressions and Validation Rules",
+      "narrative": "Understanding the distinct characteristics of validation expressions and validation rules is key to choosing the appropriate validation mechanism for your business requirements. While both serve to enforce data integrity, they are designed for different levels of complexity and implementation contexts.\n\n**Validation expressions** are best suited for validating a simple logical condition related to a single field. They are implemented directly in the UI tier and must be configured individually for each widget. This approach provides immediate client-side feedback and is ideal for straightforward field-level checks that don't involve complex relationships with other data. However, their scope is limited to the UI, and they don't inherently enforce compliance through API calls.\n\nIn contrast, **validation rules** are designed for validating complex logical relationships between multiple entity fields. These rules are written as Gosu rules and operate at the data model level. For an entity to be validated by these rules, it must implement the `Validatable` delegate. This ensures that the validation logic is applied consistently, whether data is entered through the UI or via API calls, providing a robust, application-wide enforcement of compliance. Validation rules are more powerful for managing inter-field dependencies and complex business logic that might span across different parts of an entity or even related entities.",
+      "keyPoints": [
+        "Validation expressions are for simple, single-field UI validation.",
+        "Validation rules handle complex, multi-field relationships at the data model level.",
+        "Validation rules require the `Validatable` delegate and enforce compliance via UI and API.",
+        "Choose expressions for immediate UI feedback on simple fields, rules for comprehensive data model integrity."
+      ],
+      "figures": [
+        {
+          "slideNumber": 23,
+          "caption": "Figure 18: A comparison table outlining the key differences between validation expressions and validation rules."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your insurance application needs to validate a 'Zip Code' field. The requirement is that the zip code must be exactly five digits long. If the user enters anything else, they should see an immediate warning in the UI, but the system should still allow them to save the data if they choose, as this is a soft warning.",
+      "question": "How would you implement this validation using pattern matching components, and what specific properties would you configure?",
+      "hints": [
+        "Consider which pattern matching component provides visual guidance without restricting commit.",
+        "Think about how to define a pattern for exactly five digits.",
+        "Refer to the discussion on input masks and their behavior."
+      ],
+      "expectedApproach": "Use an input mask to provide the visual guide and an implicit regular expression for client-side validation. The input mask property would be configured with five '#' placeholders."
+    },
+    {
+      "type": "practice",
+      "id": "practice-2",
+      "level": "independent",
+      "scenario": "You are working on a new 'Claim' entity. Business requires that if a claim's 'Amount' is greater than $10,000, and the 'Adjuster' field is empty, an error must be displayed preventing the claim from being saved. This validation needs to apply regardless of whether the claim is created via the UI or an API.",
+      "question": "Would you use a validation expression or a validation rule for this scenario, and why? Briefly describe the high-level steps for implementing your chosen approach.",
+      "hints": [
+        "Consider the complexity: does it involve a single field or a relationship between fields?",
+        "Think about the scope: does it need to apply to UI and API, or just UI?",
+        "Recall the role of the `Validatable` delegate."
+      ],
+      "expectedApproach": "A validation rule would be used because it involves a complex logical condition (Amount > $10,000 AND Adjuster is empty) and needs to be enforced at the data model level for both UI and API. Implementation would involve ensuring the 'Claim' entity implements the `Validatable` delegate and writing a Gosu rule that uses the `rejectField` method if the condition is met."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "Assume that there is an Order entity that has an OrderNumber field. The\nfield appears on two detail views: LegacyOrdersDV and NewOrdersDV.\n\nA) Name a situation where you would implement validation logic for the\nOrderNumber field at the data model level.\n\nB) Name a situation where you would implement validation logic for the\nOrderNumber field at the UI level.\n\nSe Sess e ese ssc esaeK",
+      "referenceAnswer": "A) Possible answer: The OrderNumber field has a pattern, such as two characters, a\nhyphen, and five characters, and \nSS Se SSeS sess e eases",
+      "questionKey": "slide-26"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "What happens if a widget's validation expression retums null?\n\n¢\n¢\n4\n\nSe Sess e ese ssc esaeK",
+      "referenceAnswer": "The save is allowed—a return value of null signifies that the validation condition was\nmet.\nSS Se SSeS sess e eases",
+      "questionKey": "slide-28"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Incase of validation rules, if you have an existing reject statement which\nraises only a warning, how would you change it to instead raise an error?\n\n4\n\nSe Sess e ese ssc esaeK",
+      "referenceAnswer": "You would swap the order of the final two pairs of arguments. The first pair should be\nthe last pair and vice versa.\nSS Se SSeS sess e eases",
+      "questionKey": "slide-30"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "the first argument of rejectField is a “relative path” to the object to\nhighlight. Why is it relevant to keep in mind that the path is relative?\n\nSe Sess e ese ssc esaeK",
+      "referenceAnswer": "Itis important to keep this in mind because the root object must be omitted from the\npath. If you include the root object, then TrainingApp will not be able to find the field to\nhighlight.\nSS Se SSeS sess e eases",
+      "questionKey": "slide-32"
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Validation is crucial for data integrity, preventing invalid business data from being saved.",
+        "Pattern matching uses regular expressions to define formats and input masks for user guidance.",
+        "Pattern matching can be implemented in the data model (universal enforcement) or UI (dynamic values, immediate feedback).",
+        "Validation expressions are Gosu expressions for simple, field-level UI validation.",
+        "Validation rules, written in Gosu, handle complex logical conditions and relationships between fields, requiring the `Validatable` delegate.",
+        "The validation graph ensures that changes to related entities trigger validation on top-level `Validatable` objects during database commit, controlled by the `triggersValidation` attribute."
+      ],
+      "realWorldConnection": "In Guidewire projects, robust validation is non-negotiable. Whether it's ensuring policy numbers are correctly formatted, preventing high-value claims from being saved without an adjuster, or maintaining complex relationships between contacts and addresses, these validation techniques are fundamental to building reliable and compliant insurance applications. Choosing the right validation approach—pattern matching, validation expressions, or validation rules—depends on the complexity, scope, and required enforcement level of your business logic.",
+      "nextLessonPreview": "In the next lesson, we will delve deeper into advanced Gosu programming techniques, building upon the foundational concepts of expressions and rules we've explored here."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Complete the 'Validation' student exercise to apply your knowledge of pattern matching, validation expressions, and validation rules in a practical scenario. This exercise will challenge you to implement different validation types based on specific business requirements, reinforcing your understanding of when and how to use each approach.",
+      "objectives": [
+        "Implement pattern matching using regular expressions and input masks.",
+        "Configure validation expressions for field-level business logic.",
+        "Develop validation rules for complex inter-field relationships.",
+        "Differentiate between warnings and errors in validation outcomes."
+      ]
+    }
+  ]
+}

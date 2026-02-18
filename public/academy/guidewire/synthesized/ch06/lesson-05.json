@@ -137,22 +137,22 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "How does BillingCenter determine the placement date of the first\nof installment invoice item?",
-      "referenceAnswer": "Howdoes BillingCenter determine the placement date of the first\ninstallment invoice item?\nBillingCenter determines the placement date using the invoiced and days fields in the\n\nFirst Installment section on the payment plan.",
+      "question": "How does BillingCenter determine the placement date of the first installment invoice item?",
+      "referenceAnswer": "BillingCenter determines the placement date using the invoiced and days fields in the First Installment section on the payment plan.",
       "questionKey": "slide-17"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "How does BillingCenter determine the placement date of the second\nof installment invoice item when there is a down payment?",
-      "referenceAnswer": "Howdoes BillingCenter determine the placement date of the second\ninstallment invoice item when there is a down payment?\n\nBillingCenter adds one payment interval (for example, a month) to the placement date\nfor the first installment.",
+      "question": "How does BillingCenter determine the placement date of the second installment invoice item when there is a down payment?",
+      "referenceAnswer": "BillingCenter adds one payment interval (for example, a month) to the placement date for the first installment.",
       "questionKey": "slide-19"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "The down payment and installment 1 have different placement dates.\nof Why are they on the same invoice?",
-      "referenceAnswer": "BillingCenter places each invoice item on the earliest available invoice that has the\nsame or later date than the invoice item’s placement date. The first available invoice\nfor both invoice items was dated 10/15/2018.",
+      "question": "The down payment and installment 1 have different placement dates. Why are they on the same invoice?",
+      "referenceAnswer": "BillingCenter places each invoice item on the earliest available invoice that has the same or later date than the invoice item’s placement date. The first available invoice for both invoice items was dated 10/15/2018.",
       "questionKey": "slide-21"
     },
     {
@@ -228,22 +228,22 @@
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "Suppose you have a policy period that uses a payment plan with\nof monthly payment interval. A pro rata charge for the policy period has\nbeen converted into invoice items.\nIn this situation, which one of the statements below will always be true?\nA) Ifthe down payment is scheduled for January ‘st, the first installment must\nbe scheduled for February 1st.\nB)_ Ifthe first installment is scheduled for February 1st, the second installment\nmust be scheduled for March 1st.\nC) Ifthe second installment is scheduled for March 1st, the third installment\nmust be scheduled for April 1st.",
-      "referenceAnswer": "Suppose you have a policy period that uses a payment plan with\nmonthly payment interval. A pro rata charge for the policy period has\n: been converted into invoice items.\nIn this situation, which one of the statements below will always be true?\n\nA. If the down payment is scheduled for January ‘st, the first installment\nmust be scheduled for February ‘st.\n\n' B. If the first installment is scheduled for February 1st, the second\n1 installment must be scheduled for March ‘st.\nJ\nc. If the second installment is scheduled for March ‘st, the third\ninstallment must be scheduled for April 1st.\n\nC. With a monthly payment plan, all installments after the second installment occur at\nmonthly intervals. If the first installment is on sequence, all installments after the\nfirst installment occur at monthly intervals.",
+      "question": "Suppose you have a policy period that uses a payment plan with monthly payment interval. A pro rata charge for the policy period has been converted into invoice items.\nIn this situation, which one of the statements below will always be true?\nA) If the down payment is scheduled for January 1st, the first installment must be scheduled for February 1st.\nB) If the first installment is scheduled for February 1st, the second installment must be scheduled for March 1st.\nC) If the second installment is scheduled for March 1st, the third installment must be scheduled for April 1st.",
+      "referenceAnswer": "C. With a monthly payment plan, all installments after the second installment occur at monthly intervals. If the first installment is on sequence, all installments after the first installment occur at monthly intervals.",
       "questionKey": "slide-33"
     },
     {
       "type": "knowledge_check",
       "id": "kc-5",
-      "question": "Which of these invoice treatments does BillingCenter support for a pro\nof rata charge?\ndown payment installments (of equal value)\noN\nDP IN IN IN IN IN\nDP IN IN IN IN IN\nON = regular interval of time",
-      "referenceAnswer": "~ — Which of these invoice treatments does BillingCenter support for a pro\n’ a rata charge?\n\nThese invoice treatments are supported for a pro rata change:\n#1 a down payment and sequence of installments\n#3 no down payment and an out-of-sequence first installment\n\n#4 no down payment and a sequence of installments\n\nNote: #2 is not supported (a down payment and an out-of-sequence first installment)",
+      "question": "Which of these invoice treatments does BillingCenter support for a pro rata charge?",
+      "referenceAnswer": "These invoice treatments are supported for a pro rata change:\n#1 a down payment and sequence of installments\n#3 no down payment and an out-of-sequence first installment\n#4 no down payment and a sequence of installments\nNote: #2 is not supported (a down payment and an out-of-sequence first installment)",
       "questionKey": "slide-35"
     },
     {
       "type": "knowledge_check",
       "id": "kc-6",
-      "question": "What is the difference between a down payment and an out-of-sequence\na first installment?",
-      "referenceAnswer": "The down payment amount is calculated as a percentage of the premium amount\nwhereas an out-of-sequence first installment is for the same amount as the other\ninstallments for the same premium charge.",
+      "question": "What is the difference between a down payment and an out-of-sequence first installment?",
+      "referenceAnswer": "The down payment amount is calculated as a percentage of the premium amount whereas an out-of-sequence first installment is for the same amount as the other installments for the same premium charge.",
       "questionKey": "slide-37"
     },
     {
@@ -288,7 +288,7 @@
       "type": "knowledge_check",
       "id": "kc-7",
       "question": "What is the main purpose of the charge breakdown feature?\nA) Charge breakdowns provide charge details for policyholder invoices.\nB) Charge breakdowns facilitate efficient charge slicing.\nC) Charge breakdowns allow for more granular accounting.",
-      "referenceAnswer": "What is the main purpose of the charge breakdown feature?\nA) Charge breakdowns provide charge details for policyholder invoices.\n\nB) Charge breakdowns facilitate efficient charge slicing.\nC) Charge breakdowns allow for more granular accounting.\n\nA. Charge breakdowns provide charge details for policyholder invoices.",
+      "referenceAnswer": "A. Charge breakdowns provide charge details for policyholder invoices.",
       "questionKey": "slide-43"
     },
     {

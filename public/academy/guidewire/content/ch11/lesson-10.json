@@ -350,8 +350,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "(dentify if each statements true or false.",
-        "answer": "|dentify if each statements true or false. Plugins implement methods that are called by internal code. Plugins must be written in Gosu. A plugin class must contain a predetermined set of methods based on the business need it serves. Plugins are used exclusively for external application integration. False — Guidewire recommends that they be written in Gosu, but they can be written in OSGi or Java. False — They are also used to execute tasks exclusively within the Guidewire application."
+        "question": "Identify if each statement is true or false.\nA) Plugins implement methods that are called by internal code.\nB) Plugins must be written in Gosu.\nC) A plugin class must contain a predetermined set of methods based on the\nbusiness need it serves.\nD) Plugins are used exclusively for external application integration.",
+        "answer": "A) True\nB) False — Guidewire recommends that they be written in Gosu, but they can be\nwritten in OSGi or Java.\nC) True\nD) False — They are also used to execute tasks exclusively within the Guidewire\napplication."
       }
     },
     {
@@ -388,8 +388,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "An What is the purpose of a plugin registry entry?",
-        "answer": "What is the purpose of a plugin registry entry? The plugin registry entry identifies the plugin class to use for a given set of internally called methods and initialization parameters that may be used to affect the plugin's behavior."
+        "question": "What is the purpose of a plugin registry entry?",
+        "answer": "The plugin registry entry identifies the plugin class to use for a given set of internally\ncalled methods and initialization parameters that may be used to affect the plugin's\nbehavior."
       }
     },
     {
@@ -426,8 +426,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Do you need to restart the server when you:",
-        "answer": "Modify code in an existing Gosu plugin? Modify a plugin registry entry? A) No, you do not to restart the server when you make changes to a Gosu plugin class. However, you need to execute Reload Changed Classes. B) Yes, you need to restart the server when modifying a plugin registry entry because plugin registry entries are initialized only during the server application start-up."
+        "question": "Do you need to restart the server when you:\nA) Modify code in an existing Gosu plugin?\nB) Modify a plugin registry entry?",
+        "answer": "A) No, you do not need to restart the server when you make changes to a Gosu plugin\nclass. However, you need to execute Reload Changed Classes.\nB) Yes, you need to restart the server when modifying a plugin registry entry because\nplugin registry entries are initialized only during the server application start-up."
       }
     },
     {

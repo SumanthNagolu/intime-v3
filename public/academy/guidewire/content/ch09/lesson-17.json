@@ -403,7 +403,7 @@
       "slideType": "question",
       "questionData": {
         "question": "Under what conditions are exposure rules triggered?",
-        "answer": "When an incident is created, each exposure rule compares the incident to its Applies To section and any Rule Conditions; if the incident matches, the rule is triggered. SS See See ease angen ses"
+        "answer": "When an incident is created, each exposure rule compares the incident to its Applies To section and any Rule Conditions; if the incident matches, the rule is triggered."
       }
     },
     {
@@ -440,8 +440,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "If a business rule condition access the property",
-        "answer": "X exposure .VehicleIncident .AirbagsDeployed, : what kind(s) of business rule can this be? The correct answers are either a Reserve business rule or an Activity business rule. Exposure creation rules can only directly access the triggering incident. SS See See ease angen ses"
+        "question": "If a business rule condition accesses the property exposure.VehicleIncident.AirbagsDeployed, what kind(s) of business rule can this be?",
+        "answer": "Either a Reserve business rule or an Activity business rule. Exposure creation rules can only directly access the triggering incident."
       }
     },
     {

@@ -13,6 +13,13 @@ const ROLE_NAV: Record<Role, { title: string; icon: any; items: { label: string;
   // --- 1. ACADEMY (Student) ---
   student: [
     {
+      title: "Catalog",
+      icon: BookOpen,
+      items: [
+        { label: "Catalog", path: "/academy/catalog", icon: BookOpen },
+      ]
+    },
+    {
       title: "Learn",
       icon: BookOpen,
       items: [
@@ -141,6 +148,7 @@ const ROLE_NAV: Record<Role, { title: string; icon: any; items: { label: string;
           icon: GraduationCap,
           items: [
               { label: "Instructor Dash", path: "/employee/academy/admin/dashboard", icon: LayoutDashboard },
+              { label: "Enrollments", path: "/employee/academy/admin/enrollments", icon: UserPlus },
               { label: "Certificates", path: "/employee/academy/admin/certificates", icon: Award },
               { label: "Course Builder", path: "/employee/academy/admin/courses", icon: Layers },
           ]
@@ -303,7 +311,7 @@ export const Navbar: React.FC = () => {
   const [isRoleSwitcherOpen, setIsRoleSwitcherOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 
-  const isPublic = pathname === '/' || pathname === '/academy' || pathname === '/clients' || pathname === '/login' || pathname.startsWith('/verify-certificate');
+  const isPublic = pathname === '/' || pathname === '/academy' || pathname === '/clients' || pathname === '/login' || pathname.startsWith('/verify-certificate') || pathname.startsWith('/academy/catalog') || pathname.startsWith('/auth/');
   const isLoginPage = pathname === '/login';
 
   const isActive = (path: string) => pathname === path || pathname.startsWith(path + '/');

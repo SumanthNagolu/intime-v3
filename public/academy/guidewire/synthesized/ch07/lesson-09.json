@@ -259,21 +259,21 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "What is the significance of a rule set's root entity?",
-      "referenceAnswer": "Whatis the significance of a rule set's root entity?\noY” Every rule set is tied to an entity, known as the root entity. This determines which class\nof objects the rule set is tied to. It also determines the object available to the rules in\nthe rule set when the rule set is triggered.",
+      "referenceAnswer": "Every rule set is tied to an entity, known as the root entity. This determines which class\nof objects the rule set is tied to. It also determines the object available to the rules in\nthe rule set when the rule set is triggered.",
       "questionKey": "slide-28"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "What is the difference between an \"execute all\" rule set and an “exit after\nfirst action\" rule set?",
-      "referenceAnswer": "Whatis the difference between an \"execute all\" rule set and an “exit after\na first action\" rule set?\n? In an “execute all\" rule set, all rules are executed. For example, validation rule sets are\nexecute all. All validation conditions are checked, regardless of how many are true. In\nan \"exit after first action\" rule set, you do not typically execute all rules. When the first\ntrue condition is found, the action associated with that condition is taken and the rule\nset is exited. For example, assignment rule sets are exit after first action. Once an\nassignment is made, the rule set exits so that later code doesn't reassign the object.",
+      "question": "What is the difference between an \"execute all\" rule set and an “exit after first action\" rule set?",
+      "referenceAnswer": "In an \"execute all\" rule set, all rules are executed. For example, validation rule sets are execute all. All validation conditions are checked, regardless of how many are true. In an \"exit after first action\" rule set, you do not typically execute all rules. When the first true condition is found, the action associated with that condition is taken and the rule set is exited. For example, assignment rule sets are exit after first action. Once an assignment is made, the rule set exits so that later code doesn't reassign the object.",
       "questionKey": "slide-30"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
       "question": "What is the effect of deactivating a rule?",
-      "referenceAnswer": "rules \"on\" and \"off\".",
+      "referenceAnswer": "The rule is not executed by the rules engine, which is useful in development for turning rules \"on\" and \"off\".",
       "questionKey": "slide-32"
     },
     {

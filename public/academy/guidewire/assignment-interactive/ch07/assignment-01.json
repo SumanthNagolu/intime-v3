@@ -1,0 +1,251 @@
+{
+  "assignmentId": "ch07-a01",
+  "chapterSlug": "ch07-insurance-suite-fundamentals",
+  "lessonNumber": 1,
+  "title": "Introduction to Guidewire Configuration",
+  "complexityLevel": "exploratory",
+  "estimatedMinutes": 45,
+  "totalExercises": 3,
+  "skillsCovered": ["PolicyCenter Navigation", "Application Fundamentals", "Workspace Understanding", "Configuration Concepts"],
+  "blocks": [
+    {
+      "type": "assignment_header",
+      "id": "header-01",
+      "lessonTitle": "Introduction to Guidewire Configuration",
+      "scenario": "You are a new Guidewire developer who has just joined Enigma Fire & Casualty. Your team lead has asked you to familiarize yourself with the PolicyCenter application by exploring its key areas, understanding the workspace layout, and documenting what you observe. This exercise will build your foundational knowledge of the system.",
+      "prerequisites": [
+        "Access to Guidewire PolicyCenter training environment",
+        "Completed Lesson 1 reading materials",
+        "Basic understanding of insurance terminology"
+      ],
+      "objectives": [
+        "Navigate the PolicyCenter desktop and identify key workspace areas",
+        "Understand the relationship between accounts, policies, and submissions",
+        "Explore the configuration panels and identify configurable elements",
+        "Document observations about the application's structure and behavior"
+      ],
+      "estimatedMinutes": 45,
+      "complexityLevel": "exploratory",
+      "skillsTested": ["PolicyCenter Navigation", "Observation Skills", "Application Understanding"]
+    },
+    {
+      "type": "exercise_group",
+      "id": "ex-01",
+      "exerciseNumber": 1,
+      "title": "Lab: Explore the PolicyCenter Desktop",
+      "description": "In this exercise, you will log into PolicyCenter and systematically explore the main desktop areas, tabs, and navigation elements.",
+      "variant": "lab"
+    },
+    {
+      "type": "step",
+      "id": "ex01-s01",
+      "exerciseId": "ex-01",
+      "stepNumber": 1,
+      "instruction": "Log into PolicyCenter using the training credentials provided. Once logged in, observe the desktop layout.",
+      "requiresAction": true
+    },
+    {
+      "type": "step",
+      "id": "ex01-s02",
+      "exerciseId": "ex-01",
+      "stepNumber": 2,
+      "instruction": "Identify and note the main navigation tabs across the top of the screen.",
+      "substeps": [
+        { "letter": "a", "text": "Click on each top-level tab (Desktop, Account, Policy, Search, Administration)" },
+        { "letter": "b", "text": "Note what sub-tabs appear under each main tab" },
+        { "letter": "c", "text": "Observe how the workspace area changes with each tab selection" }
+      ],
+      "requiresAction": true
+    },
+    {
+      "type": "write_it_down",
+      "id": "ex01-wid01",
+      "exerciseId": "ex-01",
+      "question": "List the main navigation tabs you see in PolicyCenter. For each tab, describe in one sentence what type of information or functionality it provides.",
+      "referenceAnswer": "The main tabs are: Desktop (shows summary dashboards, activities, and quick-access items), Account (manages customer/organization information and their associated policies), Policy (handles policy transactions like submissions, renewals, and endorsements), Search (provides global search across accounts, policies, and other entities), and Administration (system configuration, user management, and security settings).",
+      "answerType": "paragraph",
+      "hints": ["Look at the very top navigation bar", "There should be approximately 5 main tabs"],
+      "skillTested": "PolicyCenter Navigation"
+    },
+    {
+      "type": "step",
+      "id": "ex01-s03",
+      "exerciseId": "ex-01",
+      "stepNumber": 3,
+      "instruction": "Navigate to the Desktop tab and explore the different screens available.",
+      "substeps": [
+        { "letter": "a", "text": "Click on 'My Activities' and note the types of activities shown" },
+        { "letter": "b", "text": "Click on 'My Submissions' and observe the submission workflow states" },
+        { "letter": "c", "text": "Click on 'My Renewals' to see the renewal queue" }
+      ],
+      "requiresAction": true
+    },
+    {
+      "type": "callout",
+      "id": "callout-01",
+      "variant": "tip",
+      "title": "Desktop Screens",
+      "content": "The Desktop tab is your home base in PolicyCenter. It shows personalized views of your work items. As a developer, understanding these screens helps you know what end users see daily and what they might need customized."
+    },
+    {
+      "type": "write_it_down",
+      "id": "ex01-wid02",
+      "exerciseId": "ex-01",
+      "question": "What are the different submission states you observed in 'My Submissions'? Why do you think the system tracks these different states?",
+      "referenceAnswer": "Common submission states include Draft, Quoted, Application, Bound, Issued, Declined, Not Taken, and Withdrawn. The system tracks these states to manage the lifecycle of a policy from initial creation through approval. Each state represents a business milestone and may trigger different rules, validations, and available actions. This state machine approach ensures proper workflow enforcement.",
+      "answerType": "paragraph",
+      "skillTested": "Application Understanding"
+    },
+    {
+      "type": "verification",
+      "id": "ex01-v01",
+      "exerciseId": "ex-01",
+      "title": "Exercise 1 Verification",
+      "steps": [
+        { "text": "Successfully logged into PolicyCenter", "verificationNote": "You should see the Desktop tab active" },
+        { "text": "Explored all main navigation tabs", "verificationNote": "You should have clicked through Desktop, Account, Policy, Search, and Administration" },
+        { "text": "Viewed My Activities screen" },
+        { "text": "Viewed My Submissions screen and noted states" },
+        { "text": "Answered both Write It Down questions" }
+      ]
+    },
+    {
+      "type": "exercise_group",
+      "id": "ex-02",
+      "exerciseNumber": 2,
+      "title": "Lab: Investigate Account and Policy Structure",
+      "description": "Explore how accounts and policies are organized in PolicyCenter. Understand the parent-child relationships between these key entities.",
+      "variant": "lab"
+    },
+    {
+      "type": "step",
+      "id": "ex02-s01",
+      "exerciseId": "ex-02",
+      "stepNumber": 1,
+      "instruction": "Navigate to the Account tab and search for an existing account.",
+      "substeps": [
+        { "letter": "a", "text": "Click the Account tab" },
+        { "letter": "b", "text": "Use the search functionality to find any existing account" },
+        { "letter": "c", "text": "Open the account summary page" }
+      ],
+      "requiresAction": true
+    },
+    {
+      "type": "step",
+      "id": "ex02-s02",
+      "exerciseId": "ex-02",
+      "stepNumber": 2,
+      "instruction": "From the account summary, explore the different sections available.",
+      "embeddedQuestion": "How many policies are associated with this account?",
+      "requiresAction": true
+    },
+    {
+      "type": "data_table",
+      "id": "ex02-dt01",
+      "exerciseId": "ex-02",
+      "context": "As you explore, document what you find for each section:",
+      "headers": ["Section", "Purpose", "Key Information Shown"],
+      "rows": [
+        ["Summary", "Overview of the account", "Account name, status, primary contact"],
+        ["Policies", "Lists all policies under this account", "Policy number, type, status, effective dates"],
+        ["Contacts", "Associated people and organizations", "Name, role, contact details"],
+        ["Activities", "Tasks and workflows related to this account", "Activity type, status, assigned user, due date"]
+      ],
+      "caption": "Key account sections in PolicyCenter"
+    },
+    {
+      "type": "write_it_down",
+      "id": "ex02-wid01",
+      "exerciseId": "ex-02",
+      "question": "Describe the relationship between an Account and its Policies in PolicyCenter. Why do you think Guidewire chose this hierarchical structure?",
+      "referenceAnswer": "An Account serves as a container for one or more Policies. The Account represents the customer (person or company) while Policies represent the specific insurance products they've purchased. This hierarchy allows: (1) a single customer view across all their policies, (2) shared contact and billing information, (3) cross-policy reporting and analytics, and (4) consistent workflow management. It mirrors real-world insurance relationships where one customer can hold multiple policies.",
+      "answerType": "paragraph",
+      "skillTested": "Application Understanding"
+    },
+    {
+      "type": "callout",
+      "id": "callout-02",
+      "variant": "best_practice",
+      "title": "Entity Relationships",
+      "content": "Understanding the Account > Policy > Submission hierarchy is fundamental to Guidewire development. Every customization you build will operate within this entity structure, so investing time to understand it thoroughly pays dividends throughout your career."
+    },
+    {
+      "type": "verification",
+      "id": "ex02-v01",
+      "exerciseId": "ex-02",
+      "title": "Exercise 2 Verification",
+      "steps": [
+        { "text": "Found and opened an existing account" },
+        { "text": "Explored the Summary section" },
+        { "text": "Reviewed the Policies section" },
+        { "text": "Checked the Contacts section" },
+        { "text": "Answered the entity relationship question" }
+      ]
+    },
+    {
+      "type": "exercise_group",
+      "id": "ex-03",
+      "exerciseNumber": 3,
+      "title": "Lab: Introduction to Configuration Concepts",
+      "description": "Begin to understand what aspects of PolicyCenter can be configured and how configuration differs from customization.",
+      "variant": "lab"
+    },
+    {
+      "type": "step",
+      "id": "ex03-s01",
+      "exerciseId": "ex-03",
+      "stepNumber": 1,
+      "instruction": "Navigate to the Administration tab and explore the available configuration areas.",
+      "substeps": [
+        { "letter": "a", "text": "Click Administration > Business Settings" },
+        { "letter": "b", "text": "Browse through the available settings categories" },
+        { "letter": "c", "text": "Note which settings can be changed through the UI vs. which require developer tools" }
+      ],
+      "requiresAction": true
+    },
+    {
+      "type": "callout",
+      "id": "callout-03",
+      "variant": "important",
+      "title": "Configuration vs. Customization",
+      "content": "In Guidewire terminology, 'configuration' refers to changes made within the supported framework (Gosu code, PCFs, entity modifications). 'Out-of-the-box' (OOTB) settings are changed through the Admin UI. Understanding this distinction is critical for choosing the right approach for each requirement."
+    },
+    {
+      "type": "write_it_down",
+      "id": "ex03-wid01",
+      "exerciseId": "ex-03",
+      "question": "Based on your exploration, list at least three areas of PolicyCenter that appear to be configurable through the Administration UI. For each, speculate on why an insurer would want to change these settings.",
+      "referenceAnswer": "Configurable areas include: (1) User Roles and Permissions - insurers need to control who can access what based on their organizational structure; (2) Workflow rules and activity patterns - different insurers have different business processes and approval chains; (3) Business settings like default values and validation rules - each insurer has unique business rules for underwriting, pricing, and policy management. These are configurable because they represent business decisions that vary by insurer, not technical requirements.",
+      "answerType": "paragraph",
+      "hints": ["Look under Business Settings", "Check User & Security settings", "Explore Workflow configurations"],
+      "skillTested": "Configuration Concepts"
+    },
+    {
+      "type": "verification",
+      "id": "ex03-v01",
+      "exerciseId": "ex-03",
+      "title": "Exercise 3 Verification",
+      "steps": [
+        { "text": "Explored Administration tab" },
+        { "text": "Browsed Business Settings" },
+        { "text": "Identified configurable vs. customizable areas" },
+        { "text": "Answered the configuration areas question" }
+      ]
+    },
+    {
+      "type": "reference",
+      "id": "ref-01",
+      "variant": "review",
+      "question": "What is the difference between the Desktop tab and the Account tab in PolicyCenter?",
+      "explanation": "The Desktop tab is a personalized workspace showing your activities, submissions, and renewals - it's your daily workflow hub. The Account tab is entity-focused, allowing you to search for, view, and manage specific customer accounts and their associated data. Desktop is user-centric; Account is data-centric."
+    },
+    {
+      "type": "reference",
+      "id": "ref-02",
+      "variant": "review",
+      "question": "Why does PolicyCenter use a state machine for submission workflows?",
+      "explanation": "State machines enforce valid business transitions (e.g., you can't jump from Draft directly to Issued without going through Quote and Bind). This ensures business rules are respected, provides clear audit trails, enables role-based permissions at each stage, and allows automated actions (like notifications) to trigger on specific state changes."
+    }
+  ],
+  "synthesizedAt": "2026-02-17T00:00:00Z"
+}

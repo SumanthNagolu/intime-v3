@@ -1,0 +1,264 @@
+{
+  "assignmentId": "ch11-a08",
+  "chapterSlug": "ch11-insurance-suite-integration",
+  "lessonNumber": 8,
+  "title": "RESTful Web Services Integration",
+  "complexityLevel": "development",
+  "estimatedMinutes": 90,
+  "totalExercises": 3,
+  "skillsCovered": ["REST APIs", "Integration Patterns", "JSON Handling", "Gosu HTTP Client", "API Authentication", "Error Handling"],
+  "blocks": [
+    {
+      "type": "assignment_header",
+      "id": "header-01",
+      "lessonTitle": "Building RESTful Web Service Integrations",
+      "scenario": "Enigma Fire & Casualty needs to integrate their ClaimCenter with an external vendor rating service and a document management system. You will build REST API integrations using Guidewire's integration framework, handling authentication, request/response mapping, and error scenarios.",
+      "prerequisites": [
+        "Completed Integration Lessons 1-7",
+        "Understanding of REST/HTTP concepts",
+        "Familiarity with JSON data format",
+        "Gosu programming proficiency"
+      ],
+      "objectives": [
+        "Create outbound REST API calls from Guidewire using Gosu",
+        "Handle JSON request and response payloads",
+        "Implement authentication headers for external APIs",
+        "Build robust error handling for integration failures",
+        "Create a reusable integration service pattern"
+      ],
+      "estimatedMinutes": 90,
+      "complexityLevel": "development",
+      "skillsTested": ["REST APIs", "Integration Patterns", "Gosu HTTP Client", "Error Handling"]
+    },
+    {
+      "type": "exercise_group",
+      "id": "ex-01",
+      "exerciseNumber": 1,
+      "title": "Lab: Build a REST Client for Vendor Rating",
+      "description": "Create a Gosu class that calls an external vendor rating API to get risk scores for claims. The API returns JSON responses that need to be parsed and stored on the claim.",
+      "variant": "lab"
+    },
+    {
+      "type": "step",
+      "id": "ex01-s01",
+      "exerciseId": "ex-01",
+      "stepNumber": 1,
+      "instruction": "Create a new Gosu class 'VendorRatingService.gs' in the integration package.",
+      "substeps": [
+        { "letter": "a", "text": "Navigate to config > integration > services" },
+        { "letter": "b", "text": "Create a new package 'efc.integration.vendor'" },
+        { "letter": "c", "text": "Create the class file VendorRatingService.gs" }
+      ],
+      "requiresAction": true
+    },
+    {
+      "type": "data_table",
+      "id": "ex01-dt01",
+      "exerciseId": "ex-01",
+      "context": "The vendor rating API has the following specification:",
+      "headers": ["Attribute", "Value"],
+      "rows": [
+        ["Endpoint", "POST https://api.vendorrating.example.com/v2/risk-score"],
+        ["Auth", "Bearer token in Authorization header"],
+        ["Content-Type", "application/json"],
+        ["Request Body", "{\"claimNumber\": \"...\", \"lossType\": \"...\", \"lossAmount\": 0.00, \"state\": \"...\"}"],
+        ["Response (200)", "{\"riskScore\": 85, \"riskLevel\": \"HIGH\", \"factors\": [...], \"requestId\": \"...\"}"],
+        ["Response (4xx/5xx)", "{\"error\": \"...\", \"code\": \"...\"}"]
+      ],
+      "caption": "Vendor Rating API specification"
+    },
+    {
+      "type": "code_task",
+      "id": "ex01-ct01",
+      "exerciseId": "ex-01",
+      "language": "gosu",
+      "prompt": "Write the VendorRatingService class with a method getRiskScore(claim: Claim) that:\n1. Builds the JSON request body from claim properties\n2. Makes an HTTP POST call with Bearer authentication\n3. Parses the JSON response\n4. Returns a structured result object\n\nInclude proper error handling for network failures and non-200 responses.",
+      "context": "Use gw.api.util.ConfigAccess to read the API URL and token from configuration. Use javax.json for JSON processing.",
+      "starterCode": "package efc.integration.vendor\n\nuses gw.api.util.Logger\nuses gw.api.util.ConfigAccess\nuses java.net.HttpURLConnection\nuses java.net.URL\nuses javax.json.*\n\nclass VendorRatingService {\n  \n  static final var LOG = Logger.forCategory(\"VendorRating\")\n  \n  // Configuration keys\n  static final var API_URL_KEY = \"efc.vendor.rating.url\"\n  static final var API_TOKEN_KEY = \"efc.vendor.rating.token\"\n  \n  // TODO: Implement getRiskScore method\n  \n}",
+      "hints": [
+        "Use new URL(apiUrl).openConnection() as HttpURLConnection to create the connection",
+        "Set headers with conn.setRequestProperty(\"Authorization\", \"Bearer \" + token)",
+        "Write body with conn.outputStream.write(jsonString.getBytes(\"UTF-8\"))",
+        "Read response with Json.createReader(conn.inputStream).readObject()"
+      ],
+      "referenceSolution": "package efc.integration.vendor\n\nuses gw.api.util.Logger\nuses gw.api.util.ConfigAccess\nuses java.net.HttpURLConnection\nuses java.net.URL\nuses java.io.OutputStreamWriter\nuses javax.json.*\n\nclass VendorRatingService {\n  \n  static final var LOG = Logger.forCategory(\"VendorRating\")\n  static final var API_URL_KEY = \"efc.vendor.rating.url\"\n  static final var API_TOKEN_KEY = \"efc.vendor.rating.token\"\n  static final var TIMEOUT_MS = 10000\n  \n  static function getRiskScore(claim: Claim): VendorRatingResult {\n    var apiUrl = ConfigAccess.getProperty(API_URL_KEY)\n    var token = ConfigAccess.getProperty(API_TOKEN_KEY)\n    \n    if (apiUrl == null || token == null) {\n      LOG.error(\"Vendor rating API not configured\")\n      return VendorRatingResult.error(\"API not configured\")\n    }\n    \n    try {\n      // Build request JSON\n      var requestBody = Json.createObjectBuilder()\n        .add(\"claimNumber\", claim.ClaimNumber)\n        .add(\"lossType\", claim.LossType.Code)\n        .add(\"lossAmount\", claim.LossAmount?.Amount ?: 0)\n        .add(\"state\", claim.LossLocation?.State?.Code ?: \"\")\n        .build()\n      \n      // Create connection\n      var conn = new URL(apiUrl).openConnection() as HttpURLConnection\n      conn.RequestMethod = \"POST\"\n      conn.setRequestProperty(\"Content-Type\", \"application/json\")\n      conn.setRequestProperty(\"Authorization\", \"Bearer \" + token)\n      conn.ConnectTimeout = TIMEOUT_MS\n      conn.ReadTimeout = TIMEOUT_MS\n      conn.DoOutput = true\n      \n      // Send request\n      using (var writer = new OutputStreamWriter(conn.OutputStream, \"UTF-8\")) {\n        writer.write(requestBody.toString())\n        writer.flush()\n      }\n      \n      // Handle response\n      var responseCode = conn.ResponseCode\n      if (responseCode == 200) {\n        using (var reader = Json.createReader(conn.InputStream)) {\n          var json = reader.readObject()\n          return new VendorRatingResult(\n            json.getInt(\"riskScore\"),\n            json.getString(\"riskLevel\"),\n            json.getString(\"requestId\")\n          )\n        }\n      } else {\n        LOG.warn(\"Vendor rating API returned \" + responseCode)\n        return VendorRatingResult.error(\"API returned \" + responseCode)\n      }\n    } catch (e: Exception) {\n      LOG.error(\"Vendor rating API call failed: \" + e.Message, e)\n      return VendorRatingResult.error(e.Message)\n    }\n  }\n}",
+      "skillTested": "REST APIs"
+    },
+    {
+      "type": "callout",
+      "id": "callout-01",
+      "variant": "best_practice",
+      "title": "Integration Timeouts",
+      "content": "Always set connection and read timeouts on HTTP calls. Without timeouts, a slow external service can hold up Guidewire threads indefinitely, potentially bringing down the entire system. The typical recommendation is 5-15 seconds for read timeout and 5 seconds for connect timeout."
+    },
+    {
+      "type": "write_it_down",
+      "id": "ex01-wid01",
+      "exerciseId": "ex-01",
+      "question": "What would happen if the vendor rating API is down and you didn't implement timeout handling? How would this affect PolicyCenter users?",
+      "referenceAnswer": "Without timeouts, the HTTP connection would wait indefinitely (or until the JVM's default socket timeout). This would hold the Guidewire application thread, blocking the user's session. If many users trigger the integration simultaneously, all available threads could be consumed waiting for responses, effectively making the application unresponsive for ALL users (not just those triggering the integration). This is why timeouts and circuit-breaker patterns are critical for production integrations.",
+      "answerType": "paragraph",
+      "skillTested": "Integration Patterns"
+    },
+    {
+      "type": "verification",
+      "id": "ex01-v01",
+      "exerciseId": "ex-01",
+      "title": "Test Your REST Client",
+      "steps": [
+        { "text": "Code compiles without errors in Guidewire Studio" },
+        { "text": "Configuration properties are properly referenced" },
+        { "text": "Request body includes all required fields" },
+        { "text": "Authorization header is set correctly" },
+        { "text": "Response parsing handles the JSON structure" },
+        { "text": "Error handling covers network failures and non-200 responses" },
+        { "text": "Timeouts are configured on the connection" }
+      ]
+    },
+    {
+      "type": "exercise_group",
+      "id": "ex-02",
+      "exerciseNumber": 2,
+      "title": "Lab: Create a Result DTO and Error Handling",
+      "description": "Build a structured result type and implement retry logic with exponential backoff for transient failures.",
+      "variant": "lab"
+    },
+    {
+      "type": "step",
+      "id": "ex02-s01",
+      "exerciseId": "ex-02",
+      "stepNumber": 1,
+      "instruction": "Create the VendorRatingResult.gs class to represent API responses.",
+      "requiresAction": true
+    },
+    {
+      "type": "code_task",
+      "id": "ex02-ct01",
+      "exerciseId": "ex-02",
+      "language": "gosu",
+      "prompt": "Create a VendorRatingResult class that:\n1. Has properties: riskScore (int), riskLevel (String), requestId (String), success (boolean), errorMessage (String)\n2. Has a constructor for success cases\n3. Has a static factory method error(message) for error cases\n4. Has a method isHighRisk() that returns true if riskScore > 75",
+      "starterCode": "package efc.integration.vendor\n\nclass VendorRatingResult {\n  // TODO: Implement\n}",
+      "referenceSolution": "package efc.integration.vendor\n\nclass VendorRatingResult {\n  var _riskScore: int as RiskScore\n  var _riskLevel: String as RiskLevel\n  var _requestId: String as RequestId\n  var _success: boolean as Success\n  var _errorMessage: String as ErrorMessage\n  \n  construct(score: int, level: String, reqId: String) {\n    _riskScore = score\n    _riskLevel = level\n    _requestId = reqId\n    _success = true\n    _errorMessage = null\n  }\n  \n  private construct() {}\n  \n  static function error(message: String): VendorRatingResult {\n    var result = new VendorRatingResult()\n    result._success = false\n    result._errorMessage = message\n    result._riskScore = -1\n    return result\n  }\n  \n  function isHighRisk(): boolean {\n    return _success && _riskScore > 75\n  }\n}",
+      "skillTested": "Gosu HTTP Client"
+    },
+    {
+      "type": "callout",
+      "id": "callout-02",
+      "variant": "cookbook_recipe",
+      "title": "Result Pattern for Integrations",
+      "content": "Always use a Result/Response DTO instead of throwing exceptions for expected failures. This pattern: (1) makes error handling explicit in the calling code, (2) avoids expensive exception stack traces for expected scenarios like API errors, (3) carries structured error information that can be logged and displayed to users."
+    },
+    {
+      "type": "verification",
+      "id": "ex02-v01",
+      "exerciseId": "ex-02",
+      "title": "Verify Result DTO",
+      "steps": [
+        { "text": "VendorRatingResult compiles successfully" },
+        { "text": "Success constructor sets all fields correctly" },
+        { "text": "Error factory method creates proper error result" },
+        { "text": "isHighRisk() returns correct values for different scores" }
+      ]
+    },
+    {
+      "type": "exercise_group",
+      "id": "ex-03",
+      "exerciseNumber": 3,
+      "title": "Lab: Wire Integration into ClaimCenter Workflow",
+      "description": "Connect your vendor rating service to the ClaimCenter workflow so it automatically triggers when a claim reaches a specific state.",
+      "variant": "lab"
+    },
+    {
+      "type": "step",
+      "id": "ex03-s01",
+      "exerciseId": "ex-03",
+      "stepNumber": 1,
+      "instruction": "Create a preupdate rule that calls the vendor rating service when a claim transitions to 'Open' status.",
+      "requiresAction": true
+    },
+    {
+      "type": "code_task",
+      "id": "ex03-ct01",
+      "exerciseId": "ex-03",
+      "language": "gosu",
+      "prompt": "Write a preupdate rule that:\n1. Fires only when the claim Status changes to 'Open'\n2. Calls VendorRatingService.getRiskScore()\n3. If the result is high risk, creates an Activity for the assigned user\n4. Stores the risk score in a custom field (claim.EFC_VendorRiskScore_Ext)\n5. Handles errors gracefully without blocking the claim save",
+      "context": "Use ActivityPattern to create activities. The custom field EFC_VendorRiskScore_Ext has already been added to the Claim entity.",
+      "hints": [
+        "Check status change with: claim.isFieldChanged(Claim#Status) && claim.Status == ClaimState.TC_OPEN",
+        "Create activity: claim.createActivityFromPattern(null, ActivityPattern.finder.getActivityPatternByCode(\"general_reminder\"))",
+        "Set activity properties like Subject, Description, AssignedUser after creation"
+      ],
+      "referenceSolution": "// EFC_VendorRatingOnOpen.gs - Preupdate Rule\nuses efc.integration.vendor.VendorRatingService\nuses gw.api.util.Logger\n\nvar claim = Loss\nvar LOG = Logger.forCategory(\"EFC_VendorRating\")\n\n// Only fire when status changes to Open\nif (claim.isFieldChanged(Claim#Status) && claim.Status == ClaimState.TC_OPEN) {\n  try {\n    var result = VendorRatingService.getRiskScore(claim)\n    \n    if (result.Success) {\n      // Store risk score\n      claim.EFC_VendorRiskScore_Ext = result.RiskScore\n      \n      // Create activity for high-risk claims\n      if (result.isHighRisk()) {\n        var activity = claim.createActivityFromPattern(\n          null,\n          ActivityPattern.finder.getActivityPatternByCode(\"general_reminder\")\n        )\n        activity.Subject = \"HIGH RISK: Vendor rating score \" + result.RiskScore\n        activity.Description = \"Claim \" + claim.ClaimNumber\n          + \" received a high vendor risk score (\"\n          + result.RiskScore + \"/100, level: \"\n          + result.RiskLevel + \"). Review required.\"\n        activity.AssignedUser = claim.AssignedUser\n        activity.Priority = Priority.TC_URGENT\n        \n        LOG.info(\"High risk activity created for claim \" + claim.ClaimNumber)\n      }\n    } else {\n      LOG.warn(\"Vendor rating failed for claim \"\n        + claim.ClaimNumber + \": \" + result.ErrorMessage)\n      // Don't block the claim save on integration failure\n    }\n  } catch (e: Exception) {\n    LOG.error(\"Unexpected error in vendor rating rule: \" + e.Message, e)\n    // Never let integration failures block claim processing\n  }\n}",
+      "skillTested": "Integration Patterns"
+    },
+    {
+      "type": "callout",
+      "id": "callout-03",
+      "variant": "warning",
+      "title": "Never Block Core Workflow",
+      "content": "Integration calls in preupdate rules should NEVER prevent the user from saving their work. If the external API is down, log the error and continue. Consider implementing a retry queue or scheduled batch job to handle failed integration calls asynchronously."
+    },
+    {
+      "type": "write_it_down",
+      "id": "ex03-wid01",
+      "exerciseId": "ex-03",
+      "question": "Describe three potential improvements you would make to this integration for a production deployment. Consider reliability, performance, and observability.",
+      "referenceAnswer": "Three production improvements: (1) Circuit Breaker Pattern - After N consecutive failures, stop calling the API for a cooldown period to prevent cascading failures and thread exhaustion. (2) Async Processing - Move the API call to an asynchronous message queue or batch process instead of running synchronously in a preupdate rule, so users never experience latency from slow external services. (3) Observability - Add structured metrics (call count, latency, error rate, risk score distribution) to enable monitoring dashboards and alerting when the integration degrades.",
+      "answerType": "paragraph",
+      "hints": ["Think about what happens when the API is slow or down repeatedly", "Consider if synchronous calls are the right pattern here"],
+      "skillTested": "Integration Patterns"
+    },
+    {
+      "type": "verification",
+      "id": "ex03-v01",
+      "exerciseId": "ex-03",
+      "title": "Test Integration Workflow",
+      "steps": [
+        { "text": "Rule compiles and deploys successfully" },
+        { "text": "Rule only fires when claim status changes to Open" },
+        { "text": "Risk score is stored on the claim custom field" },
+        { "text": "Activity is created for high-risk results" },
+        { "text": "Integration failure does not block claim save" },
+        { "text": "Error logging captures failure details" }
+      ]
+    },
+    {
+      "type": "solution_step",
+      "id": "sol-01",
+      "exerciseId": "ex-01",
+      "stepNumber": 1,
+      "instruction": "Set up the integration package structure",
+      "substeps": [
+        { "letter": "a", "text": "Create the package efc.integration.vendor under config" },
+        { "letter": "b", "text": "This follows Guidewire's convention of organizing integration code by external system" }
+      ]
+    },
+    {
+      "type": "solution_step",
+      "id": "sol-02",
+      "exerciseId": "ex-01",
+      "stepNumber": 2,
+      "instruction": "Implement the HTTP connection with proper headers",
+      "codeSnippet": {
+        "language": "gosu",
+        "code": "var conn = new URL(apiUrl).openConnection() as HttpURLConnection\nconn.RequestMethod = \"POST\"\nconn.setRequestProperty(\"Content-Type\", \"application/json\")\nconn.setRequestProperty(\"Authorization\", \"Bearer \" + token)\nconn.ConnectTimeout = 5000\nconn.ReadTimeout = 10000\nconn.DoOutput = true",
+        "explanation": "DoOutput = true is required for POST requests. Connect timeout should be shorter than read timeout since connection should be fast but processing may take longer."
+      }
+    },
+    {
+      "type": "reference",
+      "id": "ref-01",
+      "variant": "review",
+      "question": "What is the difference between synchronous and asynchronous integration patterns in Guidewire?",
+      "explanation": "Synchronous integrations (like our preupdate rule) execute inline with the user's transaction - the user waits for the external call to complete. Asynchronous integrations use message queues, batch processes, or Guidewire's messaging framework to process integrations in the background. Synchronous is simpler but risky for production; asynchronous is more robust but more complex to implement and debug."
+    },
+    {
+      "type": "reference",
+      "id": "ref-02",
+      "variant": "tip",
+      "question": "When should you use Guidewire's built-in REST framework vs. custom HTTP clients?",
+      "explanation": "Use Guidewire's Cloud Integration framework (REST endpoints, messaging) when: the integration is with another Guidewire app, you need OOTB retry/error handling, or you want to leverage the Integration Gateway. Use custom HTTP clients when: integrating with non-standard APIs, you need fine-grained control over request/response handling, or the OOTB framework doesn't support your authentication method."
+    }
+  ],
+  "synthesizedAt": "2026-02-17T00:00:00Z"
+}

@@ -212,35 +212,35 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "What are the three ways that a renewal job can end?",
-      "referenceAnswer": "taken (when the insured chooses not to renew the policy).",
+      "referenceAnswer": "Renewed, non-renewal (when the insurer chooses not to renew the policy) or not taken (when the insured chooses not to renew the policy).",
       "questionKey": "slide-20"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
       "question": "Under what two circumstances is the renewal wizard typically used?",
-      "referenceAnswer": "policy must be changed at renewal time.",
+      "referenceAnswer": "The renewal wizard is typically used when the renewal is started manually or when the policy must be changed at renewal time.",
       "questionKey": "slide-22"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
       "question": "Consider a situation where the insured is offered a renewal, but never\nmakes the payment. What is the renewal’s state? HINT: The renewal flow\ntimes out.",
-      "referenceAnswer": "/~ — Consider a situation where the insured is offered a renewal, but never\nx makes the payment. What is the renewal’s state? HINT: The renewal flow\n: times out.\nThe renewal flow does time out, and the renewal term is Not Taken.",
+      "referenceAnswer": "The renewal flow does time out, and the renewal term is Not Taken.",
       "questionKey": "slide-24"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
       "question": "How many pre-renewal directions can a policy have?",
-      "referenceAnswer": "How many pre-renewal directions can a policy have?\nA policy may have any number of pre-renewal directions, but there is only one active\npre-renewal renewal direction at a time .",
+      "referenceAnswer": "A policy may have any number of pre-renewal directions, but there is only one active\npre-renewal renewal direction at a time.",
       "questionKey": "slide-26"
     },
     {
       "type": "knowledge_check",
       "id": "kc-5",
       "question": "When should you not create a pre-renewal direction?",
-      "referenceAnswer": "not need human review of the job while it's being executed.",
+      "referenceAnswer": "You should not create a pre-renewal direction if you want to renew the policy and do\nnot need human review of the job while it's being executed.",
       "questionKey": "slide-28"
     },
     {

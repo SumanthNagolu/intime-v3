@@ -352,7 +352,7 @@
       "slideType": "question",
       "questionData": {
         "question": "What does a code generator do?",
-        "answer": "OO” A code generator processes a Guidewire resource defined in XML format (such as PCF file, entity, etc.) and produces a Gosu or Java class."
+        "answer": "A code generator processes a Guidewire resource defined in XML format (such as PCF file, entity, etc.) and produces a Gosu or Java class."
       }
     },
     {
@@ -389,8 +389,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Name atleast one difference between incremental and bulk code",
-        "answer": "Y generation. Possible answers: * incremental code generator can process a single file, while bulk code generator processes a set of files • incremental code generation is not supported for every resource type bulk code generation can be started from the CodeGen menu or during project I * incremental code generation can be started on save or during project make while ' rebuild"
+        "question": "Name at least one difference between incremental and bulk code generation.",
+        "answer": "- incremental code generator can process a single file, while bulk code generator processes a set of files\n- incremental code generation is not supported for every resource type\n- bulk code generation can be started from the CodeGen menu or during project\n- incremental code generation can be started on save or during project make while rebuild"
       }
     },
     {
@@ -428,7 +428,7 @@
       "slideType": "question",
       "questionData": {
         "question": "What is a breakpoint?",
-        "answer": "OO” A breakpoint indicates a place where you want to suspend the execution of Gosu or Java code"
+        "answer": "A breakpoint indicates a place where you want to suspend the execution of Gosu or Java code"
       }
     },
     {
@@ -466,7 +466,7 @@
       "slideType": "question",
       "questionData": {
         "question": "What is a PCF method? How can you debug a PCF method?",
-        "answer": "OO” APCF method is a plain old Gosu function that is local in a PCF file and executes some logic tied to that particular PCF file. You can open the <PCFFileName>Expressions.gs file, find the function and click on the gutter area at the desired line to set a breakpoint."
+        "answer": "A PCF method is a plain old Gosu function that is local in a PCF file and executes some logic tied to that particular PCF file. You can open the <PCFFileName>Expressions.gs file, find the function and click on the gutter area at the desired line to set a breakpoint."
       }
     },
     {

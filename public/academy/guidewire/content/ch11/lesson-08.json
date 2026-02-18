@@ -571,8 +571,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Match the HTTP verb with its description",
-        "answer": "Sve [answer Description | PUT Update/Replace row in the database Delete from the database | RETRIEVE Not an HTTP verb Update/Replace row in the database I GET Read from the database Create a new record in the database | PATCH Update/Modify row in the database Read from the database | INSERT Not an HTTP verb Update/Modify row in the database | REMOVE Not an HTTP verb Not an HTTP verb i] POST Create a new record in the database Not an HTTP verb | REPLACE Not an HTTP verb Not an HTTP verb ! DELETE Delete from the database Not an HTTP verb"
+        "question": "Match the HTTP verb with its description:\n\nPUT: Delete from the database\nRETRIEVE: Update/Replace row in the database\nGET: Create a new record in the database\nPATCH: Read from the database\nINSERT: Update/Modify row in the database\nREMOVE: Not an HTTP verb\nPOST: Not an HTTP verb\nREPLACE: Not an HTTP verb\nDELETE: Not an HTTP verb",
+        "answer": "PUT: Update/Replace row in the database\nRETRIEVE: Not an HTTP verb\nGET: Read from the database\nPATCH: Update/Modify row in the database\nINSERT: Not an HTTP verb\nREMOVE: Not an HTTP verb\nPOST: Create a new record in the database\nREPLACE: Not an HTTP verb\nDELETE: Delete from the database"
       }
     },
     {
@@ -609,8 +609,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "What file must be updated to publish an API schema?",
-        "answer": "Swagger.yaml published-schemas.yaml codegen-schemas.yaml published-apis.yaml json-apis.yaml The correct answer is published-apis.yaml"
+        "question": "What file must be updated to publish an API schema?\n\nA) swagger.yaml\nB) published-schemas.yaml\nC) codegen-schemas.yaml\nD) published-apis.yaml\nE) json-apis.yaml",
+        "answer": "The correct answer is published-apis.yaml"
       }
     },
     {

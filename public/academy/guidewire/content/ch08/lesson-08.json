@@ -196,8 +196,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Name three policy-related objects in PolicyCenter on which class-based",
-        "answer": "Oo validation is performed. Class-based validation can be performed on PolicyContactRole, PolicyLocation, PolicyPeriod, or any LOB entities, or any other policy-specific entities."
+        "question": "Name three policy-related objects in PolicyCenter on which class-based validation is performed.",
+        "answer": "Class-based validation can be performed on PolicyContactRole, PolicyLocation, PolicyPeriod, or any LOB entities, or any other policy-specific entities."
       }
     },
     {
@@ -560,8 +560,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "State true or false:",
-        "answer": "Oo a) All entities in PolicyCenter can be validated. b) All validation classes must have a validatelmpl or doValidate method. c) The doValidate method should be last method in a class. a) True b) True c) False"
+        "question": "State true or false:\na) All entities in PolicyCenter can be validated.\nb) All validation classes must have a validatelmpl or doValidate method.\nc) The doValidate method should be last method in a class.",
+        "answer": "a) True\nb) True\nc) False"
       }
     },
     {
@@ -598,8 +598,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Name the validation context method that produces a string of methods",
-        "answer": "Oo that were visited as validation was performed. The showVisited() method shows a list of methods as a string that were visited as validation was performed."
+        "question": "Name the validation context method that produces a string of methods\nthat were visited as validation was performed.",
+        "answer": "The showVisited() method shows a list of methods as a string that were visited as\nvalidation was performed."
       }
     },
     {
@@ -637,7 +637,7 @@
       "slideType": "question",
       "questionData": {
         "question": "Define validation chaining.",
-        "answer": "Validation chaining is the process of one validation class calling another validation class to perform additional validation checks."
+        "answer": "Validation chaining is the process of one validation class calling another validation\nclass to perform additional validation checks."
       }
     },
     {
@@ -674,8 +674,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Name the PCF attributes used to invoke class-based validation in a",
-        "answer": "Oo popup and in a job wizard. BeforeSave attribute for a job wizard step and beforeCommit attribute on a popup."
+        "question": "Name the PCF attributes used to invoke class-based validation in a\npopup and in a job wizard.",
+        "answer": "BeforeSave attribute for a job wizard step and beforeCommit attribute on a popup."
       }
     },
     {

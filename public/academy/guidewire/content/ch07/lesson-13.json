@@ -316,8 +316,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "In a List View:",
-        "answer": "OY A) What type of widget displays individual fields of data? B) What type of widget organizes the individual fields of data? A) Cell widgets B) Rowwidgets"
+        "question": "In a List View:\nA) What type of widget displays individual fields of data?\nB) What type of widget organizes the individual fields of data?",
+        "answer": "A) Cell widgets\nB) Rowwidgets"
       }
     },
     {
@@ -354,8 +354,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Assume you have a list view panel with \"anABContact\" as the root",
-        "answer": "Y object. The list view panel displays the contact’s addresses. C) What other widgets would make use of the element name? What would the row iterator's \"value\" property be set to? What would the row iterator's \"element name\" be set to? A) anABContact.Addresses (assuming that the name of the addresses array is \"Addresses\") B) The value is arbitrary, but it would probably be set to something like \"currentAddress\". Cc) The cell widgets inside the row iterator's row. For example, a cell displaying the street would have a value of \"currentAddress. Street\"."
+        "question": "Assume you have a list view panel with \"anABContact\" as the root object. The list view panel displays the contact’s addresses.\nA) What would the row iterator's \"value\" property be set to?\nB) What would the row iterator's \"element name\" be set to?\nC) What other widgets would make use of the element name?",
+        "answer": "A) anABContact.Addresses (assuming that the name of the addresses array is \"Addresses\")\nB) The value is arbitrary, but it would probably be set to something like \"currentAddress\".\nC) The cell widgets inside the row iterator's row. For example, a cell displaying the street would have a value of \"currentAddress. Street\"."
       }
     },
     {
@@ -392,8 +392,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Allist view typically needs a toolbar, even if it is read-only. Why?",
-        "answer": "Alist view typically needs a toolbar, even if it is read-only. Why? o” The toolbar is needed for the paging controls. These controls are used to view each page of rows if the number of rows is greater than what can be displayed at one time."
+        "question": "A list view typically needs a toolbar, even if it is read-only. Why?",
+        "answer": "The toolbar is needed for the paging controls. These controls are used to view each page of rows if the number of rows is greater than what can be displayed at one time."
       }
     },
     {
@@ -430,8 +430,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "In what way is embedding a List View Panel in a detail view panel",
-        "answer": "Y different from embedding a list view panel in a screen? To embed a list view panel in a detail view panel , use a List View Input widget. To embed a list view panel in a screen (or card view panel or List Detail Panel , you use a Panel Ref widget."
+        "question": "In what way is embedding a List View Panel in a detail view panel different from embedding a list view panel in a screen?",
+        "answer": "To embed a list view panel in a detail view panel, use a List View Input widget. To embed a list view panel in a screen (or card view panel or List Detail Panel), you use a Panel Ref widget."
       }
     },
     {

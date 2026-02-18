@@ -225,28 +225,28 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "When and where can service requests be created?",
-      "referenceAnswer": "74\ng The correct answers are:\n¢ During claim creation, in the New Claim Wizard\n* After the claim has been created, from the Actions menu",
+      "referenceAnswer": "The correct answers are:\n* During claim creation, in the New Claim Wizard\n* After the claim has been created, from the Actions menu",
       "questionKey": "slide-23"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
       "question": "What are the types of Service Request in the base application?",
-      "referenceAnswer": "74\n¢ The correct answers are:\n* Quote Only\n¢ Service Only\n* Quote and Perform Service\n« Unmanaged Service (for Auto First and Final only)",
+      "referenceAnswer": "The correct answers are:\n* Quote Only\n* Service Only\n* Quote and Perform Service\n* Unmanaged Service (for Auto First and Final only)",
       "questionKey": "slide-25"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
       "question": "If you need to add a new service type, what files must you modify?",
-      "referenceAnswer": "74\ng The correct answer is vendorservicetree.xml and vendorservicedetails.xml.",
+      "referenceAnswer": "The correct answer is vendorservicetree.xml and vendorservicedetails.xml.",
       "questionKey": "slide-27"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "--- After modifying the files, what must you do for the new service type to be\navailable?",
-      "referenceAnswer": "(and ContactManager) administrator user interfaces.",
+      "question": "After modifying the files, what must you do for the new service type to be available?",
+      "referenceAnswer": "Import the data from the files in the ClaimCenter (and ContactManager) administrator user interfaces.",
       "questionKey": "slide-29"
     },
     {
@@ -409,14 +409,14 @@
       "type": "knowledge_check",
       "id": "kc-5",
       "question": "What do State Transition Helper classes enable?",
-      "referenceAnswer": "oO The correct answer is Straight-Through Invoice Processing (STIP).",
+      "referenceAnswer": "The correct answer is Straight-Through Invoice Processing (STIP).",
       "questionKey": "slide-47"
     },
     {
       "type": "knowledge_check",
       "id": "kc-6",
-      "question": "If aninvoice comes into the system through a vendor portal, what\nprovides the approval limits for STIP?",
-      "referenceAnswer": "faninvoice comes into the system through a vendor portal, what\n¢ provides the approval limits for STIP?\n\n74\n\nThe correct answer is:\n\nThe web service that accepts the invoice is associated with a user, whose permissions\nenable that web service.\n\nThe approval limits are those of that user.",
+      "question": "If an invoice comes into the system through a vendor portal, what provides the approval limits for STIP?",
+      "referenceAnswer": "The correct answer is:\n\nThe web service that accepts the invoice is associated with a user, whose permissions\nenable that web service.\n\nThe approval limits are those of that user.",
       "questionKey": "slide-49"
     },
     {

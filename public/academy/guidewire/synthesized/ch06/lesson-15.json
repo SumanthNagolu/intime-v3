@@ -160,14 +160,14 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "Within the context of policy changes, what process does BillingCenter\ndo for both positive and negative charges?",
-      "referenceAnswer": "Both positive and negative charges are sliced into invoice items and are placed on\ninvoices.",
+      "referenceAnswer": "Both positive and negative charges are sliced into invoice items and are placed on invoices.",
       "questionKey": "slide-13"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
       "question": "Within the context of policy changes, what process does BillingCenter\ndo for negative charges only?",
-      "referenceAnswer": "BillingCenter uses the negative invoice items from a negative charge to pay unsettled\npositive invoice items.",
+      "referenceAnswer": "BillingCenter uses the negative invoice items from a negative charge to pay unsettled positive invoice items.",
       "questionKey": "slide-15"
     },
     {
@@ -271,7 +271,7 @@
       "type": "knowledge_check",
       "id": "kc-3",
       "question": "Whats the role of the return premium plan?",
-      "referenceAnswer": "The return premium plan controls allocation of policy credits. Specifically, it specifies\nwhich unpaid items to pay with a policy credit and how to allocate the credit (for\nexample, proportional, last to first, first to last).",
+      "referenceAnswer": "The return premium plan controls allocation of policy credits. Specifically, it specifies which unpaid items to pay with a policy credit and how to allocate the credit (for example, proportional, last to first, first to last).",
       "questionKey": "slide-24"
     },
     {
@@ -352,7 +352,7 @@
       "type": "knowledge_check",
       "id": "kc-4",
       "question": "What does “collapsing future invoices” during cancellation involve?",
-      "referenceAnswer": ", Invoice items from all planned invoices are moved to the earliest planned invoice. Any\npolicy credits allocated to positive invoice items are included in the move.",
+      "referenceAnswer": "Invoice items from all planned invoices are moved to the earliest planned invoice. Any policy credits allocated to positive invoice items are included in the move.",
       "questionKey": "slide-32"
     },
     {
@@ -415,7 +415,7 @@
       "type": "knowledge_check",
       "id": "kc-5",
       "question": "What is the purpose of cancellation snapshots?",
-      "referenceAnswer": "Cancellation snapshots provide the means of restoring the policy to a state that is as\n\nclose to its original state as possible. Snapshots are needed because all planned\ninvoices were collapsed onto a single invoice during the cancellation.",
+      "referenceAnswer": "Cancellation snapshots provide the means of restoring the policy to a state that is as close to its original state as possible. Snapshots are needed because all planned invoices were collapsed onto a single invoice during the cancellation.",
       "questionKey": "slide-39"
     },
     {

@@ -19,7 +19,6 @@ import {
 } from '@/lib/academy/curriculum'
 import { loadLessonContent, loadKnowledgeChecks } from '@/lib/academy/content-loader'
 import { useAcademyStore } from '@/lib/academy/progress-store'
-import { useGuruUI } from '@/lib/academy/guru-ui-store'
 
 import { MentorshipSlide } from './MentorshipSlide'
 import { DemoVideo } from './DemoVideo'
@@ -160,30 +159,6 @@ function extractObjectives(slides: SlideContent[]): string[] {
   return objectives.slice(0, 8)
 }
 
-/** Extract key concepts from content slide titles for sidebar */
-function extractKeyConcepts(slides: SlideContent[]): string[] {
-  const seen = new Set<string>()
-  const concepts: string[] = []
-
-  for (const slide of slides) {
-    if (slide.title) {
-      const words = slide.title
-        .replace(/[^a-zA-Z\s]/g, '')
-        .split(/\s+/)
-        .filter((w) => w.length > 3)
-      for (const w of words) {
-        const lower = w.toLowerCase()
-        if (!seen.has(lower) && concepts.length < 10) {
-          seen.add(lower)
-          concepts.push(w)
-        }
-      }
-    }
-  }
-
-  return concepts.slice(0, 8)
-}
-
 /** Group content slides into journey sections for left sidebar */
 function buildJourneySections(slides: SlideContent[]): { label: string; slideNumbers: number[] }[] {
   const sections: { label: string; slideNumbers: number[] }[] = []
@@ -218,15 +193,6 @@ function buildJourneySections(slides: SlideContent[]): { label: string; slideNum
   return sections
 }
 
-// Wisdom quotes for lessons
-const WISDOM_QUOTES = [
-  { text: 'To understand the whole, first understand how its parts relate. A good model illuminates the territory it represents.', attr: 'A principle for Guidewire learners' },
-  { text: 'The expert has failed more times than the beginner has tried. Mastery comes from patience, not speed.', attr: 'Ancient proverb for developers' },
-  { text: 'Configuration is the language of the system. Learn to speak it fluently, and the system will do your bidding.', attr: 'Guidewire Architecture Wisdom' },
-  { text: 'Every line of code tells a story. The best code tells the simplest story that still captures the truth.', attr: 'Software craftsmanship tradition' },
-  { text: 'The most powerful tool a developer has is understanding. Before you write, understand. Before you fix, understand.', attr: 'Senior engineer\'s wisdom' },
-]
-
 // --- Main component ---
 
 export function LessonPresentationView() {
@@ -248,7 +214,6 @@ export function LessonPresentationView() {
     setCurrentLesson,
     initializeProgress,
   } = useAcademyStore()
-  const guruUI = useGuruUI()
 
   // State
   const [lessonContent, setLessonContent] = useState<ExtractedLesson | null>(null)
@@ -266,11 +231,6 @@ export function LessonPresentationView() {
   const progress = getLessonProgress(lessonId)
   const prevLesson = lessonMeta ? getPrevLesson(lessonId) : null
   const nextLesson = lessonMeta ? getNextLesson(lessonId) : null
-
-  const wisdomQuote = useMemo(() =>
-    WISDOM_QUOTES[Math.abs(lessonNumber * 7 + (chapter?.id ?? 0) * 13) % WISDOM_QUOTES.length],
-    [lessonNumber, chapter?.id]
-  )
 
   // Initialize
   useEffect(() => {
@@ -460,7 +420,6 @@ export function LessonPresentationView() {
 
     return { anchoredVideos: anchored, unanchoredVideos: leftover }
   }, [videos, demoSlides])
-  const keyConcepts = useMemo(() => extractKeyConcepts(contentSlides), [contentSlides])
   const journeySections = useMemo(() => buildJourneySections(contentSlides), [contentSlides])
 
   // Build knowledge check items — centralized file is the source of truth,
@@ -703,10 +662,6 @@ export function LessonPresentationView() {
 
   const progressPct = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0
 
-  // SVG circle math for progress ring
-  const circumference = 2 * Math.PI * 24 // r=24
-  const dashOffset = circumference * (1 - progressPct / 100)
-
   // --- Error / Loading states ---
 
   if (!chapter || !lessonMeta) {
@@ -746,18 +701,8 @@ export function LessonPresentationView() {
 
         {/* ====== LEFT SIDEBAR: Sensei + Journey ====== */}
         <div className="m-sidebar-left">
-          {/* Sensei card */}
-          <div className="m-sensei-card">
-            <div className="m-sensei-avatar">G</div>
-            <div style={{ minWidth: 0 }}>
-              <div className="m-sensei-name">Guidewire Guru</div>
-              <div className="m-sensei-role">Your Guidewire Sensei</div>
-              <div className="m-sensei-status">Available</div>
-            </div>
-          </div>
-
           {/* Journey navigation */}
-          <div className="m-nav-label">Your Journey</div>
+          <div className="m-nav-label">Lesson Journey</div>
 
           {journeySections.map((section, idx) => {
             const isCompleted = idx < activeSection
@@ -777,9 +722,7 @@ export function LessonPresentationView() {
                     {isCompleted ? '✓' : ''}
                   </div>
                   <div className="m-nav-title">
-                    {section.label.length > 35
-                      ? section.label.slice(0, 35) + '...'
-                      : section.label}
+                    {section.label}
                   </div>
                 </div>
               </div>
@@ -826,19 +769,6 @@ export function LessonPresentationView() {
         {/* ====== MAIN CONTENT: Narrative Scroll ====== */}
         <main className="m-main" ref={mainRef}>
 
-          {/* Welcome banner */}
-          <div className="m-welcome m-animate">
-            <div className="m-welcome-greeting">Welcome back, Student</div>
-            <div className="m-welcome-message">
-              {progress.status === 'completed'
-                ? `You've already completed this lesson. Feel free to review the material at your own pace.`
-                : contentSlides.length > 0
-                  ? `Let's continue your journey. Today we explore ${lessonMeta.title.toLowerCase()}. Take your time — this one is worth understanding deeply.`
-                  : `This lesson's content is being prepared. Check back soon!`
-              }
-            </div>
-          </div>
-
           {/* Lesson header */}
           <div className="m-lesson-header">
             <div className="m-lesson-tag">
@@ -870,12 +800,6 @@ export function LessonPresentationView() {
                 </>
               )}
             </div>
-          </div>
-
-          {/* Wisdom card */}
-          <div className="m-wisdom">
-            <div className="m-wisdom-text">{wisdomQuote.text}</div>
-            <div className="m-wisdom-attr">— {wisdomQuote.attr}</div>
           </div>
 
           {/* Learning Objectives — extracted from objectives slides */}
@@ -996,7 +920,7 @@ export function LessonPresentationView() {
             </div>
           </div>
 
-          {/* Prev / Next navigation */}
+          {/* Prev / Next navigation — hide Next when completion card already shows it */}
           <div style={{ display: 'flex', gap: 12, marginTop: 24, paddingBottom: 40 }}>
             {prevLesson && (
               <button
@@ -1008,7 +932,7 @@ export function LessonPresentationView() {
                 Previous Lesson
               </button>
             )}
-            {nextLesson && (
+            {nextLesson && progress.status !== 'completed' && (
               <button
                 className="m-practice-btn"
                 style={{ marginLeft: 'auto' }}
@@ -1022,29 +946,26 @@ export function LessonPresentationView() {
 
         </main>
 
-        {/* ====== RIGHT SIDEBAR: Editorial Components ====== */}
+        {/* ====== RIGHT SIDEBAR ====== */}
         <aside className="m-sidebar-right">
 
-          {/* Progress ring */}
+          {/* Back to Learn */}
+          <div className="m-aside-section">
+            <div className="m-back-link" onClick={() => router.push('/academy/learn')}>
+              <ChevronLeft size={14} />
+              Back to Learn
+            </div>
+          </div>
+
+          {/* Progress (compact text + bar) */}
           <div className="m-aside-section">
             <div className="m-aside-label">Your Progress</div>
-            <div className="m-progress-block">
-              <div style={{ width: 56, height: 56, position: 'relative', flexShrink: 0 }}>
-                <svg width="56" height="56" viewBox="0 0 56 56">
-                  <circle className="m-ring-bg" cx="28" cy="28" r="24" />
-                  <circle
-                    className="m-ring-fill"
-                    cx="28" cy="28" r="24"
-                    strokeDasharray={circumference}
-                    strokeDashoffset={dashOffset}
-                    transform="rotate(-90 28 28)"
-                  />
-                </svg>
-                <div className="m-ring-text">{progressPct}%</div>
+            <div className="m-progress-compact">
+              <div className="m-progress-compact-text">
+                <strong>{completedItems} of {totalItems}</strong> complete
               </div>
-              <div className="m-progress-detail">
-                <strong>{completedItems} of {totalItems} items</strong>
-                completed so far
+              <div className="m-progress-bar">
+                <div className="m-progress-fill" style={{ width: `${progressPct}%` }} />
               </div>
             </div>
           </div>
@@ -1057,75 +978,6 @@ export function LessonPresentationView() {
               <div className="m-duration-meta">
                 <strong>minutes</strong>
                 {contentSlides.length} slides &middot; {videos.length} video{videos.length !== 1 ? 's' : ''}
-              </div>
-            </div>
-          </div>
-
-          {/* Sensei mini */}
-          <div className="m-aside-section">
-            <div className="m-aside-label">Your Sensei</div>
-            <div className="m-instructor-mini">
-              <div className="m-instructor-mini-avatar">G</div>
-              <div>
-                <div style={{ fontSize: 13, fontWeight: 500, color: 'var(--m-text-primary)' }}>
-                  Guidewire Guru
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--m-text-muted)', marginTop: 1 }}>
-                  Sr. Guidewire Architect
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Key Concepts */}
-          {keyConcepts.length > 0 && (
-            <div className="m-aside-section">
-              <div className="m-aside-label">Key Concepts</div>
-              <div className="m-concept-tags">
-                {keyConcepts.map((concept, i) => (
-                  <span key={i} className="m-concept-pill">{concept}</span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Resources */}
-          <div className="m-aside-section">
-            <div className="m-aside-label">Resources</div>
-            {lessonMeta.hasAssignment && lessonMeta.assignmentPdf && (
-              <div
-                className="m-resource-item"
-                onClick={() => {
-                  const el = document.getElementById('assignment-section')
-                  if (el) el.scrollIntoView({ behavior: 'smooth' })
-                }}
-              >
-                <div className="m-resource-icon">📄</div>
-                <span>Assignment PDF</span>
-              </div>
-            )}
-            <div className="m-resource-item" onClick={() => router.push('/academy/learn')}>
-              <div className="m-resource-icon">📚</div>
-              <span>Back to Dashboard</span>
-            </div>
-            {videos.length > 0 && (
-              <div className="m-resource-item" onClick={() => {
-                const el = document.querySelector('.m-video-block')
-                if (el) el.scrollIntoView({ behavior: 'smooth' })
-              }}>
-                <div className="m-resource-icon">🎥</div>
-                <span>Demo Video{videos.length > 1 ? 's' : ''}</span>
-              </div>
-            )}
-          </div>
-
-          {/* Ask Sensei */}
-          <div className="m-aside-section">
-            <div className="m-ask-sensei" onClick={() => guruUI.open()}>
-              <div className="m-ask-sensei-icon">💬</div>
-              <div className="m-ask-sensei-text">
-                <strong>Stuck on something?</strong>
-                Ask Guidewire Guru for help
               </div>
             </div>
           </div>

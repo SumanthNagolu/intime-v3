@@ -299,22 +299,22 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "For each of the following, identify if it is stored as a database table, as a\ntable column, or not stored in the database at all:\nA) An entity (such as ABContact)\nB) Aphysical data field (such as ABContact.CreateTime)\nC) A virtual data field (such as ABContact.FullName)\nD) A foreign key field (such as ABContact.AssignedUser)",
-      "referenceAnswer": "For each of the following, identify if itis stored as a database table, as a\n¢ table column, or not stored in the database at all:\n\nThe correct responses are:\nA) Atable\nB) Acolumn\n\nC) Not stored in the database (Technically, the source values are probably stored in\nthe database. But the value of a virtual field itself is not stored as a separate\nvalue.)\n\ngS\n\nAcolumn (specifically a foreign key column to the relevant entity's table)",
+      "question": "For each of the following, identify if it is stored as a database table, as a table column, or not stored in the database at all:\nA) An entity (such as ABContact)\nB) A physical data field (such as ABContact.CreateTime)\nC) A virtual data field (such as ABContact.FullName)\nD) A foreign key field (such as ABContact.AssignedUser)",
+      "referenceAnswer": "The correct responses are:\nA) A table\nB) A column\nC) Not stored in the database (Technically, the source values are probably stored in the database. But the value of a virtual field itself is not stored as a separate value.)\nD) A column (specifically a foreign key column to the relevant entity's table)",
       "questionKey": "slide-26"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "For each of the following, identify if it is stored as a database table, as a\ntable column, or not stored in the database at all:\nA) Anarray key field (such as ABContact.ContactNotes)\nB) Atypelist (such as VendorType)\nC) Atypekey field (such as ABContact.VendorType)",
-      "referenceAnswer": "For each of the following, identify if itis stored as a database table, as a\n¢ table column, or not stored in the database at all:\n\nA) Anarray key field (such as ABContact.ContactNotes)\nB) Atypelist (such as VendorType)\nC) Atypekey field (such as ABContact.VendorType)\n\nThe correct answers are:\nA) Not stored in the database,\nB) Atable,\n\nC) Acolumn (specifically a foreign key column to the typelist's table)",
+      "question": "For each of the following, identify if it is stored as a database table, as a table column, or not stored in the database at all:\nA) An array key field (such as ABContact.ContactNotes)\nB) A typelist (such as VendorType)\nC) A typekey field (such as ABContact.VendorType)",
+      "referenceAnswer": "The correct answers are:\nA) Not stored in the database,\nB) A table,\nC) A column (specifically a foreign key column to the typelist's table)",
       "questionKey": "slide-28"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "Name two circumstances in which you would execute the gwb\ngenDataDictionary command.",
-      "referenceAnswer": "other aspect of access and therefore need to regenerate the Security Dictionary.\n\nPossible answers:\n\nYou would execute genDataDictionary when you install the application and whenever\nyou extend the Data Model.\n\nYou could also execute the command when you modify system permissions or some\nother aspect of access and therefore need to regenerate the Security Dictionary.",
+      "question": "Name two circumstances in which you would execute the gwb genDataDictionary command.",
+      "referenceAnswer": "Possible answers:\nYou would execute genDataDictionary when you install the application and whenever you extend the Data Model.\nYou could also execute the command when you modify system permissions or some other aspect of access and therefore need to regenerate the Security Dictionary.",
       "questionKey": "slide-30"
     },
     {

@@ -209,29 +209,29 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "What are some of the differences between the files in the\n..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders?",
-      "referenceAnswer": "What are some of the differences between the files in the\n\nSS Se SSeS sess e eases\n\n: ..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders?\n\nFiles under Metadata are read-only and are specific to the base configuration.\n\nYou cannot create Typelist files in the Metadata directory but can create Typelist\nfiles in the Extensions directory.\n\nOnly internal Typelist extension files (TIX) are in the Metadata directory.\nOnly external Typelist files (TTX) are in the Extensions directory.\nBoth directories contain Typelist (TT1) files.",
+      "question": "What are some of the differences between the files in the ..\\Metadata\\Typelist\\ and...\\Extensions\\Typelist\\ folders?",
+      "referenceAnswer": "Files under Metadata are read-only and are specific to the base configuration.\nYou cannot create Typelist files in the Metadata directory but can create Typelist files in the Extensions directory.\nOnly internal Typelist extension files (TIX) are in the Metadata directory.\nOnly external Typelist files (TTX) are in the Extensions directory.\nBoth directories contain Typelist (TT1) files.",
       "questionKey": "slide-18"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
       "question": "Which is a valid code value for a Typecode in a food coloring Typelist?\nA) RedDye#1\nB) YellowDye40\nC) OrangeDye:10",
-      "referenceAnswer": "A) RedDye#1\nB) YellowDye40\nC) OrangeDye:10\nA) Not valid\nB) Valid\nC) Not valid",
+      "referenceAnswer": "A) Not valid\nB) Valid\nC) Not valid",
       "questionKey": "slide-20"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "Which Typecode attribute determines the order in which Typecodes are\nlisted in the user interface?",
-      "referenceAnswer": "at the end of the list.\nSS Se SSeS sess e eases",
+      "question": "Which Typecode attribute determines the order in which Typecodes are listed in the user interface?",
+      "referenceAnswer": "The priority attribute determines the sort order in the User Interface for a Typelist. After priority, the name (not code) determines the sort order. Entries with priority -1 appear at the end of the list.",
       "questionKey": "slide-22"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
       "question": "What does a Typefilter do?",
-      "referenceAnswer": "What does a Typefilter do?\n\n¢\n¢\n\nDefines a named subset of the Typecodes that could be used as value for the\nassociated Typekey field that references this Typelist.\n\nSS Se SSeS sess e eases",
+      "referenceAnswer": "Defines a named subset of the Typecodes that could be used as value for the associated Typekey field that references this Typelist.",
       "questionKey": "slide-24"
     },
     {

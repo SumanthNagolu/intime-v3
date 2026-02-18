@@ -473,7 +473,7 @@
       "slideType": "question",
       "questionData": {
         "question": "What must you specify in a widget's \"value\" property?",
-        "answer": ": “ You must specify the field in the data model that the widget is bound to. SS SSS SHS se FH"
+        "answer": "You must specify the field in the data model that the widget is bound to."
       }
     },
     {
@@ -511,7 +511,7 @@
       "slideType": "question",
       "questionData": {
         "question": "When would you see the keyword \"as\" in the value property?",
-        "answer": "You would see the \"as\" when the container's base object is subtyped, and the field to which the widget must be bound is at one of the subtype levels. SS SSS SHS se FH"
+        "answer": "You would see the \"as\" when the container's base object is subtyped, and the field to which the widget must be bound is at one of the subtype levels."
       }
     },
     {
@@ -548,8 +548,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "An What is a display key?",
-        "answer": ": “ Adisplay key is an abstract display value referenced by a widget's label property. It can have one or more language-specific values, and when the UI is rendered, the value matching the user’s language is used. SS SSS SHS se FH"
+        "question": "What is a display key?",
+        "answer": "A display key is an abstract display value referenced by a widget's label property. It can have one or more language-specific values, and when the UI is rendered, the value matching the user’s language is used."
       }
     },
     {
@@ -586,8 +586,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Ifyou create a widget and specify only the ID, name, and label, is the",
-        "answer": "—— Ifyou Create a widget and specify only the ID, name, and label, is the Y widget visible? Editable? Required? The widget will be visible, not editable, and not required. SS SSS SHS se FH"
+        "question": "If you create a widget and specify only the ID, name, and label, is the widget visible? Editable? Required?",
+        "answer": "The widget will be visible, not editable, and not required."
       }
     },
     {
@@ -624,8 +624,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "The screenshot shows a standard input widget. The customer requires",
-        "answer": "Y along\" date format. How could you implement this requirement? You would need to configure the date input widget’s date format property. Setting this property to “long” will provide the desired behavior. SS SSS SHS se FH"
+        "question": "The screenshot shows a standard input widget. The customer requires a \"long\" date format. How could you implement this requirement?",
+        "answer": "You would need to configure the date input widget’s date format property. Setting this property to “long” will provide the desired behavior."
       }
     },
     {
@@ -662,8 +662,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "For the object \"myContact\" of type ABContact,",
-        "answer": "2 what is the dot notation for the object's: A) Preferred currency? B) Notes? C) Level of experience of myContact's assigned user? D) Mobile phone (if it is a person) The correct responses are: A) myContact.PreferredCurrency B) myContact.ContactNotes c) myContact.AssignedUser.ExperienceLevel SS SSS SHS se FH D) (myContact as ABPerson).CellPhone"
+        "question": "For the object \"myContact\" of type ABContact, what is the dot notation for the object's:\nA) Preferred currency?\nB) Notes?\nC) Level of experience of myContact's assigned user?\nD) Mobile phone (if it is a person)",
+        "answer": "The correct responses are:\nA) myContact.PreferredCurrency\nB) myContact.ContactNotes\nC) myContact.AssignedUser.ExperienceLevel\nD) (myContact as ABPerson).CellPhone"
       }
     },
     {

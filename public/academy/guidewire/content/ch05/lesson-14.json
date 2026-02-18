@@ -539,7 +539,7 @@
       "slideType": "question",
       "questionData": {
         "question": "When does ClaimCenter determine which permissions a given user has?",
-        "answer": "ClaimCenter determines the permissions for a given user when that user logs in. SS Oooo D OOOO ODD oo"
+        "answer": "ClaimCenter determines the permissions for a given user when that user logs in."
       }
     },
     {
@@ -577,7 +577,7 @@
       "slideType": "question",
       "questionData": {
         "question": "How many permissions can a given role have?",
-        "answer": "Arole can have any number of permissions, from zero (which would serve no business purpose but is theoretically possible) to all the permissions in the system. SS Oooo D OOOO ODD oo"
+        "answer": "A role can have any number of permissions, from zero (which would serve no business purpose but is theoretically possible) to all the permissions in the system."
       }
     },
     {
@@ -615,7 +615,7 @@
       "slideType": "question",
       "questionData": {
         "question": "How many roles can a given user have?",
-        "answer": "How many roles can a given user have? Auser can theoretically have any number of roles from Zero to all the roles in the system. A user must have at least one role in order to be able to do anything in ClaimCenter. A user who has broader responsibility than another user can be given additional roles so that they are able to accomplish these responsibilities. SS Oooo D OOOO ODD oo"
+        "answer": "A user can theoretically have any number of roles from Zero to all the roles in the system. A user must have at least one role in order to be able to do anything in ClaimCenter. A user who has broader responsibility than another user can be given additional roles so that they are able to accomplish these responsibilities."
       }
     },
     {
@@ -652,8 +652,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "How could you easily determine the number of roles that enable users to",
-        "answer": "• create matters? You could view the create matter permission in the security dictionary to see which roles contain that permission. Note that this only works for the base product, because the security dictionary will not update based on any changes that a project team or security administrator makes to the roles. SS Oooo D OOOO ODD oo"
+        "question": "How could you easily determine the number of roles that enable users to\ncreate matters?",
+        "answer": "You could view the create matter permission in the security dictionary to see which\nroles contain that permission. Note that this only works for the base product, because\nthe security dictionary will not update based on any changes that a project team or\nsecurity administrator makes to the roles."
       }
     },
     {
@@ -690,8 +690,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Agiven user appears on the access control list for claim 234-22-147282,",
-        "answer": "But that user cannot view or edit the claim. How could this happen? The user probably lacks the system permission to view and/or edit claims. In order to view or edit a claim, the user must have the system permission and appear on the SS Oooo D OOOO ODD oo"
+        "question": "A given user appears on the access control list for claim 234-22-147282,\nbut that user cannot view or edit the claim. How could this happen?",
+        "answer": "The user probably lacks the system permission to view and/or edit claims. In order to\nview or edit a claim, the user must have the system permission and appear on the\nACL."
       }
     },
     {
@@ -728,8 +728,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Asecurity profile can specify criteria for three types of access. What are",
-        "answer": "The three types of access? Own access, view access, edit access. SS Oooo D OOOO ODD oo"
+        "question": "A security profile can specify criteria for three types of access. What are\nthe three types of access?",
+        "answer": "Own access, view access, edit access."
       }
     },
     {
@@ -766,8 +766,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Two different claims that use the same security profile can have two",
-        "answer": "• completely different access control lists. Why? The security profile generates a list of users based on the criteria. The users who meet the criteria vary from claim to claim. For example, if a profile says only the claim owner and members of his group can view and edit the claim, then two claims will have different access control lists if they are owned by users in different groups. SS Oooo D OOOO ODD oo"
+        "question": "Two different claims that use the same security profile can have two\ncompletely different access control lists. Why?",
+        "answer": "The security profile generates a list of users based on the criteria. The users who meet\nthe criteria vary from claim to claim. For example, if a profile says only the claim owner\nand members of his group can view and edit the claim, then two claims will have\ndifferent access control lists if they are owned by users in different groups."
       }
     },
     {

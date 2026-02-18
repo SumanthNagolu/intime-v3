@@ -1,0 +1,290 @@
+{
+  "assignmentId": "ch09-a04",
+  "chapterSlug": "ch09-claimcenter-configuration",
+  "lessonNumber": 4,
+  "title": "Writing Gosu Business Rules",
+  "complexityLevel": "development",
+  "estimatedMinutes": 75,
+  "totalExercises": 3,
+  "skillsCovered": ["Gosu Programming", "Business Rules", "Validation Rules", "Preupdate Rules", "ClaimCenter Configuration"],
+  "blocks": [
+    {
+      "type": "assignment_header",
+      "id": "header-01",
+      "lessonTitle": "Writing Gosu Business Rules in ClaimCenter",
+      "scenario": "Enigma Fire & Casualty has received new regulatory requirements that require additional validation on claim submissions. As a Guidewire developer, you need to write Gosu business rules to enforce these requirements. The rules must validate claim data, enforce business policies, and provide meaningful error messages to adjusters.",
+      "prerequisites": [
+        "Completed ClaimCenter Configuration Lessons 1-3",
+        "Basic understanding of Gosu syntax",
+        "Access to Guidewire Studio IDE",
+        "ClaimCenter training environment running"
+      ],
+      "objectives": [
+        "Write validation rules using Gosu in ClaimCenter",
+        "Implement preupdate rules to enforce business logic",
+        "Use entity properties and methods in business rules",
+        "Test and debug business rules in the development environment"
+      ],
+      "estimatedMinutes": 75,
+      "complexityLevel": "development",
+      "skillsTested": ["Gosu Programming", "Business Rules", "Validation Rules", "Debugging"]
+    },
+    {
+      "type": "exercise_group",
+      "id": "ex-01",
+      "exerciseNumber": 1,
+      "title": "Lab: Write a Claim Validation Rule",
+      "description": "Create a validation rule that ensures all new claims have a valid loss date and that the reported date is not in the future.",
+      "variant": "lab"
+    },
+    {
+      "type": "step",
+      "id": "ex01-s01",
+      "exerciseId": "ex-01",
+      "stepNumber": 1,
+      "instruction": "Open Guidewire Studio and navigate to the ClaimCenter configuration project.",
+      "requiresAction": true
+    },
+    {
+      "type": "step",
+      "id": "ex01-s02",
+      "exerciseId": "ex-01",
+      "stepNumber": 2,
+      "instruction": "Navigate to the validation rules directory: config > rules > Validation > ClaimValidationRules.",
+      "requiresAction": true
+    },
+    {
+      "type": "callout",
+      "id": "callout-01",
+      "variant": "tip",
+      "title": "Rule Directory Structure",
+      "content": "Guidewire organizes rules by type (Validation, Preupdate, Startup) and by entity (Claim, Exposure, Activity). Always place your rules in the correct directory to ensure they fire at the right time."
+    },
+    {
+      "type": "step",
+      "id": "ex01-s03",
+      "exerciseId": "ex-01",
+      "stepNumber": 3,
+      "instruction": "Create a new validation rule file named 'EFC_ValidateLossDate.gs'.",
+      "substeps": [
+        { "letter": "a", "text": "Right-click on ClaimValidationRules > New > Gosu Rule" },
+        { "letter": "b", "text": "Name the file 'EFC_ValidateLossDate'" },
+        { "letter": "c", "text": "Set the rule to fire on 'Create' and 'Update' events" }
+      ],
+      "requiresAction": true
+    },
+    {
+      "type": "code_task",
+      "id": "ex01-ct01",
+      "exerciseId": "ex-01",
+      "language": "gosu",
+      "prompt": "Write a Gosu validation rule that checks the following conditions on a Claim:\n1. The LossDate must not be null\n2. The LossDate must not be in the future (after today)\n3. The ReportedDate must not be before the LossDate\n\nFor each violation, add an appropriate validation error message.",
+      "context": "This rule fires during claim creation and updates. The claim entity is available as 'claim' in the rule context.",
+      "starterCode": "// EFC_ValidateLossDate.gs\n// Validation Rule: Ensure valid loss and reported dates\n\nuses gw.api.util.DateUtil\n\n// Your validation logic here\nvar claim = Loss\n",
+      "hints": [
+        "Use claim.LossDate to access the loss date property",
+        "DateUtil.currentDate() gives you today's date for comparison",
+        "Use reject() to add validation errors: reject(\"message\", null, null, \"fieldName\")"
+      ],
+      "referenceSolution": "// EFC_ValidateLossDate.gs\nuses gw.api.util.DateUtil\n\nvar claim = Loss\n\n// Validate LossDate is not null\nif (claim.LossDate == null) {\n  reject(\"Loss Date is required for all claims.\",\n    null, null, \"LossDate\")\n}\n\n// Validate LossDate is not in the future\nif (claim.LossDate != null && claim.LossDate > DateUtil.currentDate()) {\n  reject(\"Loss Date cannot be in the future. Please verify the date.\",\n    null, null, \"LossDate\")\n}\n\n// Validate ReportedDate is not before LossDate\nif (claim.LossDate != null && claim.ReportedDate != null\n    && claim.ReportedDate < claim.LossDate) {\n  reject(\"Reported Date cannot be before the Loss Date.\",\n    null, null, \"ReportedDate\")\n}",
+      "skillTested": "Validation Rules"
+    },
+    {
+      "type": "callout",
+      "id": "callout-02",
+      "variant": "important",
+      "title": "Validation Rule Best Practices",
+      "content": "Always check for null before comparing date values to avoid NullPointerExceptions. Provide clear, user-friendly error messages that tell the adjuster what went wrong and how to fix it. Include the field name parameter so the UI highlights the correct field."
+    },
+    {
+      "type": "verification",
+      "id": "ex01-v01",
+      "exerciseId": "ex-01",
+      "title": "Test Your Validation Rule",
+      "steps": [
+        { "text": "Deploy the rule to your local ClaimCenter instance" },
+        { "text": "Create a new claim with no Loss Date - verify error appears", "verificationNote": "Error message should appear next to the Loss Date field" },
+        { "text": "Create a claim with Loss Date set to tomorrow - verify future date error" },
+        { "text": "Create a claim with Reported Date before Loss Date - verify chronology error" },
+        { "text": "Create a valid claim (Loss Date in past, Reported Date after Loss Date) - verify no errors" }
+      ]
+    },
+    {
+      "type": "exercise_group",
+      "id": "ex-02",
+      "exerciseNumber": 2,
+      "title": "Lab: Implement a Preupdate Rule",
+      "description": "Create a preupdate rule that automatically sets the claim priority based on the reported loss amount.",
+      "variant": "lab"
+    },
+    {
+      "type": "step",
+      "id": "ex02-s01",
+      "exerciseId": "ex-02",
+      "stepNumber": 1,
+      "instruction": "Navigate to the preupdate rules directory: config > rules > Preupdate > ClaimPreupdateRules.",
+      "requiresAction": true
+    },
+    {
+      "type": "step",
+      "id": "ex02-s02",
+      "exerciseId": "ex-02",
+      "stepNumber": 2,
+      "instruction": "Create a new preupdate rule file named 'EFC_AutoSetPriority.gs'.",
+      "requiresAction": true
+    },
+    {
+      "type": "data_table",
+      "id": "ex02-dt01",
+      "exerciseId": "ex-02",
+      "context": "Implement the following priority assignment logic based on the initial reported loss amount:",
+      "headers": ["Loss Amount Range", "Priority", "Rationale"],
+      "rows": [
+        ["$0 - $10,000", "Low (4)", "Routine claims handled in normal queue"],
+        ["$10,001 - $50,000", "Normal (3)", "Standard processing with regular SLA"],
+        ["$50,001 - $250,000", "High (2)", "Requires senior adjuster review"],
+        ["Over $250,000", "Urgent (1)", "Escalate to claims manager immediately"]
+      ],
+      "caption": "Priority assignment matrix for Enigma Fire & Casualty"
+    },
+    {
+      "type": "code_task",
+      "id": "ex02-ct01",
+      "exerciseId": "ex-02",
+      "language": "gosu",
+      "prompt": "Write a Gosu preupdate rule that automatically sets the claim Priority based on the loss amount thresholds in the table above. The rule should only fire when the claim is first created OR when the loss amount changes.",
+      "context": "Preupdate rules fire before the entity is committed to the database. Use claim.isFieldChanged(\"LossAmount\") to check if a field was modified.",
+      "starterCode": "// EFC_AutoSetPriority.gs\n// Preupdate Rule: Auto-assign claim priority based on loss amount\n\nvar claim = Loss\n\n// Only run on create or when loss amount changes\n",
+      "hints": [
+        "Use claim.New to check if the entity is newly created",
+        "claim.isFieldChanged(Claim#LossCause) checks if a field changed - adapt for your field",
+        "Priority values: Priority.TC_URGENT (1), Priority.TC_HIGH (2), Priority.TC_NORMAL (3), Priority.TC_LOW (4)"
+      ],
+      "referenceSolution": "// EFC_AutoSetPriority.gs\nvar claim = Loss\n\n// Only run on create or when loss amount changes\nif (claim.New || claim.isFieldChanged(Claim#LossAmount)) {\n  var amount = claim.LossAmount?.Amount\n  \n  if (amount == null) {\n    // No amount yet, default to normal\n    claim.Priority = Priority.TC_NORMAL\n  } else if (amount <= 10000) {\n    claim.Priority = Priority.TC_LOW\n  } else if (amount <= 50000) {\n    claim.Priority = Priority.TC_NORMAL\n  } else if (amount <= 250000) {\n    claim.Priority = Priority.TC_HIGH\n  } else {\n    claim.Priority = Priority.TC_URGENT\n  }\n}",
+      "skillTested": "Preupdate Rules"
+    },
+    {
+      "type": "callout",
+      "id": "callout-03",
+      "variant": "best_practice",
+      "title": "Preupdate Rule Performance",
+      "content": "Always guard preupdate rules with field-change checks (isFieldChanged) or new-entity checks (claim.New). Preupdate rules fire on every save, so unguarded rules that run expensive logic on every commit can significantly impact system performance."
+    },
+    {
+      "type": "verification",
+      "id": "ex02-v01",
+      "exerciseId": "ex-02",
+      "title": "Test Your Preupdate Rule",
+      "steps": [
+        { "text": "Deploy the rule to your local ClaimCenter instance" },
+        { "text": "Create a claim with loss amount $5,000 - verify Priority is set to Low" },
+        { "text": "Create a claim with loss amount $75,000 - verify Priority is set to High" },
+        { "text": "Create a claim with loss amount $500,000 - verify Priority is set to Urgent" },
+        { "text": "Edit an existing claim's loss amount from $5,000 to $100,000 - verify Priority updates to High" }
+      ]
+    },
+    {
+      "type": "exercise_group",
+      "id": "ex-03",
+      "exerciseNumber": 3,
+      "title": "Lab: Combine Rules with Error Handling",
+      "description": "Write a comprehensive rule that combines validation and business logic with proper error handling and logging.",
+      "variant": "lab"
+    },
+    {
+      "type": "step",
+      "id": "ex03-s01",
+      "exerciseId": "ex-03",
+      "stepNumber": 1,
+      "instruction": "Create a new validation rule 'EFC_ValidateClaimAssignment.gs' that enforces assignment rules.",
+      "requiresAction": true
+    },
+    {
+      "type": "code_task",
+      "id": "ex03-ct01",
+      "exerciseId": "ex-03",
+      "language": "gosu",
+      "prompt": "Write a validation rule that enforces the following business requirement:\n\n1. Claims with Priority = Urgent MUST have an AssignedUser\n2. Claims with LossType = 'WC' (Workers Comp) must have a MainContact with role 'claimant'\n3. If the claim has any Exposures, at least one must have a CoverageType set\n\nInclude proper null-safety and clear error messages.",
+      "context": "This rule ensures claims are properly set up before they can progress in the workflow.",
+      "hints": [
+        "Access exposures via claim.Exposures (returns an array)",
+        "Check MainContact with claim.getClaimContactsByRole(ContactRole.TC_CLAIMANT)",
+        "Use claim.LossType to check the loss type typecode"
+      ],
+      "referenceSolution": "// EFC_ValidateClaimAssignment.gs\nuses gw.api.util.Logger\n\nvar claim = Loss\nvar logger = Logger.forCategory(\"EFC_Rules\")\n\ntry {\n  // Rule 1: Urgent claims must have assignment\n  if (claim.Priority == Priority.TC_URGENT\n      && claim.AssignedUser == null) {\n    reject(\"Urgent claims must be assigned to an adjuster before saving.\",\n      null, null, \"AssignedUser\")\n  }\n\n  // Rule 2: Workers Comp claims must have claimant contact\n  if (claim.LossType == LossType.TC_WC) {\n    var claimants = claim.getClaimContactsByRole(ContactRole.TC_CLAIMANT)\n    if (claimants == null || claimants.IsEmpty) {\n      reject(\"Workers' Compensation claims require a Claimant contact.\",\n        null, null, \"MainContact\")\n    }\n  }\n\n  // Rule 3: Claims with exposures must have coverage type\n  if (claim.Exposures != null && claim.Exposures.length > 0) {\n    var hasCoverage = claim.Exposures.hasMatch(\\ e -> e.CoverageType != null)\n    if (!hasCoverage) {\n      reject(\"At least one exposure must have a Coverage Type specified.\",\n        null, null, \"Exposures\")\n    }\n  }\n} catch (e: Exception) {\n  logger.error(\"Error in EFC_ValidateClaimAssignment: \" + e.Message)\n}",
+      "skillTested": "Business Rules"
+    },
+    {
+      "type": "callout",
+      "id": "callout-04",
+      "variant": "warning",
+      "title": "Always Wrap Rules in Try-Catch",
+      "content": "An unhandled exception in a business rule can prevent users from saving ANY data. Always wrap rule logic in try-catch blocks and log errors. It's better to let invalid data through than to lock users out of the system entirely."
+    },
+    {
+      "type": "verification",
+      "id": "ex03-v01",
+      "exerciseId": "ex-03",
+      "title": "Test Your Combined Rule",
+      "steps": [
+        { "text": "Deploy the rule to your local ClaimCenter instance" },
+        { "text": "Create an Urgent claim without assigning a user - verify error" },
+        { "text": "Create a WC claim without a claimant - verify error" },
+        { "text": "Add exposures without coverage type - verify error" },
+        { "text": "Verify that a properly configured claim passes all validations" }
+      ]
+    },
+    {
+      "type": "solution_step",
+      "id": "sol-01",
+      "exerciseId": "ex-01",
+      "stepNumber": 1,
+      "instruction": "Create the validation rule file in the correct directory",
+      "substeps": [
+        { "letter": "a", "text": "In Guidewire Studio, expand config > rules > Validation" },
+        { "letter": "b", "text": "Right-click ClaimValidationRules and select New > Gosu Class" },
+        { "letter": "c", "text": "Name it EFC_ValidateLossDate" }
+      ]
+    },
+    {
+      "type": "solution_step",
+      "id": "sol-02",
+      "exerciseId": "ex-01",
+      "stepNumber": 2,
+      "instruction": "Write the validation logic with null-safe date comparisons",
+      "codeSnippet": {
+        "language": "gosu",
+        "code": "uses gw.api.util.DateUtil\n\nvar claim = Loss\n\nif (claim.LossDate == null) {\n  reject(\"Loss Date is required.\", null, null, \"LossDate\")\n}\n\nif (claim.LossDate != null && claim.LossDate > DateUtil.currentDate()) {\n  reject(\"Loss Date cannot be in the future.\", null, null, \"LossDate\")\n}",
+        "explanation": "Always check for null first before doing comparisons. The reject() function takes: message, internationalization key, params, and field name."
+      }
+    },
+    {
+      "type": "solution_step",
+      "id": "sol-03",
+      "exerciseId": "ex-01",
+      "stepNumber": 3,
+      "instruction": "Deploy and test the rule",
+      "substeps": [
+        { "letter": "a", "text": "Save the file in Guidewire Studio" },
+        { "letter": "b", "text": "The development server should auto-pick up the change" },
+        { "letter": "c", "text": "If not, restart the server from Studio's Run menu" }
+      ],
+      "screenshotCaption": "The validation error appears as a red banner at the top of the claim screen, with the Loss Date field highlighted in red."
+    },
+    {
+      "type": "reference",
+      "id": "ref-01",
+      "variant": "review",
+      "question": "What is the difference between a validation rule and a preupdate rule in Guidewire?",
+      "explanation": "Validation rules run BEFORE the transaction is committed and can reject the save with error messages. They're used to enforce data quality. Preupdate rules also run before commit but are used to modify/compute values rather than reject - they don't show errors to users. Both fire during the save process, but they serve different purposes: validation = gatekeeping, preupdate = transformation."
+    },
+    {
+      "type": "reference",
+      "id": "ref-02",
+      "variant": "review",
+      "question": "Why should you use isFieldChanged() guards in preupdate rules?",
+      "explanation": "Without guards, preupdate rules execute on EVERY save of the entity, even if the relevant fields haven't changed. This causes: (1) unnecessary processing overhead, (2) potential override of manual user changes, (3) confusing audit trail entries. Using isFieldChanged() ensures the rule only fires when relevant data actually changes, improving both performance and correctness."
+    }
+  ],
+  "synthesizedAt": "2026-02-17T00:00:00Z"
+}

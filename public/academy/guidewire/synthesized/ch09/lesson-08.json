@@ -276,20 +276,20 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "What is the difference between a contact type and a contact role?",
-      "referenceAnswer": "The correct answer is type and subtype are object types in the data model. Contact\nroles identify the contact’s relationship to the claim or exposure.",
+      "referenceAnswer": "Type and subtype are object types in the data model. Contact roles identify the contact’s relationship to the claim or exposure.",
       "questionKey": "slide-32"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "What is the difference between a contact role type constraint and an\nentity role constraint?",
-      "referenceAnswer": "The correct answer is contract role type constraints determine which subtypes of the\ncontact entity can have the role. Entity role constraints determines what entities can\n“own” the role, and how many contacts with the role are allowed on the entity.",
+      "question": "What is the difference between a contact role type constraint and an entity role constraint?",
+      "referenceAnswer": "The correct answer is contact role type constraints determine which subtypes of the\ncontact entity can have the role. Entity role constraints determines what entities can\n“own” the role, and how many contacts with the role are allowed on the entity.",
       "questionKey": "slide-34"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "!fyou need to add a claim contact to a detail view, which widget type\nY should you use?",
+      "question": "If you need to add a claim contact to a detail view, which widget type should you use?",
       "referenceAnswer": "The correct answer is a claim contact input.",
       "questionKey": "slide-36"
     },

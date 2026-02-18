@@ -146,7 +146,7 @@
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "In the base ClaimCenter configuration, making a final payment on an\nexposure closes the exposure; and making a final payment on the last\nexposure on a claim closes the claim.\nIf you want to change this behavior, what file should you edit?",
+      "question": "In the base ClaimCenter configuration, making a final payment on an\nexposure closes the exposure; and making a final payment on the last\nexposure on a claim closes the claim.\n\nIf you want to change this behavior, what file should you edit?",
       "referenceAnswer": "The correct answer is config.xml.",
       "questionKey": "slide-20"
     },
@@ -243,7 +243,7 @@
       "type": "knowledge_check",
       "id": "kc-5",
       "question": "How does ClaimCenter exit the validation rule set? Why?",
-      "referenceAnswer": "The correct answers are:\nThe actions.exit() method is not used; rather, the rule set exits when all transaction\nvalidation rules have been executed, in the order in which they appear in Studio.\n\nThis is because success (or failure) of one validation condition does not necessarily\nmean that another will not fail (or succeed). By running all the rules, ClaimCenter\nprovides a full list of any conditions that must be remedied before continuing.",
+      "referenceAnswer": "The actions.exit() method is not used; rather, the rule set exits when all transaction\nvalidation rules have been executed, in the order in which they appear in Studio.\nThis is because success (or failure) of one validation condition does not necessarily\nmean that another will not fail (or succeed). By running all the rules, ClaimCenter\nprovides a full list of any conditions that must be remedied before continuing.",
       "questionKey": "slide-39"
     },
     {

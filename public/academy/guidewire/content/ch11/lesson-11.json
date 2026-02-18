@@ -385,7 +385,7 @@
       "slideType": "question",
       "questionData": {
         "question": "What are the five stages of Guidewire messaging?",
-        "answer": "Triggering a message. Creating a message and payload. Optionally transform the payload. Sending the message to an external system. aro N > Processing message acknowledgment."
+        "answer": "Triggering a message.\nCreating a message and payload.\nOptionally transform the payload.\nSending the message to an external system.\nProcessing message acknowledgment."
       }
     },
     {
@@ -422,8 +422,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "What are the three possible statuses for messages that are in the",
-        "answer": "Message table? 1. Pending send. 2. Pending acknowledged (sent but no acknowledgement received). 3. Retryable error (sent and an error reported by external system, a negative acknowledgement or NACk)."
+        "question": "What are the three possible statuses for messages that are in the\nmessage table?",
+        "answer": "1. Pending send.\n2. Pending acknowledged (sent but no acknowledgement received).\n3. Retryable error (sent and an error reported by external system, a negative\nacknowledgement or NACk)."
       }
     },
     {
@@ -460,8 +460,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "For a Guidewire implementation using clustering, what two server roles",
-        "answer": "Execute the work for messaging? What work is done by each server : role? The two clustering server roles are: the ui role and the messaging role."
+        "question": "For a Guidewire implementation using clustering, what two server roles\nexecute the work for messaging? What work is done by each server\nrole?",
+        "answer": "The two clustering server roles are: the ui role and the messaging role."
       }
     },
     {

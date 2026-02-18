@@ -6,7 +6,9 @@ import {
   BookOpen,
   Briefcase,
   CheckCircle,
+  ChevronDown,
   ChevronRight,
+  ClipboardList,
   Code2,
   ExternalLink,
   Flame,
@@ -20,6 +22,7 @@ import {
   Pencil,
   Plus,
   RefreshCw,
+  Save,
   Sparkles,
   Target,
   Trash2,
@@ -31,11 +34,6 @@ import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Switch } from '@/components/ui/switch'
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible'
-import {
   useProfileStore,
   type SkillLevel,
   type SkillCategory,
@@ -45,7 +43,9 @@ import {
   type Implementation,
 } from '@/lib/academy/profile-store'
 import { useAcademyStore } from '@/lib/academy/progress-store'
-import { TOTAL_LESSONS, CHAPTERS } from '@/lib/academy/curriculum'
+import { TOTAL_LESSONS, CHAPTERS, CHAPTER_LESSONS } from '@/lib/academy/curriculum'
+import { ImplementationDocBuilder } from '@/components/academy/profile/ImplementationDocBuilder'
+import { ImplementationDocViewer } from '@/components/academy/profile/ImplementationDocViewer'
 
 // ============================================================
 // Constants
@@ -94,7 +94,7 @@ function useProfileCompletion() {
   const hasProjects = store.projects.length > 0
   const hasSocial = !!(store.linkedinUrl || store.githubUrl || store.portfolioUrl)
 
-  const total = 9 // 5 fields + skills + certs + projects + social
+  const total = 9
   const filled = filledFields + (hasSkills ? 1 : 0) + (hasCerts ? 1 : 0) + (hasProjects ? 1 : 0) + (hasSocial ? 1 : 0)
   return Math.round((filled / total) * 100)
 }
@@ -105,7 +105,7 @@ function useIsProfileEmpty() {
 }
 
 // ============================================================
-// Main Component
+// Main Component - Resume Style Layout
 // ============================================================
 
 export function AcademyProfileView() {
@@ -114,98 +114,100 @@ export function AcademyProfileView() {
   const isEmpty = useIsProfileEmpty()
   const completion = useProfileCompletion()
 
-  // Auto-enable edit mode on first visit (empty profile)
   useEffect(() => {
     if (isEmpty && !isEditMode) {
       store.setEditMode(true)
     }
-    // Only run on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <div className="min-h-screen bg-cream">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-6">
-        {/* Page Header */}
-        <div className="flex items-center justify-between animate-fade-in">
-          <div>
-            <h1 className="text-2xl font-heading font-bold text-charcoal-900 tracking-tight">
+      {/* Floating edit toggle */}
+      <div className="sticky top-0 z-20 bg-cream/80 backdrop-blur-sm border-b border-charcoal-200/40">
+        <div className="max-w-[960px] mx-auto px-6 py-2.5 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="text-[11px] font-medium text-charcoal-400 uppercase tracking-wider">
               Developer Profile
-            </h1>
-            <p className="text-sm text-charcoal-500 mt-1">
-              Build your professional Guidewire portfolio
-            </p>
-          </div>
-          <div className="flex items-center gap-4">
-            {/* Completion meter */}
-            <div className="hidden sm:flex items-center gap-2.5">
-              <div className="w-24 h-1.5 rounded-full bg-charcoal-200 overflow-hidden">
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-gold-500 to-gold-400 transition-all duration-500"
-                  style={{ width: `${completion}%` }}
-                />
-              </div>
-              <span className="text-[11px] font-semibold text-charcoal-500 tabular-nums">
-                {completion}%
-              </span>
-            </div>
-            <div className="flex items-center gap-2.5 pl-4 border-l border-charcoal-200">
-              <span className="text-xs font-medium text-charcoal-500">
-                {isEditMode ? 'Editing' : 'Viewing'}
-              </span>
-              <Switch
-                checked={isEditMode}
-                onCheckedChange={(v) => store.setEditMode(v)}
+            </span>
+            <div className="w-20 h-1 rounded-full bg-charcoal-200 overflow-hidden">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-gold-500 to-gold-400 transition-all duration-500"
+                style={{ width: `${completion}%` }}
               />
             </div>
+            <span className="text-[10px] font-semibold text-charcoal-400 tabular-nums">{completion}%</span>
+          </div>
+          <div className="flex items-center gap-2.5">
+            <span className="text-[11px] font-medium text-charcoal-500">
+              {isEditMode ? 'Editing' : 'Preview'}
+            </span>
+            <Switch
+              checked={isEditMode}
+              onCheckedChange={(v) => store.setEditMode(v)}
+            />
           </div>
         </div>
+      </div>
 
-        {/* Onboarding Banner - shows when profile is empty and in edit mode */}
+      {/* Resume document */}
+      <div className="max-w-[960px] mx-auto px-6 py-8">
+        {/* Onboarding */}
         {isEmpty && isEditMode && (
-          <div className="rounded-xl border border-gold-200 bg-gradient-to-r from-gold-50 to-amber-50 p-5 animate-slide-up">
+          <div className="rounded-xl border border-gold-200 bg-gradient-to-r from-gold-50 to-amber-50 p-5 mb-8 animate-slide-up">
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-xl bg-gold-100 flex items-center justify-center shrink-0">
                 <Sparkles className="w-5 h-5 text-gold-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-charcoal-900 text-sm">
-                  Welcome to your Developer Profile
-                </h3>
+                <h3 className="font-semibold text-charcoal-900 text-sm">Build Your Developer Resume</h3>
                 <p className="text-sm text-charcoal-600 mt-1 leading-relaxed">
-                  This is your living portfolio. Start by adding your name and title above,
-                  then document your project experience, skills, and certifications.
-                  Everything saves automatically to your browser.
+                  Fill in your details to create a professional Guidewire developer profile.
+                  Document your projects and implementations to showcase your expertise.
+                  Everything saves automatically.
                 </p>
               </div>
             </div>
           </div>
         )}
 
-        {/* Profile Header Card */}
-        <ProfileHeaderCard />
+        {/* The Resume Card */}
+        <div className="bg-white rounded-xl shadow-elevation-md overflow-hidden border border-charcoal-200/40 animate-fade-in">
 
-        {/* Academy Badges Strip */}
-        <AcademyBadgesStrip />
+          {/* ═══ HEADER SECTION ═══ */}
+          <ResumeHeader />
 
-        {/* Technical Skills */}
-        <TechnicalSkillsSection />
+          {/* ═══ BODY ═══ */}
+          <div className="divide-y divide-charcoal-100">
+            {/* Summary */}
+            <ResumeSummary />
 
-        {/* Certifications */}
-        <CertificationsSection />
+            {/* Academy Progress Strip */}
+            <AcademyBadgesStrip />
 
-        {/* Project Experience */}
-        <ProjectExperienceSection />
+            {/* Assignment Submissions */}
+            <ResumeAssignments />
+
+            {/* Technical Skills */}
+            <ResumeSkills />
+
+            {/* Project Experience */}
+            <ResumeProjects />
+
+            {/* Certifications */}
+            <ResumeCertifications />
+          </div>
+        </div>
       </div>
     </div>
   )
 }
 
 // ============================================================
-// Profile Header Card (dark bg with gradient)
+// Resume Header (dark band)
 // ============================================================
 
-function ProfileHeaderCard() {
+function ResumeHeader() {
   const store = useProfileStore()
   const { isEditMode } = store
 
@@ -221,98 +223,76 @@ function ProfileHeaderCard() {
   const hasSocialLinks = !!(store.linkedinUrl || store.githubUrl || store.portfolioUrl)
 
   return (
-    <div className="rounded-xl overflow-hidden shadow-elevation-md animate-fade-in" style={{ animationDelay: '75ms' }}>
-      {/* Gradient top accent */}
+    <div className="relative">
       <div className="h-1 bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600" />
       <div className="bg-charcoal-900 text-white relative">
-        {/* Subtle background pattern */}
         <div className="absolute inset-0 bg-gradient-to-br from-charcoal-800/50 via-transparent to-gold-900/10" />
 
-        <div className="relative p-6 sm:p-8">
-          <div className="flex flex-col sm:flex-row gap-6">
+        <div className="relative px-8 py-8">
+          <div className="flex gap-6">
             {/* Avatar */}
-            <div className="relative">
-              <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-2xl font-heading font-bold text-charcoal-900 shrink-0 shadow-lg shadow-gold-500/20">
-                {initials}
-              </div>
-              {isEditMode && (
-                <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-gold-500 flex items-center justify-center shadow-sm">
-                  <Pencil className="w-3 h-3 text-charcoal-900" />
-                </div>
-              )}
+            <div className="w-[72px] h-[72px] rounded-xl bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-2xl font-heading font-bold text-charcoal-900 shrink-0 shadow-lg shadow-gold-500/20">
+              {initials}
             </div>
 
-            {/* Info */}
-            <div className="flex-1 min-w-0 space-y-2">
-              <div>
-                <InlineEditableField
-                  value={store.name}
-                  onChange={(v) => store.setField('name', v)}
-                  placeholder="Your Full Name"
-                  viewPlaceholder="Add your name"
-                  editing={isEditMode}
-                  className="text-xl font-heading font-bold text-white"
-                  placeholderClassName="text-xl font-heading font-bold text-white/30 italic"
-                  inputClassName="bg-white/10 border-white/20 text-white placeholder:text-white/40 text-lg"
-                />
-                <InlineEditableField
-                  value={store.title}
-                  onChange={(v) => store.setField('title', v)}
-                  placeholder="e.g. Guidewire Developer / PolicyCenter Specialist"
-                  viewPlaceholder="Add your professional title"
-                  editing={isEditMode}
-                  className="text-sm text-charcoal-400 mt-1"
-                  placeholderClassName="text-sm text-white/20 italic mt-1"
-                  inputClassName="bg-white/10 border-white/20 text-charcoal-300 placeholder:text-white/30"
-                />
-              </div>
-              <InlineEditableTextarea
-                value={store.summary}
-                onChange={(v) => store.setField('summary', v)}
-                placeholder="Brief professional summary highlighting your Guidewire expertise and career goals..."
-                viewPlaceholder="Add a professional summary to introduce yourself..."
+            {/* Name + Title */}
+            <div className="flex-1 min-w-0">
+              <InlineEditableField
+                value={store.name}
+                onChange={(v) => store.setField('name', v)}
+                placeholder="Your Full Name"
+                viewPlaceholder="Add your name"
                 editing={isEditMode}
-                className="text-sm text-charcoal-300 leading-relaxed"
-                placeholderClassName="text-sm text-white/20 italic leading-relaxed"
-                inputClassName="bg-white/10 border-white/20 text-charcoal-300 placeholder:text-white/30"
-                rows={2}
+                className="text-2xl font-heading font-bold text-white tracking-tight"
+                placeholderClassName="text-2xl font-heading font-bold text-white/30 italic"
+                inputClassName="bg-white/10 border-white/20 text-white placeholder:text-white/40 text-xl"
               />
-            </div>
+              <InlineEditableField
+                value={store.title}
+                onChange={(v) => store.setField('title', v)}
+                placeholder="e.g. Guidewire Developer / PolicyCenter Specialist"
+                viewPlaceholder="Add your professional title"
+                editing={isEditMode}
+                className="text-sm text-gold-400 mt-1 font-medium"
+                placeholderClassName="text-sm text-white/20 italic mt-1"
+                inputClassName="bg-white/10 border-white/20 text-gold-300 placeholder:text-white/30 mt-1"
+              />
 
-            {/* Meta */}
-            <div className="sm:text-right space-y-2 shrink-0">
-              <div className="flex items-center gap-2 sm:justify-end text-sm text-charcoal-400">
-                <MapPin className="w-3.5 h-3.5 shrink-0" />
-                <InlineEditableField
-                  value={store.location}
-                  onChange={(v) => store.setField('location', v)}
-                  placeholder="City, Country"
-                  viewPlaceholder="Location"
-                  editing={isEditMode}
-                  className="text-sm text-charcoal-400"
-                  placeholderClassName="text-sm text-white/20 italic"
-                  inputClassName="bg-white/10 border-white/20 text-charcoal-300 placeholder:text-white/30 w-32"
-                />
-              </div>
-              <div className="flex items-center gap-2 sm:justify-end text-sm text-charcoal-400">
-                <Briefcase className="w-3.5 h-3.5 shrink-0" />
-                <InlineEditableField
-                  value={store.yearsExperience}
-                  onChange={(v) => store.setField('yearsExperience', v)}
-                  placeholder="e.g. 3 years"
-                  viewPlaceholder="Experience"
-                  editing={isEditMode}
-                  className="text-sm text-charcoal-400"
-                  placeholderClassName="text-sm text-white/20 italic"
-                  inputClassName="bg-white/10 border-white/20 text-charcoal-300 placeholder:text-white/30 w-28"
-                />
+              {/* Meta row */}
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3">
+                <div className="flex items-center gap-1.5 text-charcoal-400 text-xs">
+                  <MapPin className="w-3 h-3" />
+                  <InlineEditableField
+                    value={store.location}
+                    onChange={(v) => store.setField('location', v)}
+                    placeholder="City, Country"
+                    viewPlaceholder="Location"
+                    editing={isEditMode}
+                    className="text-xs text-charcoal-400"
+                    placeholderClassName="text-xs text-white/20 italic"
+                    inputClassName="bg-white/10 border-white/20 text-charcoal-300 placeholder:text-white/30 w-32 !py-1 !text-xs"
+                  />
+                </div>
+                <div className="flex items-center gap-1.5 text-charcoal-400 text-xs">
+                  <Briefcase className="w-3 h-3" />
+                  <InlineEditableField
+                    value={store.yearsExperience}
+                    onChange={(v) => store.setField('yearsExperience', v)}
+                    placeholder="e.g. 3 years"
+                    viewPlaceholder="Experience"
+                    editing={isEditMode}
+                    className="text-xs text-charcoal-400"
+                    placeholderClassName="text-xs text-white/20 italic"
+                    inputClassName="bg-white/10 border-white/20 text-charcoal-300 placeholder:text-white/30 w-24 !py-1 !text-xs"
+                  />
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Social Links - only show divider when there's content or in edit mode */}
+          {/* Social links */}
           {(isEditMode || hasSocialLinks) && (
-            <div className="mt-5 pt-5 border-t border-white/10 flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 mt-5 pt-5 border-t border-white/10">
               <SocialLink
                 icon={Linkedin}
                 value={store.linkedinUrl}
@@ -343,7 +323,37 @@ function ProfileHeaderCard() {
 }
 
 // ============================================================
-// Academy Badges Strip
+// Summary Section
+// ============================================================
+
+function ResumeSummary() {
+  const store = useProfileStore()
+  const { isEditMode } = store
+
+  if (!isEditMode && !store.summary) return null
+
+  return (
+    <div className="px-8 py-6">
+      <SectionLabel>Professional Summary</SectionLabel>
+      <div className="mt-2">
+        <InlineEditableTextarea
+          value={store.summary}
+          onChange={(v) => store.setField('summary', v)}
+          placeholder="Brief professional summary highlighting your Guidewire expertise and career goals..."
+          viewPlaceholder="Add a professional summary..."
+          editing={isEditMode}
+          className="text-sm text-charcoal-700 leading-relaxed"
+          placeholderClassName="text-sm text-charcoal-400 italic leading-relaxed"
+          inputClassName="border-charcoal-200 text-charcoal-700 placeholder:text-charcoal-400"
+          rows={3}
+        />
+      </div>
+    </div>
+  )
+}
+
+// ============================================================
+// Academy Progress Strip
 // ============================================================
 
 function AcademyBadgesStrip() {
@@ -357,126 +367,136 @@ function AcademyBadgesStrip() {
       .map((id) => id.split('-')[0])
   ).size
 
-  const badges = [
-    {
-      label: 'Readiness',
-      value: `${readinessIndex}%`,
-      icon: Target,
-      color: readinessIndex >= 50 ? 'text-green-600' : readinessIndex >= 20 ? 'text-amber-600' : 'text-charcoal-500',
-      bgColor: readinessIndex >= 50 ? 'bg-green-50' : readinessIndex >= 20 ? 'bg-amber-50' : 'bg-charcoal-100',
-    },
-    {
-      label: 'Completed',
-      value: `${completedCount}/${TOTAL_LESSONS}`,
-      icon: CheckCircle,
-      color: 'text-charcoal-500',
-      bgColor: 'bg-charcoal-100',
-    },
-    {
-      label: 'Chapters',
-      value: `${chaptersStarted}/${CHAPTERS.length}`,
-      icon: BookOpen,
-      color: 'text-charcoal-500',
-      bgColor: 'bg-charcoal-100',
-    },
-    {
-      label: 'Streak',
-      value: `${streak}d`,
-      icon: Flame,
-      color: streak > 0 ? 'text-orange-500' : 'text-charcoal-500',
-      bgColor: streak > 0 ? 'bg-orange-50' : 'bg-charcoal-100',
-    },
-  ]
+  const readinessPct = Math.round((readinessIndex ?? 0) * 100)
+
+  // Assignment stats
+  const allAssignmentLessons = CHAPTERS.flatMap(ch => (CHAPTER_LESSONS[ch.slug] || []).filter(l => l.hasAssignment))
+  const totalAssignments = allAssignmentLessons.length
+  const submittedAssignments = allAssignmentLessons.filter(l => lessons[l.lessonId]?.assignmentSubmitted).length
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 animate-fade-in" style={{ animationDelay: '150ms' }}>
-      {badges.map((b, idx) => (
-        <div
-          key={b.label}
-          className="group rounded-xl border border-charcoal-200/60 bg-white p-3.5 flex items-center gap-3 shadow-elevation-sm hover:shadow-elevation-md hover:-translate-y-0.5 transition-all duration-300"
-        >
-          <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center shrink-0 transition-colors', b.bgColor)}>
-            <b.icon className={cn('w-4 h-4 transition-colors', b.color)} />
-          </div>
-          <div className="min-w-0">
-            <p className="text-[10px] font-medium text-charcoal-400 uppercase tracking-wider">
-              {b.label}
-            </p>
-            <p className="text-lg font-bold text-charcoal-900 tabular-nums leading-tight">
-              {b.value}
-            </p>
-          </div>
-        </div>
-      ))}
+    <div className="px-8 py-5 bg-charcoal-50/40">
+      <div className="flex items-center gap-6 overflow-x-auto">
+        <StatChip
+          label="Readiness"
+          value={`${readinessPct}%`}
+          color={readinessPct >= 50 ? 'green' : readinessPct >= 20 ? 'amber' : 'neutral'}
+        />
+        <div className="w-px h-6 bg-charcoal-200 shrink-0" />
+        <StatChip label="Lessons" value={`${completedCount}/${TOTAL_LESSONS}`} color="neutral" />
+        <div className="w-px h-6 bg-charcoal-200 shrink-0" />
+        <StatChip label="Chapters" value={`${chaptersStarted}/${CHAPTERS.length}`} color="neutral" />
+        <div className="w-px h-6 bg-charcoal-200 shrink-0" />
+        <StatChip
+          label="Assignments"
+          value={`${submittedAssignments}/${totalAssignments}`}
+          color={submittedAssignments > 0 ? 'green' : 'neutral'}
+          icon={submittedAssignments > 0 ? <ClipboardList className="w-3 h-3 text-green-600" /> : undefined}
+        />
+        <div className="w-px h-6 bg-charcoal-200 shrink-0" />
+        <StatChip
+          label="Streak"
+          value={streak > 0 ? `${streak}d` : '0d'}
+          color={streak > 0 ? 'orange' : 'neutral'}
+          icon={streak > 0 ? <Flame className="w-3 h-3 text-orange-500" /> : undefined}
+        />
+      </div>
+    </div>
+  )
+}
+
+function StatChip({
+  label,
+  value,
+  color,
+  icon,
+}: {
+  label: string
+  value: string
+  color: 'green' | 'amber' | 'orange' | 'neutral'
+  icon?: React.ReactNode
+}) {
+  const colorMap = {
+    green: 'text-green-700',
+    amber: 'text-amber-700',
+    orange: 'text-orange-600',
+    neutral: 'text-charcoal-700',
+  }
+  return (
+    <div className="flex items-center gap-2 shrink-0">
+      {icon}
+      <div>
+        <p className="text-[10px] font-medium text-charcoal-400 uppercase tracking-wider">{label}</p>
+        <p className={cn('text-sm font-bold tabular-nums', colorMap[color])}>{value}</p>
+      </div>
     </div>
   )
 }
 
 // ============================================================
-// Technical Skills Section
+// Skills Section
 // ============================================================
 
-function TechnicalSkillsSection() {
+function ResumeSkills() {
   const store = useProfileStore()
   const { skills, isEditMode } = store
   const [showAdd, setShowAdd] = useState(false)
 
-  const grouped = SKILL_CATEGORIES.map((cat) => ({
-    ...cat,
-    skills: skills.filter((s) => s.category === cat.value),
-  })).filter((g) => g.skills.length > 0)
+  const grouped = useMemo(
+    () =>
+      SKILL_CATEGORIES.map((cat) => ({
+        ...cat,
+        skills: skills.filter((s) => s.category === cat.value),
+      })).filter((g) => g.skills.length > 0),
+    [skills]
+  )
 
   return (
-    <SectionCard
-      title="Technical Skills"
-      icon={Code2}
-      count={skills.length}
-      delay={225}
-      rightAction={
-        isEditMode ? (
+    <div className="px-8 py-6">
+      <div className="flex items-center justify-between">
+        <SectionLabel>Technical Skills</SectionLabel>
+        {isEditMode && (
           <div className="flex items-center gap-2">
             <button
               onClick={() => store.syncSkillsFromProgress()}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-gold-700 bg-gold-50 hover:bg-gold-100 border border-gold-200 transition-colors"
+              className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-medium text-charcoal-500 hover:bg-charcoal-100 transition-colors"
             >
-              <RefreshCw className="w-3.5 h-3.5" />
+              <RefreshCw className="w-3 h-3" />
               Sync from Academy
             </button>
             <button
               onClick={() => setShowAdd(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-charcoal-600 hover:bg-charcoal-100 transition-colors"
+              className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-medium text-charcoal-600 bg-charcoal-100 hover:bg-charcoal-200 transition-colors"
             >
-              <Plus className="w-3.5 h-3.5" />
+              <Plus className="w-3 h-3" />
               Add
             </button>
           </div>
-        ) : undefined
-      }
-    >
-      {skills.length === 0 ? (
+        )}
+      </div>
+
+      {grouped.length === 0 && !showAdd ? (
         <EmptyState
           icon={Code2}
-          message="No skills added yet"
-          hint={isEditMode ? 'Click "Sync from Academy" to auto-populate skills from your training progress, or add them manually.' : 'Enable edit mode to add your technical skills.'}
-          action={isEditMode ? { label: 'Sync from Academy', onClick: () => store.syncSkillsFromProgress(), icon: RefreshCw } : undefined}
+          message="No skills documented"
+          hint={isEditMode ? 'Sync from your academy progress or add skills manually.' : 'Enable edit mode to add skills.'}
+          action={isEditMode ? { label: 'Add Skill', onClick: () => setShowAdd(true), icon: Plus } : undefined}
         />
       ) : (
-        <div className="space-y-5">
+        <div className="mt-3 space-y-4">
           {grouped.map((group) => (
             <div key={group.value}>
-              <p className="text-[11px] font-medium text-charcoal-400 uppercase tracking-wider mb-3">
+              <p className="text-[10px] font-semibold text-charcoal-400 uppercase tracking-wider mb-2">
                 {group.label}
               </p>
-              <div className="space-y-2.5">
+              <div className="space-y-1">
                 {group.skills.map((skill) => (
                   <SkillBar
                     key={skill.id}
                     skill={skill}
                     editing={isEditMode}
                     onRemove={() => store.removeSkill(skill.id)}
-                    onLevelChange={(level) =>
-                      store.updateSkill(skill.id, { level })
-                    }
+                    onLevelChange={(level) => store.updateSkill(skill.id, { level })}
                   />
                 ))}
               </div>
@@ -494,109 +514,47 @@ function TechnicalSkillsSection() {
           onCancel={() => setShowAdd(false)}
         />
       )}
-    </SectionCard>
+    </div>
   )
 }
 
 // ============================================================
-// Certifications Section
+// Projects Section (Resume-style timeline)
 // ============================================================
 
-function CertificationsSection() {
-  const store = useProfileStore()
-  const { certifications, isEditMode } = store
-  const [showAdd, setShowAdd] = useState(false)
-
-  return (
-    <SectionCard
-      title="Certifications"
-      icon={Award}
-      count={certifications.length}
-      delay={300}
-      rightAction={
-        isEditMode ? (
-          <button
-            onClick={() => setShowAdd(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-charcoal-600 hover:bg-charcoal-100 transition-colors"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            Add
-          </button>
-        ) : undefined
-      }
-    >
-      {certifications.length === 0 ? (
-        <EmptyState
-          icon={GraduationCap}
-          message="No certifications added"
-          hint={isEditMode ? 'Add your Guidewire certifications, cloud credentials, or other relevant qualifications.' : 'Enable edit mode to add certifications.'}
-        />
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {certifications.map((cert) => (
-            <CertificationCard
-              key={cert.id}
-              cert={cert}
-              editing={isEditMode}
-              onRemove={() => store.removeCertification(cert.id)}
-            />
-          ))}
-        </div>
-      )}
-
-      {showAdd && (
-        <AddCertificationForm
-          onAdd={(cert) => {
-            store.addCertification(cert)
-            setShowAdd(false)
-          }}
-          onCancel={() => setShowAdd(false)}
-        />
-      )}
-    </SectionCard>
-  )
-}
-
-// ============================================================
-// Project Experience Section
-// ============================================================
-
-function ProjectExperienceSection() {
+function ResumeProjects() {
   const store = useProfileStore()
   const { projects, isEditMode } = store
   const [showAdd, setShowAdd] = useState(false)
 
   return (
-    <SectionCard
-      title="Project Experience"
-      icon={Briefcase}
-      count={projects.length}
-      delay={375}
-      rightAction={
-        isEditMode ? (
+    <div className="px-8 py-6">
+      <div className="flex items-center justify-between">
+        <SectionLabel>Project Experience</SectionLabel>
+        {isEditMode && (
           <button
             onClick={() => setShowAdd(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-charcoal-600 hover:bg-charcoal-100 transition-colors"
+            className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-medium text-charcoal-600 bg-charcoal-100 hover:bg-charcoal-200 transition-colors"
           >
-            <Plus className="w-3.5 h-3.5" />
+            <Plus className="w-3 h-3" />
             Add Project
           </button>
-        ) : undefined
-      }
-    >
-      {projects.length === 0 ? (
+        )}
+      </div>
+
+      {projects.length === 0 && !showAdd ? (
         <EmptyState
           icon={Layers}
           message="No projects documented"
           hint={isEditMode
-            ? 'Document your Guidewire implementations, including the problems you solved, your technical approach, and the business impact.'
-            : 'Enable edit mode to document your project experience.'}
-          action={isEditMode ? { label: 'Add First Project', onClick: () => setShowAdd(true), icon: Plus } : undefined}
+            ? 'Document your Guidewire implementations to showcase your expertise.'
+            : 'Enable edit mode to add projects.'}
+          action={isEditMode ? { label: 'Add Project', onClick: () => setShowAdd(true), icon: Plus } : undefined}
         />
       ) : (
-        <div className="space-y-3">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+        <div className="mt-4 space-y-0">
+          {projects.map((project, idx) => (
+            <ResumeProjectEntry key={project.id} project={project} isLast={idx === projects.length - 1} />
           ))}
         </div>
       )}
@@ -610,344 +568,650 @@ function ProjectExperienceSection() {
           onCancel={() => setShowAdd(false)}
         />
       )}
-    </SectionCard>
+    </div>
   )
 }
 
-// ============================================================
-// Project Card (collapsible)
-// ============================================================
-
-function ProjectCard({ project }: { project: Project }) {
+function ResumeProjectEntry({ project, isLast }: { project: Project; isLast: boolean }) {
   const store = useProfileStore()
   const { isEditMode } = store
-  const [isOpen, setIsOpen] = useState(false)
   const [showAddImpl, setShowAddImpl] = useState(false)
+  const [expandedImpl, setExpandedImpl] = useState<string | null>(null)
 
   const duration = project.isCurrent
     ? `${project.startDate} - Present`
     : `${project.startDate}${project.endDate ? ` - ${project.endDate}` : ''}`
 
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className="rounded-lg border border-charcoal-200/60 bg-white overflow-hidden hover:border-charcoal-300/60 transition-colors">
-        <CollapsibleTrigger className="w-full text-left p-4 flex items-start gap-3 hover:bg-charcoal-50/40 transition-colors">
-          <div className="w-8 h-8 rounded-lg bg-charcoal-100 flex items-center justify-center shrink-0 mt-0.5">
-            <Briefcase className="w-4 h-4 text-charcoal-500" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <h4 className="font-semibold text-charcoal-900 text-sm">
-                  {project.name || 'Untitled Project'}
-                </h4>
-                <p className="text-xs text-charcoal-500 mt-0.5">
-                  {project.client && <span className="font-medium">{project.client}</span>}
-                  {project.client && project.role && <span> &middot; </span>}
-                  {project.role && <span>{project.role}</span>}
-                  {(project.client || project.role) && <span> &middot; </span>}
-                  <span className="text-charcoal-400">{duration}</span>
-                </p>
-                {/* Quick stats */}
-                <div className="flex items-center gap-3 mt-1.5">
-                  {project.technologies.length > 0 && (
-                    <span className="text-[10px] text-charcoal-400">
-                      {project.technologies.length} technologies
-                    </span>
-                  )}
-                  {project.implementations.length > 0 && (
-                    <span className="text-[10px] text-charcoal-400">
-                      {project.implementations.length} implementations
-                    </span>
-                  )}
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                {isEditMode && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      store.removeProject(project.id)
-                    }}
-                    className="p-1.5 rounded-lg text-charcoal-400 hover:text-red-500 hover:bg-red-50 transition-colors"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                )}
-                <ChevronRight
-                  className={cn(
-                    'w-4 h-4 text-charcoal-400 shrink-0 transition-transform duration-200',
-                    isOpen && 'rotate-90'
-                  )}
-                />
-              </div>
-            </div>
-          </div>
-        </CollapsibleTrigger>
+    <div className={cn('relative pl-6', !isLast && 'pb-6')}>
+      {/* Timeline line */}
+      {!isLast && (
+        <div className="absolute left-[7px] top-[20px] bottom-0 w-px bg-charcoal-200" />
+      )}
+      {/* Timeline dot */}
+      <div className="absolute left-0 top-[6px] w-[15px] h-[15px] rounded-full border-2 border-gold-500 bg-white" />
 
-        <CollapsibleContent>
-          <div className="px-4 pb-5 pl-[60px] space-y-4 border-t border-charcoal-100">
-            <div className="pt-4" />
-
-            {/* Description */}
-            <div>
-              <Label>Description</Label>
+      <div className="group">
+        {/* Project header */}
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h4 className="font-heading font-semibold text-charcoal-900 text-[15px] leading-tight">
               {isEditMode ? (
-                <textarea
-                  value={project.description}
-                  onChange={(e) =>
-                    store.updateProject(project.id, {
-                      description: e.target.value,
-                    })
-                  }
-                  placeholder="Describe the project scope and your contribution..."
-                  className="w-full mt-1.5 px-3 py-2 rounded-lg border border-charcoal-200 bg-white text-sm text-charcoal-700 resize-none focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500"
-                  rows={3}
+                <input
+                  type="text"
+                  value={project.name}
+                  onChange={(e) => store.updateProject(project.id, { name: e.target.value })}
+                  className="w-full bg-transparent border-b border-dashed border-charcoal-200 focus:border-gold-500 focus:outline-none py-0.5 font-heading font-semibold text-charcoal-900 text-[15px]"
+                  placeholder="Project name"
                 />
               ) : (
-                <p className="text-sm text-charcoal-600 mt-1 leading-relaxed">
-                  {project.description || <span className="italic text-charcoal-400">No description provided.</span>}
-                </p>
+                project.name || 'Untitled Project'
               )}
-            </div>
-
-            {/* Responsibilities */}
-            <div>
-              <Label>Key Responsibilities</Label>
+            </h4>
+            <div className="flex items-center gap-2 mt-0.5 text-xs text-charcoal-500">
               {isEditMode ? (
-                <EditableList
-                  items={project.responsibilities}
-                  onChange={(items) =>
-                    store.updateProject(project.id, {
-                      responsibilities: items,
-                    })
-                  }
-                  placeholder="Add a responsibility"
-                />
-              ) : project.responsibilities.length > 0 ? (
-                <ul className="mt-1.5 space-y-1.5">
-                  {project.responsibilities.map((r, i) => (
-                    <li
-                      key={i}
-                      className="text-sm text-charcoal-600 flex items-start gap-2"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-gold-500 mt-1.5 shrink-0" />
-                      {r}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-sm text-charcoal-400 mt-1 italic">
-                  No responsibilities listed.
-                </p>
-              )}
-            </div>
-
-            {/* Technologies */}
-            <div>
-              <Label>Technologies Used</Label>
-              {isEditMode ? (
-                <TagInput
-                  tags={project.technologies}
-                  onChange={(tags) =>
-                    store.updateProject(project.id, { technologies: tags })
-                  }
-                  placeholder="e.g. PolicyCenter, Gosu, PCF..."
-                />
-              ) : project.technologies.length > 0 ? (
-                <div className="flex flex-wrap gap-1.5 mt-1.5">
-                  {project.technologies.map((t) => (
-                    <Badge
-                      key={t}
-                      variant="secondary"
-                      className="text-[11px] bg-charcoal-100 text-charcoal-600 border-0 px-2.5 py-0.5"
-                    >
-                      {t}
-                    </Badge>
-                  ))}
-                </div>
-              ) : null}
-            </div>
-
-            {/* Key Implementations */}
-            <div className="pt-2">
-              <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <Zap className="w-3.5 h-3.5 text-gold-500" />
-                  <Label>Key Implementations</Label>
+                  <input
+                    type="text"
+                    value={project.client}
+                    onChange={(e) => store.updateProject(project.id, { client: e.target.value })}
+                    className="bg-transparent border-b border-dashed border-charcoal-200 focus:border-gold-500 focus:outline-none py-0 text-xs text-charcoal-500 w-28"
+                    placeholder="Client"
+                  />
+                  <span className="text-charcoal-300">&middot;</span>
+                  <input
+                    type="text"
+                    value={project.role}
+                    onChange={(e) => store.updateProject(project.id, { role: e.target.value })}
+                    className="bg-transparent border-b border-dashed border-charcoal-200 focus:border-gold-500 focus:outline-none py-0 text-xs text-charcoal-500 w-28"
+                    placeholder="Role"
+                  />
                 </div>
-                {isEditMode && (
-                  <button
-                    onClick={() => setShowAddImpl(true)}
-                    className="flex items-center gap-1 text-xs font-medium text-gold-700 bg-gold-50 hover:bg-gold-100 px-2.5 py-1 rounded-lg border border-gold-200 transition-colors"
-                  >
-                    <Plus className="w-3 h-3" />
-                    Add
-                  </button>
-                )}
-              </div>
-
-              {project.implementations.length === 0 && !showAddImpl ? (
-                <p className="text-sm text-charcoal-400 italic pl-5">
-                  {isEditMode
-                    ? 'Document the key technical solutions you built in this project.'
-                    : 'No implementations documented.'}
-                </p>
               ) : (
-                <div className="space-y-2">
-                  {project.implementations.map((impl) => (
-                    <ImplementationCard
-                      key={impl.id}
-                      impl={impl}
-                      projectId={project.id}
-                    />
-                  ))}
-                </div>
-              )}
-
-              {showAddImpl && (
-                <AddImplementationForm
-                  onAdd={(impl) => {
-                    store.addImplementation(project.id, impl)
-                    setShowAddImpl(false)
-                  }}
-                  onCancel={() => setShowAddImpl(false)}
-                />
+                <>
+                  {project.client && <span className="font-medium">{project.client}</span>}
+                  {project.client && project.role && <span className="text-charcoal-300">&middot;</span>}
+                  {project.role && <span>{project.role}</span>}
+                </>
               )}
             </div>
           </div>
-        </CollapsibleContent>
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="text-[11px] text-charcoal-400 tabular-nums whitespace-nowrap">{duration}</span>
+            {isEditMode && (
+              <button
+                onClick={() => store.removeProject(project.id)}
+                className="opacity-0 group-hover:opacity-100 p-1 rounded text-charcoal-400 hover:text-red-500 transition-all"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Description */}
+        <div className="mt-2">
+          {isEditMode ? (
+            <textarea
+              value={project.description}
+              onChange={(e) => store.updateProject(project.id, { description: e.target.value })}
+              placeholder="Describe the project scope and your contribution..."
+              className="w-full px-0 py-1 bg-transparent text-sm text-charcoal-600 resize-none border-b border-dashed border-charcoal-200 focus:border-gold-500 focus:outline-none leading-relaxed"
+              rows={2}
+            />
+          ) : project.description ? (
+            <p className="text-sm text-charcoal-600 leading-relaxed">{project.description}</p>
+          ) : null}
+        </div>
+
+        {/* Responsibilities */}
+        {(isEditMode || project.responsibilities.length > 0) && (
+          <div className="mt-2">
+            {isEditMode ? (
+              <EditableList
+                items={project.responsibilities}
+                onChange={(items) => store.updateProject(project.id, { responsibilities: items })}
+                placeholder="Add a key responsibility"
+              />
+            ) : (
+              <ul className="space-y-0.5">
+                {project.responsibilities.map((r, i) => (
+                  <li key={i} className="text-sm text-charcoal-600 flex items-start gap-2">
+                    <span className="w-1 h-1 rounded-full bg-charcoal-400 mt-2 shrink-0" />
+                    {r}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+
+        {/* Technologies */}
+        {(isEditMode || project.technologies.length > 0) && (
+          <div className="mt-2">
+            {isEditMode ? (
+              <TagInput
+                tags={project.technologies}
+                onChange={(tags) => store.updateProject(project.id, { technologies: tags })}
+                placeholder="e.g. PolicyCenter, Gosu, PCF..."
+              />
+            ) : (
+              <div className="flex flex-wrap gap-1">
+                {project.technologies.map((t) => (
+                  <span key={t} className="px-2 py-0.5 rounded text-[10px] bg-charcoal-100 text-charcoal-600 font-medium">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Implementations */}
+        {(isEditMode || project.implementations.length > 0) && (
+          <div className="mt-4">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-1.5">
+                <Zap className="w-3 h-3 text-gold-500" />
+                <span className="text-[10px] font-semibold text-charcoal-500 uppercase tracking-wider">
+                  Key Implementations
+                </span>
+                {project.implementations.length > 0 && (
+                  <span className="text-[10px] text-charcoal-400 tabular-nums">
+                    ({project.implementations.length})
+                  </span>
+                )}
+              </div>
+              {isEditMode && (
+                <button
+                  onClick={() => setShowAddImpl(true)}
+                  className="flex items-center gap-1 text-[10px] font-medium text-gold-700 bg-gold-50 hover:bg-gold-100 px-2 py-0.5 rounded-lg border border-gold-200 transition-colors"
+                >
+                  <Plus className="w-2.5 h-2.5" />
+                  Add
+                </button>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              {project.implementations.map((impl) => (
+                <ResumeImplementation
+                  key={impl.id}
+                  impl={impl}
+                  projectId={project.id}
+                  isExpanded={expandedImpl === impl.id}
+                  onToggle={() => setExpandedImpl(expandedImpl === impl.id ? null : impl.id)}
+                />
+              ))}
+            </div>
+
+            {showAddImpl && (
+              <GuidedImplementationWizard
+                onAdd={(impl) => {
+                  store.addImplementation(project.id, impl)
+                  setShowAddImpl(false)
+                }}
+                onCancel={() => setShowAddImpl(false)}
+              />
+            )}
+          </div>
+        )}
       </div>
-    </Collapsible>
+    </div>
   )
 }
 
 // ============================================================
-// Implementation Card (collapsible)
+// Implementation Card - Resume style with Problem/Solution/Impact
 // ============================================================
 
-function ImplementationCard({
+function ResumeImplementation({
   impl,
   projectId,
+  isExpanded,
+  onToggle,
 }: {
   impl: Implementation
   projectId: string
+  isExpanded: boolean
+  onToggle: () => void
 }) {
   const store = useProfileStore()
   const { isEditMode } = store
-  const [isOpen, setIsOpen] = useState(false)
+  const blockCount = impl.contentBlocks?.length ?? 0
+  const hasSummary = !!(impl.problem || impl.solution || impl.technicalDetails || impl.impact)
 
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className="rounded-lg border border-charcoal-200/40 bg-charcoal-50/30 overflow-hidden">
-        <CollapsibleTrigger className="w-full text-left px-3 py-2.5 flex items-center gap-2 hover:bg-charcoal-50/60 transition-colors">
-          <ChevronRight
-            className={cn(
-              'w-3.5 h-3.5 text-charcoal-400 shrink-0 transition-transform duration-200',
-              isOpen && 'rotate-90'
-            )}
-          />
-          <Badge
-            variant="outline"
-            className="text-[10px] border-charcoal-200 text-charcoal-500 shrink-0 font-medium"
-          >
-            {impl.category}
-          </Badge>
-          <span className="text-sm font-medium text-charcoal-800 truncate">
-            {impl.title || 'Untitled Implementation'}
-          </span>
+    <div className={cn(
+      'rounded-lg border overflow-hidden bg-white transition-all duration-200',
+      isExpanded ? 'border-charcoal-300 shadow-sm' : 'border-charcoal-200/60'
+    )}>
+      {/* ── Collapsed Header ── */}
+      <button
+        onClick={onToggle}
+        className="w-full text-left px-3.5 py-2.5 flex items-center gap-2.5 hover:bg-charcoal-50/60 transition-colors"
+      >
+        <ChevronRight
+          className={cn(
+            'w-3.5 h-3.5 text-charcoal-400 shrink-0 transition-transform duration-200',
+            isExpanded && 'rotate-90'
+          )}
+        />
+        <span className="px-1.5 py-0.5 rounded text-[9px] font-medium bg-gold-100 text-gold-700 border border-gold-200 uppercase tracking-wider shrink-0">
+          {impl.category}
+        </span>
+        <span className="text-sm font-medium text-charcoal-800 truncate flex-1">
+          {impl.title || 'Untitled'}
+        </span>
+
+        {/* Indicators */}
+        <div className="flex items-center gap-2 shrink-0">
+          {blockCount > 0 && !isExpanded && (
+            <span className="text-[9px] font-medium text-charcoal-400 bg-charcoal-100 px-1.5 py-0.5 rounded tabular-nums">
+              {blockCount} block{blockCount !== 1 ? 's' : ''}
+            </span>
+          )}
           {isEditMode && (
             <button
               onClick={(e) => {
                 e.stopPropagation()
                 store.removeImplementation(projectId, impl.id)
               }}
-              className="ml-auto p-1 rounded text-charcoal-400 hover:text-red-500 transition-colors"
+              className="p-0.5 rounded text-charcoal-400 hover:text-red-500 transition-colors"
             >
-              <X className="w-3 h-3" />
+              <X className="w-3.5 h-3.5" />
             </button>
           )}
-        </CollapsibleTrigger>
+        </div>
+      </button>
 
-        <CollapsibleContent>
-          <div className="px-3 pb-3 pl-8 space-y-3 border-t border-charcoal-200/40">
-            <div className="pt-3" />
-            <ImplField
-              label="Problem"
-              value={impl.problem}
-              editing={isEditMode}
-              onChange={(v) =>
-                store.updateImplementation(projectId, impl.id, { problem: v })
-              }
-              placeholder="What challenge did you face?"
-            />
-            <ImplField
-              label="Solution"
-              value={impl.solution}
-              editing={isEditMode}
-              onChange={(v) =>
-                store.updateImplementation(projectId, impl.id, { solution: v })
-              }
-              placeholder="How did you solve it?"
-            />
-            <ImplField
-              label="Technical Details"
-              value={impl.technicalDetails}
-              editing={isEditMode}
-              onChange={(v) =>
-                store.updateImplementation(projectId, impl.id, {
-                  technicalDetails: v,
-                })
-              }
-              placeholder="Gosu, PCF, entity extensions, plugins used..."
-            />
-            <ImplField
-              label="Impact"
-              value={impl.impact}
-              editing={isEditMode}
-              onChange={(v) =>
-                store.updateImplementation(projectId, impl.id, { impact: v })
-              }
-              placeholder="What was the business or technical impact?"
-            />
+      {/* ── Expanded Content ── */}
+      {isExpanded && (
+        <div className="border-t border-charcoal-200">
 
-            {/* Technologies */}
-            <div>
-              <Label>Technologies</Label>
-              {isEditMode ? (
-                <TagInput
-                  tags={impl.technologies}
-                  onChange={(tags) =>
-                    store.updateImplementation(projectId, impl.id, {
-                      technologies: tags,
-                    })
-                  }
-                  placeholder="Add technology"
-                />
-              ) : impl.technologies.length > 0 ? (
-                <div className="flex flex-wrap gap-1 mt-1">
-                  {impl.technologies.map((t) => (
-                    <Badge
-                      key={t}
-                      variant="secondary"
-                      className="text-[10px] bg-charcoal-100 text-charcoal-600 border-0"
-                    >
-                      {t}
-                    </Badge>
-                  ))}
-                </div>
-              ) : null}
+          {/* ═══════════════════════════════════════════════════════
+              ZONE 1: Quick Summary
+              ═══════════════════════════════════════════════════════ */}
+          <div className="px-4 pt-4 pb-3">
+            <div className="flex items-center gap-2 mb-3">
+              <Target className="w-3.5 h-3.5 text-charcoal-400" />
+              <span className="text-[10px] font-bold text-charcoal-500 uppercase tracking-[0.1em]">
+                Summary
+              </span>
             </div>
+
+            {/* 2-column grid: Problem | Solution */}
+            <div className="grid grid-cols-2 gap-3">
+              <ImplField
+                label="Problem"
+                value={impl.problem}
+                editing={isEditMode}
+                onChange={(v) => store.updateImplementation(projectId, impl.id, { problem: v })}
+                placeholder="What challenge did you face?"
+              />
+              <ImplField
+                label="Solution"
+                value={impl.solution}
+                editing={isEditMode}
+                onChange={(v) => store.updateImplementation(projectId, impl.id, { solution: v })}
+                placeholder="How did you solve it?"
+              />
+            </div>
+
+            {/* 2-column grid: Technical Details | Impact */}
+            <div className="grid grid-cols-2 gap-3 mt-3">
+              <ImplField
+                label="Technical Details"
+                value={impl.technicalDetails}
+                editing={isEditMode}
+                onChange={(v) => store.updateImplementation(projectId, impl.id, { technicalDetails: v })}
+                placeholder="Gosu, PCF, entity extensions, plugins..."
+              />
+              <ImplField
+                label="Impact"
+                value={impl.impact}
+                editing={isEditMode}
+                onChange={(v) => store.updateImplementation(projectId, impl.id, { impact: v })}
+                placeholder="Business or technical impact?"
+              />
+            </div>
+
+            {/* Technologies - full width */}
+            {(isEditMode || impl.technologies.length > 0) && (
+              <div className="mt-3 pt-3 border-t border-charcoal-100">
+                <FieldLabel>Technologies</FieldLabel>
+                {isEditMode ? (
+                  <TagInput
+                    tags={impl.technologies}
+                    onChange={(tags) => store.updateImplementation(projectId, impl.id, { technologies: tags })}
+                    placeholder="Add technology"
+                  />
+                ) : (
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {impl.technologies.map((t) => (
+                      <span key={t} className="px-1.5 py-0.5 rounded text-[10px] bg-charcoal-100 text-charcoal-600 font-medium">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
-        </CollapsibleContent>
-      </div>
-    </Collapsible>
+
+          {/* ═══════════════════════════════════════════════════════
+              ZONE 2: Design Document
+              ═══════════════════════════════════════════════════════ */}
+          <div className="bg-charcoal-50/40 border-t border-charcoal-200 px-4 pt-4 pb-4">
+            {isEditMode ? (
+              <ImplementationDocBuilder
+                blocks={impl.contentBlocks ?? []}
+                onAdd={(type) => store.addContentBlock(projectId, impl.id, type)}
+                onUpdate={(blockId, updates) => store.updateContentBlock(projectId, impl.id, blockId, updates)}
+                onRemove={(blockId) => store.removeContentBlock(projectId, impl.id, blockId)}
+                onMove={(blockId, dir) => store.moveContentBlock(projectId, impl.id, blockId, dir)}
+              />
+            ) : (
+              <ImplementationDocViewer blocks={impl.contentBlocks ?? []} />
+            )}
+          </div>
+        </div>
+      )}
+    </div>
   )
 }
 
 // ============================================================
-// Sub-components: Inline Editable Field / Textarea
+// Guided Implementation Wizard (step-by-step intake)
 // ============================================================
+
+function GuidedImplementationWizard({
+  onAdd,
+  onCancel,
+}: {
+  onAdd: (impl: Omit<Implementation, 'id' | 'sortOrder'>) => void
+  onCancel: () => void
+}) {
+  const [step, setStep] = useState(0)
+  const [title, setTitle] = useState('')
+  const [category, setCategory] = useState(IMPL_CATEGORIES[0])
+  const [problem, setProblem] = useState('')
+  const [solution, setSolution] = useState('')
+  const [technicalDetails, setTechnicalDetails] = useState('')
+  const [impact, setImpact] = useState('')
+  const [technologies, setTechnologies] = useState<string[]>([])
+
+  const steps = [
+    {
+      label: 'What did you build?',
+      content: (
+        <div className="space-y-3">
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="e.g. Custom Rating Algorithm, Claim Validation Rules..."
+            className="w-full px-3 py-2.5 rounded-lg border border-charcoal-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500"
+            autoFocus
+          />
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="w-full px-3 py-2 rounded-lg border border-charcoal-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gold-500/20"
+          >
+            {IMPL_CATEGORIES.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+        </div>
+      ),
+      isValid: title.trim().length > 0,
+    },
+    {
+      label: 'What was the problem?',
+      content: (
+        <textarea
+          value={problem}
+          onChange={(e) => setProblem(e.target.value)}
+          placeholder="Describe the business need or technical challenge you were solving..."
+          rows={3}
+          className="w-full px-3 py-2.5 rounded-lg border border-charcoal-200 bg-white text-sm resize-none focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500"
+          autoFocus
+        />
+      ),
+      isValid: true,
+    },
+    {
+      label: 'How did you solve it?',
+      content: (
+        <div className="space-y-3">
+          <textarea
+            value={solution}
+            onChange={(e) => setSolution(e.target.value)}
+            placeholder="Explain your approach, the architecture decisions you made..."
+            rows={3}
+            className="w-full px-3 py-2.5 rounded-lg border border-charcoal-200 bg-white text-sm resize-none focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500"
+            autoFocus
+          />
+          <textarea
+            value={technicalDetails}
+            onChange={(e) => setTechnicalDetails(e.target.value)}
+            placeholder="Technical specifics: Gosu enhancements, PCF changes, plugin implementations, entity extensions..."
+            rows={2}
+            className="w-full px-3 py-2 rounded-lg border border-charcoal-200 bg-white text-sm resize-none focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 text-charcoal-500"
+          />
+        </div>
+      ),
+      isValid: true,
+    },
+    {
+      label: 'What was the impact?',
+      content: (
+        <div className="space-y-3">
+          <textarea
+            value={impact}
+            onChange={(e) => setImpact(e.target.value)}
+            placeholder="Quantify the results: improved processing time by 40%, reduced errors by 60%, enabled $2M revenue..."
+            rows={2}
+            className="w-full px-3 py-2.5 rounded-lg border border-charcoal-200 bg-white text-sm resize-none focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500"
+            autoFocus
+          />
+          <div>
+            <p className="text-[10px] font-medium text-charcoal-500 uppercase tracking-wider mb-1.5">Technologies Used</p>
+            <TagInput
+              tags={technologies}
+              onChange={setTechnologies}
+              placeholder="e.g. Gosu, PCF, REST API..."
+            />
+          </div>
+        </div>
+      ),
+      isValid: true,
+    },
+  ]
+
+  const currentStep = steps[step]
+  const isLastStep = step === steps.length - 1
+
+  const handleNext = () => {
+    if (isLastStep) {
+      onAdd({
+        title: title.trim(),
+        category,
+        problem: problem.trim(),
+        solution: solution.trim(),
+        technicalDetails: technicalDetails.trim(),
+        impact: impact.trim(),
+        technologies,
+      })
+    } else {
+      setStep(step + 1)
+    }
+  }
+
+  return (
+    <div className="mt-3 rounded-lg border border-gold-200 bg-gradient-to-b from-gold-50/60 to-white overflow-hidden">
+      {/* Progress dots */}
+      <div className="flex items-center gap-1.5 px-4 pt-3">
+        {steps.map((_, i) => (
+          <div
+            key={i}
+            className={cn(
+              'h-1 flex-1 rounded-full transition-all duration-300',
+              i <= step ? 'bg-gold-500' : 'bg-charcoal-200'
+            )}
+          />
+        ))}
+      </div>
+
+      <div className="p-4">
+        <p className="text-xs font-semibold text-charcoal-700 mb-3">
+          Step {step + 1}: {currentStep.label}
+        </p>
+
+        {currentStep.content}
+
+        <div className="flex items-center justify-between mt-4">
+          <div>
+            {step > 0 && (
+              <button
+                onClick={() => setStep(step - 1)}
+                className="px-3 py-1.5 rounded-lg text-xs font-medium text-charcoal-500 hover:bg-charcoal-100 transition-colors"
+              >
+                Back
+              </button>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onCancel}
+              className="px-3 py-1.5 rounded-lg text-xs font-medium text-charcoal-500 hover:bg-charcoal-100 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={!currentStep.isValid}
+              className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-charcoal-900 text-white text-xs font-medium hover:bg-charcoal-800 transition-colors disabled:opacity-40"
+            >
+              {isLastStep ? (
+                <>
+                  <CheckCircle className="w-3 h-3" />
+                  Save
+                </>
+              ) : (
+                <>
+                  Next
+                  <ChevronRight className="w-3 h-3" />
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ============================================================
+// Certifications Section
+// ============================================================
+
+function ResumeCertifications() {
+  const store = useProfileStore()
+  const { certifications, isEditMode } = store
+  const [showAdd, setShowAdd] = useState(false)
+
+  if (!isEditMode && certifications.length === 0) return null
+
+  return (
+    <div className="px-8 py-6">
+      <div className="flex items-center justify-between">
+        <SectionLabel>Certifications</SectionLabel>
+        {isEditMode && (
+          <button
+            onClick={() => setShowAdd(true)}
+            className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-medium text-charcoal-600 bg-charcoal-100 hover:bg-charcoal-200 transition-colors"
+          >
+            <Plus className="w-3 h-3" />
+            Add
+          </button>
+        )}
+      </div>
+
+      {certifications.length === 0 ? (
+        <EmptyState
+          icon={GraduationCap}
+          message="No certifications yet"
+          hint="Add your Guidewire certifications and credentials."
+          action={{ label: 'Add Certification', onClick: () => setShowAdd(true), icon: Plus }}
+        />
+      ) : (
+        <div className="mt-3 space-y-2">
+          {certifications.map((cert) => (
+            <div key={cert.id} className="flex items-center gap-3 group py-1">
+              <GraduationCap className="w-4 h-4 text-gold-500 shrink-0" />
+              <div className="flex-1 min-w-0">
+                <span className="text-sm font-medium text-charcoal-900">{cert.name}</span>
+                <span className="text-xs text-charcoal-400 ml-2">
+                  {cert.issuer} &middot; {cert.dateObtained}
+                </span>
+                {cert.credentialUrl && (
+                  <a
+                    href={cert.credentialUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-0.5 text-[10px] text-gold-600 hover:text-gold-700 ml-2 font-medium"
+                  >
+                    View <ExternalLink className="w-2.5 h-2.5" />
+                  </a>
+                )}
+              </div>
+              {isEditMode && (
+                <button
+                  onClick={() => store.removeCertification(cert.id)}
+                  className="opacity-0 group-hover:opacity-100 p-1 rounded text-charcoal-400 hover:text-red-500 transition-all"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {showAdd && (
+        <AddCertificationForm
+          onAdd={(cert) => {
+            store.addCertification(cert)
+            setShowAdd(false)
+          }}
+          onCancel={() => setShowAdd(false)}
+        />
+      )}
+    </div>
+  )
+}
+
+// ============================================================
+// Shared Sub-components
+// ============================================================
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <h3 className="text-[11px] font-bold text-charcoal-900 uppercase tracking-[0.12em] border-b-2 border-charcoal-900 pb-1 inline-block">
+      {children}
+    </h3>
+  )
+}
+
+function FieldLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-[10px] font-medium text-charcoal-500 uppercase tracking-wider">
+      {children}
+    </p>
+  )
+}
 
 function InlineEditableField({
   value,
@@ -983,9 +1247,7 @@ function InlineEditableField({
     )
   }
   if (!value) {
-    if (viewPlaceholder) {
-      return <p className={placeholderClassName}>{viewPlaceholder}</p>
-    }
+    if (viewPlaceholder) return <p className={placeholderClassName}>{viewPlaceholder}</p>
     return null
   }
   return <p className={className}>{value}</p>
@@ -1027,17 +1289,11 @@ function InlineEditableTextarea({
     )
   }
   if (!value) {
-    if (viewPlaceholder) {
-      return <p className={placeholderClassName}>{viewPlaceholder}</p>
-    }
+    if (viewPlaceholder) return <p className={placeholderClassName}>{viewPlaceholder}</p>
     return null
   }
   return <p className={className}>{value}</p>
 }
-
-// ============================================================
-// Sub-components: Misc helpers
-// ============================================================
 
 function SocialLink({
   icon: Icon,
@@ -1083,86 +1339,6 @@ function SocialLink({
   )
 }
 
-function SectionCard({
-  title,
-  icon: Icon,
-  count,
-  delay = 0,
-  rightAction,
-  children,
-}: {
-  title: string
-  icon: React.ElementType
-  count?: number
-  delay?: number
-  rightAction?: React.ReactNode
-  children: React.ReactNode
-}) {
-  return (
-    <div
-      className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-fade-in"
-      style={{ animationDelay: `${delay}ms` }}
-    >
-      <div className="px-6 py-4 border-b border-charcoal-100 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-charcoal-100 flex items-center justify-center">
-            <Icon className="w-4 h-4 text-charcoal-600" />
-          </div>
-          <div className="flex items-center gap-2.5">
-            <h3 className="font-semibold text-charcoal-900">{title}</h3>
-            {count !== undefined && count > 0 && (
-              <span className="text-xs tabular-nums text-charcoal-400 bg-charcoal-100 px-2 py-0.5 rounded-full">
-                {count}
-              </span>
-            )}
-          </div>
-        </div>
-        {rightAction}
-      </div>
-      <div className="p-6">{children}</div>
-    </div>
-  )
-}
-
-function Label({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
-      {children}
-    </p>
-  )
-}
-
-function EmptyState({
-  icon: Icon,
-  message,
-  hint,
-  action,
-}: {
-  icon: React.ElementType
-  message: string
-  hint: string
-  action?: { label: string; onClick: () => void; icon: React.ElementType }
-}) {
-  return (
-    <div className="text-center py-10">
-      <div className="w-12 h-12 rounded-xl bg-charcoal-100 flex items-center justify-center mx-auto mb-3">
-        <Icon className="w-6 h-6 text-charcoal-400" />
-      </div>
-      <p className="text-sm font-medium text-charcoal-600">{message}</p>
-      <p className="text-xs text-charcoal-400 mt-1.5 max-w-xs mx-auto leading-relaxed">{hint}</p>
-      {action && (
-        <button
-          onClick={action.onClick}
-          className="mt-4 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-charcoal-900 text-white text-xs font-medium hover:bg-charcoal-800 transition-colors"
-        >
-          <action.icon className="w-3.5 h-3.5" />
-          {action.label}
-        </button>
-      )}
-    </div>
-  )
-}
-
 function ImplField({
   label,
   value,
@@ -1177,28 +1353,26 @@ function ImplField({
   placeholder: string
 }) {
   return (
-    <div>
-      <Label>{label}</Label>
+    <div className="min-w-0">
+      <FieldLabel>{label}</FieldLabel>
       {editing ? (
         <textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          rows={2}
-          className="w-full mt-1 px-3 py-2 rounded-lg border border-charcoal-200 bg-white text-sm text-charcoal-700 resize-none focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500"
+          rows={3}
+          className="w-full mt-1 px-2.5 py-2 rounded-lg border border-charcoal-200 bg-white text-[13px] text-charcoal-700 resize-none focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 leading-relaxed"
         />
-      ) : (
-        <p className="text-sm text-charcoal-600 mt-0.5 leading-relaxed">
-          {value || <span className="italic text-charcoal-400">-</span>}
+      ) : value ? (
+        <p className="text-[13px] text-charcoal-600 mt-1 leading-relaxed">
+          {value}
         </p>
+      ) : (
+        <p className="text-[13px] text-charcoal-400 italic mt-1">Not specified</p>
       )}
     </div>
   )
 }
-
-// ============================================================
-// Skill Bar
-// ============================================================
 
 function SkillBar({
   skill,
@@ -1215,10 +1389,10 @@ function SkillBar({
 
   return (
     <div className="flex items-center gap-3 group py-0.5">
-      <span className="text-sm text-charcoal-700 w-52 truncate shrink-0 font-medium">
+      <span className="text-sm text-charcoal-700 w-48 truncate shrink-0 font-medium">
         {skill.name}
       </span>
-      <div className="flex gap-1.5 flex-1 max-w-[200px]">
+      <div className="flex gap-1 flex-1 max-w-[180px]">
         {SKILL_LEVELS.map((lvl, i) => (
           <button
             key={lvl}
@@ -1226,7 +1400,7 @@ function SkillBar({
             onClick={() => editing && onLevelChange(lvl)}
             title={lvl.charAt(0).toUpperCase() + lvl.slice(1)}
             className={cn(
-              'h-2.5 flex-1 rounded-sm transition-all duration-200',
+              'h-2 flex-1 rounded-sm transition-all duration-200',
               i <= levelIdx
                 ? 'bg-gradient-to-r from-gold-500 to-gold-400'
                 : 'bg-charcoal-200',
@@ -1250,59 +1424,6 @@ function SkillBar({
   )
 }
 
-// ============================================================
-// Certification Card
-// ============================================================
-
-function CertificationCard({
-  cert,
-  editing,
-  onRemove,
-}: {
-  cert: Certification
-  editing: boolean
-  onRemove: () => void
-}) {
-  return (
-    <div className="rounded-lg border border-charcoal-200/60 bg-white p-4 flex items-start gap-3 group hover:shadow-elevation-sm transition-shadow">
-      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-gold-100 to-gold-50 flex items-center justify-center shrink-0">
-        <GraduationCap className="w-5 h-5 text-gold-600" />
-      </div>
-      <div className="flex-1 min-w-0">
-        <h4 className="text-sm font-semibold text-charcoal-900 truncate">
-          {cert.name}
-        </h4>
-        <p className="text-xs text-charcoal-500 mt-0.5">
-          {cert.issuer} &middot; {cert.dateObtained}
-        </p>
-        {cert.credentialUrl && (
-          <a
-            href={cert.credentialUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-xs text-gold-600 hover:text-gold-700 mt-1.5 font-medium"
-          >
-            View credential
-            <ExternalLink className="w-3 h-3" />
-          </a>
-        )}
-      </div>
-      {editing && (
-        <button
-          onClick={onRemove}
-          className="opacity-0 group-hover:opacity-100 p-1.5 rounded-lg text-charcoal-400 hover:text-red-500 hover:bg-red-50 transition-all"
-        >
-          <Trash2 className="w-3.5 h-3.5" />
-        </button>
-      )}
-    </div>
-  )
-}
-
-// ============================================================
-// Tag Input
-// ============================================================
-
 function TagInput({
   tags,
   onChange,
@@ -1323,13 +1444,13 @@ function TagInput({
   }
 
   return (
-    <div className="mt-1.5 space-y-1.5">
-      <div className="flex flex-wrap gap-1.5">
+    <div className="mt-1 space-y-1.5">
+      <div className="flex flex-wrap gap-1">
         {tags.map((tag) => (
           <Badge
             key={tag}
             variant="secondary"
-            className="text-[11px] bg-charcoal-100 text-charcoal-600 border-0 gap-1 pr-1 pl-2.5"
+            className="text-[10px] bg-charcoal-100 text-charcoal-600 border-0 gap-1 pr-1 pl-2"
           >
             {tag}
             <button
@@ -1367,10 +1488,6 @@ function TagInput({
   )
 }
 
-// ============================================================
-// Editable List (for responsibilities)
-// ============================================================
-
 function EditableList({
   items,
   onChange,
@@ -1391,10 +1508,10 @@ function EditableList({
   }
 
   return (
-    <div className="mt-1.5 space-y-1.5">
+    <div className="space-y-1">
       {items.map((item, i) => (
         <div key={i} className="flex items-start gap-2 group">
-          <span className="w-1.5 h-1.5 rounded-full bg-gold-500 mt-2 shrink-0" />
+          <span className="w-1 h-1 rounded-full bg-charcoal-400 mt-2 shrink-0" />
           <span className="flex-1 text-sm text-charcoal-600">{item}</span>
           <button
             onClick={() => onChange(items.filter((_, idx) => idx !== i))}
@@ -1430,6 +1547,37 @@ function EditableList({
   )
 }
 
+function EmptyState({
+  icon: Icon,
+  message,
+  hint,
+  action,
+}: {
+  icon: React.ElementType
+  message: string
+  hint: string
+  action?: { label: string; onClick: () => void; icon: React.ElementType }
+}) {
+  return (
+    <div className="text-center py-8">
+      <div className="w-10 h-10 rounded-xl bg-charcoal-100 flex items-center justify-center mx-auto mb-2">
+        <Icon className="w-5 h-5 text-charcoal-400" />
+      </div>
+      <p className="text-sm font-medium text-charcoal-600">{message}</p>
+      <p className="text-xs text-charcoal-400 mt-1 max-w-xs mx-auto leading-relaxed">{hint}</p>
+      {action && (
+        <button
+          onClick={action.onClick}
+          className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-charcoal-900 text-white text-xs font-medium hover:bg-charcoal-800 transition-colors"
+        >
+          <action.icon className="w-3 h-3" />
+          {action.label}
+        </button>
+      )}
+    </div>
+  )
+}
+
 // ============================================================
 // Add Forms
 // ============================================================
@@ -1447,9 +1595,7 @@ function AddSkillForm({
 
   return (
     <div className="mt-4 p-4 rounded-lg border border-gold-200 bg-gold-50/50 space-y-3">
-      <p className="text-xs font-semibold text-charcoal-700 uppercase tracking-wider">
-        Add Skill
-      </p>
+      <p className="text-xs font-semibold text-charcoal-700 uppercase tracking-wider">Add Skill</p>
       <input
         type="text"
         value={name}
@@ -1465,9 +1611,7 @@ function AddSkillForm({
           className="flex-1 px-3 py-2 rounded-lg border border-charcoal-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gold-500/20"
         >
           {SKILL_CATEGORIES.map((c) => (
-            <option key={c.value} value={c.value}>
-              {c.label}
-            </option>
+            <option key={c.value} value={c.value}>{c.label}</option>
           ))}
         </select>
         <select
@@ -1476,23 +1620,14 @@ function AddSkillForm({
           className="flex-1 px-3 py-2 rounded-lg border border-charcoal-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gold-500/20"
         >
           {SKILL_LEVELS.map((l) => (
-            <option key={l} value={l}>
-              {l.charAt(0).toUpperCase() + l.slice(1)}
-            </option>
+            <option key={l} value={l}>{l.charAt(0).toUpperCase() + l.slice(1)}</option>
           ))}
         </select>
       </div>
       <div className="flex justify-end gap-2">
+        <button onClick={onCancel} className="px-3 py-1.5 rounded-lg text-xs font-medium text-charcoal-500 hover:bg-charcoal-100 transition-colors">Cancel</button>
         <button
-          onClick={onCancel}
-          className="px-3 py-1.5 rounded-lg text-xs font-medium text-charcoal-500 hover:bg-charcoal-100 transition-colors"
-        >
-          Cancel
-        </button>
-        <button
-          onClick={() => {
-            if (name.trim()) onAdd({ name: name.trim(), level, category })
-          }}
+          onClick={() => { if (name.trim()) onAdd({ name: name.trim(), level, category }) }}
           disabled={!name.trim()}
           className="px-4 py-1.5 rounded-lg bg-charcoal-900 text-white text-xs font-medium hover:bg-charcoal-800 transition-colors disabled:opacity-40"
         >
@@ -1517,9 +1652,7 @@ function AddCertificationForm({
 
   return (
     <div className="mt-4 p-4 rounded-lg border border-gold-200 bg-gold-50/50 space-y-3">
-      <p className="text-xs font-semibold text-charcoal-700 uppercase tracking-wider">
-        Add Certification
-      </p>
+      <p className="text-xs font-semibold text-charcoal-700 uppercase tracking-wider">Add Certification</p>
       <input
         type="text"
         value={name}
@@ -1552,21 +1685,11 @@ function AddCertificationForm({
         className="w-full px-3 py-2 rounded-lg border border-charcoal-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gold-500/20"
       />
       <div className="flex justify-end gap-2">
-        <button
-          onClick={onCancel}
-          className="px-3 py-1.5 rounded-lg text-xs font-medium text-charcoal-500 hover:bg-charcoal-100 transition-colors"
-        >
-          Cancel
-        </button>
+        <button onClick={onCancel} className="px-3 py-1.5 rounded-lg text-xs font-medium text-charcoal-500 hover:bg-charcoal-100 transition-colors">Cancel</button>
         <button
           onClick={() => {
             if (name.trim() && issuer.trim() && date.trim())
-              onAdd({
-                name: name.trim(),
-                issuer: issuer.trim(),
-                dateObtained: date.trim(),
-                credentialUrl: url.trim() || undefined,
-              })
+              onAdd({ name: name.trim(), issuer: issuer.trim(), dateObtained: date.trim(), credentialUrl: url.trim() || undefined })
           }}
           disabled={!name.trim() || !issuer.trim() || !date.trim()}
           className="px-4 py-1.5 rounded-lg bg-charcoal-900 text-white text-xs font-medium hover:bg-charcoal-800 transition-colors disabled:opacity-40"
@@ -1582,9 +1705,7 @@ function AddProjectForm({
   onAdd,
   onCancel,
 }: {
-  onAdd: (
-    project: Omit<Project, 'id' | 'implementations' | 'sortOrder'>
-  ) => void
+  onAdd: (project: Omit<Project, 'id' | 'implementations' | 'sortOrder'>) => void
   onCancel: () => void
 }) {
   const [name, setName] = useState('')
@@ -1597,9 +1718,7 @@ function AddProjectForm({
 
   return (
     <div className="mt-4 p-4 rounded-lg border border-gold-200 bg-gold-50/50 space-y-3">
-      <p className="text-xs font-semibold text-charcoal-700 uppercase tracking-wider">
-        Add Project
-      </p>
+      <p className="text-xs font-semibold text-charcoal-700 uppercase tracking-wider">Add Project</p>
       <input
         type="text"
         value={name}
@@ -1659,12 +1778,7 @@ function AddProjectForm({
         className="w-full px-3 py-2 rounded-lg border border-charcoal-200 bg-white text-sm resize-none focus:outline-none focus:ring-2 focus:ring-gold-500/20"
       />
       <div className="flex justify-end gap-2">
-        <button
-          onClick={onCancel}
-          className="px-3 py-1.5 rounded-lg text-xs font-medium text-charcoal-500 hover:bg-charcoal-100 transition-colors"
-        >
-          Cancel
-        </button>
+        <button onClick={onCancel} className="px-3 py-1.5 rounded-lg text-xs font-medium text-charcoal-500 hover:bg-charcoal-100 transition-colors">Cancel</button>
         <button
           onClick={() => {
             if (name.trim())
@@ -1684,88 +1798,6 @@ function AddProjectForm({
           className="px-4 py-1.5 rounded-lg bg-charcoal-900 text-white text-xs font-medium hover:bg-charcoal-800 transition-colors disabled:opacity-40"
         >
           Add Project
-        </button>
-      </div>
-    </div>
-  )
-}
-
-function AddImplementationForm({
-  onAdd,
-  onCancel,
-}: {
-  onAdd: (impl: Omit<Implementation, 'id' | 'sortOrder'>) => void
-  onCancel: () => void
-}) {
-  const [title, setTitle] = useState('')
-  const [category, setCategory] = useState(IMPL_CATEGORIES[0])
-  const [problem, setProblem] = useState('')
-  const [solution, setSolution] = useState('')
-
-  return (
-    <div className="mt-3 p-3 rounded-lg border border-gold-200 bg-gold-50/50 space-y-2">
-      <p className="text-xs font-semibold text-charcoal-700 uppercase tracking-wider">
-        Add Implementation
-      </p>
-      <div className="flex gap-2">
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="e.g. Custom Rating Algorithm"
-          className="flex-1 px-3 py-1.5 rounded-lg border border-charcoal-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gold-500/20"
-          autoFocus
-        />
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="px-3 py-1.5 rounded-lg border border-charcoal-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gold-500/20"
-        >
-          {IMPL_CATEGORIES.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
-      </div>
-      <textarea
-        value={problem}
-        onChange={(e) => setProblem(e.target.value)}
-        placeholder="What was the problem or requirement?"
-        rows={2}
-        className="w-full px-3 py-1.5 rounded-lg border border-charcoal-200 bg-white text-sm resize-none focus:outline-none focus:ring-2 focus:ring-gold-500/20"
-      />
-      <textarea
-        value={solution}
-        onChange={(e) => setSolution(e.target.value)}
-        placeholder="How did you solve it?"
-        rows={2}
-        className="w-full px-3 py-1.5 rounded-lg border border-charcoal-200 bg-white text-sm resize-none focus:outline-none focus:ring-2 focus:ring-gold-500/20"
-      />
-      <div className="flex justify-end gap-2">
-        <button
-          onClick={onCancel}
-          className="px-3 py-1.5 rounded-lg text-xs font-medium text-charcoal-500 hover:bg-charcoal-100 transition-colors"
-        >
-          Cancel
-        </button>
-        <button
-          onClick={() => {
-            if (title.trim())
-              onAdd({
-                title: title.trim(),
-                category,
-                problem: problem.trim(),
-                solution: solution.trim(),
-                technicalDetails: '',
-                impact: '',
-                technologies: [],
-              })
-          }}
-          disabled={!title.trim()}
-          className="px-4 py-1.5 rounded-lg bg-charcoal-900 text-white text-xs font-medium hover:bg-charcoal-800 transition-colors disabled:opacity-40"
-        >
-          Add Implementation
         </button>
       </div>
     </div>

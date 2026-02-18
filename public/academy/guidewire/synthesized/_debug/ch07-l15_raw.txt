@@ -1,0 +1,246 @@
+{
+  "title": "Introduction to Typelists",
+  "subtitle": "Understand Guidewire typelists, their structure, and how they manage fixed data values.",
+  "estimatedMinutes": 90,
+  "blocks": [
+    {
+      "type": "hook",
+      "id": "hook-1",
+      "scenario": "Imagine a business requirement where users need to select an invoicing method for an insurance policy, but only from a predefined set of options. This ensures data consistency and simplifies the user experience.",
+      "question": "How do we implement such fixed, predefined lists of values in a Guidewire application, ensuring they are easily manageable and integrated into the data model?"
+    },
+    {
+      "type": "objectives",
+      "id": "obj-1",
+      "objectives": [
+        "Define typelists, typekeys, and typecodes and explain their relationships.",
+        "Identify the different kinds of typelists in Guidewire (internal, custom, virtual, extendable).",
+        "Describe how typelists are structured and stored in the Guidewire data model, database, and object model.",
+        "Locate and differentiate between base application and customer-specific typelist files in Guidewire Studio.",
+        "Explain the purpose and application of typefilters.",
+        "Configure a new typelist and integrate it into an existing entity's data model."
+      ],
+      "estimatedMinutes": 2
+    },
+    {
+      "type": "activate",
+      "id": "act-1",
+      "priorKnowledge": "You should be familiar with basic data modeling concepts, including entities, fields, and how user interfaces often present choices through dropdown lists. Recall how XML files are used for configuration in Guidewire.",
+      "warmupQuestion": "In your experience, what are some common ways to manage fixed sets of choices or enumerations in software applications?",
+      "hint": "Think about enums in programming languages or lookup tables in databases."
+    },
+    {
+      "type": "concept",
+      "id": "concept-1",
+      "heading": "Understanding Typelists, Typekeys, and Typecodes",
+      "narrative": "In Guidewire applications, when you encounter a dropdown list in the user interface, it's almost always backed by a **Typelist**. Typelists are fundamental for managing fixed, predefined lists of values, ensuring data integrity and a consistent user experience. Consider a real-world scenario: a business analyst requires that the invoicing method for each policy must be stored in the TrainingApp. The insurance company only allows three specific invoicing methods, such as '10% down payment and 11 installments' or '50% down payment and 2 installments'. This is a perfect use case for a typelist.\n\nA **Typelist** is essentially a collection of **Typecodes**. Each Typecode represents a specific, immutable value within that list. For instance, an `InvoicingMethod` typelist would contain typecodes for each of the allowed invoicing methods. These values cannot be dynamically added or removed during runtime, making them ideal for constraining user input to a predefined set of options. When rendered in the UI, a typelist typically appears as a dropdown list, allowing users to select only from the available typecodes.\n\nTo integrate a typelist into your data model, you use a **Typekey field**. A Typekey field is an entity field that is directly associated with a specific Typelist. It acts as a reference, allowing the entity to 'point' to one of the Typecodes defined within its associated Typelist. For example, a `Policy` entity might have an `InvoicingMethod` Typekey field that references the `InvoicingMethod` Typelist. This setup ensures that the `InvoicingMethod` field on any `Policy` instance can only hold one of the predefined Typecode values from the `InvoicingMethod` Typelist.",
+      "keyPoints": [
+        "Typelists provide fixed, predefined lists of values (Typecodes) for dropdowns in the UI.",
+        "Typecodes are immutable values within a typelist and cannot be changed at runtime.",
+        "Typekey fields are entity fields that reference a specific typelist, constraining their values to the typelist's typecodes."
+      ],
+      "figures": [
+        {
+          "slideNumber": 3,
+          "caption": "An example of a typelist in a Guidewire application, often appearing as a dropdown."
+        },
+        {
+          "slideNumber": 4,
+          "caption": "A user story illustrating the business need for a fixed list of 'Invoicing Method' options, a common use case for typelists."
+        },
+        {
+          "slideNumber": 5,
+          "caption": "Visual representation of a typelist, showing its structure and how it defines a set of choices."
+        },
+        {
+          "slideNumber": 6,
+          "caption": "Detailed explanation of what a typelist is: a fixed list of Typecodes that constrains user input and typically renders as a dropdown."
+        },
+        {
+          "slideNumber": 7,
+          "caption": "Diagram showing the relationship between a Typekey field on an entity and its associated Typelist, which contains the possible Typecodes."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "definition",
+          "title": "Typelist",
+          "content": "A fixed, predefined list of values (Typecodes) that cannot be dynamically added or removed during runtime. Often used to constrain user input in UI dropdowns."
+        },
+        {
+          "type": "definition",
+          "title": "Typecode",
+          "content": "A unique, immutable code within a Typelist, representing a specific value. Also known as a code value for a Typekey."
+        },
+        {
+          "type": "definition",
+          "title": "Typekey Field",
+          "content": "An entity field associated with a specific Typelist, limiting its possible values to the Typecodes defined in that typelist."
+        },
+        {
+          "type": "gotcha",
+          "title": "Final Typelists",
+          "content": "If a typelist is defined as 'final' in Guidewire, you cannot add or delete typecodes from it. This ensures the integrity of core system functionalities."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-2",
+      "heading": "Kinds of Typelists and Their File Structure",
+      "narrative": "Typelists in Guidewire come in various forms, each with specific characteristics regarding their origin and modifiability. Understanding these distinctions is crucial for effective configuration. We categorize typelists primarily into:\n\n*   **Internal base application typelists**: These are part of the core Guidewire application logic. They are read-only and cannot be modified or extended by customers. Some of these might be 'virtual' typelists, meaning they don't have a physical XML file exposed in Guidewire Studio but are generated from Java classes (e.g., typelists of subtypes for a given supertype).\n*   **Base application typelists (extendable)**: These are also part of the base application but are designed to be modified or extended by customers. You can add new typecodes to these typelists.\n*   **Custom typelists**: These are created entirely by customers as part of their custom configuration. They are fully modifiable.\n\nJust like entities, typelists are defined as XML files within your Guidewire project structure. These files typically reside in two main folders:\n\n*   `...\\Metadata\\Typelist`: This folder contains read-only platform and base application typelists. You'll find **TTI (Typelist Type Information)** files here, which define the base typelists. You cannot create new typelist files directly in this directory.\n*   `...\\Extensions\\Typelist`: This is where customer-specific typelists and extensions are located. Here, you can create new custom typelists (also as TTI files) or extend existing base typelists using **TIX (Typelist Extension)** files. **TTX (Typelist Type Extension)** files are also found here, allowing for external typelist extensions.\n\nIt's important to remember that `Metadata` files are generally immutable and represent the core configuration, while `Extensions` files are where you implement your specific business logic and customizations. You can always determine the base configuration for a Guidewire application by examining its zip file.",
+      "keyPoints": [
+        "Typelists are categorized as internal, extendable base, or custom, determining their modifiability.",
+        "Typelists are defined in XML files (TTI, TIX, TTX) located in `Metadata` (read-only base) or `Extensions` (customer-specific, modifiable) folders.",
+        "Virtual typelists exist in the object model but may not have physical XML files."
+      ],
+      "figures": [
+        {
+          "slideNumber": 8,
+          "caption": "Overview of the different kinds of typelists in Guidewire: internal, custom, and extendable base application typelists."
+        },
+        {
+          "slideNumber": 9,
+          "caption": "Explanation of how typelists are structured in the data model, using XML files (TTI, TIX, TTX) and their respective folders."
+        },
+        {
+          "slideNumber": 10,
+          "caption": "Examples illustrating the different kinds of typelists and their file types within the Guidewire data model."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "tip",
+          "title": "Locating Base Configuration",
+          "content": "You can always determine the base configuration for a Guidewire application by looking at the application's zip file."
+        },
+        {
+          "type": "definition",
+          "title": "TTI, TIX, TTX Files",
+          "content": "TTI files define base typelists. TIX files extend internal typelists. TTX files are external typelist extensions, typically for custom additions."
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept-3",
+      "heading": "Typelists in the Application Architecture and Typefilters",
+      "narrative": "Understanding how typelists are represented across the Guidewire application architecture – from the data model to the database and object model – is key to working with them effectively. When you define typelists and typekey fields, these definitions impact the underlying database schema and the generated Java code.\n\nIn the **database**, typelists are stored as dedicated tables. Each Typecode within a typelist becomes a row in that table, complete with its unique ID, code, name, and a 'retired' status. Typekey fields, on the other hand, are stored as foreign key columns in the entity table they belong to. This foreign key links the entity record to a specific Typecode's ID in the corresponding typelist table. For example, an `InvoicingMethod` Typekey on a `Policy` entity would be a foreign key column in the `Policy` table, pointing to a row in the `InvoicingMethod` typelist table.\n\nIn the **object model**, Guidewire's code generators automatically create Java classes from your typelist definitions. Within these generated Java classes, each Typecode is represented as a `static final` variable. This allows developers to reference typelist values programmatically using clear, type-safe constants (e.g., `InvoicingMethod.TC_DOWNPAYMENT10`). It's important to regenerate the InsuranceSuite application's Data Dictionary after making any updates to the Data Model, including typelists, to ensure these changes are reflected correctly and to catch any potential mistakes.\n\nWhile typelists provide a fixed set of values, sometimes you need to display only a subset of these values in a particular context. This is where **Typefilters** come in. A Typefilter defines a named subset of the Typecodes from an associated Typelist. You can define multiple Typefilters for a single Typelist, but a Typekey field can reference at most one Typefilter. This allows you to dynamically narrow down the options presented to the user based on specific business rules or UI requirements, without altering the underlying typelist itself. For instance, you might have a `YesNo` typelist, but a specific field only needs to show 'Yes' and 'No', excluding 'Other' – a Typefilter can achieve this.",
+      "keyPoints": [
+        "Typelists are stored as database tables, with Typecodes as rows and Typekeys as foreign key columns.",
+        "Java classes are generated from typelists, with Typecodes becoming `static final` variables for programmatic access.",
+        "Typefilters define named subsets of Typecodes, allowing Typekey fields to display only relevant options from a typelist."
+      ],
+      "figures": [
+        {
+          "slideNumber": 11,
+          "caption": "Illustration of how typelists and typekey fields are stored in the database, showing typelists as tables and typekeys as foreign key columns."
+        },
+        {
+          "slideNumber": 12,
+          "caption": "Explanation of how typelists and typekeys are represented in the object model, with generated Java classes and static final Typecode variables."
+        },
+        {
+          "slideNumber": 13,
+          "caption": "A visual representation summarizing the integration of typelists within the Guidewire architecture."
+        },
+        {
+          "slideNumber": 14,
+          "caption": "Description of Typefilters, showing how they create a subset of Typecodes for a specific Typekey field."
+        }
+      ],
+      "callouts": [
+        {
+          "type": "best_practice",
+          "title": "Regenerate Data Dictionary",
+          "content": "Guidewire recommends regenerating the InsuranceSuite application's Data Dictionary after any updates to the Data Model, including typelists, to identify and correct mistakes."
+        },
+        {
+          "type": "warning",
+          "title": "Modifying Existing Typelists",
+          "content": "Guidewire generally discourages changes to existing typelists, except for extending non-final typelists to add new typekeys or retiring a typekey (making it invisible in the UI but preserving it in the database)."
+        },
+        {
+          "type": "gotcha",
+          "title": "Key vs. Typekey",
+          "content": "Do not confuse a 'Key' (which uniquely identifies an entity instance, like Activity.ID) with a 'Typekey' (which is similar to an enumeration, referencing a Typecode from a Typelist)."
+        },
+        {
+          "type": "tip",
+          "title": "Gosu Typecode Literals",
+          "content": "To reference an existing typecode from Gosu, use the format `TYPELISTNAME.TC_TYPECODENAME` (e.g., `AddressType.TC_BUSINESS`). The `identifierCode` attribute in the typecode definition can change the programmatic name, but must use valid Gosu identifier characters."
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "id": "demo-1",
+      "videoIndex": 0,
+      "context": "This demonstration will walk you through the practical steps of creating a new typelist and then adding a typekey field to an existing entity. Pay close attention to how the new typelist is defined and how it's linked to the entity.",
+      "transcriptSummary": "The demo addresses the user story of adding an 'Invoicing Method' to policies. It shows how to navigate to typelist folders in Studio, differentiate between base and extension typelist files, create a new custom typelist, and then add a typekey field to the `Policy_Ext` entity to reference this new typelist. The process highlights the creation and modification of fixed lists of values to implement user stories."
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-1",
+      "question": "What are some of the differences between the files in the\n\n..\\\Metadata\\\Typelist\\\ and...\\\Extensions\\\Typelist\\\ folders?\n\nSe Sess e ese ssc esaeK",
+      "referenceAnswer": "What are some of the differences between the files in the\n\nSS Se SSeS sess e eases\n\n: ..\\\Metadata\\\Typelist\\\ and...\\\Extensions\\\Typelist\\\ folders?\n\nFiles under Metadata are read-only and are specific to the base configuration.\n\nYou cannot create Typelist files in the Metadata directory but can create Typelist\nfiles in the Extensions directory.\n\nOnly internal Typelist extension files (TIX) are in the Metadata directory.\nOnly external Typelist files (TTX) are in the Extensions directory.\nBoth directories contain Typelist (TT1) files.",
+      "questionKey": "slide-18"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-2",
+      "question": "Which is a valid code value for a Typecode in a food coloring Typelist?\n\no A) RedDye#1\n\nB) YellowDye40\nC) OrangeDye:10\n\nSe Sess e ese ssc esaeK",
+      "referenceAnswer": "A) RedDye#1\nB) YellowDye40\nC) OrangeDye:10\nA) Not valid\nB) Valid\nC) Not valid",
+      "questionKey": "slide-20"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-3",
+      "question": "Which Typecode attribute determines the order in which Typecodes are\nPa listed in the user interface?\n\nSe Sess e ese ssc esaeK",
+      "referenceAnswer": "at the end of the list.\nSS Se SSeS sess e eases",
+      "questionKey": "slide-22"
+    },
+    {
+      "type": "knowledge_check",
+      "id": "kc-4",
+      "question": "What does a Typefilter do?\n\n¢\n¢\n4\n\nSe Sess e ese ssc esaeK",
+      "referenceAnswer": "What does a Typefilter do?\n\n¢\n¢\n\nDefines a named subset of the Typecodes that could be used as value for the\nassociated Typekey field that references this Typelist.\n\nSS Se SSeS sess e eases",
+      "questionKey": "slide-24"
+    },
+    {
+      "type": "practice",
+      "id": "practice-1",
+      "level": "guided",
+      "scenario": "Your team is implementing a new 'ClaimSeverity' field for claims. This field should allow users to select from 'Low', 'Medium', or 'High'. You need to ensure that only these three options are available.",
+      "question": "Describe the steps you would take to configure a new Typelist for 'ClaimSeverity' and integrate it into the `Claim_Ext` entity. What type of typelist file would you create and where?",
+      "hints": [
+        "Think about the folder structure for custom typelists.",
+        "Consider the XML element you would use to define the typelist and its typecodes.",
+        "How would you add a field to `Claim_Ext` to reference this new typelist?"
+      ],
+      "expectedApproach": "Create a new TTI file in the `...\\Extensions\\Typelist` folder. Define the `ClaimSeverity` typelist with 'Low', 'Medium', and 'High' typecodes. Then, add a `<typekey>` element to the `Claim_Ext` entity's XML file, referencing the `ClaimSeverity` typelist."
+    },
+    {
+      "type": "summary",
+      "id": "summary-1",
+      "keyTakeaways": [
+        "Typelists are Guidewire's mechanism for managing fixed, predefined lists of values, ensuring data consistency.",
+        "Typekeys are entity fields that reference typelists, and Typecodes are the individual values within a typelist.",
+        "Typelists are defined in XML files (TTI, TIX, TTX) located in `Metadata` (base, read-only) or `Extensions` (custom, modifiable) folders.",
+        "They are represented as tables in the database and as generated Java classes with `static final` variables in the object model.",
+        "Typefilters allow you to display a subset of a typelist's values for specific Typekey fields."
+      ],
+      "realWorldConnection": "In real Guidewire projects, mastering typelists is essential for almost any configuration task. From defining policy coverages and claim statuses to managing user roles and payment methods, typelists are the backbone for providing controlled, consistent choices throughout the application, directly impacting data quality and user experience."
+    },
+    {
+      "type": "assignment",
+      "id": "assign-1",
+      "description": "Based on the demonstration and concepts learned, complete the student exercise on Typelists. This exercise will involve hands-on configuration of a new typelist and its integration into an existing entity, reinforcing your understanding of the process.",
+      "objectives": [
+        "Create a new custom typelist with specific typecodes.",
+        "Add a typekey field to an existing entity that references your new typelist.",
+        "Verify the changes in the Guidewire Studio and potentially the application UI (if UI requirements are provided)."
+      ]
+    }
+  ]
+}

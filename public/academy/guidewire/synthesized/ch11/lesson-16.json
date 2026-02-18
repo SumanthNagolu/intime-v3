@@ -353,35 +353,35 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "What is a messaging acknowledgement from an external system?",
-      "referenceAnswer": "Amessaging acknowledgement is Guidewire's process for interpreting a messaging\nresponse from an external system.",
+      "referenceAnswer": "A messaging acknowledgement is Guidewire's process for interpreting a messaging response from an external system.",
       "questionKey": "slide-32"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "What are the possible ways Guidewire can interpret an external system's\na response to a message?",
-      "referenceAnswer": "Guidewire can interpret an external system's response, if one exists, as a positive\nacknowledgement (ACK), negative acknowledgment (NACK), or duplicate.",
+      "question": "What are the possible ways Guidewire can interpret an external system's response to a message?",
+      "referenceAnswer": "Guidewire can interpret an external system's response, if one exists, as a positive acknowledgement (ACK), negative acknowledgment (NACK), or duplicate.",
       "questionKey": "slide-34"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "Under what three circumstances is an entry added to the\n: MessageHistory table?",
-      "referenceAnswer": "Amessage is added to the message history table when a message is positively\nacknowledged, skipped, or retried. For the first two, the message is removed entirely\nfrom the Message table. For the third, a copy of the original message remains in the\nMessage table.",
+      "question": "Under what three circumstances is an entry added to the MessageHistory table?",
+      "referenceAnswer": "A message is added to the message history table when a message is positively acknowledged, skipped, or retried. For the first two, the message is removed entirely from the Message table. For the third, a copy of the original message remains in the Message table.",
       "questionKey": "slide-36"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
       "question": "Under what circumstances are acknowledgements processed:\nA) By the transport plugin?\nB) By the reply plugin?\nC) Without involvement from any plugin?",
-      "referenceAnswer": "A) When the reply is received synchronously.\n\nB) When the reply is received asynchronously through a listener or polling\nmechanism.\n\nC) When the reply is received asynchronously by an external system call to an API.",
+      "referenceAnswer": "A) When the reply is received synchronously.\nB) When the reply is received asynchronously through a listener or polling mechanism.\nC) When the reply is received asynchronously by an external system call to an API.",
       "questionKey": "slide-38"
     },
     {
       "type": "knowledge_check",
       "id": "kc-5",
       "question": "When should you use each of the following methods?\nA) aMessage.reportError(retryTime)?\nB) aMessage.reportError(errorCategory)?",
-      "referenceAnswer": "A) When the message needs to be retried and the message has not reached its\nmaximum number of retries.\n\nB) When the message needs to be retried, but the message has reached its\nmaximum number of retries.",
+      "referenceAnswer": "A) When the message needs to be retried and the message has not reached its maximum number of retries.\nB) When the message needs to be retried, but the message has reached its maximum number of retries.",
       "questionKey": "slide-40"
     },
     {

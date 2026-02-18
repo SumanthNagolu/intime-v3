@@ -9,6 +9,7 @@ import {
   Trophy,
   ChevronLeft,
   ChevronRight,
+  Lock,
 } from 'lucide-react'
 import type { SynthesizedLesson, ExtractedLesson, LessonBlock } from '@/lib/academy/types'
 import {
@@ -19,8 +20,10 @@ import {
 } from '@/lib/academy/curriculum'
 import { loadSynthesizedLesson, loadLessonContent, getStructuralSlideNumbers, isStructuralCaption } from '@/lib/academy/content-loader'
 import { useAcademyStore } from '@/lib/academy/progress-store'
-import { useGuruUI } from '@/lib/academy/guru-ui-store'
 import { useProgressSync } from '@/lib/academy/progress-sync'
+import { useStudentEnrollment } from '@/hooks/useStudentEnrollment'
+import { getNextLessonInPath, getPrevLessonInPath } from '@/lib/academy/learning-paths'
+import { canAccessLesson } from '@/lib/academy/gating-rules'
 
 import { BlockRenderer } from './BlockRenderer'
 import { SynthesizedSidebar } from './SynthesizedSidebar'
@@ -28,15 +31,6 @@ import { LessonPresentationView } from '../LessonPresentationView'
 
 import '../mentorship.css'
 import './synthesized.css'
-
-// Wisdom quotes for lessons
-const WISDOM_QUOTES = [
-  { text: 'To understand the whole, first understand how its parts relate. A good model illuminates the territory it represents.', attr: 'A principle for Guidewire learners' },
-  { text: 'The expert has failed more times than the beginner has tried. Mastery comes from patience, not speed.', attr: 'Ancient proverb for developers' },
-  { text: 'Configuration is the language of the system. Learn to speak it fluently, and the system will do your bidding.', attr: 'Guidewire Architecture Wisdom' },
-  { text: 'Every line of code tells a story. The best code tells the simplest story that still captures the truth.', attr: 'Software craftsmanship tradition' },
-  { text: 'The most powerful tool a developer has is understanding. Before you write, understand. Before you fix, understand.', attr: "Senior engineer's wisdom" },
-]
 
 export function SynthesizedLessonView() {
   const params = useParams()
@@ -57,8 +51,8 @@ export function SynthesizedLessonView() {
     completeLesson,
     setCurrentLesson,
     initializeProgress,
+    initializePathProgress,
   } = useAcademyStore()
-  const guruUI = useGuruUI()
 
   useProgressSync()
 
@@ -70,6 +64,9 @@ export function SynthesizedLessonView() {
   const [showCompletion, setShowCompletion] = useState(false)
   const [activeBlockId, setActiveBlockId] = useState<string | null>(null)
 
+  // Enrollment
+  const { isEnrolled, activePathSlug } = useStudentEnrollment()
+
   // Derived data
   const chapter = getChapterBySlug(chapterSlug)
   const chapterLessons = chapter ? getLessonsForChapter(chapterSlug) : []
@@ -77,18 +74,39 @@ export function SynthesizedLessonView() {
   const lessonId = lessonMeta?.lessonId ?? `${chapterSlug}-l${String(lessonNumber).padStart(2, '0')}`
 
   const progress = getLessonProgress(lessonId)
-  const prevLesson = lessonMeta ? getPrevLesson(lessonId) : null
-  const nextLesson = lessonMeta ? getNextLesson(lessonId) : null
+  const allProgress = useAcademyStore((s) => s.lessons)
 
-  const wisdomQuote = useMemo(() =>
-    WISDOM_QUOTES[Math.abs(lessonNumber * 7 + (chapter?.id ?? 0) * 13) % WISDOM_QUOTES.length],
-    [lessonNumber, chapter?.id]
-  )
+  // Path-aware prev/next navigation
+  const prevLesson = useMemo(() => {
+    if (!lessonMeta) return null
+    if (isEnrolled && activePathSlug) {
+      return getPrevLessonInPath(lessonId, activePathSlug) ?? null
+    }
+    return getPrevLesson(lessonId)
+  }, [lessonMeta, isEnrolled, activePathSlug, lessonId])
+
+  const nextLesson = useMemo(() => {
+    if (!lessonMeta) return null
+    if (isEnrolled && activePathSlug) {
+      return getNextLessonInPath(lessonId, activePathSlug) ?? null
+    }
+    return getNextLesson(lessonId)
+  }, [lessonMeta, isEnrolled, activePathSlug, lessonId])
+
+  // Check if next lesson is gated (locked)
+  const nextLessonLocked = useMemo(() => {
+    if (!nextLesson || !isEnrolled || !activePathSlug) return false
+    const gating = canAccessLesson(nextLesson.lessonId, activePathSlug, allProgress)
+    return !gating.allowed
+  }, [nextLesson, isEnrolled, activePathSlug, allProgress])
 
   // Initialize
   useEffect(() => {
     initializeProgress()
-  }, [initializeProgress])
+    if (isEnrolled && activePathSlug) {
+      initializePathProgress(activePathSlug)
+    }
+  }, [initializeProgress, initializePathProgress, isEnrolled, activePathSlug])
 
   // Load synthesized content, fall back to original
   useEffect(() => {
@@ -220,10 +238,10 @@ export function SynthesizedLessonView() {
   )
 
   const handleCompleteLesson = useCallback(() => {
-    completeLesson(lessonId)
+    completeLesson(lessonId, undefined, activePathSlug ?? undefined)
     setShowCompletion(true)
     setTimeout(() => setShowCompletion(false), 4000)
-  }, [lessonId, completeLesson])
+  }, [lessonId, completeLesson, activePathSlug])
 
   const scrollToBlock = useCallback((blockId: string) => {
     const el = document.getElementById(`block-${blockId}`)
@@ -283,10 +301,6 @@ export function SynthesizedLessonView() {
 
   const progressPct = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0
 
-  // SVG circle math for progress ring
-  const circumference = 2 * Math.PI * 24
-  const dashOffset = circumference * (1 - progressPct / 100)
-
   // KC index tracker for block rendering
   let kcIndexCounter = 0
 
@@ -333,16 +347,6 @@ export function SynthesizedLessonView() {
 
         {/* ====== LEFT SIDEBAR ====== */}
         <div className="m-sidebar-left">
-          {/* Sensei card */}
-          <div className="m-sensei-card">
-            <div className="m-sensei-avatar">G</div>
-            <div style={{ minWidth: 0 }}>
-              <div className="m-sensei-name">Guidewire Guru</div>
-              <div className="m-sensei-role">Your Guidewire Sensei</div>
-              <div className="m-sensei-status">Available</div>
-            </div>
-          </div>
-
           {/* Block-based navigation */}
           <SynthesizedSidebar
             blocks={blocks}
@@ -354,17 +358,6 @@ export function SynthesizedLessonView() {
 
         {/* ====== MAIN CONTENT ====== */}
         <main className="m-main" ref={mainRef}>
-
-          {/* Welcome banner */}
-          <div className="m-welcome m-animate">
-            <div className="m-welcome-greeting">Welcome back, Student</div>
-            <div className="m-welcome-message">
-              {progress.status === 'completed'
-                ? "You've already completed this lesson. Feel free to review the material at your own pace."
-                : synthesized?.subtitle || `Let's explore ${lessonMeta.title.toLowerCase()}. Take your time with this one.`
-              }
-            </div>
-          </div>
 
           {/* Lesson header */}
           <div className="m-lesson-header">
@@ -397,12 +390,6 @@ export function SynthesizedLessonView() {
                 </>
               )}
             </div>
-          </div>
-
-          {/* Wisdom card */}
-          <div className="m-wisdom">
-            <div className="m-wisdom-text">{wisdomQuote.text}</div>
-            <div className="m-wisdom-attr">&mdash; {wisdomQuote.attr}</div>
           </div>
 
           {/* Render all blocks */}
@@ -449,12 +436,23 @@ export function SynthesizedLessonView() {
                 </p>
               </div>
               {nextLesson && (
-                <button
-                  className="m-practice-btn"
-                  onClick={() => router.push(`/academy/lesson/${nextLesson.chapterSlug}/${nextLesson.lessonNumber}`)}
-                >
-                  Next Lesson &rarr;
-                </button>
+                nextLessonLocked ? (
+                  <span
+                    className="m-practice-btn"
+                    style={{ opacity: 0.5, cursor: 'not-allowed', display: 'inline-flex', alignItems: 'center', gap: 6 }}
+                    title="Complete this lesson first to unlock the next one"
+                  >
+                    <Lock size={14} />
+                    Next Lesson Locked
+                  </span>
+                ) : (
+                  <button
+                    className="m-practice-btn"
+                    onClick={() => router.push(`/academy/lesson/${nextLesson.chapterSlug}/${nextLesson.lessonNumber}`)}
+                  >
+                    Next Lesson &rarr;
+                  </button>
+                )
               )}
             </div>
           ) : (
@@ -504,14 +502,25 @@ export function SynthesizedLessonView() {
               </button>
             )}
             {nextLesson && (
-              <button
-                className="m-practice-btn"
-                style={{ marginLeft: 'auto' }}
-                onClick={() => router.push(`/academy/lesson/${nextLesson.chapterSlug}/${nextLesson.lessonNumber}`)}
-              >
-                Next Lesson
-                <ChevronRight size={16} />
-              </button>
+              nextLessonLocked ? (
+                <span
+                  className="m-practice-btn"
+                  style={{ marginLeft: 'auto', opacity: 0.5, cursor: 'not-allowed', display: 'inline-flex', alignItems: 'center', gap: 6 }}
+                  title="Complete this lesson to unlock"
+                >
+                  <Lock size={14} />
+                  Next Lesson
+                </span>
+              ) : (
+                <button
+                  className="m-practice-btn"
+                  style={{ marginLeft: 'auto' }}
+                  onClick={() => router.push(`/academy/lesson/${nextLesson.chapterSlug}/${nextLesson.lessonNumber}`)}
+                >
+                  Next Lesson
+                  <ChevronRight size={16} />
+                </button>
+              )
             )}
           </div>
 
@@ -520,26 +529,23 @@ export function SynthesizedLessonView() {
         {/* ====== RIGHT SIDEBAR ====== */}
         <aside className="m-sidebar-right">
 
-          {/* Progress ring */}
+          {/* Back to Learn */}
+          <div className="m-aside-section">
+            <div className="m-back-link" onClick={() => router.push('/academy/learn')}>
+              <ChevronLeft size={14} />
+              Back to Learn
+            </div>
+          </div>
+
+          {/* Progress (compact text + bar) */}
           <div className="m-aside-section">
             <div className="m-aside-label">Your Progress</div>
-            <div className="m-progress-block">
-              <div style={{ width: 56, height: 56, position: 'relative', flexShrink: 0 }}>
-                <svg width="56" height="56" viewBox="0 0 56 56">
-                  <circle className="m-ring-bg" cx="28" cy="28" r="24" />
-                  <circle
-                    className="m-ring-fill"
-                    cx="28" cy="28" r="24"
-                    strokeDasharray={circumference}
-                    strokeDashoffset={dashOffset}
-                    transform="rotate(-90 28 28)"
-                  />
-                </svg>
-                <div className="m-ring-text">{progressPct}%</div>
+            <div className="m-progress-compact">
+              <div className="m-progress-compact-text">
+                <strong>{completedItems} of {totalItems}</strong> complete
               </div>
-              <div className="m-progress-detail">
-                <strong>{completedItems} of {totalItems} items</strong>
-                completed so far
+              <div className="m-progress-bar">
+                <div className="m-progress-fill" style={{ width: `${progressPct}%` }} />
               </div>
             </div>
           </div>
@@ -556,79 +562,24 @@ export function SynthesizedLessonView() {
             </div>
           </div>
 
-          {/* Sensei mini */}
-          <div className="m-aside-section">
-            <div className="m-aside-label">Your Sensei</div>
-            <div className="m-instructor-mini">
-              <div className="m-instructor-mini-avatar">G</div>
-              <div>
-                <div style={{ fontSize: 13, fontWeight: 500, color: 'var(--m-text-primary)' }}>
-                  Guidewire Guru
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--m-text-muted)', marginTop: 1 }}>
-                  Sr. Guidewire Architect
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Resources */}
-          <div className="m-aside-section">
-            <div className="m-aside-label">Resources</div>
-            {lessonMeta.hasAssignment && lessonMeta.assignmentPdf && (
-              <div
-                className="m-resource-item"
-                onClick={() => {
-                  const el = document.getElementById('assignment-section')
-                  if (el) el.scrollIntoView({ behavior: 'smooth' })
-                }}
-              >
-                <div className="m-resource-icon">📄</div>
-                <span>Assignment PDF</span>
-              </div>
-            )}
-            <div className="m-resource-item" onClick={() => router.push('/academy/learn')}>
-              <div className="m-resource-icon">📚</div>
-              <span>Back to Dashboard</span>
-            </div>
-            {videos.length > 0 && (
-              <div className="m-resource-item" onClick={() => {
-                const el = document.querySelector('.m-video-block')
-                if (el) el.scrollIntoView({ behavior: 'smooth' })
-              }}>
-                <div className="m-resource-icon">🎥</div>
-                <span>Demo Video{videos.length > 1 ? 's' : ''}</span>
-              </div>
-            )}
-          </div>
-
-          {/* Ask Sensei */}
-          <div className="m-aside-section">
-            <div className="m-ask-sensei" onClick={() => guruUI.open()}>
-              <div className="m-ask-sensei-icon">💬</div>
-              <div className="m-ask-sensei-text">
-                <strong>Stuck on something?</strong>
-                Ask Guidewire Guru for help
-              </div>
-            </div>
-          </div>
-
           {/* Up Next */}
           {nextLesson && (
             <div className="m-aside-section">
               <div className="m-aside-label">Up Next</div>
               <div
                 className="m-up-next"
-                onClick={() => router.push(`/academy/lesson/${nextLesson.chapterSlug}/${nextLesson.lessonNumber}`)}
+                style={nextLessonLocked ? { opacity: 0.5, cursor: 'not-allowed' } : undefined}
+                onClick={() => !nextLessonLocked && router.push(`/academy/lesson/${nextLesson.chapterSlug}/${nextLesson.lessonNumber}`)}
               >
                 <div className="m-up-next-eyebrow">
+                  {nextLessonLocked && <Lock size={10} style={{ display: 'inline', marginRight: 4, verticalAlign: 'middle' }} />}
                   Lesson {nextLesson.lessonNumber}
                 </div>
                 <div className="m-up-next-title">{nextLesson.title}</div>
                 <div className="m-up-next-desc">
-                  ~{nextLesson.estimatedMinutes} min
+                  {nextLessonLocked ? 'Complete current lesson to unlock' : `~${nextLesson.estimatedMinutes} min`}
                 </div>
-                <div className="m-up-next-arrow">→</div>
+                {!nextLessonLocked && <div className="m-up-next-arrow">→</div>}
               </div>
             </div>
           )}

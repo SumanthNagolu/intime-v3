@@ -116,15 +116,15 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "A What event is represented by each number?\nProducer\nBS\nCommission is put in Commission is earned Commission is paid\nreserve",
-      "referenceAnswer": "reserve\nCommission day for\nproducer is reached\nProducer Payment batch\nprocess runs\nProducer",
+      "question": "What event is represented by each number?",
+      "referenceAnswer": "BillingCenter receives billing request and constructs billing instruction\nCommission earning event occurs\nCommission is put in reserve\nCommission is earned\nCommission is paid\nCommission day for producer is reached\nProducer Payment batch process runs",
       "questionKey": "slide-12"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "How many producers can earn commission from a single policy billing\noo instruction?",
-      "referenceAnswer": "instruction?\nThree — Primary, Secondary, and Referrer",
+      "question": "How many producers can earn commission from a single policy billing instruction?",
+      "referenceAnswer": "Three — Primary, Secondary, and Referrer",
       "questionKey": "slide-14"
     },
     {
@@ -164,22 +164,22 @@
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "How would you configure BillingCenter to pay different commission\nrates for different lines of business with the same producer?",
-      "referenceAnswer": "Howwould you configure BillingCenter to pay different commission\nPa rates for different lines of business with the same producer?\n¢\nThere are two ways to do this: (1) Set up commission subplans that define different\ncriteria for different types of cases or (2) set up different producer codes.",
+      "question": "How would you configure BillingCenter to pay different commission rates for different lines of business with the same producer?",
+      "referenceAnswer": "There are two ways to do this: (1) Set up commission subplans that define different\ncriteria for different types of cases or (2) set up different producer codes.",
       "questionKey": "slide-21"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "How does BillingCenter determine which commission subplan applies to\na given policy period?",
-      "referenceAnswer": "(evaluations, customer segments). If all the checks fail, the Default subplan is used.",
+      "question": "How does BillingCenter determine which commission subplan applies to a given policy period?",
+      "referenceAnswer": "The conditional subplans have availability criteria, which BillingCenter checks against\nthe policy (LOB code), policy period (term number, assigned risk, state), and account\n(evaluations, customer segments). If all the checks fail, the Default subplan is used.",
       "questionKey": "slide-23"
     },
     {
       "type": "knowledge_check",
       "id": "kc-5",
       "question": "What is the role of the Default subplan?",
-      "referenceAnswer": ",— — Whatis the role of the Default subplan?\n¢\noo If no conditional subplans match the policy, BillingCenter uses the Default subplan.",
+      "referenceAnswer": "If no conditional subplans match the policy, BillingCenter uses the Default subplan.",
       "questionKey": "slide-25"
     },
     {
@@ -211,7 +211,7 @@
       "type": "knowledge_check",
       "id": "kc-6",
       "question": "When is commission earned?",
-      "referenceAnswer": ": ‘ The timing of commission earning varies. It is determined by the Earn Commissions\nsetting on the commission subplan that is being used.",
+      "referenceAnswer": "The timing of commission earning varies. It is determined by the Earn Commissions\nsetting on the commission subplan that is being used.",
       "questionKey": "slide-30"
     },
     {
@@ -270,7 +270,7 @@
       "type": "knowledge_check",
       "id": "kc-7",
       "question": "Both commission overrides are available on the policy, on a charge, or",
-      "referenceAnswer": "a bot, commission overrides are available on the policy, on a charge, or\n, ?\nCommission % is available on both; commission plan is available for the policy only;\ncommission amount is available for a charge only.",
+      "referenceAnswer": "Commission % is available on both; commission plan is available for the policy only;\ncommission amount is available for a charge only.",
       "questionKey": "slide-38"
     },
     {

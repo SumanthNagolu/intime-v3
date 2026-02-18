@@ -571,8 +571,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "What are the three ways a batch process can be run? Which of the three",
-        "answer": "Is the most common? Three way to run a batch process are: * Scheduled • Run from the UI « Run from the web service API See eee ee eae Scheduled is the most common way to run a batch process."
+        "question": "What are the three ways a batch process can be run? Which of the three is the most common?",
+        "answer": "Three way to run a batch process are:\nScheduled\nRun from the UI\nRun from the web service API\nScheduled is the most common way to run a batch process."
       }
     },
     {
@@ -609,8 +609,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "When you add a new batch process typecode to BatchProcess Type,",
-        "answer": "Why must you add one or more categories to the typecode? The categories of a BatchProcessType typecode determines how the batch process can be run (from the UI, scheduled, from the API, and/or in maintenance level). See eee ee eae"
+        "question": "When you add a new batch process typecode to BatchProcess Type, why must you add one or more categories to the typecode?",
+        "answer": "The categories of a BatchProcessType typecode determines how the batch process can be run (from the UI, scheduled, from the API, and/or in maintenance level)."
       }
     },
     {
@@ -647,8 +647,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "When creating a custom batch process, do you need to implement the",
-        "answer": "ProcessesPlugin or just modify it? For PolicyCenter and ClaimCenter, the IProcessesPlugin file already exists in the base application and you only need to modify the ProcessesPlugin class which implements the IProcessesPlugin interface. For BillingCenter and ContactManager, you need to create an IProcessesPlugin registry file that implements the IProcessesPlugin interface in a new class. See eee ee eae"
+        "question": "When creating a custom batch process, do you need to implement the ProcessesPlugin or just modify it?",
+        "answer": "For PolicyCenter and ClaimCenter, the IProcessesPlugin file already exists in the base application and you only need to modify the ProcessesPlugin class which implements the IProcessesPlugin interface.\nFor BillingCenter and ContactManager, you need to create an IProcessesPlugin registry file that implements the IProcessesPlugin interface in a new class."
       }
     },
     {
@@ -685,8 +685,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "For acustom batch process, what method or methods require",
-        "answer": "Implementation? Only the doWork method is required. See eee ee eae"
+        "question": "For a custom batch process, what method or methods require implementation?",
+        "answer": "Only the doWork method is required."
       }
     },
     {
@@ -724,7 +724,7 @@
       "slideType": "question",
       "questionData": {
         "question": "How does a batch process commit changes to the database?",
-        "answer": "The code must create a new bundle using runWithNewBundle and add the entities to be changed and committed to that bundle. See eee ee eae"
+        "answer": "The code must create a new bundle using runWithNewBundle and add the entities to\nbe changed and committed to that bundle."
       }
     },
     {

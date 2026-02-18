@@ -277,14 +277,14 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "|f “Tire Town” is in Address Book and is associated with three claims, ow how many contacts have the name “Tire Town\"?",
+      "question": "If “Tire Town” is in Address Book and is associated with three claims, how many contacts have the name “Tire Town\"?",
       "referenceAnswer": "Four. There would be one contact in ContactManager and three in ClaimCenter. Every contact, whether it is linked or not, is a unique and separate object.",
       "questionKey": "slide-32"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "Is it common or uncommon to have a contact that exists only in ClaimCenter? Only in ContactManager?",
+      "question": "Is it common or uncommon to have a contact that exists only in\nClaimCenter? Only in ContactManager?",
       "referenceAnswer": "It is common to have a contact that exists only in ClaimCenter. This is true for contacts that are relevant to only one claim (such as a witness or passenger). It is uncommon to have a contact exist only in Address Book. The primary purpose for a contact in Address Book is to have it associated with multiple claims, and if it is associated with even one claim, then the contact will also exist in ClaimCenter.",
       "questionKey": "slide-34"
     },
@@ -292,20 +292,20 @@
       "type": "knowledge_check",
       "id": "kc-3",
       "question": "What is the purpose of a contact role?",
-      "referenceAnswer": "Acontact role identifies the relationship that the contact has with the claim (such as insured, witness, doctor, and so on).",
+      "referenceAnswer": "A contact role identifies the relationship that the contact has with the claim (such as insured, witness, doctor, and so on).",
       "questionKey": "slide-36"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "Howcan you tell if a contact is linked or in sync?",
+      "question": "How can you tell if a contact is linked or in sync?",
       "referenceAnswer": "You can tell whether a contact is linked and/or in sync by selecting the contact from the Parties Involved — Contacts’ screen. A label on the Basics card identifies the contact's status.",
       "questionKey": "slide-38"
     },
     {
       "type": "knowledge_check",
       "id": "kc-5",
-      "question": "How many claims can a contact be associated with if the contact is only ow defined in ClaimCenter?",
+      "question": "How many claims can a contact be associated with if the contact is only defined in ClaimCenter?",
       "referenceAnswer": "One. Each contact is created within a claim. If a contact (usually an insured) has multiple claims, there will be a separate contact on each of those claims.",
       "questionKey": "slide-40"
     },

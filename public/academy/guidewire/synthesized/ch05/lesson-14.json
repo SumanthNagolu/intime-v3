@@ -334,14 +334,14 @@
       "type": "knowledge_check",
       "id": "kc-2",
       "question": "How many permissions can a given role have?",
-      "referenceAnswer": "Arole can have any number of permissions, from zero (which would serve no business purpose but is theoretically possible) to all the permissions in the system.",
+      "referenceAnswer": "A role can have any number of permissions, from zero (which would serve no business purpose but is theoretically possible) to all the permissions in the system.",
       "questionKey": "slide-33"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
       "question": "How many roles can a given user have?",
-      "referenceAnswer": "Auser can theoretically have any number of roles from Zero to all the roles in the system. A user must have at least one role in order to be able to do anything in ClaimCenter. A user who has broader responsibility than another user can be given additional roles so that they are able to accomplish these responsibilities.",
+      "referenceAnswer": "A user can theoretically have any number of roles from Zero to all the roles in the system. A user must have at least one role in order to be able to do anything in ClaimCenter. A user who has broader responsibility than another user can be given additional roles so that they are able to accomplish these responsibilities.",
       "questionKey": "slide-35"
     },
     {
@@ -354,14 +354,14 @@
     {
       "type": "knowledge_check",
       "id": "kc-5",
-      "question": "Agiven user appears on the access control list for claim 234-22-147282,\nbut that user cannot view or edit the claim. How could this happen?",
+      "question": "A given user appears on the access control list for claim 234-22-147282,\nbut that user cannot view or edit the claim. How could this happen?",
       "referenceAnswer": "The user probably lacks the system permission to view and/or edit claims. In order to\nview or edit a claim, the user must have the system permission and appear on the\nACL.",
       "questionKey": "slide-39"
     },
     {
       "type": "knowledge_check",
       "id": "kc-6",
-      "question": "Asecurity profile can specify criteria for three types of access. What are\nthe three types of access?",
+      "question": "A security profile can specify criteria for three types of access. What are\nthe three types of access?",
       "referenceAnswer": "Own access, view access, edit access.",
       "questionKey": "slide-41"
     },

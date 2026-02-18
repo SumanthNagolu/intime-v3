@@ -556,7 +556,7 @@
       "slideType": "question",
       "questionData": {
         "question": "What is the difference between primary and secondary assignment?",
-        "answer": "What is the difference between primary and secondary assignment? In primary assignment, a single user is assigned ownership of the assigned object. In secondary assignment, one or more users are assigned to roles with respect to the assigned object."
+        "answer": "In primary assignment, a single user is assigned ownership of the assigned object. In secondary assignment, one or more users are assigned to roles with respect to the assigned object."
       }
     },
     {
@@ -593,8 +593,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "When an activity is assigned by rules, which two rule sets are typically",
-        "answer": "Fa executed? In what order? First, global rules are executed. Then, default group rules are executed."
+        "question": "When an activity is assigned by rules, which two rule sets are typically\nexecuted? In what order?",
+        "answer": "First, global rules are executed. Then, default group rules are executed."
       }
     },
     {
@@ -631,8 +631,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Under what circumstances can an activity be assigned without",
-        "answer": "Fa assignment rules being executed? When the activity is assigned to a specific user."
+        "question": "Under what circumstances can an activity be assigned without\nassignment rules being executed?",
+        "answer": "When the activity is assigned to a specific user."
       }
     },
     {
@@ -669,8 +669,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "Why are assignment methods always inside i‘ statements in assignment",
-        "answer": "Fa rules? Assignment methods are always inside if statements because they might fail. For example, an assignGroup method may not be able to find the specified group. If the assignment succeeds, then the if statement causes control of flow to execute an actions.exit() statement, which exits execution from the rule set. If the assignment fails, then the actions.exit() statement is skipped and execution proceeds to the next rule."
+        "question": "Why are assignment methods always inside if statements in assignment rules?",
+        "answer": "Assignment methods are always inside if statements because they might fail. For\nexample, an assignGroup method may not be able to find the specified group.\nIf the assignment succeeds, then the if statement causes control of flow to execute an\nactions.exit() statement, which exits execution from the rule set.\nIf the assignment fails, then the actions.exit() statement is skipped and execution\nproceeds to the next rule."
       }
     },
     {
@@ -708,7 +708,7 @@
       "slideType": "question",
       "questionData": {
         "question": "What is the Default Owner of an object?",
-        "answer": "Default Owner is a dummy user that objects are assigned to when global assignment rules fail to assign the object to a group."
+        "answer": "Default Owner is a dummy user that objects are assigned to when global assignment\nrules fail to assign the object to a group."
       }
     },
     {

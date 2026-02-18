@@ -132,22 +132,22 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "For a cell to be editable, the cell’s Editable property must be set to true.\nY What other elements, if any, must also be editable to make the cell\neditable in the user interface?",
-      "referenceAnswer": "Fora cell to be editable, the cell’s Editable property must be set to true.\nY What other elements, if any, must also be editable to make the cell\neditable in the user interface?\n\nThe List View Panel’s Row Iterator Editable property must be set to true.\n\nen",
+      "question": "For a cell to be editable, the cell’s Editable property must be set to true. What other elements, if any, must also be editable to make the cell editable in the user interface?",
+      "referenceAnswer": "The List View Panel’s Row Iterator Editable property must be set to true.",
       "questionKey": "slide-13"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "When you drag an Iterator Buttons widget onto a toolbar, how many\nY buttons are added?",
-      "referenceAnswer": "When you drag an Iterator Buttons widget onto a toolbar, how many\nY buttons are added?\n\nTwo: Add and Remove\nen",
+      "question": "When you drag an Iterator Buttons widget onto a toolbar, how many buttons are added?",
+      "referenceAnswer": "Two: Add and Remove",
       "questionKey": "slide-15"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "Assume that an object called\nY anABContact has an Addresses array\nand an Addresses list view panel whose\nRow lterator is configured as shown.\nIdentify the errors in how the property is\nconfigured.",
-      "referenceAnswer": "Assume that an object called\nY anABContact has an Addresses array\nand an Addresses list view panel whose\nRow lterator is configured as shown.\nIdentify the errors in how the property is\nconfigured.\n\nThere are four errors:\n1. The object is anABContact, not ABContact.\n2. The method name starts with \"addTo...\", not \"toAdd...\".\n\n3. The name of the array is missing from the end of the method name. (The method should\nbe addToAddresses.)\n\n4. The argument must reference the row iterator's element name, which is currentAddress.\n\nen",
+      "question": "Assume that an object called anABContact has an Addresses array and an Addresses list view panel whose Row Iterator is configured as shown. Identify the errors in how the property is configured.",
+      "referenceAnswer": "There are four errors:\n1. The object is anABContact, not ABContact.\n2. The method name starts with \"addTo...\", not \"toAdd...\".\n3. The name of the array is missing from the end of the method name. (The method should be addToAddresses.)\n4. The argument must reference the row iterator's element name, which is currentAddress.",
       "questionKey": "slide-17"
     },
     {

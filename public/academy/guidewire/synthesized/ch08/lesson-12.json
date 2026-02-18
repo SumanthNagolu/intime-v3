@@ -286,7 +286,7 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "What is the difference between primary and secondary assignment?",
-      "referenceAnswer": "In primary assignment, a single user is assigned ownership of the assigned object. In\nsecondary assignment, one or more users are assigned to roles with respect to the\nassigned object.",
+      "referenceAnswer": "In primary assignment, a single user is assigned ownership of the assigned object. In secondary assignment, one or more users are assigned to roles with respect to the assigned object.",
       "questionKey": "slide-32"
     },
     {
@@ -306,7 +306,7 @@
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "Why are assignment methods always inside i‘ statements in assignment\nrules?\n0 ! ’",
+      "question": "Why are assignment methods always inside if statements in assignment rules?",
       "referenceAnswer": "Assignment methods are always inside if statements because they might fail. For\nexample, an assignGroup method may not be able to find the specified group.\nIf the assignment succeeds, then the if statement causes control of flow to execute an\nactions.exit() statement, which exits execution from the rule set.\nIf the assignment fails, then the actions.exit() statement is skipped and execution\nproceeds to the next rule.",
       "questionKey": "slide-38"
     },

@@ -810,7 +810,7 @@
       "slideType": "question",
       "questionData": {
         "question": "What is a bundle?",
-        "answer": "_- — What is a bundle? A Guidewire bundle is a set of in-memory entities that are saved to the database as a unit. Each bundle corresponds to one database transaction."
+        "answer": "A Guidewire bundle is a set of in-memory entities that are saved to the database as a\nunit. Each bundle corresponds to one database transaction."
       }
     },
     {
@@ -847,8 +847,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "For each of the following, identify if its an example of auto commit or",
-        "answer": "7’ manual commit? • A) Queried entities that must be modified Code executed from the Ul in edit mode Code executed in business rules Code executed from the UI in read-only mode Manual commit Auto commit Auto commit Manual commit"
+        "question": "For each of the following, identify if it's an example of auto commit or manual commit?\n\nA) Queried entities that must be modified\nB) Code executed from the UI in edit mode\nC) Code executed in business rules\nD) Code executed from the UI in read-only mode",
+        "answer": "A) Queried entities that must be modified: Manual commit\nB) Code executed from the UI in edit mode: Auto commit\nC) Code executed in business rules: Auto commit\nD) Code executed from the UI in read-only mode: Manual commit"
       }
     },
     {
@@ -885,8 +885,8 @@
       "mediaReferences": [],
       "slideType": "question",
       "questionData": {
-        "question": "What kind of entities are initially put into read-only bundles?",
-        "answer": "Under what circumstance would you need to copy one of those entities : to a writable bundle and how is this done? Entities that are the result of a query are put into read-only bundles, and entities referenced by foreign key are put into a read-only bundle if the referencing entity is also in a read-only bundle. You need to copy these entities to a writable bundle if you need to modify them, which is done via the bundle's add method."
+        "question": "What kind of entities are initially put into read-only bundles?\nUnder what circumstance would you need to copy one of those entities to a writable bundle and how is this done?",
+        "answer": "Entities that are the result of a query are put into read-only bundles, and entities\nreferenced by foreign key are put into a read-only bundle if the referencing entity is\nalso in a read-only bundle.\n\nYou need to copy these entities to a writable bundle if you need to modify them, which\nis done via the bundle's add method."
       }
     },
     {

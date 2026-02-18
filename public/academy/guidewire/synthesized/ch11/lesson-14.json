@@ -220,15 +220,15 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "With regards to payload generation and payload transformation:\nA) Onwhich server does each take place?\nB) At what point in time does each take place?",
-      "referenceAnswer": "A) Payload generation occurs on the application/UI server. Payload transformation occurs on the batch/integration server.\nB) Payload generation occurs during Event Fired rules (right after the triggering event occurs). Payload transformation occurs right before the message is sent (in the request plugin's beforeSend method.",
+      "question": "With regards to payload generation and payload transformation:\nA) On which server does each take place?\n\nB) At what point in time does each take place?",
+      "referenceAnswer": "A) Payload generation occurs on the application/UI server. Payload transformation\noccurs on the batch/integration server.\nB) Payload generation occurs during Event Fired rules (right after the triggering event\noccurs). Payload transformation occurs right before the message is sent (in the\nrequest plugin's beforeSend method.",
       "questionKey": "slide-19"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
       "question": "Under what circumstance would you need to late bind a message\npayload?",
-      "referenceAnswer": "You would need to late bind a message if information that needs to go in the message payload is not known at the time the message payload is generated in Event Fired rules.",
+      "referenceAnswer": "You would need to late bind a message if information that needs to go in the message\npayload is not known at the time the message payload is generated in Event Fired\nrules.",
       "questionKey": "slide-21"
     },
     {

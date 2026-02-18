@@ -189,7 +189,7 @@
       "type": "knowledge_check",
       "id": "kc-1",
       "question": "Why must an Event Fired rule cast the MessageContext Root object?",
-      "referenceAnswer": "Why must an Event Fired rule cast the MessageContext Root object?\n\nMessageContext.Root is of type Object, but message payloads typically need to work\nwith the MessageContext.Root as the type of entity that triggered the message event.\nTherefore, the MessageContext.Root entity must be cast to be of that type.",
+      "referenceAnswer": "MessageContext.Root is of type Object, but message payloads typically need to work\nwith the MessageContext.Root as the type of entity that triggered the message event.\nTherefore, the MessageContext.Root entity must be cast to be of that type.",
       "questionKey": "slide-17"
     },
     {

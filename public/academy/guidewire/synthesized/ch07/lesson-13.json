@@ -184,29 +184,29 @@
     {
       "type": "knowledge_check",
       "id": "kc-1",
-      "question": "In a List View:\nOo A) What type of widget displays individual fields of data?\nB) What type of widget organizes the individual fields of data?",
+      "question": "In a List View:\nA) What type of widget displays individual fields of data?\nB) What type of widget organizes the individual fields of data?",
       "referenceAnswer": "A) Cell widgets\nB) Rowwidgets",
       "questionKey": "slide-18"
     },
     {
       "type": "knowledge_check",
       "id": "kc-2",
-      "question": "Assume you have a list view panel with \"anABContact\" as the root\nY object. The list view panel displays the contact’s addresses.\nA) What would the row iterator's \"value\" property be set to?\nB) What would the row iterator's \"element name\" be set to?\nC) What other widgets would make use of the element name?",
-      "referenceAnswer": "Assume you have a list view panel with \"anABContact\" as the root\nY object. The list view panel displays the contact’s addresses.\n\nA\nB\n\nC) What other widgets would make use of the element name?\n\nA) anABContact.Addresses (assuming that the name of the addresses array is\n\"Addresses\")\n\nB) The value is arbitrary, but it would probably be set to something like\n\"currentAddress\".\n\nCc) The cell widgets inside the row iterator's row. For example, a cell displaying the\nstreet would have a value of \"currentAddress. Street\".",
+      "question": "Assume you have a list view panel with \"anABContact\" as the root object. The list view panel displays the contact’s addresses.\nA) What would the row iterator's \"value\" property be set to?\nB) What would the row iterator's \"element name\" be set to?\nC) What other widgets would make use of the element name?",
+      "referenceAnswer": "A) anABContact.Addresses (assuming that the name of the addresses array is \"Addresses\")\nB) The value is arbitrary, but it would probably be set to something like \"currentAddress\".\nC) The cell widgets inside the row iterator's row. For example, a cell displaying the street would have a value of \"currentAddress. Street\".",
       "questionKey": "slide-20"
     },
     {
       "type": "knowledge_check",
       "id": "kc-3",
-      "question": "Alist view typically needs a toolbar, even if it is read-only. Why?",
-      "referenceAnswer": "The toolbar is needed for the paging controls. These controls are used to view each\npage of rows if the number of rows is greater than what can be displayed at one time.",
+      "question": "A list view typically needs a toolbar, even if it is read-only. Why?",
+      "referenceAnswer": "The toolbar is needed for the paging controls. These controls are used to view each page of rows if the number of rows is greater than what can be displayed at one time.",
       "questionKey": "slide-22"
     },
     {
       "type": "knowledge_check",
       "id": "kc-4",
-      "question": "In what way is embedding a List View Panel in a detail view panel\ndifferent from embedding a list view panel in a screen?",
-      "referenceAnswer": "To embed a list view panel in a detail view panel , use a List View Input widget. To\nembed a list view panel in a screen (or card view panel or List Detail Panel , you use a\nPanel Ref widget.",
+      "question": "In what way is embedding a List View Panel in a detail view panel different from embedding a list view panel in a screen?",
+      "referenceAnswer": "To embed a list view panel in a detail view panel, use a List View Input widget. To embed a list view panel in a screen (or card view panel or List Detail Panel), you use a Panel Ref widget.",
       "questionKey": "slide-24"
     },
     {
