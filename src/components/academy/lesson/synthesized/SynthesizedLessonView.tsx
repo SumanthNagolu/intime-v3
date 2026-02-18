@@ -17,7 +17,7 @@ import {
   getNextLesson,
   getPrevLesson,
 } from '@/lib/academy/curriculum'
-import { loadSynthesizedLesson, loadLessonContent } from '@/lib/academy/content-loader'
+import { loadSynthesizedLesson, loadLessonContent, getStructuralSlideNumbers, isStructuralCaption } from '@/lib/academy/content-loader'
 import { useAcademyStore } from '@/lib/academy/progress-store'
 import { useGuruUI } from '@/lib/academy/guru-ui-store'
 import { useProgressSync } from '@/lib/academy/progress-sync'
@@ -101,7 +101,24 @@ export function SynthesizedLessonView() {
         if (cancelled) return
 
         if (synth && synth.blocks.length > 0) {
-          setSynthesized(synth)
+          // Filter structural slides (objectives, title, welcome) from concept figures
+          const structuralSlides = await getStructuralSlideNumbers(chapterSlug, lessonNumber)
+          const filtered: typeof synth = {
+            ...synth,
+            blocks: synth.blocks.map(block => {
+              if (block.type === 'concept') {
+                return {
+                  ...block,
+                  figures: block.figures.filter(fig =>
+                    !structuralSlides.has(fig.slideNumber) &&
+                    !isStructuralCaption(fig.caption || '')
+                  ),
+                }
+              }
+              return block
+            }),
+          }
+          setSynthesized(filtered)
           setUseFallback(false)
         } else {
           // Load fallback

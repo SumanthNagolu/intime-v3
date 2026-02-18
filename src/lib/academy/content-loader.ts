@@ -199,6 +199,67 @@ export function getSlideImageUrl(
   return `/academy/guidewire/slides/${path}`
 }
 
+// --- Structural Slide Filtering ---
+
+/** Slide title patterns that indicate structural/decorative slides (not content) */
+const STRUCTURAL_TITLE_PATTERNS = [
+  /^learning objectives?$/i,
+  /^lesson objectives?$/i,
+  /^lesson outline$/i,
+  /^lesson\s*\|?$/i,
+  /^welcome to\s/i,
+]
+
+/** Caption patterns that indicate structural figures */
+const STRUCTURAL_CAPTION_PATTERNS = [
+  /lesson objectives/i,
+  /learning objectives/i,
+  /outlines the learning objectives/i,
+  /overview of the lesson objectives/i,
+  /review of the lesson objectives/i,
+  /overview of lesson topics/i,
+]
+
+/**
+ * Get the set of slide numbers that are structural (title, objectives, outline, welcome).
+ * These should be filtered out from concept block figures in synthesized view.
+ *
+ * Guidewire training PPTs follow a standard template:
+ *   Slide 1: Title/Welcome → Slide 2: Learning Objectives → Slide 3+: Content
+ * The extraction sometimes misidentifies slide 2's title, so if slide 1 is a
+ * title/welcome slide, slide 2 is also marked as structural.
+ */
+export async function getStructuralSlideNumbers(
+  chapterSlug: string,
+  lessonNumber: number
+): Promise<Set<number>> {
+  const structural = new Set<number>()
+  const content = await loadLessonContent(chapterSlug, lessonNumber)
+  if (!content?.slides || content.slides.length < 3) return structural
+
+  for (const slide of content.slides) {
+    const title = (slide.title || '').trim()
+    if (STRUCTURAL_TITLE_PATTERNS.some(p => p.test(title))) {
+      structural.add(slide.slideNumber)
+    }
+  }
+
+  // Heuristic: if slide 1 is a title/welcome slide, slide 2 is very likely
+  // the objectives slide (common Guidewire PPT template pattern)
+  if (structural.has(1) && content.slides.length > 5) {
+    structural.add(2)
+  }
+
+  return structural
+}
+
+/**
+ * Check if a figure caption indicates structural content.
+ */
+export function isStructuralCaption(caption: string): boolean {
+  return STRUCTURAL_CAPTION_PATTERNS.some(p => p.test(caption))
+}
+
 // Clear caches (useful for development)
 export function clearContentCache(): void {
   lessonCache.clear()
