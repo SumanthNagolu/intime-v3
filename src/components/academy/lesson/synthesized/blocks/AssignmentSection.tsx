@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { ClipboardList } from 'lucide-react'
-import type { AssignmentBlock as AssignmentBlockType } from '@/lib/academy/types'
+import type { AssignmentBlock as AssignmentBlockType, SubmissionBlock } from '@/lib/academy/types'
 import { AssignmentBlock } from '../../AssignmentBlock'
 
 interface AssignmentSectionProps {
@@ -10,9 +10,10 @@ interface AssignmentSectionProps {
   lessonId: string
   assignmentPdf?: string
   solutionPdf?: string
-  onSubmit: (lessonId: string, response: string) => void
+  onSubmit: (lessonId: string, response: string, blocks?: SubmissionBlock[]) => void
   isSubmitted: boolean
   previousResponse?: string
+  previousBlocks?: SubmissionBlock[]
 }
 
 export function AssignmentSection({
@@ -23,6 +24,7 @@ export function AssignmentSection({
   onSubmit,
   isSubmitted,
   previousResponse,
+  previousBlocks,
 }: AssignmentSectionProps) {
   return (
     <div id={`block-${block.id}`}>
@@ -51,6 +53,7 @@ export function AssignmentSection({
           onSubmit={onSubmit}
           isSubmitted={isSubmitted}
           previousResponse={previousResponse}
+          previousBlocks={previousBlocks}
         />
       </div>
     </div>

@@ -6,41 +6,24 @@ import { useRouter, usePathname } from 'next/navigation';
 import { User, Mic, Map, Menu, X, Cpu, ChevronDown, List, Layers, Sparkles, LogOut, FileText, Bell, Briefcase, Users, Globe, TrendingUp, LayoutDashboard, Search, Clock, Activity, Plus, DollarSign, UserPlus, Network, BarChart3, GraduationCap, Settings, Award, Rocket, Megaphone, Plane, CheckCircle, Building2, Download, ShieldCheck, Target, Lock, Terminal, BookOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAppStore } from '@/lib/store';
+import { useStudentEnrollment } from '@/hooks/useStudentEnrollment';
 import type { Role } from '@/lib/types';
 
 // Navigation structures based on role
+// Student nav is computed dynamically based on enrollment state
+const STUDENT_NAV_ENROLLED: { title: string; icon: any; items: { label: string; path: string; icon: any }[] }[] = [
+  { title: "Learn", icon: BookOpen, items: [{ label: "Learn", path: "/academy/learn", icon: BookOpen }] },
+  { title: "Practice", icon: Mic, items: [{ label: "Practice", path: "/academy/practice", icon: Mic }] },
+  { title: "Profile", icon: User, items: [{ label: "Profile", path: "/academy/profile", icon: User }] },
+];
+
+const STUDENT_NAV_NOT_ENROLLED: { title: string; icon: any; items: { label: string; path: string; icon: any }[] }[] = [
+  { title: "Explore", icon: Layers, items: [{ label: "Explore", path: "/academy/explore", icon: Layers }] },
+];
+
 const ROLE_NAV: Record<Role, { title: string; icon: any; items: { label: string; path: string; icon: any }[] }[]> = {
-  // --- 1. ACADEMY (Student) ---
-  student: [
-    {
-      title: "Catalog",
-      icon: BookOpen,
-      items: [
-        { label: "Catalog", path: "/academy/catalog", icon: BookOpen },
-      ]
-    },
-    {
-      title: "Learn",
-      icon: BookOpen,
-      items: [
-        { label: "Learn", path: "/academy/learn", icon: BookOpen },
-      ]
-    },
-    {
-      title: "Practice",
-      icon: Mic,
-      items: [
-        { label: "Practice", path: "/academy/practice", icon: Mic },
-      ]
-    },
-    {
-      title: "Profile",
-      icon: User,
-      items: [
-        { label: "Profile", path: "/academy/profile", icon: User },
-      ]
-    }
-  ],
+  // --- 1. ACADEMY (Student) --- (dynamic, see STUDENT_NAV_* above; default to not-enrolled)
+  student: STUDENT_NAV_NOT_ENROLLED,
 
   // --- 2. CLIENT PORTAL (External Client) ---
   client: [
@@ -255,9 +238,9 @@ const ROLE_NAV: Record<Role, { title: string; icon: any; items: { label: string;
   ],
 };
 
-// Role-specific dashboard paths
+// Role-specific dashboard paths (student is dynamic, default to explore)
 const DASHBOARD_PATHS: Record<Role, string> = {
-  student: '/academy/learn',
+  student: '/academy/explore',
   client: '/client/dashboard',
   consultant: '/talent/dashboard',
   bench_manager: '/employee/bench/dashboard',
@@ -311,7 +294,7 @@ export const Navbar: React.FC = () => {
   const [isRoleSwitcherOpen, setIsRoleSwitcherOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 
-  const isPublic = pathname === '/' || pathname === '/academy' || pathname === '/clients' || pathname === '/login' || pathname.startsWith('/verify-certificate') || pathname.startsWith('/academy/catalog') || pathname.startsWith('/auth/');
+  const isPublic = pathname === '/' || pathname === '/academy' || pathname === '/clients' || pathname === '/login' || pathname.startsWith('/verify-certificate') || pathname.startsWith('/auth/');
   const isLoginPage = pathname === '/login';
 
   const isActive = (path: string) => pathname === path || pathname.startsWith(path + '/');
@@ -321,11 +304,17 @@ export const Navbar: React.FC = () => {
   const isAcademyRoute = pathname.startsWith('/academy');
   const effectiveRole = isAcademyRoute ? 'student' : activeRole;
 
+  // Dynamic enrollment-aware student nav
+  const { isEnrolled, isLoading: enrollmentLoading } = useStudentEnrollment();
+
   const isInternal = !['student', 'client', 'consultant'].includes(effectiveRole);
-  const activeNavStructure = ROLE_NAV[effectiveRole] || [];
+  const activeNavStructure = effectiveRole === 'student'
+    ? (isEnrolled ? STUDENT_NAV_ENROLLED : STUDENT_NAV_NOT_ENROLLED)
+    : (ROLE_NAV[effectiveRole] || []);
 
   // Logo navigates to role-specific dashboard (or landing page if on public route)
-  const logoHref = isPublic ? '/' : (DASHBOARD_PATHS[effectiveRole] ?? '/');
+  const studentDashboard = isEnrolled ? '/academy/learn' : '/academy/explore';
+  const logoHref = isPublic ? '/' : (effectiveRole === 'student' ? studentDashboard : (DASHBOARD_PATHS[effectiveRole] ?? '/'));
 
   // Close all popups
   const closeAll = useCallback(() => {

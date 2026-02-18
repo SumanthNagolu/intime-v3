@@ -217,7 +217,7 @@ export function LessonScrollView() {
   )
 
   const handleAssignmentSubmit = useCallback(
-    (_id: string, response: string) => submitAssignment(lessonId, response),
+    (_id: string, response: string, blocks?: import('@/lib/academy/types').SubmissionBlock[]) => submitAssignment(lessonId, response, blocks),
     [lessonId, submitAssignment]
   )
 
@@ -414,6 +414,7 @@ export function LessonScrollView() {
               onSubmit={handleAssignmentSubmit}
               isSubmitted={progress.assignmentSubmitted}
               previousResponse={progress.assignmentResponse}
+              previousBlocks={progress.assignmentBlocks}
             />
           )}
 

@@ -11,18 +11,18 @@ import {
   ClipboardList,
   Code2,
   ExternalLink,
+  FileText,
   Flame,
   Github,
   Globe,
   GraduationCap,
+  Image,
   Layers,
   Linkedin,
   MapPin,
   Minus,
-  Pencil,
   Plus,
   RefreshCw,
-  Save,
   Sparkles,
   Target,
   Trash2,
@@ -44,8 +44,10 @@ import {
 } from '@/lib/academy/profile-store'
 import { useAcademyStore } from '@/lib/academy/progress-store'
 import { TOTAL_LESSONS, CHAPTERS, CHAPTER_LESSONS } from '@/lib/academy/curriculum'
+import type { SubmissionBlock } from '@/lib/academy/types'
 import { ImplementationDocBuilder } from '@/components/academy/profile/ImplementationDocBuilder'
 import { ImplementationDocViewer } from '@/components/academy/profile/ImplementationDocViewer'
+import { GraduationSection } from '@/components/academy/profile/GraduationSection'
 
 // ============================================================
 // Constants
@@ -197,6 +199,11 @@ export function AcademyProfileView() {
             {/* Certifications */}
             <ResumeCertifications />
           </div>
+        </div>
+
+        {/* Graduation & Certificate */}
+        <div className="mt-8">
+          <GraduationSection />
         </div>
       </div>
     </div>
@@ -431,6 +438,262 @@ function StatChip({
       </div>
     </div>
   )
+}
+
+// ============================================================
+// Assignment Submissions Section
+// ============================================================
+
+function ResumeAssignments() {
+  const { lessons } = useAcademyStore()
+  const { isEditMode } = useProfileStore()
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set())
+
+  // Build assignment data grouped by chapter
+  const assignmentsByChapter = useMemo(() => {
+    return CHAPTERS.map(ch => {
+      const chLessons = CHAPTER_LESSONS[ch.slug] || []
+      const withAssignment = chLessons.filter(l => l.hasAssignment)
+      if (withAssignment.length === 0) return null
+      return {
+        chapter: ch,
+        assignments: withAssignment.map(l => ({
+          lesson: l,
+          submitted: lessons[l.lessonId]?.assignmentSubmitted ?? false,
+          response: lessons[l.lessonId]?.assignmentResponse ?? '',
+          blocks: lessons[l.lessonId]?.assignmentBlocks ?? [],
+        })),
+      }
+    }).filter((g): g is NonNullable<typeof g> => g !== null)
+  }, [lessons])
+
+  const submittedAssignments = assignmentsByChapter.flatMap(g => g.assignments).filter(a => a.submitted)
+  const totalAssignments = assignmentsByChapter.flatMap(g => g.assignments).length
+
+  // In view mode, only show if there are submissions
+  if (!isEditMode && submittedAssignments.length === 0) return null
+
+  const toggleExpand = (lessonId: string) => {
+    setExpandedIds(prev => {
+      const next = new Set(prev)
+      if (next.has(lessonId)) {
+        next.delete(lessonId)
+      } else {
+        next.add(lessonId)
+      }
+      return next
+    })
+  }
+
+  // Only show chapters that have at least one submission (in view mode)
+  // or all chapters with assignments (in edit mode)
+  const visibleChapters = isEditMode
+    ? assignmentsByChapter
+    : assignmentsByChapter.filter(g => g.assignments.some(a => a.submitted))
+
+  return (
+    <div className="px-8 py-6">
+      <div className="flex items-center justify-between">
+        <SectionLabel>Assignment Submissions</SectionLabel>
+        <span className="text-[10px] font-medium text-charcoal-400 tabular-nums">
+          {submittedAssignments.length}/{totalAssignments} submitted
+        </span>
+      </div>
+
+      {submittedAssignments.length === 0 ? (
+        <EmptyState
+          icon={ClipboardList}
+          message="No assignments submitted"
+          hint="Complete assignments in your lessons to see them here. Your responses will be tracked automatically."
+        />
+      ) : (
+        <div className="mt-4 space-y-5">
+          {visibleChapters.map(({ chapter, assignments }) => {
+            const chapterSubmitted = assignments.filter(a => a.submitted).length
+            if (!isEditMode && chapterSubmitted === 0) return null
+
+            return (
+              <div key={chapter.slug}>
+                {/* Chapter header */}
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-charcoal-100 text-charcoal-500 uppercase tracking-wider shrink-0">
+                    {chapter.slug}
+                  </span>
+                  <span className="text-[10px] font-semibold text-charcoal-500 uppercase tracking-wider truncate">
+                    {chapter.title}
+                  </span>
+                  <span className="text-[10px] text-charcoal-400 tabular-nums shrink-0">
+                    {chapterSubmitted}/{assignments.length}
+                  </span>
+                </div>
+
+                {/* Assignment entries */}
+                <div className="space-y-1.5">
+                  {assignments.map(({ lesson, submitted, response, blocks }) => {
+                    // In view mode, skip non-submitted
+                    if (!isEditMode && !submitted) return null
+
+                    const isExpanded = expandedIds.has(lesson.lessonId)
+                    const blockCount = blocks.length
+                    const hasScreenshots = blocks.some(b => b.type === 'screenshot')
+                    const hasCode = blocks.some(b => b.type === 'code')
+
+                    return (
+                      <div
+                        key={lesson.lessonId}
+                        className={cn(
+                          'rounded-lg border overflow-hidden transition-all duration-200',
+                          isExpanded ? 'border-charcoal-300 shadow-sm' : 'border-charcoal-200/60',
+                          !submitted && 'opacity-60'
+                        )}
+                      >
+                        {/* Row header */}
+                        <button
+                          onClick={() => submitted && toggleExpand(lesson.lessonId)}
+                          disabled={!submitted}
+                          className={cn(
+                            'w-full text-left px-3.5 py-2.5 flex items-center gap-2.5 transition-colors',
+                            submitted && 'hover:bg-charcoal-50/60 cursor-pointer',
+                            !submitted && 'cursor-default'
+                          )}
+                        >
+                          {submitted ? (
+                            <ChevronRight
+                              className={cn(
+                                'w-3.5 h-3.5 text-charcoal-400 shrink-0 transition-transform duration-200',
+                                isExpanded && 'rotate-90'
+                              )}
+                            />
+                          ) : (
+                            <div className="w-3.5 h-3.5 shrink-0" />
+                          )}
+
+                          <span className="text-sm text-charcoal-700 truncate flex-1">
+                            <span className="text-charcoal-400 tabular-nums text-xs mr-1.5">
+                              L{String(lesson.lessonNumber).padStart(2, '0')}
+                            </span>
+                            {lesson.title}
+                          </span>
+
+                          {/* Block type indicators */}
+                          {submitted && blockCount > 0 && !isExpanded && (
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              {hasCode && (
+                                <Code2 className="w-3 h-3 text-charcoal-400" />
+                              )}
+                              {hasScreenshots && (
+                                <Image className="w-3 h-3 text-charcoal-400" />
+                              )}
+                              <span className="text-[9px] font-medium text-charcoal-400 bg-charcoal-100 px-1.5 py-0.5 rounded tabular-nums">
+                                {blockCount}
+                              </span>
+                            </div>
+                          )}
+
+                          {/* Status badge */}
+                          {submitted ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-green-50 text-green-700 border border-green-200 shrink-0">
+                              <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                              Submitted
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 text-amber-700 border border-amber-200 shrink-0">
+                              <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                              Pending
+                            </span>
+                          )}
+                        </button>
+
+                        {/* Expanded content - render structured blocks */}
+                        {isExpanded && submitted && (
+                          <div className="border-t border-charcoal-200 bg-charcoal-50/30">
+                            {blockCount > 0 ? (
+                              <div className="divide-y divide-charcoal-100">
+                                {blocks.map((block) => (
+                                  <SubmissionBlockRenderer key={block.id} block={block} />
+                                ))}
+                              </div>
+                            ) : response ? (
+                              <div className="px-4 py-3">
+                                <p className="text-sm text-charcoal-600 leading-relaxed whitespace-pre-wrap">
+                                  {response}
+                                </p>
+                              </div>
+                            ) : (
+                              <div className="px-4 py-3 text-sm text-charcoal-400 italic">
+                                No response content
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
+
+/** Renders a single submission block (text, code, or screenshot) in the profile view */
+function SubmissionBlockRenderer({ block }: { block: SubmissionBlock }) {
+  switch (block.type) {
+    case 'text':
+      return (
+        <div className="px-4 py-3">
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <FileText className="w-3 h-3 text-charcoal-400" />
+            <span className="text-[9px] font-semibold text-charcoal-400 uppercase tracking-wider">Notes</span>
+          </div>
+          <p className="text-sm text-charcoal-600 leading-relaxed whitespace-pre-wrap">
+            {block.content}
+          </p>
+        </div>
+      )
+
+    case 'code':
+      return (
+        <div className="px-4 py-3">
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <Code2 className="w-3 h-3 text-charcoal-400" />
+            <span className="text-[9px] font-semibold text-charcoal-400 uppercase tracking-wider">
+              {block.language || 'Code'}
+            </span>
+          </div>
+          <pre className="rounded-lg bg-charcoal-900 text-charcoal-100 px-4 py-3 text-xs font-mono leading-relaxed overflow-x-auto">
+            <code>{block.content}</code>
+          </pre>
+        </div>
+      )
+
+    case 'screenshot':
+      return (
+        <div className="px-4 py-3">
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <Image className="w-3 h-3 text-charcoal-400" />
+            <span className="text-[9px] font-semibold text-charcoal-400 uppercase tracking-wider">Screenshot</span>
+          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={block.dataUrl}
+            alt={block.caption || 'Assignment screenshot'}
+            className="rounded-lg border border-charcoal-200 max-w-full max-h-[400px] object-contain bg-white"
+          />
+          {block.caption && (
+            <p className="text-xs text-charcoal-500 mt-1.5 italic">{block.caption}</p>
+          )}
+        </div>
+      )
+
+    default: {
+      const _exhaustive: never = block
+      return null
+    }
+  }
 }
 
 // ============================================================

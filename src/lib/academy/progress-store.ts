@@ -2,7 +2,7 @@
 
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
-import type { AcademyProgressState, LessonProgress, LessonStatus, ChapterProgress, KnowledgeCheckAnswer } from './types'
+import type { AcademyProgressState, LessonProgress, LessonStatus, ChapterProgress, KnowledgeCheckAnswer, SubmissionBlock } from './types'
 import { CHAPTERS, CHAPTER_LESSONS, getAllLessons } from './curriculum'
 import { getPathLessons } from './learning-paths'
 
@@ -26,7 +26,7 @@ interface AcademyStore extends AcademyProgressState {
   markBlockVisited: (lessonId: string, blockId: string) => void
   completeCheckpoint: (lessonId: string, checkpointId: string) => void
   markVideoWatched: (lessonId: string, videoFilename: string) => void
-  submitAssignment: (lessonId: string, response: string) => void
+  submitAssignment: (lessonId: string, response: string, blocks?: SubmissionBlock[]) => void
   recordKnowledgeCheckAnswer: (lessonId: string, questionKey: string, answer: string, correct: boolean, feedback: string) => void
   getKnowledgeCheckScore: (lessonId: string) => { correct: number; total: number }
   completeLesson: (lessonId: string, score?: number, pathSlug?: string) => void
@@ -157,7 +157,7 @@ export const useAcademyStore = create<AcademyStore>()(
         })
       },
 
-      submitAssignment: (lessonId, response) => {
+      submitAssignment: (lessonId, response, blocks) => {
         set((state) => ({
           lessons: {
             ...state.lessons,
@@ -165,6 +165,7 @@ export const useAcademyStore = create<AcademyStore>()(
               ...(state.lessons[lessonId] || DEFAULT_LESSON_PROGRESS),
               assignmentSubmitted: true,
               assignmentResponse: response,
+              ...(blocks ? { assignmentBlocks: blocks } : {}),
             },
           },
         }))

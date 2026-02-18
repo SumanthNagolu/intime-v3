@@ -3,6 +3,15 @@ import { TRPCError } from '@trpc/server'
 import { publicProcedure, router } from '../trpc/init'
 import { orgProtectedProcedure, protectedProcedure } from '../trpc/middleware'
 import { getAdminClient } from '@/lib/supabase/admin'
+import {
+  sendEnrollmentReceivedEmail,
+  sendEnrollmentApprovedEmail,
+  sendEnrollmentRejectedEmail,
+  sendInvitationEmail,
+} from '@/lib/academy/email-triggers'
+import { sendWhatsAppWelcome, sendWhatsAppGraduation } from '@/lib/whatsapp/service'
+import { generateCertificateNumber, generateVerificationCode } from '@/lib/academy/graduation'
+import { sendGraduationEmail } from '@/lib/academy/email-triggers'
 
 export const academyRouter = router({
   // ============================================
@@ -604,7 +613,7 @@ export const academyRouter = router({
         // Get the request
         const { data: request, error: reqError } = await adminClient
           .from('enrollment_requests')
-          .select('*')
+          .select('*, learning_paths:path_id(slug, title)')
           .eq('id', input.requestId)
           .single()
 
@@ -646,6 +655,24 @@ export const academyRouter = router({
             })
         }
 
+        // Send approval email (fire-and-forget)
+        const pathInfo = request.learning_paths as { slug: string; title: string } | null
+        void sendEnrollmentApprovedEmail({
+          to: request.applicant_email,
+          firstName: request.applicant_first_name || 'Student',
+          pathTitle: pathInfo?.title || 'Guidewire Developer Training',
+          pathSlug: pathInfo?.slug || '',
+        })
+
+        // Send WhatsApp welcome if user opted in (fire-and-forget)
+        if (request.user_id) {
+          void sendWhatsAppWelcome({
+            userId: request.user_id,
+            firstName: request.applicant_first_name || 'Student',
+            pathTitle: pathInfo?.title || 'Guidewire Developer Training',
+          })
+        }
+
         return { success: true }
       }),
 
@@ -656,6 +683,14 @@ export const academyRouter = router({
       }))
       .mutation(async ({ ctx, input }) => {
         const adminClient = getAdminClient()
+
+        // Fetch request + path info before updating
+        const { data: request } = await adminClient
+          .from('enrollment_requests')
+          .select('applicant_email, applicant_first_name, learning_paths:path_id(title)')
+          .eq('id', input.requestId)
+          .eq('status', 'pending')
+          .single()
 
         const { error } = await adminClient
           .from('enrollment_requests')
@@ -673,6 +708,17 @@ export const academyRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Failed to reject request' })
         }
 
+        // Send rejection email (fire-and-forget)
+        if (request) {
+          const pathInfo = request.learning_paths as { title: string } | null
+          void sendEnrollmentRejectedEmail({
+            to: request.applicant_email,
+            firstName: request.applicant_first_name || 'Applicant',
+            pathTitle: pathInfo?.title || 'Guidewire Developer Training',
+            reason: input.reason,
+          })
+        }
+
         return { success: true }
       }),
 
@@ -683,9 +729,16 @@ export const academyRouter = router({
         lastName: z.string().optional(),
         pathId: z.string().uuid(),
       }))
-      .mutation(async ({ input }) => {
+      .mutation(async ({ ctx, input }) => {
         const adminClient = getAdminClient()
         const token = crypto.randomUUID()
+
+        // Lookup path title for the email
+        const { data: pathData } = await adminClient
+          .from('learning_paths')
+          .select('title')
+          .eq('id', input.pathId)
+          .single()
 
         const { data, error } = await adminClient
           .from('enrollment_requests')
@@ -704,6 +757,22 @@ export const academyRouter = router({
         if (error) {
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Failed to create invitation' })
         }
+
+        // Send invitation email (fire-and-forget)
+        // Lookup sender name
+        const { data: sender } = await adminClient
+          .from('user_profiles')
+          .select('first_name, last_name')
+          .eq('id', ctx.profileId)
+          .single()
+
+        void sendInvitationEmail({
+          to: input.email,
+          firstName: input.firstName,
+          pathTitle: pathData?.title || 'Guidewire Developer Training',
+          invitationToken: token,
+          senderName: sender ? `${sender.first_name} ${sender.last_name}`.trim() : undefined,
+        })
 
         return { success: true, requestId: data.id, token }
       }),
@@ -729,7 +798,7 @@ export const academyRouter = router({
       // Lookup path by slug
       const { data: path } = await adminClient
         .from('learning_paths')
-        .select('id')
+        .select('id, title')
         .eq('slug', input.pathSlug)
         .single()
 
@@ -752,6 +821,13 @@ export const academyRouter = router({
       if (error) {
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Failed to submit enrollment request' })
       }
+
+      // Send confirmation email (fire-and-forget)
+      void sendEnrollmentReceivedEmail({
+        to: input.email,
+        firstName: input.firstName,
+        pathTitle: path?.title || 'Guidewire Developer Training',
+      })
 
       return { success: true }
     }),
@@ -823,4 +899,228 @@ export const academyRouter = router({
 
     return data || []
   }),
+
+  // ============================================
+  // WHATSAPP OPT-IN
+  // ============================================
+
+  updateWhatsAppOptIn: protectedProcedure
+    .input(z.object({
+      phone: z.string().nullable(),
+      optedIn: z.boolean(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const adminClient = getAdminClient()
+      const profileId = ctx.profileId || ctx.user?.id
+
+      if (!profileId) {
+        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Not authenticated' })
+      }
+
+      const { error } = await adminClient
+        .from('user_profiles')
+        .update({
+          whatsapp_phone: input.phone,
+          whatsapp_opted_in: input.optedIn,
+          whatsapp_opted_in_at: input.optedIn ? new Date().toISOString() : null,
+        })
+        .eq('id', profileId)
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Failed to update WhatsApp preferences' })
+      }
+
+      return { success: true }
+    }),
+
+  getWhatsAppStatus: protectedProcedure.query(async ({ ctx }) => {
+    const adminClient = getAdminClient()
+    const profileId = ctx.profileId || ctx.user?.id
+
+    if (!profileId) {
+      return { optedIn: false, phone: null }
+    }
+
+    const { data } = await adminClient
+      .from('user_profiles')
+      .select('whatsapp_phone, whatsapp_opted_in')
+      .eq('id', profileId)
+      .single()
+
+    return {
+      optedIn: data?.whatsapp_opted_in || false,
+      phone: data?.whatsapp_phone || null,
+    }
+  }),
+
+  // ============================================
+  // GRADUATION & CERTIFICATES
+  // ============================================
+
+  requestGraduation: protectedProcedure
+    .input(z.object({ pathSlug: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const adminClient = getAdminClient()
+      const profileId = ctx.profileId || ctx.user?.id
+
+      if (!profileId) {
+        throw new TRPCError({ code: 'UNAUTHORIZED' })
+      }
+
+      // Find the active enrollment
+      const { data: enrollment } = await adminClient
+        .from('path_enrollments')
+        .select('id, path_id, learning_paths:path_id(title, slug)')
+        .eq('user_id', profileId)
+        .eq('status', 'active')
+        .single()
+
+      if (!enrollment) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'No active enrollment found' })
+      }
+
+      // Check if already graduated
+      const { data: existingCert } = await adminClient
+        .from('certificates')
+        .select('id')
+        .eq('enrollment_id', enrollment.id)
+        .limit(1)
+
+      if (existingCert && existingCert.length > 0) {
+        throw new TRPCError({ code: 'BAD_REQUEST', message: 'Certificate already issued' })
+      }
+
+      const certNumber = generateCertificateNumber()
+      const verificationCode = generateVerificationCode()
+
+      // Create certificate
+      const { error: certError } = await adminClient
+        .from('certificates')
+        .insert({
+          enrollment_id: enrollment.id,
+          certificate_number: certNumber,
+          verification_code: verificationCode,
+          issued_at: new Date().toISOString(),
+        })
+
+      if (certError) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Failed to issue certificate' })
+      }
+
+      // Mark enrollment as completed
+      await adminClient
+        .from('path_enrollments')
+        .update({
+          status: 'completed',
+          completed_at: new Date().toISOString(),
+          progress_percent: 100,
+        })
+        .eq('id', enrollment.id)
+
+      // Send graduation notifications (fire-and-forget)
+      const pathInfo = enrollment.learning_paths as { title: string; slug: string } | null
+      const email = ctx.user?.email
+
+      // Get student name
+      const { data: profile } = await adminClient
+        .from('user_profiles')
+        .select('first_name')
+        .eq('id', profileId)
+        .single()
+
+      const firstName = profile?.first_name || 'Student'
+      const pathTitle = pathInfo?.title || 'Guidewire Developer Training'
+      const completionDate = new Date().toLocaleDateString('en-US', { dateStyle: 'long' })
+
+      if (email) {
+        void sendGraduationEmail({
+          to: email,
+          firstName,
+          pathTitle,
+          completionDate,
+        })
+      }
+
+      void sendWhatsAppGraduation({
+        userId: profileId,
+        firstName,
+        pathTitle,
+      })
+
+      return { success: true, certificateNumber: certNumber }
+    }),
+
+  getMyCertificates: protectedProcedure.query(async ({ ctx }) => {
+    const adminClient = getAdminClient()
+    const profileId = ctx.profileId || ctx.user?.id
+
+    if (!profileId) return []
+
+    // First get user's enrollment IDs
+    const { data: enrollments } = await adminClient
+      .from('path_enrollments')
+      .select('id')
+      .eq('user_id', profileId)
+
+    if (!enrollments || enrollments.length === 0) return []
+
+    const enrollmentIds = enrollments.map(e => e.id)
+
+    const { data } = await adminClient
+      .from('certificates')
+      .select(`
+        id,
+        certificate_number,
+        verification_code,
+        issued_at,
+        pdf_url,
+        path_enrollments:enrollment_id(
+          learning_paths:path_id(title, slug)
+        )
+      `)
+      .in('enrollment_id', enrollmentIds)
+      .order('issued_at', { ascending: false })
+
+    return data || []
+  }),
+
+  verifyCertificate: publicProcedure
+    .input(z.object({ certificateNumber: z.string() }))
+    .query(async ({ input }) => {
+      const adminClient = getAdminClient()
+
+      const { data } = await adminClient
+        .from('certificates')
+        .select(`
+          id,
+          certificate_number,
+          verification_code,
+          issued_at,
+          path_enrollments:enrollment_id(
+            user_profiles:user_id(first_name, last_name),
+            learning_paths:path_id(title)
+          )
+        `)
+        .eq('certificate_number', input.certificateNumber)
+        .single()
+
+      if (!data) {
+        return { valid: false }
+      }
+
+      const enrollment = data.path_enrollments as {
+        user_profiles: { first_name: string; last_name: string } | null
+        learning_paths: { title: string } | null
+      } | null
+
+      return {
+        valid: true,
+        certificateNumber: data.certificate_number,
+        issuedAt: data.issued_at,
+        studentName: enrollment?.user_profiles
+          ? `${enrollment.user_profiles.first_name} ${enrollment.user_profiles.last_name}`.trim()
+          : null,
+        pathTitle: enrollment?.learning_paths?.title || null,
+      }
+    }),
 })

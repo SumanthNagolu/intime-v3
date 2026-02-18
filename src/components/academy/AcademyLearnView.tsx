@@ -48,6 +48,13 @@ export function AcademyLearnView() {
   // Path-aware enrollment
   const { activePath, activePathSlug, pathChapters, pathLessons, isEnrolled, isLoading: enrollmentLoading } = useStudentEnrollment()
 
+  // Redirect unenrolled users to explore
+  useEffect(() => {
+    if (!enrollmentLoading && !isEnrolled) {
+      router.replace('/academy/explore')
+    }
+  }, [enrollmentLoading, isEnrolled, router])
+
   // Use path-filtered data if enrolled, otherwise show all
   const effectiveChapters = isEnrolled && pathChapters.length > 0 ? pathChapters : CHAPTERS
   const effectiveAllLessons = isEnrolled && pathLessons.length > 0 ? pathLessons : getAllLessons()

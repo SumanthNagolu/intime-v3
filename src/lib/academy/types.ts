@@ -273,6 +273,30 @@ export interface GeneratedKnowledgeCheck {
   topic: string
 }
 
+// --- Assignment Submission Blocks ---
+
+export interface TextSubmissionBlock {
+  type: 'text'
+  id: string
+  content: string
+}
+
+export interface CodeSubmissionBlock {
+  type: 'code'
+  id: string
+  language: string
+  content: string
+}
+
+export interface ScreenshotSubmissionBlock {
+  type: 'screenshot'
+  id: string
+  dataUrl: string
+  caption: string
+}
+
+export type SubmissionBlock = TextSubmissionBlock | CodeSubmissionBlock | ScreenshotSubmissionBlock
+
 // --- Progress Tracking ---
 
 export type LessonStatus = 'locked' | 'available' | 'in_progress' | 'completed'
@@ -293,6 +317,7 @@ export interface LessonProgress {
   videosWatched: string[]
   assignmentSubmitted: boolean
   assignmentResponse?: string
+  assignmentBlocks?: SubmissionBlock[]
   completedAt?: string
   score?: number
   knowledgeCheckAnswers?: Record<string, KnowledgeCheckAnswer>

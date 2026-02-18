@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import type { LessonBlock, VideoRef } from '@/lib/academy/types'
+import type { LessonBlock, VideoRef, SubmissionBlock } from '@/lib/academy/types'
 import { HookCard } from './blocks/HookCard'
 import { ObjectivesList } from './blocks/ObjectivesList'
 import { ActivateCard } from './blocks/ActivateCard'
@@ -22,9 +22,10 @@ interface BlockRendererProps {
   watchedVideos: string[]
   assignmentPdf?: string
   solutionPdf?: string
-  onAssignmentSubmit: (lessonId: string, response: string) => void
+  onAssignmentSubmit: (lessonId: string, response: string, blocks?: SubmissionBlock[]) => void
   isAssignmentSubmitted: boolean
   assignmentResponse?: string
+  assignmentBlocks?: SubmissionBlock[]
   kcIndex: number
   totalKCs: number
 }
@@ -42,6 +43,7 @@ export function BlockRenderer({
   onAssignmentSubmit,
   isAssignmentSubmitted,
   assignmentResponse,
+  assignmentBlocks,
   kcIndex,
   totalKCs,
 }: BlockRendererProps) {
@@ -101,6 +103,7 @@ export function BlockRenderer({
           onSubmit={onAssignmentSubmit}
           isSubmitted={isAssignmentSubmitted}
           previousResponse={assignmentResponse}
+          previousBlocks={assignmentBlocks}
         />
       )
 

@@ -233,7 +233,7 @@ export function SynthesizedLessonView() {
   )
 
   const handleAssignmentSubmit = useCallback(
-    (_id: string, response: string) => submitAssignment(lessonId, response),
+    (_id: string, response: string, blocks?: import('@/lib/academy/types').SubmissionBlock[]) => submitAssignment(lessonId, response, blocks),
     [lessonId, submitAssignment]
   )
 
@@ -415,6 +415,7 @@ export function SynthesizedLessonView() {
                 onAssignmentSubmit={handleAssignmentSubmit}
                 isAssignmentSubmitted={progress.assignmentSubmitted}
                 assignmentResponse={progress.assignmentResponse}
+                assignmentBlocks={progress.assignmentBlocks}
                 kcIndex={kcIdx}
                 totalKCs={kcBlocks.length}
               />
