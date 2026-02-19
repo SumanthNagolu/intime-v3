@@ -3,8 +3,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   Mic, MicOff, Loader2, MessageSquare, Sparkles,
-  Circle, Trash2, Volume2, VolumeX, ChevronDown,
-  AlertCircle, Zap, Clock, Copy, Check
+  Circle, Trash2, Volume2, VolumeX,
+  AlertCircle, Zap, Clock, Copy, Check, Settings2
 } from 'lucide-react';
 
 interface TranscriptEntry {
@@ -23,7 +23,6 @@ interface AnswerEntry {
   loading?: boolean;
 }
 
-// Extend Window for webkitSpeechRecognition
 interface SpeechRecognitionEvent extends Event {
   results: SpeechRecognitionResultList;
   resultIndex: number;
@@ -33,50 +32,88 @@ interface SpeechRecognitionErrorEvent extends Event {
   error: string;
 }
 
+interface AudioDevice {
+  deviceId: string;
+  label: string;
+}
+
 export const GuidewireInterviewAssistant: React.FC = () => {
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState<TranscriptEntry[]>([]);
   const [answers, setAnswers] = useState<AnswerEntry[]>([]);
   const [interimText, setInterimText] = useState('');
   const [accumulatedText, setAccumulatedText] = useState('');
-  const [isSupported, setIsSupported] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [autoDetect, setAutoDetect] = useState(true);
   const [manualInput, setManualInput] = useState('');
 
-  const recognitionRef = useRef<any>(null);
+  // Audio device selection
+  const [audioDevices, setAudioDevices] = useState<AudioDevice[]>([]);
+  const [selectedDeviceId, setSelectedDeviceId] = useState<string>('default');
+  const [showDevicePicker, setShowDevicePicker] = useState(false);
+  const [useWhisper, setUseWhisper] = useState(true); // Whisper for system audio, SpeechRecognition for mic
+
   const transcriptEndRef = useRef<HTMLDivElement>(null);
   const answersEndRef = useRef<HTMLDivElement>(null);
   const silenceTimerRef = useRef<NodeJS.Timeout | null>(null);
   const accumulatedRef = useRef('');
 
-  // Check browser support
+  // Whisper mode refs
+  const mediaStreamRef = useRef<MediaStream | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const recordingIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const isTranscribingRef = useRef(false);
+  const chunksRef = useRef<Blob[]>([]);
+
+  // SpeechRecognition mode ref
+  const recognitionRef = useRef<any>(null);
+
+  // Enumerate audio input devices
   useEffect(() => {
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      setIsSupported(false);
+    async function loadDevices() {
+      try {
+        // Need a temporary stream to get device labels
+        const tempStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        tempStream.getTracks().forEach(t => t.stop());
+
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const audioInputs = devices
+          .filter(d => d.kind === 'audioinput')
+          .map(d => ({
+            deviceId: d.deviceId,
+            label: d.label || `Microphone ${d.deviceId.slice(0, 8)}`,
+          }));
+        setAudioDevices(audioInputs);
+
+        // Auto-select a virtual audio device if found (BlackHole, VB-Cable, etc.)
+        const virtual = audioInputs.find(d =>
+          /blackhole|virtual|vb-cable|soundflower|loopback/i.test(d.label)
+        );
+        if (virtual) {
+          setSelectedDeviceId(virtual.deviceId);
+          setUseWhisper(true);
+        }
+      } catch {
+        console.warn('Could not enumerate audio devices');
+      }
     }
+    loadDevices();
   }, []);
 
-  // Auto-scroll transcript
   useEffect(() => {
     transcriptEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [transcript, interimText]);
 
-  // Auto-scroll answers
   useEffect(() => {
     answersEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [answers]);
 
   const detectQuestion = useCallback((text: string): boolean => {
     const trimmed = text.trim();
-    // Question mark
     if (trimmed.endsWith('?')) return true;
-    // Question words at start
     const questionStarters = /^(what|how|why|when|where|who|which|can you|could you|tell me|explain|describe|walk me through|have you|do you|did you|are you|is there|what's|how's|would you)/i;
     if (questionStarters.test(trimmed)) return true;
-    // Guidewire-specific question patterns
     const gwPatterns = /\b(difference between|what is|how does|experience with|familiar with|worked with|implemented|configured|customized)\b/i;
     if (gwPatterns.test(trimmed)) return true;
     return false;
@@ -106,18 +143,63 @@ export const GuidewireInterviewAssistant: React.FC = () => {
         }),
       });
 
-      const data = await response.json();
+      if (!response.ok) {
+        const data = await response.json();
+        setAnswers(prev => prev.map(a =>
+          a.id === answerId
+            ? { ...a, answer: data.error || 'No response', loading: false }
+            : a
+        ));
+        return;
+      }
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let accumulated = '';
+
+      if (!reader) {
+        setAnswers(prev => prev.map(a =>
+          a.id === answerId ? { ...a, answer: 'No response stream', loading: false } : a
+        ));
+        return;
+      }
 
       setAnswers(prev => prev.map(a =>
-        a.id === answerId
-          ? { ...a, answer: data.answer || data.error || 'No response', loading: false }
-          : a
+        a.id === answerId ? { ...a, loading: false } : a
       ));
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        const lines = chunk.split('\n');
+
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          const payload = line.slice(6);
+          if (payload === '[DONE]') break;
+          try {
+            const parsed = JSON.parse(payload);
+            if (parsed.text) {
+              accumulated += parsed.text;
+              const text = accumulated;
+              setAnswers(prev => prev.map(a =>
+                a.id === answerId ? { ...a, answer: text } : a
+              ));
+            }
+          } catch { /* skip */ }
+        }
+      }
+
+      if (!accumulated) {
+        setAnswers(prev => prev.map(a =>
+          a.id === answerId ? { ...a, answer: 'No response generated', loading: false } : a
+        ));
+      }
     } catch {
       setAnswers(prev => prev.map(a =>
-        a.id === answerId
-          ? { ...a, answer: 'Failed to get answer. Check your connection.', loading: false }
-          : a
+        a.id === answerId ? { ...a, answer: 'Failed to get answer.', loading: false } : a
       ));
     }
   }, [answers]);
@@ -142,7 +224,124 @@ export const GuidewireInterviewAssistant: React.FC = () => {
     }
   }, [detectQuestion, autoDetect, fetchAnswer]);
 
-  const startListening = useCallback(() => {
+  // ─── WHISPER MODE: getUserMedia + MediaRecorder + Whisper API ───
+  const transcribeChunk = useCallback(async (blob: Blob) => {
+    if (blob.size < 1000) return;
+
+    // Allow overlapping transcriptions for speed
+    try {
+      const formData = new FormData();
+      formData.append('audio', blob, 'audio.webm');
+
+      const res = await fetch('/api/ai/transcribe', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!res.ok) return;
+
+      const data = await res.json();
+      const text = data.text?.trim();
+
+      if (text && text.length > 5) {
+        accumulatedRef.current += ' ' + text;
+        setAccumulatedText(accumulatedRef.current);
+
+        if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+        silenceTimerRef.current = setTimeout(() => {
+          if (accumulatedRef.current.trim()) {
+            processAccumulatedText(accumulatedRef.current);
+            accumulatedRef.current = '';
+            setAccumulatedText('');
+          }
+        }, 1500);
+      }
+    } catch (err) {
+      console.error('[Whisper] Transcribe error:', err);
+    }
+  }, [processAccumulatedText]);
+
+  const startWhisperListening = useCallback(async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          deviceId: selectedDeviceId ? { exact: selectedDeviceId } : undefined,
+          echoCancellation: false,
+          noiseSuppression: false,
+          autoGainControl: false,
+        },
+      });
+
+      mediaStreamRef.current = stream;
+
+      const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
+        ? 'audio/webm;codecs=opus'
+        : 'audio/webm';
+
+      const recorder = new MediaRecorder(stream, { mimeType });
+      mediaRecorderRef.current = recorder;
+      chunksRef.current = [];
+
+      recorder.ondataavailable = (e) => {
+        if (e.data.size > 0) {
+          chunksRef.current.push(e.data);
+        }
+      };
+
+      recorder.start();
+      setIsListening(true);
+      setInterimText('Capturing audio...');
+
+      // Every 4 seconds, flush and transcribe
+      recordingIntervalRef.current = setInterval(() => {
+        if (recorder.state === 'recording') {
+          recorder.stop();
+
+          const blob = new Blob(chunksRef.current, { type: mimeType });
+          chunksRef.current = [];
+          transcribeChunk(blob);
+
+          recorder.start();
+        }
+      }, 4000);
+    } catch (err: any) {
+      console.error('[Whisper] Start error:', err);
+      alert(`Could not access audio device. ${err.message || 'Check permissions.'}`);
+    }
+  }, [selectedDeviceId, transcribeChunk]);
+
+  const stopWhisperListening = useCallback(() => {
+    if (recordingIntervalRef.current) {
+      clearInterval(recordingIntervalRef.current);
+      recordingIntervalRef.current = null;
+    }
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+      mediaRecorderRef.current.stop();
+
+      // Transcribe final chunk
+      const mimeType = mediaRecorderRef.current.mimeType;
+      const blob = new Blob(chunksRef.current, { type: mimeType });
+      chunksRef.current = [];
+      if (blob.size > 1000) transcribeChunk(blob);
+
+      mediaRecorderRef.current = null;
+    }
+    if (mediaStreamRef.current) {
+      mediaStreamRef.current.getTracks().forEach(t => t.stop());
+      mediaStreamRef.current = null;
+    }
+    if (accumulatedRef.current.trim()) {
+      processAccumulatedText(accumulatedRef.current);
+      accumulatedRef.current = '';
+      setAccumulatedText('');
+    }
+    if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+    setIsListening(false);
+    setInterimText('');
+  }, [processAccumulatedText, transcribeChunk]);
+
+  // ─── SPEECH RECOGNITION MODE (browser mic) ─────────────────
+  const startSpeechRecognition = useCallback(() => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) return;
 
@@ -169,7 +368,6 @@ export const GuidewireInterviewAssistant: React.FC = () => {
         accumulatedRef.current += ' ' + finalTranscript;
         setAccumulatedText(accumulatedRef.current);
 
-        // Reset silence timer
         if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
         silenceTimerRef.current = setTimeout(() => {
           if (accumulatedRef.current.trim()) {
@@ -177,33 +375,21 @@ export const GuidewireInterviewAssistant: React.FC = () => {
             accumulatedRef.current = '';
             setAccumulatedText('');
           }
-        }, 2000); // 2 second pause = end of utterance
+        }, 2000);
       }
 
       setInterimText(interim);
     };
 
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-      console.error('Speech recognition error:', event.error);
-      if (event.error === 'not-allowed') {
-        setIsSupported(false);
-      }
-      // Auto-restart on network errors
       if (event.error === 'network' || event.error === 'aborted') {
-        setTimeout(() => {
-          if (isListening) startListening();
-        }, 1000);
+        setTimeout(() => startSpeechRecognition(), 1000);
       }
     };
 
     recognition.onend = () => {
-      // Auto-restart if still supposed to be listening
       if (isListening) {
-        try {
-          recognition.start();
-        } catch {
-          // Already started
-        }
+        try { recognition.start(); } catch { /* already started */ }
       }
     };
 
@@ -212,12 +398,11 @@ export const GuidewireInterviewAssistant: React.FC = () => {
     setIsListening(true);
   }, [isListening, processAccumulatedText]);
 
-  const stopListening = useCallback(() => {
+  const stopSpeechRecognition = useCallback(() => {
     if (recognitionRef.current) {
       recognitionRef.current.stop();
       recognitionRef.current = null;
     }
-    // Process any remaining accumulated text
     if (accumulatedRef.current.trim()) {
       processAccumulatedText(accumulatedRef.current);
       accumulatedRef.current = '';
@@ -228,11 +413,12 @@ export const GuidewireInterviewAssistant: React.FC = () => {
     setInterimText('');
   }, [processAccumulatedText]);
 
+  // ─── UNIFIED TOGGLE ────────────────────────────────────────
   const toggleListening = () => {
     if (isListening) {
-      stopListening();
+      useWhisper ? stopWhisperListening() : stopSpeechRecognition();
     } else {
-      startListening();
+      useWhisper ? startWhisperListening() : startSpeechRecognition();
     }
   };
 
@@ -270,19 +456,7 @@ export const GuidewireInterviewAssistant: React.FC = () => {
     fetchAnswer(entry.text, entry.id);
   };
 
-  if (!isSupported) {
-    return (
-      <div className="flex items-center justify-center h-[60vh]">
-        <div className="text-center max-w-md">
-          <AlertCircle className="w-16 h-16 text-amber-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-serif font-bold text-charcoal mb-2">Browser Not Supported</h2>
-          <p className="text-stone-500">
-            Speech recognition requires Chrome or Edge. Please switch browsers or allow microphone access.
-          </p>
-        </div>
-      </div>
-    );
-  }
+  const selectedDeviceLabel = audioDevices.find(d => d.deviceId === selectedDeviceId)?.label || 'Default';
 
   return (
     <div className="animate-fade-in h-[calc(100vh-120px)] flex flex-col">
@@ -313,16 +487,81 @@ export const GuidewireInterviewAssistant: React.FC = () => {
                 ))}
               </div>
             )}
+            {isListening && (
+              <span className="text-[10px] text-stone-400 font-medium">
+                {useWhisper ? 'Whisper' : 'Speech API'} · {selectedDeviceLabel}
+              </span>
+            )}
           </div>
           <h1 className="text-3xl font-serif font-bold text-charcoal italic">
             Guidewire Interview Assistant
           </h1>
           <p className="text-stone-500 text-sm mt-1">
-            Captures your Zoom audio, detects questions, provides instant expert answers
+            Captures audio, detects interviewer questions, provides instant expert answers
           </p>
         </div>
 
         <div className="flex items-center gap-3">
+          {/* Audio Device Picker */}
+          <div className="relative">
+            <button
+              onClick={() => setShowDevicePicker(!showDevicePicker)}
+              disabled={isListening}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-semibold transition-all border ${
+                isListening
+                  ? 'bg-stone-50 text-stone-300 border-stone-200 cursor-not-allowed'
+                  : 'bg-white text-charcoal border-stone-200 hover:border-stone-300 hover:bg-stone-50'
+              }`}
+            >
+              <Settings2 size={14} />
+              <span className="max-w-[140px] truncate">{selectedDeviceLabel}</span>
+            </button>
+
+            {showDevicePicker && !isListening && (
+              <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-xl border border-stone-200 z-50 overflow-hidden">
+                <div className="px-4 py-3 border-b border-stone-100 bg-stone-50">
+                  <p className="text-xs font-semibold text-charcoal uppercase tracking-wider">Audio Input Device</p>
+                  <p className="text-[10px] text-stone-400 mt-0.5">Select your audio source (mic, BlackHole, virtual cable)</p>
+                </div>
+                <div className="max-h-60 overflow-y-auto">
+                  {audioDevices.map((device) => (
+                    <button
+                      key={device.deviceId}
+                      onClick={() => {
+                        setSelectedDeviceId(device.deviceId);
+                        setShowDevicePicker(false);
+                      }}
+                      className={`w-full text-left px-4 py-3 text-sm transition-colors flex items-center justify-between ${
+                        selectedDeviceId === device.deviceId
+                          ? 'bg-rust/5 text-rust font-medium'
+                          : 'text-charcoal hover:bg-stone-50'
+                      }`}
+                    >
+                      <span className="truncate">{device.label}</span>
+                      {selectedDeviceId === device.deviceId && (
+                        <Check size={14} className="text-rust shrink-0" />
+                      )}
+                    </button>
+                  ))}
+                  {audioDevices.length === 0 && (
+                    <p className="px-4 py-3 text-sm text-stone-400">No audio devices found. Allow mic access first.</p>
+                  )}
+                </div>
+                <div className="px-4 py-3 border-t border-stone-100 bg-stone-50">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={useWhisper}
+                      onChange={(e) => setUseWhisper(e.target.checked)}
+                      className="rounded border-stone-300 text-rust focus:ring-rust"
+                    />
+                    <span className="text-xs text-stone-600">Use Whisper API (better for system audio / virtual devices)</span>
+                  </label>
+                </div>
+              </div>
+            )}
+          </div>
+
           <button
             onClick={() => setAutoDetect(!autoDetect)}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
@@ -381,8 +620,12 @@ export const GuidewireInterviewAssistant: React.FC = () => {
               {transcript.length === 0 && !interimText && !accumulatedText && (
                 <div className="flex flex-col items-center justify-center h-full text-stone-500">
                   <Mic size={32} className="mb-3 opacity-30" />
-                  <p className="text-sm">Start listening to see transcript</p>
-                  <p className="text-xs text-stone-600 mt-1">Make sure Zoom audio is playing through speakers</p>
+                  <p className="text-sm">Click Start Listening to begin</p>
+                  <p className="text-xs text-stone-600 mt-1">
+                    {useWhisper
+                      ? 'Using Whisper transcription with selected device'
+                      : 'Using browser speech recognition with default mic'}
+                  </p>
                 </div>
               )}
 
@@ -417,7 +660,6 @@ export const GuidewireInterviewAssistant: React.FC = () => {
                 </div>
               ))}
 
-              {/* Accumulated text (building up) */}
               {accumulatedText && (
                 <div className="px-3 py-2.5 rounded-xl bg-white/5 border border-dashed border-white/10">
                   <p className="text-sm text-stone-400 leading-relaxed">{accumulatedText.trim()}</p>
@@ -428,7 +670,6 @@ export const GuidewireInterviewAssistant: React.FC = () => {
                 </div>
               )}
 
-              {/* Interim text (currently being spoken) */}
               {interimText && (
                 <div className="px-3 py-2.5 rounded-xl bg-rust/10 border border-rust/20">
                   <p className="text-sm text-rust/70 leading-relaxed italic">{interimText}</p>
@@ -484,7 +725,6 @@ export const GuidewireInterviewAssistant: React.FC = () => {
 
               {answers.map((entry) => (
                 <div key={entry.id} className="animate-fade-in">
-                  {/* Question */}
                   <div className="flex items-start gap-3 mb-3">
                     <div className="w-7 h-7 rounded-lg bg-amber-50 flex items-center justify-center shrink-0 mt-0.5">
                       <MessageSquare size={14} className="text-amber-600" />
@@ -495,7 +735,6 @@ export const GuidewireInterviewAssistant: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Answer */}
                   <div className="ml-10 relative">
                     {entry.loading ? (
                       <div className="flex items-center gap-3 py-4">

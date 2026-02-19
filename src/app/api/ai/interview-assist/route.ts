@@ -1,141 +1,192 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { readFile } from "fs/promises";
+import { join } from "path";
+import { searchRAG } from "@/lib/academy/rag-service";
 
-const GUIDEWIRE_SYSTEM_PROMPT = `You are an expert Guidewire consultant with 15+ years of experience across PolicyCenter, ClaimCenter, BillingCenter, and the entire InsuranceSuite. You are helping someone answer Guidewire interview questions in real-time during a live interview.
+// Load Goutham's SGI context at startup
+let sgiContext = "";
+async function loadSGIContext() {
+  if (sgiContext) return sgiContext;
+  try {
+    const basePath = join(process.cwd(), "public/academy/guidewire/interview-prep");
+    const [notes, cheatSheet] = await Promise.all([
+      readFile(join(basePath, "SGI-SpeakerNotes.md"), "utf-8"),
+      readFile(join(basePath, "SGI-QuickRef-CheatSheet.md"), "utf-8"),
+    ]);
+    sgiContext = `\n\n## GOUTHAM'S SGI INTERVIEW CONTEXT\nYou are helping Goutham (Senior Guidewire Developer) in a LIVE interview with SGI (Saskatchewan Government Insurance). He submitted a PolicyCenter Cyber Liability solution. Below is his full solution context — use this as the PRIMARY source for answers. Frame everything as HIS experience.\n\n### SPEAKER NOTES (What Goutham planned to say)\n${notes}\n\n### QUICK REFERENCE\n${cheatSheet}`;
+  } catch {
+    console.warn("[Interview] Could not load SGI context files");
+  }
+  return sgiContext;
+}
 
-YOUR RESPONSE RULES:
-- Give CONCISE, CONFIDENT answers (2-4 sentences max for simple questions, up to 8 for complex ones)
-- Sound like a seasoned professional speaking naturally, NOT reading from a textbook
-- Start with the key point immediately - no preamble
-- Use specific version numbers, class names, and technical terms to sound authoritative
-- If it's a behavioral question, give a brief STAR-format answer with Guidewire context
-- Format: Use bullet points for lists, bold for key terms
+const INTERVIEW_SYSTEM_PROMPT = `You are coaching a Guidewire developer through a LIVE interview. You see their screen and feed them answers in real-time.
 
-GUIDEWIRE KNOWLEDGE BASE:
+## CRITICAL: SPEED & BREVITY
+- Keep answers SHORT: 2-4 sentences for simple questions, max 6 for complex ones
+- Get to the point IMMEDIATELY — no preamble, no "Great question"
+- Start with the answer, then add 1 detail that shows depth
+- Sound natural and confident, like a senior dev in conversation
 
-## PolicyCenter (PC)
-- **Architecture**: MVC pattern, Gosu scripting language, plugin-based architecture
-- **Data Model**: Policy → PolicyPeriod → PolicyLine → Coverable → Coverage → CovTerm
-- **Key Entities**: Account, Submission, Policy, PolicyPeriod, Job (Submission/Renewal/PolicyChange/Cancellation/Reinstatement/Rewrite/Audit)
-- **Product Model**: ProductDefinition → PolicyLinePattern → ClausePattern → CovTermPattern
-- **Gosu Language**: Statically typed, runs on JVM, similar to Java/Kotlin. Key features: enhancements, blocks, delegates, named arguments
-- **PCF (Page Configuration Framework)**: XML-based UI framework. Pages → Screens → PanelSets → DetailViewPanels → ListViewPanels → InputSets
-- **Validation**: Level 1 (field-level), Level 2 (entity-level in validation rules), Level 3 (diffing pre/post)
-- **Preemptions**: Block quote, block bind, block issue, reject changes
-- **Rating**: Rate routines, rate tables, parameterized rate factors. Rating engine processes line-by-line
-- **Integration**: REST APIs, Cloud API (Swagger/OpenAPI), Messaging (events/messages), Startable plugins
-- **Job Lifecycle**: Draft → Quoted → Binding → Bound → Issued (for Submission)
-- **Advanced Product Designer (APD)**: Visual product modeling tool. Define risk objects, coverages, exclusions, conditions, schedules
-- **Underwriting Authority**: UW rules, UW issues, approval workflows
-- **Forms**: FormPattern, FormInference (auto-attach based on coverage), GenericGroupForms
-- **Reinsurance**: Treaties, facultative, proportional/non-proportional, ceded premium calculation
+## HOW TO ANSWER
+- Answer as if YOU are the candidate speaking to the interviewer in first person
+- Frame as personal project experience: "In my project...", "What I did was...", "The way I implemented this..."
+- Be SPECIFIC: drop exact Gosu classes, PCF pages, entity names
+- Bold the key technical terms
 
-## ClaimCenter (CC)
-- **Architecture**: Claim → Exposure → Activity → Check/Payment
-- **FNOL**: First Notice of Loss - claim creation wizard
-- **Exposure Types**: Vehicle Damage, Bodily Injury, Property Damage, Workers Comp (Medical, Indemnity, Expense)
-- **Reserves**: Case reserves, ALAE, expense reserves. Reserve lines per exposure
-- **Financials**: Reserves → Checks → Payments → Recovery → Subrogation
-- **Rules**: Pre-update, validation, assignment, segmentation rules
-- **Claim Lifecycle**: Draft → Open → Investigation → Negotiation → Closed
-- **Assignment Engine**: Round-robin, workload-based, proximity-based, manual
-- **Litigation**: Matter, attorney, trial dates, settlement negotiations
-- **ISO/CLUE Integration**: Claims history, fraud scoring
-- **Catastrophe (CAT)**: Bulk claim creation, CAT tracking
-- **Subrogation**: Identify responsible parties, track recovery amounts
+## ANSWER STRUCTURE
+1. Direct answer (1 sentence)
+2. Specific technical detail with class/entity names
+3. One gotcha or best practice (if relevant)
 
-## BillingCenter (BC)
-- **Architecture**: Account → Policy → Charges → Invoices → Payments
-- **Billing Plans**: Monthly, quarterly, annual, pay-as-you-go
-- **Payment Plans**: Direct bill, agency bill
-- **Commission Plans**: Flat rate, sliding scale, contingency
-- **Delinquency**: Workflows for non-payment (dunning, cancellation)
-- **Disbursements**: Return premium, commission payments
-- **Charge Patterns**: Written premium, taxes, fees, installment fees
-- **Payment Instruments**: Check, ACH, credit card, wire transfer
-- **Account Current**: Statement reconciliation for agency bill
-
-## InsuranceSuite Integration
-- **Cloud API**: RESTful APIs for all three centers, Swagger documentation
-- **Messaging**: Asynchronous event-driven integration via message queues
-- **Plugin Architecture**: Gosu-based plugins (IContactPlugin, IRatePlugin, etc.)
-- **Pre-built Integrations**: Lexis/Nexis, ISO, CLUE, MVR, credit scoring
-- **Guidewire Cloud (GWCP)**: AWS-based cloud platform, CI/CD pipelines
-- **Jutro**: React-based digital portal framework (customer/agent portals)
-- **DataHub/InfoCenter**: Analytics and reporting data warehouse
-- **SurePath Studio**: Cloud IDE for Guidewire development, Git-based workflows
-
-## Gosu Language Deep Dive
-- **Type System**: Strong static typing, generics, type inference
-- **Enhancements**: Extend existing classes without modification (like Kotlin extensions)
-- **Blocks**: Lambda/closure syntax: \\ item -> item.Name
-- **Properties**: get/set accessors, lazy properties
-- **Annotations**: @Deprecated, @Param, @Returns, @Throws
-- **Collections**: Lists, Maps, Sets with functional methods (.where(), .map(), .each())
-- **Entity Access**: Direct database entity access via type-safe Gosu (entity.Field)
-- **Testing**: GUnit framework (extends JUnit), Builder pattern for test data (PolicyBuilder, ClaimBuilder)
-
-## Configuration & Deployment
-- **Guidewire Studio**: Eclipse-based IDE (legacy) → IntelliJ-based (modern)
-- **SurePath Studio**: Cloud-based IDE with Git integration
-- **Environment Tiers**: Dev → QA → Staging → Production
-- **Database**: Oracle (on-prem), PostgreSQL (cloud)
-- **Build Tools**: Gradle-based build, Docker containerization in cloud
-- **Version Control**: Git with branch-per-feature, PR reviews
-- **CI/CD**: Jenkins (on-prem), GitHub Actions (cloud)
-
-## Common Interview Topics
-- **Explain the PolicyCenter data model** → PolicyPeriod is the versioned snapshot, Policy is the container
-- **What is a Job?** → A unit of work on a policy (Submission, Renewal, PolicyChange, etc.)
-- **Gosu vs Java** → Gosu is more concise, has enhancements, null-safe operators, runs on JVM
-- **How does rating work?** → Rate routines execute per line, use rate tables for lookups, produce rated costs
-- **PCF framework** → XML-based, server-side rendered, uses widgets (TextInput, RangeInput, ListView)
-- **Cloud API** → RESTful, versioned, supports CRUD + composite operations
-- **What are preemptions?** → Mechanisms to prevent quote/bind/issue based on UW rules
-
-Remember: You're helping someone in a LIVE interview. Be direct, authoritative, and concise.`;
+## KNOWLEDGE BASE CONTEXT
+Use the context below for accurate technical details. Frame the information as YOUR experience.`;
 
 export async function POST(request: NextRequest) {
   try {
     const { question, conversationHistory } = await request.json();
 
     if (!question) {
-      return NextResponse.json({ error: "No question provided" }, { status: 400 });
+      return new Response(JSON.stringify({ error: "No question provided" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     const apiKey = process.env.ANTHROPIC_API_KEY;
     if (!apiKey) {
-      return NextResponse.json({ error: "Anthropic API key not configured" }, { status: 500 });
+      return new Response(JSON.stringify({ error: "Anthropic API key not configured" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
-    const anthropic = new Anthropic({ apiKey });
+    // 1. Parallel RAG searches — general + practical content for best coverage
+    let ragContext = "";
+    try {
+      const [generalResults, practicalResults] = await Promise.all([
+        searchRAG(question, {
+          topK: 6,
+          minScore: 0.28,
+        }),
+        searchRAG(question, {
+          topK: 4,
+          minScore: 0.25,
+          sourceTypes: ["assignment", "interview_prep", "ppt_content", "narration", "knowledge_check"],
+        }),
+      ]);
 
-    // Build conversation context
+      // Merge and deduplicate, prioritizing practical content (assignments, interview, narrations)
+      const seen = new Set<string>();
+      const merged = [];
+
+      // Practical/hands-on content first
+      for (const r of practicalResults) {
+        if (!seen.has(r.chunk.id)) {
+          seen.add(r.chunk.id);
+          merged.push(r);
+        }
+      }
+      // Then general results
+      for (const r of generalResults) {
+        if (!seen.has(r.chunk.id)) {
+          seen.add(r.chunk.id);
+          merged.push(r);
+        }
+      }
+
+      // Take top 8 total
+      const top = merged.slice(0, 8);
+
+      if (top.length > 0) {
+        const contextChunks = top.map((r, i) => {
+          const meta = [
+            r.chunk.source_type === "assignment" ? "Assignment (Hands-on Implementation)" :
+            r.chunk.source_type === "narration" ? "Developer Explanation" :
+            r.chunk.source_type === "knowledge_check" ? "Knowledge Check Q&A" :
+            r.chunk.source_type === "interview_prep" ? "Interview Q&A" :
+            r.chunk.source_type === "ppt_content" ? "Training Material" :
+            r.chunk.source_type === "official_guide" ? "Guidewire Docs" :
+            r.chunk.source_type === "video_transcript" ? "Training Video" :
+            r.chunk.source_type,
+            r.chunk.chapter_title || null,
+          ]
+            .filter(Boolean)
+            .join(" | ");
+
+          return `[${i + 1}] (${meta})\n${r.chunk.text}`;
+        });
+
+        ragContext = `\n${contextChunks.join("\n---\n")}`;
+      }
+    } catch (ragError) {
+      console.error("[Interview] RAG search failed:", ragError);
+    }
+
+    // 2. Load SGI context + build system prompt
+    const candidateContext = await loadSGIContext();
+    const systemPrompt = INTERVIEW_SYSTEM_PROMPT + candidateContext + ragContext;
+
+    // 3. Build conversation context
     const historyContext = conversationHistory
-      ?.slice(-6)
+      ?.slice(-4)
       ?.map((h: { role: string; content: string }) => `${h.role}: ${h.content}`)
       .join("\n") || "";
 
     const userMessage = historyContext
-      ? `${historyContext}\n\nNew question from interviewer: "${question}"\n\nProvide a confident, concise answer:`
-      : `Interview question: "${question}"\n\nProvide a confident, concise answer:`;
+      ? `Previous conversation:\n${historyContext}\n\nInterviewer asks: "${question}"\n\nGive me the answer to say (be concise):`
+      : `Interviewer asks: "${question}"\n\nGive me the answer to say (be concise):`;
 
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-5-20250929",
-      max_tokens: 1024,
-      system: GUIDEWIRE_SYSTEM_PROMPT,
+    // 4. Stream with Haiku for SPEED — context has all the knowledge needed
+    const anthropic = new Anthropic({ apiKey });
+
+    const stream = anthropic.messages.stream({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 512,
+      system: systemPrompt,
       messages: [{ role: "user", content: userMessage }],
     });
 
-    const textBlock = response.content.find(b => b.type === "text");
-    const answer = textBlock?.text || "Could you rephrase that question?";
+    // 5. Return streaming response
+    const encoder = new TextEncoder();
+    const readable = new ReadableStream({
+      async start(controller) {
+        try {
+          for await (const event of stream) {
+            if (
+              event.type === "content_block_delta" &&
+              event.delta.type === "text_delta"
+            ) {
+              controller.enqueue(
+                encoder.encode(`data: ${JSON.stringify({ text: event.delta.text })}\n\n`)
+              );
+            }
+          }
+          controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+          controller.close();
+        } catch (err) {
+          console.error("[Interview] Stream error:", err);
+          controller.enqueue(
+            encoder.encode(`data: ${JSON.stringify({ error: "Stream failed" })}\n\n`)
+          );
+          controller.close();
+        }
+      },
+    });
 
-    return NextResponse.json({ answer });
+    return new Response(readable, {
+      headers: {
+        "Content-Type": "text/event-stream",
+        "Cache-Control": "no-cache",
+        Connection: "keep-alive",
+      },
+    });
   } catch (error) {
     console.error("Interview assist error:", error);
-    return NextResponse.json(
-      { error: "Failed to generate response" },
-      { status: 500 }
+    return new Response(
+      JSON.stringify({ error: "Failed to generate response" }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 }

@@ -26,10 +26,19 @@ import {
 } from '@/lib/academy/curriculum'
 import { useAcademyStore } from '@/lib/academy/progress-store'
 import { useProgressSync } from '@/lib/academy/progress-sync'
+import { trpc } from '@/lib/trpc/client'
 import type { ChapterPhase } from '@/lib/academy/types'
 
 export function AcademyProgressView() {
   const router = useRouter()
+  const { data: meData } = trpc.users.getMe.useQuery(undefined, {
+    staleTime: 10 * 60 * 1000,
+    retry: false,
+  })
+  const userName = meData?.fullName || 'Student'
+  const userInitial = userName.charAt(0).toUpperCase()
+  const hasInternalRole = meData?.role && !['student', 'client', 'consultant'].includes(meData.role.code)
+
   const {
     lessons: lessonProgress,
     readinessIndex,
@@ -458,13 +467,13 @@ export function AcademyProgressView() {
           <div className="rounded-xl border border-charcoal-200/60 bg-charcoal-900 text-white shadow-elevation-sm overflow-hidden">
             <div className="p-6 text-center">
               <div className="w-20 h-20 mx-auto bg-charcoal-700 rounded-full flex items-center justify-center text-3xl font-bold mb-4 border-2 border-charcoal-600">
-                P
+                {userInitial}
               </div>
-              <h3 className="font-heading font-bold text-lg">Priya Sharma</h3>
+              <h3 className="font-heading font-bold text-lg">{userName}</h3>
               <p className="text-charcoal-400 text-xs mt-1">Senior Developer Track</p>
               <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 bg-gold-500/20 rounded-full text-[10px] font-semibold uppercase tracking-widest text-gold-400 border border-gold-500/30">
                 <GraduationCap className="w-3 h-3" />
-                Active Student
+                {hasInternalRole ? 'Subscriber' : 'Active Student'}
               </div>
               {/* Mini readiness ring */}
               <div className="mt-5">

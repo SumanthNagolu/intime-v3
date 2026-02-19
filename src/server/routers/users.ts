@@ -10,6 +10,56 @@ const userStatusSchema = z.enum(['pending', 'active', 'suspended', 'deactivated'
 
 export const usersRouter = router({
   // ============================================
+  // GET MY PROFILE (name, email, avatar, role)
+  // ============================================
+  getMe: protectedProcedure
+    .query(async ({ ctx }) => {
+      const adminClient = getAdminClient()
+      const userId = ctx.user.id
+
+      const { data: profile } = await adminClient
+        .from('user_profiles')
+        .select('id, full_name, email, avatar_url, role_id, employee_role')
+        .eq('auth_id', userId)
+        .single()
+
+      if (!profile) {
+        return {
+          fullName: ctx.user.email?.split('@')[0] || 'User',
+          email: ctx.user.email || '',
+          avatarUrl: null as string | null,
+          role: null as { code: string; category: string; displayName: string } | null,
+        }
+      }
+
+      // Get role info
+      let role: { code: string; category: string; displayName: string } | null = null
+      if (profile.role_id) {
+        const { data: systemRole } = await adminClient
+          .from('system_roles')
+          .select('code, category, display_name')
+          .eq('id', profile.role_id)
+          .single()
+        if (systemRole) {
+          role = { code: systemRole.code, category: systemRole.category, displayName: systemRole.display_name }
+        }
+      } else if (profile.employee_role) {
+        role = {
+          code: profile.employee_role,
+          category: 'pod_ic',
+          displayName: profile.employee_role.replace(/_/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase()),
+        }
+      }
+
+      return {
+        fullName: profile.full_name || ctx.user.email?.split('@')[0] || 'User',
+        email: profile.email || ctx.user.email || '',
+        avatarUrl: profile.avatar_url,
+        role,
+      }
+    }),
+
+  // ============================================
   // GET MY ROLE (for navigation, no orgId needed)
   // ============================================
   getMyRole: protectedProcedure

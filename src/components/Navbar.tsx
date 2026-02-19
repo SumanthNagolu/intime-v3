@@ -7,6 +7,7 @@ import { User, Mic, Map, Menu, X, Cpu, ChevronDown, List, Layers, Sparkles, LogO
 import { cn } from '@/lib/utils';
 import { useAppStore } from '@/lib/store';
 import { useStudentEnrollment } from '@/hooks/useStudentEnrollment';
+import { trpc } from '@/lib/trpc/client';
 import type { Role } from '@/lib/types';
 
 // Navigation structures based on role
@@ -300,20 +301,40 @@ export const Navbar: React.FC = () => {
   const isActive = (path: string) => pathname === path || pathname.startsWith(path + '/');
   const isGroupActive = (items: { path: string }[]) => items.some(item => isActive(item.path));
 
-  // Force student nav on academy routes regardless of persisted role
+  // Fetch real user profile
+  const { data: meData } = trpc.users.getMe.useQuery(undefined, {
+    staleTime: 10 * 60 * 1000,
+    retry: false,
+    enabled: !isPublic,
+  });
+
+  // Determine if user has an internal role (admin, recruiter, etc.)
   const isAcademyRoute = pathname.startsWith('/academy');
-  const effectiveRole = isAcademyRoute ? 'student' : activeRole;
+  const hasInternalRole = meData?.role && !['student', 'client', 'consultant'].includes(meData.role.code);
+
+  // On academy routes: internal users become 'subscriber', others stay 'student'
+  const effectiveRole = isAcademyRoute
+    ? (hasInternalRole ? 'student' : 'student')
+    : activeRole;
 
   // Dynamic enrollment-aware student nav
   const { isEnrolled, isLoading: enrollmentLoading } = useStudentEnrollment();
 
+  // Internal users on academy routes are always treated as enrolled (full access)
+  const effectivelyEnrolled = isEnrolled || (isAcademyRoute && hasInternalRole);
+
   const isInternal = !['student', 'client', 'consultant'].includes(effectiveRole);
+
+  // User display info
+  const userName = meData?.fullName || 'User';
+  const userInitial = userName.charAt(0).toUpperCase();
+  const academyRoleLabel = hasInternalRole ? 'Subscriber' : 'Student';
   const activeNavStructure = effectiveRole === 'student'
-    ? (isEnrolled ? STUDENT_NAV_ENROLLED : STUDENT_NAV_NOT_ENROLLED)
+    ? (effectivelyEnrolled ? STUDENT_NAV_ENROLLED : STUDENT_NAV_NOT_ENROLLED)
     : (ROLE_NAV[effectiveRole] || []);
 
   // Logo navigates to role-specific dashboard (or landing page if on public route)
-  const studentDashboard = isEnrolled ? '/academy/learn' : '/academy/explore';
+  const studentDashboard = effectivelyEnrolled ? '/academy/learn' : '/academy/explore';
   const logoHref = isPublic ? '/' : (effectiveRole === 'student' ? studentDashboard : (DASHBOARD_PATHS[effectiveRole] ?? '/'));
 
   // Close all popups
@@ -627,10 +648,10 @@ export const Navbar: React.FC = () => {
               <div className="flex items-center gap-3">
                 <div className="text-right hidden md:block">
                   <div className="text-[9px] font-bold text-stone-400 uppercase tracking-[0.2em]">
-                    {isInternal ? getRoleLabel(effectiveRole) : effectiveRole === 'student' ? 'Student' : 'Partner'}
+                    {isAcademyRoute ? academyRoleLabel : isInternal ? getRoleLabel(effectiveRole) : 'Partner'}
                   </div>
                   <div className="text-[13px] font-serif font-bold text-charcoal-900 leading-tight mt-0.5">
-                    {effectiveRole === 'student' ? 'Priya Sharma' : isInternal ? 'User' : 'Guest User'}
+                    {userName}
                   </div>
                 </div>
 
@@ -651,7 +672,7 @@ export const Navbar: React.FC = () => {
                       "flex items-center justify-center font-serif font-bold italic text-base",
                       "transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl"
                     )}>
-                      {effectiveRole === 'student' ? 'S' : (effectiveRole as string).charAt(0).toUpperCase()}
+                      {userInitial}
                     </div>
                   </button>
 
@@ -660,14 +681,14 @@ export const Navbar: React.FC = () => {
                       <div className="p-4 bg-gradient-to-br from-stone-50 to-stone-50/50 border-b border-stone-100">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-charcoal-800 to-charcoal-900 text-white flex items-center justify-center font-serif font-bold italic text-base">
-                            {effectiveRole === 'student' ? 'S' : (effectiveRole as string).charAt(0).toUpperCase()}
+                            {userInitial}
                           </div>
                           <div>
                             <p className="text-sm font-bold text-charcoal-900">
-                              {effectiveRole === 'student' ? 'Priya Sharma' : 'User Profile'}
+                              {userName}
                             </p>
                             <p className="text-[10px] text-stone-400 uppercase tracking-wider font-medium">
-                              {getRoleLabel(effectiveRole)}
+                              {isAcademyRoute ? academyRoleLabel : getRoleLabel(effectiveRole)}
                             </p>
                           </div>
                         </div>
